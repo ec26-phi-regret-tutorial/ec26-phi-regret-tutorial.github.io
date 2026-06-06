@@ -10,9 +10,9 @@
 html{background:var(--paper);scroll-behavior:smooth}
 body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,"Times New Roman",Times,serif;font-size:18px;line-height:1.58}
 a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text-decoration:underline}
-.site-masthead{max-width:1040px;margin:0 auto;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
+.site-masthead{max-width:1040px;margin:0 auto 0 64px;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
 .course-title{font-size:1.06rem;font-weight:700}.course-authors{margin-top:2px;color:var(--muted);font-size:.92rem}.top-links{display:flex;gap:14px;margin-top:10px;font-size:.9rem;flex-wrap:wrap}
-.page-shell{max-width:1040px;margin:0 auto;padding:30px 24px 72px;position:relative}
+.page-shell{max-width:1040px;margin:0 auto 0 64px;padding:30px 24px 72px;position:relative}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:34px;align-items:start;margin-bottom:2.2rem}
 .eyebrow{margin:0 0 .35rem;color:var(--brown);font-size:.9rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
 .lecture-title{margin:0;font-size:2.55rem;line-height:1.08;letter-spacing:0}
@@ -38,7 +38,8 @@ a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text
 .organizers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem;margin:1rem 0}
 .organizer{padding:.8rem 0;border-top:1px solid var(--rule)}.organizer strong{display:block}.organizer span{display:block;color:var(--muted);font-size:.92rem;line-height:1.35}
 .footer-note{margin-top:2.4rem;padding-top:.8rem;border-top:1px solid var(--rule);color:var(--muted);font-size:.9rem}
-@media(max-width:760px){body{font-size:16.5px}.site-masthead,.page-shell{padding-left:17px;padding-right:17px}.hero{display:block}.lecture-title{font-size:2rem}.side-panel{margin-top:1.4rem}.event-meta dl{grid-template-columns:6.2rem minmax(0,1fr)}.schedule,.organizers{grid-template-columns:1fr}}
+@media(max-width:1180px){.site-masthead,.page-shell{margin-left:32px}}
+@media(max-width:760px){body{font-size:16.5px}.site-masthead,.page-shell{margin-left:0;padding-left:17px;padding-right:17px}.hero{display:block}.lecture-title{font-size:2rem}.side-panel{margin-top:1.4rem}.event-meta dl{grid-template-columns:6.2rem minmax(0,1fr)}.schedule,.organizers{grid-template-columns:1fr}}
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,
