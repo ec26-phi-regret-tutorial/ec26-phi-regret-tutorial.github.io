@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <title>Compact alphanumeric labels</title>
+    <id>https://example.com/styles/compact-alphanumeric-labels</id>
+    <link href="https://example.com/styles/compact-alphanumeric-labels" rel="self"/>
+    <category citation-format="label"/>
+    <updated>2026-06-06T00:00:00+00:00</updated>
+  </info>
+
+  <macro name="author-bib">
+    <names variable="author" delimiter=", " et-al-min="3" et-al-use-first="1">
+      <name form="short" and="text" delimiter=", " delimiter-precedes-last="never"/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="author-full">
+    <names variable="author" delimiter=", ">
+      <name initialize-with=". " and="text" delimiter=", " delimiter-precedes-last="never"/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="issued-year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="n.d."/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="date-bib">
+    <group prefix="(" suffix=")">
+      <text macro="issued-year"/>
+    </group>
+  </macro>
+
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+
+  <macro name="container">
+    <group delimiter=", ">
+      <text variable="container-title" font-style="italic"/>
+      <text variable="volume"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <macro name="publisher">
+    <text variable="publisher"/>
+  </macro>
+
+  <macro name="access">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="doi:"/>
+      </if>
+      <else-if variable="URL">
+        <text variable="URL"/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-label"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter="; ">
+      <text variable="citation-label"/>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="false" entry-spacing="0" line-spacing="2">
+    <sort>
+      <key macro="author-bib"/>
+      <key macro="issued-year"/>
+      <key macro="title"/>
+    </sort>
+    <layout>
+      <group delimiter=" " display="right-inline">
+        <text macro="author-full" suffix="."/>
+        <text macro="date-bib" suffix="."/>
+        <text macro="title" suffix="."/>
+        <text macro="container" suffix="."/>
+        <text macro="publisher" suffix="."/>
+        <text macro="access" suffix="."/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phi-Regret and Multicalibration - Learning and Computation of Phi-Equilibria</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<style>
+:root{--paper:#fbfaf7;--ink:#171411;--muted:#6b635b;--rule:#d7d0c6;--soft:#f2efe8;--block:#eeeeee;--accent:#325d8a;--accent-dark:#173f64;--brown:#8a4c20}
+html{background:var(--paper);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,"Times New Roman",Times,serif;font-size:18px;line-height:1.58}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text-decoration:underline}.ref-link{display:inline-block;padding:0 .22em;border-radius:2px;background:#e8f1fb;color:#24527e;line-height:1.28}.ref-link:hover{background:#dcebf8;color:#173f64;text-decoration:none}.citation{color:#8a4c20}.citation:hover{color:#5f3213}.citation-wrap{position:relative}.citation-note{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:#8a4c20;font-size:.78rem;font-weight:400;line-height:1.35;text-align:left}.citation-note a{color:#8a4c20}.citation-note-key{font-weight:700}
+.site-masthead{max-width:780px;margin:0 auto;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
+.course-title{font-size:1.06rem;font-weight:700}.course-authors{margin-top:2px;color:var(--muted);font-size:.92rem}.top-links{display:flex;gap:14px;margin-top:10px;font-size:.9rem}
+.chapter-rail{position:fixed;top:112px;left:calc(50% - 630px);width:150px;padding:.2rem 0;border-left:1px solid var(--rule);font-size:.86rem;line-height:1.25}.chapter-rail a{display:block;padding:.32rem .3rem .32rem .75rem;color:var(--muted)}.chapter-rail a:hover{color:var(--accent-dark);text-decoration:none;background:#fffdf9}.chapter-rail-index{margin-bottom:.35rem;font-weight:700}.chapter-rail-link span{display:inline-block;width:1.45rem;color:var(--muted);font-variant-numeric:tabular-nums}.chapter-rail-link.is-current{color:var(--ink);font-weight:700;background:#fffdf9;border-left:3px solid var(--accent);margin-left:-2px}.chapter-breadcrumbs{display:grid;grid-template-columns:1fr auto 1fr;gap:.75rem;align-items:center;margin:0 0 .75rem;color:var(--muted);font-size:.88rem}.chapter-breadcrumbs a,.chapter-breadcrumbs span{min-width:0}.chapter-breadcrumbs a:last-child,.chapter-breadcrumbs span:last-child{text-align:right}.chapter-breadcrumb-current{color:var(--brown)}
+.page-shell{max-width:780px;margin:0 auto;padding:22px 24px 64px;position:relative}.lecture-title{margin:0 0 1.2rem;font-size:2.05rem;line-height:1.14;letter-spacing:0}
+.toc{margin:0 0 2rem;padding:.85rem 1rem;background:#fffdf9;border:1px solid var(--rule);font-size:.95rem}.toc ol{margin:0;padding-left:0;list-style:none}.toc li{margin:.12rem 0}.toc a{display:flex;align-items:baseline;gap:.45rem}.toc .toc-l1{margin-left:0}.toc .toc-l2{margin-left:1.1rem}.toc .toc-l3{margin-left:2.2rem;font-size:.92em}.toc-no{display:inline-block;flex:0 0 3rem;color:var(--muted);font-variant-numeric:tabular-nums;text-align:left}
+.lecture-content h1,.lecture-content h2,.lecture-content h3,.lecture-content h4{line-height:1.18;letter-spacing:0}.lecture-content h1{margin:2.2rem 0 .8rem;padding-top:.4rem;border-top:1px solid var(--rule);font-size:1.75rem}.lecture-content h2{margin:2rem 0 .65rem;font-size:1.38rem}.lecture-content h3{margin:1.55rem 0 .45rem;font-size:1.12rem}.secno{color:var(--muted);font-weight:400}
+.lecture-content p{margin:.72rem 0}.lecture-content ul,.lecture-content ol{padding-left:1.35rem}.lecture-content li{margin:.25rem 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.92em}.raw-block{margin:1rem 0;padding:.75rem 1rem;overflow-x:auto;background:#fffdf9;border:1px solid var(--rule);font-size:.9rem;line-height:1.45}.raw-block code{font-size:1em}
+.env{margin:1.15rem 0;padding:.8rem 1rem;border:1px solid #d8d8d8;border-radius:6px}.env.statement,.env.algorithm{background:var(--block)}.env.proof{background:transparent;border:0;border-left:3px solid #a8a098;border-radius:0;padding:.2rem 0 .2rem 1rem}.env-title{font-weight:700}.env.proof .env-title{font-style:italic;font-weight:600}.algorithm-subtitle{margin:.15rem 0 .55rem;color:var(--muted);font-style:italic}.pseudocode{--pseudo-indent:1.55rem;--pseudo-stroke:#aaa;font-size:.95em}.pseudo-line,.pseudo-math{position:relative;margin:.2rem 0;padding-left:calc(var(--indent) * var(--pseudo-indent) + .1rem)}.pseudo-line{min-height:1.35em}.pseudo-text{display:block}.pseudo-math{overflow-x:auto}.pseudo-math .katex-display{margin:.25rem 0}.pseudo-guide{position:absolute;top:-.22rem;bottom:-.22rem;left:calc((var(--guide) - .5) * var(--pseudo-indent));border-left:1px solid var(--pseudo-stroke)}.pseudo-guide-end{bottom:.45em}.pseudo-guide-end::after{content:"";position:absolute;left:-1px;bottom:0;width:.42rem;border-bottom:1px solid var(--pseudo-stroke)}
+.equation{position:relative;margin:1rem 0;overflow-x:auto;padding-right:3.5rem}.equation .katex-display{margin:.35rem 0}.eqno{position:absolute;right:.2rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+.rendered-figure{margin:1.25rem 0;text-align:center}.rendered-figure img{display:block;max-width:100%;height:auto;margin:0 auto}.figure-placeholder{margin:1.15rem 0;padding:.8rem 1rem;background:var(--soft);border:1px dashed var(--rule);color:var(--muted)}figcaption{margin-top:.5rem;color:var(--ink);text-align:left}.special-comment{margin:1rem 0;padding:.55rem .8rem .65rem 1rem;border-left:3px solid var(--rule);background:#fffdf9;color:var(--muted);font-size:.94rem}.special-comment::before{content:"\25B8";margin-right:.35rem;color:var(--muted)}.special-comment-text{display:inline}.special-comment-figure{display:block;max-width:100%;height:auto;margin:.55rem auto 0}
+.typst-fallback,.callout{margin:1rem 0;padding:.75rem 1rem;background:var(--soft);border-left:3px solid var(--rule)}.callout{font-size:.98rem}.footnote-ref{font-size:.68em;line-height:0;vertical-align:super}.footnote-ref a{color:var(--accent);text-decoration:none}.footnote{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.footnote-num{font-size:.78em;line-height:0;vertical-align:super;margin-right:.3em;color:var(--accent)}.bibliography,.endnotes{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.92rem}.bibliography h1,.endnotes h1{border-top:0;margin-top:0}.bibliography p{display:grid;grid-template-columns:5.4rem minmax(0,1fr);column-gap:.7rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.endnotes{display:none}.endnotes p{padding-left:1.7rem;text-indent:-1.7rem}.footnote-backref{display:inline-block;min-width:1.25rem;font-variant-numeric:tabular-nums}.bib-key{color:var(--ink);font-size:1em;font-variant-numeric:tabular-nums;text-align:left}.bib-entry{min-width:0}mark{background:#fff1a8;padding:0 .15em}.todo{background:#ffd39a;color:#4a2500;border-radius:2px}.missing-ref{color:#9b2f2f}
+@media(max-width:1220px){.citation-note,.footnote{display:none}.endnotes{display:block}.footnote-ref{margin-right:.1em}}
+@media(max-width:1180px){.chapter-rail{display:none}}
+@media(max-width:640px){body{font-size:16.5px}.site-masthead,.page-shell{padding-left:17px;padding-right:17px}.lecture-title{font-size:1.65rem}.chapter-breadcrumbs{grid-template-columns:1fr 1fr;margin-bottom:.85rem}.chapter-breadcrumb-current{display:none}}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, 
+{
+  delimiters:[
+    {left:'\\[',right:'\\]',display:true},
+    {left:'\\(',right:'\\)',display:false}
+  ],
+  throwOnError:false,
+  strict:'warn'
+}
+);"></script>
+</head>
+<body>
+<header class="site-masthead">
+<div class="course-title">Learning and Computation of Phi-Equilibria</div>
+<div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div>
+<nav class="top-links" aria-label="Page links">
+<a href="index.html">Index</a>
+<a href="../P4-multicalibration.pdf">PDF</a>
+</nav>
+</header>
+<nav class="chapter-rail" aria-label="Chapters">
+<a class="chapter-rail-index" href="index.html">Index</a>
+<a class="chapter-rail-link" href="P1-introduction.html"><span>1</span>Introduction</a>
+<a class="chapter-rail-link" href="P2-semi_separation.html"><span>2</span>Semi-Separation</a>
+<a class="chapter-rail-link" href="P3-phi-regret-learning.html"><span>3</span>Beyond Normal Form</a>
+<a class="chapter-rail-link is-current" href="P4-multicalibration.html" aria-current="page"><span>4</span>Multicalibration</a>
+<a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
+</nav>
+<main class="page-shell">
+<nav class="chapter-breadcrumbs" aria-label="Chapter navigation">
+<a href="P3-phi-regret-learning.html">Previous: Chapter 3</a>
+<a class="chapter-breadcrumb-current" href="index.html">Index / Chapter 4</a>
+<a href="P5-treeswap.html">Next: Chapter 5</a>
+</nav>
+<h1 class="lecture-title">Phi-Regret and Multicalibration</h1>
+<nav class="toc" aria-label="Contents"><ol>
+<li class="toc-l1"><a href="#sec:mcfromregret"><span class="toc-no">4.1</span>A Gordon-Greenwald-Marks result for multicalibration</a></li>
+<li class="toc-l1"><a href="#sec:regretfrommc"><span class="toc-no">4.2</span>From Multicalibration to Phi-regret minimization</a></li>
+<li class="toc-l2"><a href="#4-2-1-putting-the-two-reductions-together"><span class="toc-no">4.2.1</span>Putting the two reductions together</a></li>
+<li class="toc-l2"><a href="#4-2-2-linear-deviations"><span class="toc-no">4.2.2</span>Linear deviations</a></li>
+<li class="toc-l2"><a href="#4-2-3-rkhs-deviations"><span class="toc-no">4.2.3</span>RKHS deviations</a></li>
+</ol></nav>
+<article class="lecture-content">
+<p>The black-box reduction from \(\Phi\)-regret to online learning due to <span class="citation-wrap"><a class="citation" href="#bib-gordon08-no">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><a class="citation-note-key" href="#bib-gordon08-no">[GGM08]</a> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. International Conference on Machine Learning.</span></span> centers around the algorithmic primitive of fixed points. This chapter introduces a different route to the same destination that passes through forecasting <span class="citation-wrap"><a class="citation" href="#bib-farinaperdomo26-efficient">[FP26]</a><span class="citation-note"><a class="citation-note-key" href="#bib-farinaperdomo26-efficient">[FP26]</a> G. Farina and J. C. Perdomo. (2026). An Efficient Black-Box Reduction from Online Learning to Multicalibration, and a New Route to $Phi$-Regret Minimization. arXiv preprint <a href="https://arxiv.org/abs/2604.19592">arXiv:2604.19592</a>.</span></span>.</p>
+<p>At a high level, the moral of this section is the following, also depicted in <a class="ref-link" href="#fig-fig-mcroute">Figure 1</a>.</p>
+<div class="callout">One can construct a \(\Phi\)-regret minimizer starting from a powerful enough <em>multicalibrated forecaster</em> of the upcoming utility, and best respond to such forecast. In turn, the task of constructing such a forecaster admits a reduction to online learning in the style of Gordon-Greenwald-Marks, with  expected variational inequalites replacing expected fixed points as the nonlinear optimization primitive.</div><p>As we will show towards the end of the chapter, this forecasting-based reduction comes with algorithmic benefits that forego the need for complicated semiseparation (<mark class="todo">Ref Chapter 3</mark>). We note however that it is not known whether a forecasting-based approach can yield fast <em>offline</em> algorithms for \(\Phi\)-equilibrium computation (<em>cf.</em> <mark class="todo">Ref Chapter 2</mark>).</p>
+<figure class="rendered-figure" id="fig-fig-mcroute"><img src="figures/mcroute.svg" alt="The two forecasting reductions and their relation to the Gordon-Greenwald-Marks framework." style="width:80%"><figcaption><strong>Figure 1.</strong> The two forecasting reductions and their relation to the Gordon-Greenwald-Marks framework.</figcaption></figure>
+<h1 id="sec:mcfromregret"><span class="secno">4.1</span> A Gordon-Greenwald-Marks result for multicalibration</h1>
+<p>We start with online multicalibration. In every round \(t\), Nature reveals a context \(\mathbf{c}^{\left(t\right)} \in \mathcal{C}\). The learner outputs a distribution \(D^{\left(t\right)}\) over forecasts \(\mathbf{p}^{\left(t\right)} \in \mathcal{U} \subseteq \mathbb{R}^d\), and Nature then reveals the true utility vector \(\mathbf{u}^{\left(t\right)} \in \mathcal{U}\). Given test \(h : \mathcal{C} \times \mathcal{U} \to \mathbb{R}^d\), the calibration error against \(h\) is</p>
+<div class="equation" id="eq-eq-mcerr">\[\mathrm{MC\text{-}Err}^{\left(T\right)} \left(h\right) \coloneqq
+  \sum_{t=1}^T \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+    \left\langle h\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}^{\left(t\right)}\right), \mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)}\right\rangle
+  \right].\]<span class="eqno">(1)</span></div>
+<p>The forecasts are \(\mathcal{H}\)-multicalibrated if \(\mathrm{MC\text{-}Err}^{\left(T\right)} \left(h\right) = o\left(T\right)\) for every \(h \in \mathcal{H}\).</p>
+<p>As we show in <a class="ref-link" href="#statement-theorem-mcfromregret">Theorem 4.2</a>, multicalibration admits a black-box reduction to online learning in the style of <span class="citation-wrap"><a class="citation" href="#bib-gordon08-no">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><a class="citation-note-key" href="#bib-gordon08-no">[GGM08]</a> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. International Conference on Machine Learning.</span></span>. In the case of multicalibration, the nonlinear primitive is <em>not</em> fixed points, but rather <em>expected variational inequalities</em>, as defined next.<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Expected variational inequalities have appeared in the literature under different names <mark class="todo">finish</mark></span></p>
+<section class="env statement"><p><span class="env-title">Definition 4.1 <span>(Expected variational inequality)</span>.</span>&nbsp;&nbsp;Let \(S : \mathcal{U} \to \mathbb{R}^d\) be an operator and let \(\epsilon > 0\). An <em>\(\epsilon\)-solution</em> to the expected variational inequality induced by \(S\) is a distribution \(D\) over \(\mathcal{U}\) such that</p>
+<div class="equation" id="eq-eq-evi">\[\mathbb{E}_{\mathbf{p} \sim D} \left[ \left\langle S\left(\mathbf{p}\right), \mathbf{u} - \mathbf{p}\right\rangle \right] \le \epsilon \quad \forall \mathbf{u} \in \mathcal{U}.\]<span class="eqno">(2)</span></div>
+</section>
+<p>One way to parse (<a class="ref-link" href="#eq-eq-evi">2</a>) is as a randomized self-consistency condition. The distribution \(D\) may place mass on several forecasts; nevertheless, after averaging over that randomness, no possible utility vector \(\mathbf{u} \in \mathcal{U}\) has positive correlation with the residual direction \(S\left(\mathbf{p}\right)\) by more than \(\epsilon\). This is exactly what will make the regret analysis telescope. Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions; for our purposes, the important point is that EVIs are a standalone optimization primitive, just as fixed points were in the Gordon-Greenwald-Marks theorem from Chapter 1.</p>
+<p>Now suppose that we have an external-regret minimizer \(R_\mathcal{H}\) whose decision set is the class of tests \(\mathcal{H}\). In each round, it chooses a test \(h^{\left(t\right)} \in \mathcal{H}\); after the utility vector is revealed, it receives the linear utility</p>
+<div class="equation" id="eq-eq-testutility">\[g^{\left(t\right)}\left(h\right) \coloneqq
+  \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+    \left\langle h\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}^{\left(t\right)}\right), \mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)}\right\rangle
+  \right].\]<span class="eqno">(3)</span></div>
+<p>The reduction is as follows.</p>
+<section class="env algorithm"><div class="env-title">Algorithm 1 (Multicalibration from external regret)</div>
+<div class="pseudocode">
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>Input:</strong> An external regret minimizer \(R_\mathcal{H}\) for the test set \(\mathcal{H}\)</span></div>
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>function</strong> <code>NextForecast</code>(\(\mathbf{c}^{\left(t\right)}\)):</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Set \(h^{\left(t\right)} \coloneqq R_\mathcal{H}.\)<code>NextStrategy</code>\(\left(\right)\)</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Let \(D^{\left(t\right)}\) solve the EVI with \(S^{\left(t\right)}\left(\mathbf{p}\right) \coloneqq h^{\left(t\right)}\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}\right)\):</span></div>
+<div class="pseudo-math" style="--indent:2"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span>\[\mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+          \left\langle h^{\left(t\right)}\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}^{\left(t\right)}\right), \mathbf{u} - \mathbf{p}^{\left(t\right)}\right\rangle
+        \right] \le \epsilon^{\left(t\right)} \quad \forall \mathbf{u} \in \mathcal{U}\]</div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-text"><strong>return</strong> \(D^{\left(t\right)}\)</span></div>
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>function</strong> <code>ObserveUtility</code>(\(\mathbf{u}^{\left(t\right)}\)):</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-text">Feed the linear utility \(g^{\left(t\right)}\) in (<a class="ref-link" href="#eq-eq-testutility">3</a>) to \(R_\mathcal{H}\)</span></div>
+</div>
+</section>
+<section class="env statement" id="statement-theorem-mcfromregret"><p><span class="env-title">Theorem 4.2.</span>&nbsp;&nbsp;Let \(\mathrm{Reg}_\mathcal{H}^{\left(T\right)}\left(h\right)\) be the external regret of \(R_\mathcal{H}\) with respect to the sequence of utilities \(g^{\left(1\right)}, \dots, g^{\left(T\right)}\), and let \(\mathrm{EVI}^{\left(T\right)} \coloneqq \sum_{t=1}^T \epsilon^{\left(t\right)}\). Then the forecasts produced by the algorithm above satisfy</p>
+<div class="equation">\[\mathrm{MC\text{-}Err}^{\left(T\right)} \left(h\right) \le \mathrm{Reg}_\mathcal{H}^{\left(T\right)}\left(h\right) + \mathrm{EVI}^{\left(T\right)} \quad \forall h \in \mathcal{H}.\]<span class="eqno">(4)</span></div>
+</section>
+<section class="env proof"><p><span class="env-title">Proof.</span>&nbsp;&nbsp;The EVI condition is invoked at the realized utility vector \(\mathbf{u}^{\left(t\right)}\), so</p>
+<div class="equation">\[g^{\left(t\right)}\left(h^{\left(t\right)}\right) \le \epsilon^{\left(t\right)}.\]<span class="eqno">(5)</span></div>
+<p>Therefore, for any comparator test \(h \in \mathcal{H}\),</p>
+<div class="equation">\[\begin{aligned}\mathrm{MC\text{-}Err}^{\left(T\right)} \left(h\right) & = \sum_{t=1}^T g^{\left(t\right)}\left(h\right) \\
+                       & \le \sum_{t=1}^T \left(g^{\left(t\right)}\left(h\right) - g^{\left(t\right)}\left(h^{\left(t\right)}\right)\right) + \sum_{t=1}^T \epsilon^{\left(t\right)} \\
+                       & = \mathrm{Reg}_\mathcal{H}^{\left(T\right)}\left(h\right) + \mathrm{EVI}^{\left(T\right)}.\end{aligned}\]<span class="eqno">(6)</span></div>
+<p>Thus, sublinear regret over \(\mathcal{H}\), together with \(\sum^{\left(T\right)} \epsilon^{\left(t\right)} = o\left(T\right)\), gives sublinear multicalibration error.</p>
+</section>
+<p><strong>Necessity of EVIs.</strong> In a precise sense, EVIs are also <em>necessary</em>. Suppose we already had an efficient \(\mathcal{H}\)-multicalibrated forecaster. Fix a context \(\mathbf{c} \in \mathcal{C}\) and a test \(h \in \mathcal{H}\), and consider the EVI operator \(S\left(\mathbf{p}\right) = h\left(\mathbf{c}, \mathbf{p}\right)\). To solve this EVI, run the forecaster for \(T\) rounds with the same context \(\mathbf{c}^{\left(t\right)} = \mathbf{c}\). After it outputs \(D^{\left(t\right)}\), choose Nature&rsquo;s response as</p>
+<div class="equation" id="eq-eq-eviadversary">\[\mathbf{u}^{\left(t\right)} \in \operatorname{arg} \max_{\mathbf{u} \in \mathcal{U}} \left\langle \mathbf{u}, \mathbb{E}_{\mathbf{p} \sim D^{\left(t\right)}} \left[S\left(\mathbf{p}\right)\right]\right\rangle.\]<span class="eqno">(7)</span></div>
+<p>For any fixed \(\mathbf{u}^\star \in \mathcal{U}\), the choice in (<a class="ref-link" href="#eq-eq-eviadversary">7</a>) gives</p>
+<div class="equation">\[\mathbb{E}_{\mathbf{p} \sim D^{\left(t\right)}} \left[\left\langle S\left(\mathbf{p}\right), \mathbf{u}^{\left(t\right)} - \mathbf{p}\right\rangle\right]
+  \ge
+  \mathbb{E}_{\mathbf{p} \sim D^{\left(t\right)}} \left[\left\langle S\left(\mathbf{p}\right), \mathbf{u}^\star - \mathbf{p}\right\rangle\right].\]<span class="eqno">(8)</span></div>
+<p>Averaging the distributions \(D^{\left(1\right)}, \dots, D^{\left(T\right)}\) uniformly therefore produces a distribution \(D\) with</p>
+<div class="equation">\[\mathbb{E}_{\mathbf{p} \sim D} \left[\left\langle S\left(\mathbf{p}\right), \mathbf{u}^\star - \mathbf{p}\right\rangle\right]
+  \le \frac{\mathrm{MC\text{-}Err}^{\left(T\right)} \left(h\right)}{T}
+  \quad \forall \mathbf{u}^\star \in \mathcal{U}.\]<span class="eqno">(9)</span></div>
+<p>As \(T\) grows, multicalibration drives the right-hand side to \(0\). So an online multicalibrated forecaster gives a black-box EVI solver.</p>
+<h1 id="sec:regretfrommc"><span class="secno">4.2</span> From Multicalibration to Phi-regret minimization</h1>
+<p>We now turn the arrow around and use forecasting to make decisions. Let \(\mathcal{X} \subseteq \mathbb{R}^d\) be a compact convex action set, and let \(\mathcal{U} \subseteq \mathbb{R}^d\) be a compact convex set of possible utility vectors. A deviation class is a family \(\Phi \subseteq \left\{\phi : \mathcal{X} \to \mathcal{X}\right\}\). If the learner outputs distributions \(\mu^{\left(t\right)}\) over \(\mathcal{X}\), its \(\Phi\)-regret against a deviation \(\phi \in \Phi\) is</p>
+<div class="equation" id="eq-eq-phiregp4">\[\Phi\mathrm{Reg}^{\left(T\right)}\left(\phi\right) \coloneqq
+  \sum_{t=1}^T \mathbb{E}_{\mathbf{x}^{\left(t\right)} \sim \mu^{\left(t\right)}} \left[
+    \left\langle \phi\left(\mathbf{x}^{\left(t\right)}\right) - \mathbf{x}^{\left(t\right)}, \mathbf{u}^{\left(t\right)}\right\rangle
+  \right].\]<span class="eqno">(10)</span></div>
+<p>The reduction asks the forecaster to predict the next utility vector. Given a forecast \(\mathbf{p} \in \mathcal{U}\), define the deterministic best response</p>
+<div class="equation" id="eq-eq-bestresponse">\[\sigma\left(\mathbf{p}\right) \in \operatorname{arg} \max_{\mathbf{x} \in \mathcal{X}} \left\langle \mathbf{x}, \mathbf{p}\right\rangle,\]<span class="eqno">(11)</span></div>
+<p>with ties broken by a fixed rule. If the forecaster outputs a distribution \(D^{\left(t\right)}\) over forecasts \(\mathbf{p}^{\left(t\right)}\), the decision maker plays the pushforward distribution \(\mu^{\left(t\right)}\) induced by \(\mathbf{x}^{\left(t\right)} = \sigma\left(\mathbf{p}^{\left(t\right)}\right)\).</p>
+<p>What tests should the forecaster be calibrated against? For each deviation \(\phi \in \Phi\), define</p>
+<div class="equation" id="eq-eq-hphi">\[h_\phi\left(\mathbf{p}\right) \coloneqq \phi\left(\sigma\left(\mathbf{p}\right)\right) - \sigma\left(\mathbf{p}\right),
+  \qquad \quad
+  \mathcal{H}_\Phi \coloneqq \left\{h_\phi : \phi \in \Phi\right\}.\]<span class="eqno">(12)</span></div>
+<p>This definition is the whole reduction. The test \(h_\phi\) measures the direction in utility space in which the deviation \(\phi\) would improve over the best response to the forecast.</p>
+<section class="env algorithm"><div class="env-title">Algorithm 2 (\(\Phi\)-regret from multicalibration)</div>
+<div class="pseudocode">
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>Input:</strong> A forecaster over \(\mathcal{U}\) multicalibrated with respect to \(\mathcal{H}_\Phi\)</span></div>
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><code>NextStrategy</code>():</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Query the forecaster and receive a distribution \(D^{\left(t\right)}\) over forecasts \(\mathbf{p}^{\left(t\right)} \in \mathcal{U}\)</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-text"><strong>return</strong> the pushforward distribution \(\mu^{\left(t\right)}\) of \(\mathbf{x}^{\left(t\right)} = \sigma\left(\mathbf{p}^{\left(t\right)}\right)\)</span></div>
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><code>ObserveUtility</code>(\(\mathbf{u}^{\left(t\right)}\)):</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-text">Feed the realized utility vector \(\mathbf{u}^{\left(t\right)}\) to the forecaster</span></div>
+</div>
+</section>
+<section class="env statement" id="statement-theorem-phifrommc"><p><span class="env-title">Theorem 4.3.</span>&nbsp;&nbsp;If the forecaster in the algorithm above has multicalibration error \(\mathrm{MC\text{-}Err}^{\left(T\right)}\) with respect to \(\mathcal{H}_\Phi\), then the decision maker has</p>
+<div class="equation">\[\Phi\mathrm{Reg}^{\left(T\right)}\left(\phi\right) \le \mathrm{MC\text{-}Err}^{\left(T\right)}\left(h_\phi\right) \quad \forall \phi \in \Phi.\]<span class="eqno">(13)</span></div>
+<p>In particular, sublinear \(\mathcal{H}_\Phi\)-multicalibration implies sublinear \(\Phi\)-regret.</p>
+</section>
+<section class="env proof"><p><span class="env-title">Proof.</span>&nbsp;&nbsp;Fix any \(\phi \in \Phi\). Since \(\mu^{\left(t\right)}\) is the pushforward of \(D^{\left(t\right)}\) under \(\mathbf{p} \mapsto \sigma\left(\mathbf{p}\right)\),</p>
+<div class="equation">\[\begin{aligned}\Phi\mathrm{Reg}^{\left(T\right)}\left(\phi\right) & = \sum_{t=1}^T \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+                            \left\langle h_\phi \left(\mathbf{p}^{\left(t\right)}\right), \mathbf{u}^{\left(t\right)}\right\rangle
+                          \right] \\
+                        & = \sum_{t=1}^T \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+                            \left\langle h_\phi \left(\mathbf{p}^{\left(t\right)}\right), \mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)}\right\rangle
+                          \right] + \sum_{t=1}^T \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+                            \left\langle h_\phi \left(\mathbf{p}^{\left(t\right)}\right), \mathbf{p}^{\left(t\right)}\right\rangle
+                          \right].\end{aligned}\]<span class="eqno">(14)</span></div>
+<p>The first term is exactly \(\mathrm{MC\text{-}Err}^{\left(T\right)}\left(h_\phi\right)\). The second term is nonpositive, because</p>
+<div class="equation">\[\left\langle h_\phi \left(\mathbf{p}\right), \mathbf{p}\right\rangle
+    = \left\langle \phi\left(\sigma\left(\mathbf{p}\right)\right), \mathbf{p}\right\rangle - \left\langle \sigma\left(\mathbf{p}\right), \mathbf{p}\right\rangle
+    \le 0\]<span class="eqno">(15)</span></div>
+<p>by the definition of \(\sigma\left(\mathbf{p}\right)\) as a maximizer over \(\mathcal{X}\).</p>
+</section>
+<p>The theorem is useful because the complexity of the required calibration class scales with the complexity of the deviation class. If \(\Phi\) contains only constant deviations, then \(\mathcal{H}_\Phi\) is a class of constant best-response gaps and we recover external regret. If \(\Phi\) grows toward all maps \(\mathcal{X} \to \mathcal{X}\), then \(\mathcal{H}_\Phi\) becomes a strong calibration class and the result approaches the classical connection between calibration and swap regret.</p>
+<p>The contextual version is identical. If contexts \(\mathbf{c}^{\left(t\right)}\) are observed before play and deviations have the form \(\phi : \mathcal{C} \times \mathcal{X} \to \mathcal{X}\), then we define</p>
+<div class="equation">\[h_\phi \left(\mathbf{c}, \mathbf{p}\right) \coloneqq \phi\left(\mathbf{c}, \sigma\left(\mathbf{p}\right)\right) - \sigma\left(\mathbf{p}\right).\]<span class="eqno">(16)</span></div>
+<p>Multicalibration with respect to these tests gives contextual \(\Phi\)-regret.</p>
+<h2 id="4-2-1-putting-the-two-reductions-together"><span class="secno">4.2.1</span> Putting the two reductions together</h2>
+<p>Combining <a class="ref-link" href="#statement-theorem-mcfromregret">Theorem 4.2</a> and <a class="ref-link" href="#statement-theorem-phifrommc">Theorem 4.3</a> gives the promised route from external regret to \(\Phi\)-regret. Set \(\mathcal{H} = \mathcal{H}_\Phi\). Run the multicalibration algorithm as the forecaster inside the best-response algorithm. Then, for every \(\phi \in \Phi\),</p>
+<div class="equation" id="eq-eq-combinedroute">\[\Phi\mathrm{Reg}^{\left(T\right)}\left(\phi\right)
+  \le \mathrm{MC\text{-}Err}^{\left(T\right)}\left(h_\phi\right)
+  \le \mathrm{Reg}_\mathcal{H}^{\left(T\right)}\left(h_\phi\right) + \mathrm{EVI}^{\left(T\right)}.\]<span class="eqno">(17)</span></div>
+<p>Thus the burden of \(\Phi\)-regret minimization shifts to two primitives:</p>
+<ol>
+<li>no-regret learning over the induced test class \(\mathcal{H}_\Phi\); and</li>
+<li>solving EVIs over the forecast domain \(\mathcal{U}\).</li>
+</ol>
+<p>The key distinction from the Gordon-Greenwald-Marks path is that we do <em>not</em> need to optimize over valid deviations directly. We only need a regret minimizer over tests that contain the maps \(h_\phi\). This extra flexibility is what makes the approach especially clean for large structured deviation classes.</p>
+<h2 id="4-2-2-linear-deviations"><span class="secno">4.2.2</span> Linear deviations</h2>
+<p>As an illustration, consider linear deviations \(\phi\left(\mathbf{x}\right) = \mathbf{M} \mathbf{x}\) over a convex compact set \(\mathcal{X} \subseteq \mathbb{R}^d\). The classical GGM approach asks us to understand the geometry of all matrices \(\mathbf{M}\) satisfying \(\mathbf{M} \mathcal{X} \subseteq \mathcal{X}\), and then compute fixed points of the matrices selected by the regret minimizer. That geometry can be difficult.</p>
+<p>The multicalibration route permits a relaxation. From (<a class="ref-link" href="#eq-eq-hphi">12</a>),</p>
+<div class="equation">\[h_\phi\left(\mathbf{p}\right) = \left(\mathbf{M} - \mathbf{I}\right) \sigma\left(\mathbf{p}\right).\]<span class="eqno">(18)</span></div>
+<p>If every valid linear endomorphism has spectral norm at most \(S\), then each test above lies in a Frobenius ball of radius on the order of \(\sqrt{d}\left(S + 1\right)\). Instead of learning over valid endomorphisms, we can learn over the larger class</p>
+<div class="equation">\[\mathcal{H} \coloneqq \left\{ \mathbf{p} \mapsto \mathbf{A} \sigma\left(\mathbf{p}\right) : \left\lVert \mathbf{A}\right\rVert_F \le \rho \right\},\]<span class="eqno">(19)</span></div>
+<p>where \(\rho\) is chosen large enough to contain all tests \(h_\phi\). This larger class is easy: external regret over a Euclidean ball is handled by projected gradient descent. Indeed, the utility sent to the matrix learner at time \(t\) is linear:</p>
+<div class="equation">\[g^{\left(t\right)}\left(\mathbf{A}\right)
+  =
+  \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+    \left\langle \mathbf{A} \sigma\left(\mathbf{p}^{\left(t\right)}\right), \mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)}\right\rangle
+  \right]
+  =
+  \left\langle \mathbf{A}, \mathbb{E}_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[
+      \left(\mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)}\right) \sigma\left(\mathbf{p}^{\left(t\right)}\right)^\top
+    \right]\right\rangle_{F}.\]<span class="eqno">(20)</span></div>
+<p>Consequently, if \(\left\lVert \mathbf{x}\right\rVert_2 \le B\) for \(\mathbf{x} \in \mathcal{X}\) and \(\left\lVert \mathbf{u}\right\rVert_2 \le L\) for \(\mathbf{u} \in \mathcal{U}\), the standard projected-gradient bound gives \(O\left(B L S \sqrt{d T}\right)\) linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-wrap"><a class="citation" href="#bib-daskalakis25-efficient">Daskalakis, Farina, Fishelson, Pipis and Schneider [Das+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-daskalakis25-efficient">[Das+25]</a> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></span>, while avoiding semi-separation altogether.</p>
+<h2 id="4-2-3-rkhs-deviations"><span class="secno">4.2.3</span> RKHS deviations</h2>
+<p>The same idea extends beyond finite-dimensional linear classes. Suppose that the deviation functions \(\phi : \mathcal{C} \times \mathcal{X} \to \mathcal{X}\) lie in a vector-valued reproducing kernel Hilbert space with matrix-valued kernel</p>
+<div class="equation">\[\Gamma\left(\left(\mathbf{c}, \mathbf{x}\right), \left(\mathbf{c}', \mathbf{x}'\right)\right) \in \mathbb{R}^{d \times d}.\]<span class="eqno">(21)</span></div>
+<p>For the contextual reduction, the relevant tests are</p>
+<div class="equation">\[h_\phi \left(\mathbf{c}, \mathbf{p}\right) = \phi\left(\mathbf{c}, \sigma\left(\mathbf{p}\right)\right) - \sigma\left(\mathbf{p}\right).\]<span class="eqno">(22)</span></div>
+<p>These tests also lie in an RKHS. Indeed, the first term is represented by composing the deviation kernel with the best-response map, while the second term is represented by the linear kernel on \(\sigma\left(\mathbf{p}\right)\). The resulting kernel is</p>
+<div class="equation" id="eq-eq-rkhskernel">\[\Gamma'\left(\left(\mathbf{c}, \mathbf{p}\right), \left(\mathbf{c}', \mathbf{p}'\right)\right)
+  \coloneqq
+  \Gamma\left(\left(\mathbf{c}, \sigma\left(\mathbf{p}\right)\right), \left(\mathbf{c}', \sigma\left(\mathbf{p}'\right)\right)\right)
+  + \sigma\left(\mathbf{p}\right) \sigma\left(\mathbf{p}'\right)^\top.\]<span class="eqno">(23)</span></div>
+<p>So, if we have an online learner over the RKHS ball associated with \(\Gamma'\), <a class="ref-link" href="#statement-theorem-mcfromregret">Theorem 4.2</a> supplies a multicalibrated forecaster, and <a class="ref-link" href="#statement-theorem-phifrommc">Theorem 4.3</a> turns it into a no-\(\Phi\)-regret algorithm. This recovers low-degree polynomial deviations as a special case and also covers infinite-dimensional kernels, such as Gaussian kernels, where the fixed-point route does not have an obvious finite-dimensional endomorphism geometry to exploit.</p>
+<p>The moral is that forecasting separates the two hard-looking parts of \(\Phi\)-regret. Best response converts forecasts to actions; multicalibration certifies that no deviation can systematically exploit the forecast errors; and EVIs provide the self-consistency condition that makes the forecaster black-box reducible to ordinary external regret.</p>
+<section class="bibliography" id="bibliography"><h1>Bibliography for this chapter</h1>
+<p id="bib-gordon08-no"><span class="bib-key">[GGM08]</span><span class="bib-entry">G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. International Conference on Machine Learning.</span></p>
+<p id="bib-farinaperdomo26-efficient"><span class="bib-key">[FP26]</span><span class="bib-entry">G. Farina and J. C. Perdomo. (2026). An Efficient Black-Box Reduction from Online Learning to Multicalibration, and a New Route to $Phi$-Regret Minimization. arXiv preprint <a href="https://arxiv.org/abs/2604.19592">arXiv:2604.19592</a>.</span></p>
+<p id="bib-daskalakis25-efficient"><span class="bib-key">[Das+25]</span><span class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></p>
+</section>
+<section class="endnotes" id="footnotes"><h1>Footnotes</h1>
+<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a>. Expected variational inequalities have appeared in the literature under different names <mark class="todo">finish</mark></p>
+</section>
+</article>
+</main>
+</body>
+</html>

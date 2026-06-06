@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <title>Compact alphanumeric labels, surname in-text</title>
+    <id>https://example.com/styles/compact-alphanumeric-labels-intext</id>
+    <link href="https://example.com/styles/compact-alphanumeric-labels-intext" rel="self"/>
+    <category citation-format="label"/>
+    <updated>2026-06-06T00:00:00+00:00</updated>
+  </info>
+
+  <macro name="author-bib">
+    <names variable="author" delimiter=", ">
+      <name form="short" and="text" delimiter=", " delimiter-precedes-last="never"/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="issued-year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="n.d."/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="title">
+    <text variable="title"/>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-label"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter="; ">
+      <text variable="citation-label"/>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="false" entry-spacing="0" line-spacing="2">
+    <sort>
+      <key macro="author-bib"/>
+      <key macro="issued-year"/>
+      <key macro="title"/>
+    </sort>
+    <layout>
+      <group delimiter=" " display="right-inline">
+        <text macro="author-bib" suffix="."/>
+        <text macro="issued-year" prefix="(" suffix=")."/>
+        <text macro="title" suffix="."/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

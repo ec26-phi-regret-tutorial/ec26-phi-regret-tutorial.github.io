@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beyond Normal Form - Learning and Computation of Phi-Equilibria</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<style>
+:root{--paper:#fbfaf7;--ink:#171411;--muted:#6b635b;--rule:#d7d0c6;--soft:#f2efe8;--block:#eeeeee;--accent:#325d8a;--accent-dark:#173f64;--brown:#8a4c20}
+html{background:var(--paper);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--paper);font-family:Georgia,"Times New Roman",Times,serif;font-size:18px;line-height:1.58}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text-decoration:underline}.ref-link{display:inline-block;padding:0 .22em;border-radius:2px;background:#e8f1fb;color:#24527e;line-height:1.28}.ref-link:hover{background:#dcebf8;color:#173f64;text-decoration:none}.citation{color:#8a4c20}.citation:hover{color:#5f3213}.citation-wrap{position:relative}.citation-note{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:#8a4c20;font-size:.78rem;font-weight:400;line-height:1.35;text-align:left}.citation-note a{color:#8a4c20}.citation-note-key{font-weight:700}
+.site-masthead{max-width:780px;margin:0 auto;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
+.course-title{font-size:1.06rem;font-weight:700}.course-authors{margin-top:2px;color:var(--muted);font-size:.92rem}.top-links{display:flex;gap:14px;margin-top:10px;font-size:.9rem}
+.chapter-rail{position:fixed;top:112px;left:calc(50% - 630px);width:150px;padding:.2rem 0;border-left:1px solid var(--rule);font-size:.86rem;line-height:1.25}.chapter-rail a{display:block;padding:.32rem .3rem .32rem .75rem;color:var(--muted)}.chapter-rail a:hover{color:var(--accent-dark);text-decoration:none;background:#fffdf9}.chapter-rail-index{margin-bottom:.35rem;font-weight:700}.chapter-rail-link span{display:inline-block;width:1.45rem;color:var(--muted);font-variant-numeric:tabular-nums}.chapter-rail-link.is-current{color:var(--ink);font-weight:700;background:#fffdf9;border-left:3px solid var(--accent);margin-left:-2px}.chapter-breadcrumbs{display:grid;grid-template-columns:1fr auto 1fr;gap:.75rem;align-items:center;margin:0 0 .75rem;color:var(--muted);font-size:.88rem}.chapter-breadcrumbs a,.chapter-breadcrumbs span{min-width:0}.chapter-breadcrumbs a:last-child,.chapter-breadcrumbs span:last-child{text-align:right}.chapter-breadcrumb-current{color:var(--brown)}
+.page-shell{max-width:780px;margin:0 auto;padding:22px 24px 64px;position:relative}.lecture-title{margin:0 0 1.2rem;font-size:2.05rem;line-height:1.14;letter-spacing:0}
+.toc{margin:0 0 2rem;padding:.85rem 1rem;background:#fffdf9;border:1px solid var(--rule);font-size:.95rem}.toc ol{margin:0;padding-left:0;list-style:none}.toc li{margin:.12rem 0}.toc a{display:flex;align-items:baseline;gap:.45rem}.toc .toc-l1{margin-left:0}.toc .toc-l2{margin-left:1.1rem}.toc .toc-l3{margin-left:2.2rem;font-size:.92em}.toc-no{display:inline-block;flex:0 0 3rem;color:var(--muted);font-variant-numeric:tabular-nums;text-align:left}
+.lecture-content h1,.lecture-content h2,.lecture-content h3,.lecture-content h4{line-height:1.18;letter-spacing:0}.lecture-content h1{margin:2.2rem 0 .8rem;padding-top:.4rem;border-top:1px solid var(--rule);font-size:1.75rem}.lecture-content h2{margin:2rem 0 .65rem;font-size:1.38rem}.lecture-content h3{margin:1.55rem 0 .45rem;font-size:1.12rem}.secno{color:var(--muted);font-weight:400}
+.lecture-content p{margin:.72rem 0}.lecture-content ul,.lecture-content ol{padding-left:1.35rem}.lecture-content li{margin:.25rem 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.92em}.raw-block{margin:1rem 0;padding:.75rem 1rem;overflow-x:auto;background:#fffdf9;border:1px solid var(--rule);font-size:.9rem;line-height:1.45}.raw-block code{font-size:1em}
+.env{margin:1.15rem 0;padding:.8rem 1rem;border:1px solid #d8d8d8;border-radius:6px}.env.statement,.env.algorithm{background:var(--block)}.env.proof{background:transparent;border:0;border-left:3px solid #a8a098;border-radius:0;padding:.2rem 0 .2rem 1rem}.env-title{font-weight:700}.env.proof .env-title{font-style:italic;font-weight:600}.algorithm-subtitle{margin:.15rem 0 .55rem;color:var(--muted);font-style:italic}.pseudocode{--pseudo-indent:1.55rem;--pseudo-stroke:#aaa;font-size:.95em}.pseudo-line,.pseudo-math{position:relative;margin:.2rem 0;padding-left:calc(var(--indent) * var(--pseudo-indent) + .1rem)}.pseudo-line{min-height:1.35em}.pseudo-text{display:block}.pseudo-math{overflow-x:auto}.pseudo-math .katex-display{margin:.25rem 0}.pseudo-guide{position:absolute;top:-.22rem;bottom:-.22rem;left:calc((var(--guide) - .5) * var(--pseudo-indent));border-left:1px solid var(--pseudo-stroke)}.pseudo-guide-end{bottom:.45em}.pseudo-guide-end::after{content:"";position:absolute;left:-1px;bottom:0;width:.42rem;border-bottom:1px solid var(--pseudo-stroke)}
+.equation{position:relative;margin:1rem 0;overflow-x:auto;padding-right:3.5rem}.equation .katex-display{margin:.35rem 0}.eqno{position:absolute;right:.2rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+.rendered-figure{margin:1.25rem 0;text-align:center}.rendered-figure img{display:block;max-width:100%;height:auto;margin:0 auto}.figure-placeholder{margin:1.15rem 0;padding:.8rem 1rem;background:var(--soft);border:1px dashed var(--rule);color:var(--muted)}figcaption{margin-top:.5rem;color:var(--ink);text-align:left}.special-comment{margin:1rem 0;padding:.55rem .8rem .65rem 1rem;border-left:3px solid var(--rule);background:#fffdf9;color:var(--muted);font-size:.94rem}.special-comment::before{content:"\25B8";margin-right:.35rem;color:var(--muted)}.special-comment-text{display:inline}.special-comment-figure{display:block;max-width:100%;height:auto;margin:.55rem auto 0}
+.typst-fallback,.callout{margin:1rem 0;padding:.75rem 1rem;background:var(--soft);border-left:3px solid var(--rule)}.callout{font-size:.98rem}.footnote-ref{font-size:.68em;line-height:0;vertical-align:super}.footnote-ref a{color:var(--accent);text-decoration:none}.footnote{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.footnote-num{font-size:.78em;line-height:0;vertical-align:super;margin-right:.3em;color:var(--accent)}.bibliography,.endnotes{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid var(--rule);font-size:.92rem}.bibliography h1,.endnotes h1{border-top:0;margin-top:0}.bibliography p{display:grid;grid-template-columns:5.4rem minmax(0,1fr);column-gap:.7rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.endnotes{display:none}.endnotes p{padding-left:1.7rem;text-indent:-1.7rem}.footnote-backref{display:inline-block;min-width:1.25rem;font-variant-numeric:tabular-nums}.bib-key{color:var(--ink);font-size:1em;font-variant-numeric:tabular-nums;text-align:left}.bib-entry{min-width:0}mark{background:#fff1a8;padding:0 .15em}.todo{background:#ffd39a;color:#4a2500;border-radius:2px}.missing-ref{color:#9b2f2f}
+@media(max-width:1220px){.citation-note,.footnote{display:none}.endnotes{display:block}.footnote-ref{margin-right:.1em}}
+@media(max-width:1180px){.chapter-rail{display:none}}
+@media(max-width:640px){body{font-size:16.5px}.site-masthead,.page-shell{padding-left:17px;padding-right:17px}.lecture-title{font-size:1.65rem}.chapter-breadcrumbs{grid-template-columns:1fr 1fr;margin-bottom:.85rem}.chapter-breadcrumb-current{display:none}}
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, 
+{
+  delimiters:[
+    {left:'\\[',right:'\\]',display:true},
+    {left:'\\(',right:'\\)',display:false}
+  ],
+  throwOnError:false,
+  strict:'warn'
+}
+);"></script>
+</head>
+<body>
+<header class="site-masthead">
+<div class="course-title">Learning and Computation of Phi-Equilibria</div>
+<div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div>
+<nav class="top-links" aria-label="Page links">
+<a href="index.html">Index</a>
+<a href="../P3-phi-regret-learning.pdf">PDF</a>
+</nav>
+</header>
+<nav class="chapter-rail" aria-label="Chapters">
+<a class="chapter-rail-index" href="index.html">Index</a>
+<a class="chapter-rail-link" href="P1-introduction.html"><span>1</span>Introduction</a>
+<a class="chapter-rail-link" href="P2-semi_separation.html"><span>2</span>Semi-Separation</a>
+<a class="chapter-rail-link is-current" href="P3-phi-regret-learning.html" aria-current="page"><span>3</span>Beyond Normal Form</a>
+<a class="chapter-rail-link" href="P4-multicalibration.html"><span>4</span>Multicalibration</a>
+<a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
+</nav>
+<main class="page-shell">
+<nav class="chapter-breadcrumbs" aria-label="Chapter navigation">
+<a href="P2-semi_separation.html">Previous: Chapter 2</a>
+<a class="chapter-breadcrumb-current" href="index.html">Index / Chapter 3</a>
+<a href="P4-multicalibration.html">Next: Chapter 4</a>
+</nav>
+<h1 class="lecture-title">Beyond Normal Form</h1>
+<nav class="toc" aria-label="Contents"><ol>
+<li class="toc-l1"><a href="#3-1-expected-fixed-points"><span class="toc-no">3.1</span>Expected fixed points</a></li>
+</ol></nav>
+<article class="lecture-content">
+<p><mark class="todo">my eventual intention is to merge the semi-separation chapter into this chapter. there is a lot of overlapping content -brian</mark></p>
+<p>In this section, we will show how to construct \(\Phi\)-regret minimizers for strategy sets \(\mathcal{X}\) that are more complex than the simplex. To do so, we first define the sets of deviations that we work with.</p>
+<section class="env statement" id="statement-def-low-degree"><p><span class="env-title">Definition 3.1.</span>&nbsp;&nbsp;Given a feature map \(q : \mathcal{X} \to \mathbb{R}^{k}\), the set of deviations \(\Phi^q\) is the set of all maps \(\phi: \mathcal{X} \to \mathcal{X}\) that can be expressed as the matrix-vector product \(\mathbf{K}\left(\phi\right) q\left(\mathbf{x}\right)\) for some matrix \(\mathbf{K} \in \mathbb{R}^{d \times k}\) and vector \(\mathbf{c} \in \mathbb{R}^d\).</p>
+</section>
+<section class="env statement"><p><span class="env-title">Example 3.2.</span>&nbsp;&nbsp;If \(q\left(\mathbf{x}\right) = \left(1, \mathbf{x}\right) \in \mathbb{R}^{d+1}\), then \(\Phi^q\) is the set of all linear maps \(\phi : \mathcal{X} \to \mathcal{X}\). More generally, if \(q\left(\mathbf{x}\right) = \mathbf{x}^{\otimes \le \ell} \in \mathbb{R}^k\) where \(k = \binom{d}{\le \ell}\) is the set of all monomials in \(\mathbf{x}\) up to degree \(\ell\), then \(\Phi^q\) is the set of all degree-\(\ell\) polynomials in \(\mathbf{x}\).</p>
+</section>
+<p>In general, we will describe algorithms that have complexity polynomial in the dimension \(k\). Note that, in the special case of degree-\(\ell\) polynomials, these algorithms will therefore run in time polynomial in \(d^\ell\).</p>
+<p>In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic. Intuitively, both problems stem from the same root cause:</p>
+<p>1. <em>Fixed-point oracle</em>: Finding a fixed point of a continuous function \(\phi : \mathcal{X} \to \mathcal{X}\) is \(PPAD\)-complete, and therefore is unlikely to be possible efficiently. Even more generally, if \(\phi\) contains <em>discontinuous</em> maps, \(\phi\) may not even admit any approximate fixed points!</p>
+<p>2. <em>External regret minimizer for \(\Phi^q\)</em>: External regret minimization implies the ability to (approximately) perform linear optimization over \(\Phi^q\). But linear optimization over \(\Phi^q\) can be hard, in two ways: </p>
+<ol>
+<li>If \(\Phi^q\) contains nonlinear functions, then that this optimization problem is \(NP\)-hard even when \(\mathcal{X}\) is the hypercube \(\left[0, 1\right]^d\) <span class="citation-wrap"><a class="citation" href="#bib-zhang24-efficient">[Zha+24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-zhang24-efficient">[Zha+24]</a> B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient $Phi$-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. Advances in Neural Information Processing Systems.</span></span>.</li>
+</ol>
+<ol>
+<li>Even if \(\Phi^q\) is the set of linear endomorphisms, if \(\mathcal{X}\) itself is only available via an oracle (e.g., a separation oracle), then optimizing a linear function over \(\Phi^q\) can in general be hard  <span class="citation-wrap"><a class="citation" href="#bib-daskalakis25-efficient">[Das+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-daskalakis25-efficient">[Das+25]</a> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></span>. <mark class="todo">why is the citation not showing?</mark></li>
+</ol>
+<section class="env statement"><p><span class="env-title">Remark 3.3.</span>&nbsp;&nbsp;When \(\mathcal{X}\) is represented by an explicit set of linear constraints, i.e., \(\mathcal{X} = \left\{ \mathbf{x} : \mathbf{A} \mathbf{x} \le \mathbf{b} \right\}\), the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span class="citation-wrap"><a class="citation" href="#bib-zhang25-expected">[Zha+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-zhang25-expected">[Zha+25]</a> B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. International Conference on Machine Learning.</span></span>. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</p>
+</section>
+<section class="env statement"><p><span class="env-title">Remark 3.4.</span>&nbsp;&nbsp;For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation <span class="citation-wrap"><a class="citation" href="#bib-zhang23-mediator">[ZFS24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-zhang23-mediator">[ZFS24]</a> B. H. Zhang, G. Farina and T. Sandholm. (2024). Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games. International Conference on Learning Representations.</span></span>. We will not detail it here, though.</p>
+</section>
+<p>We will show how to circumvent both of the above issues. We start with the fixed point computation.</p>
+<h1 id="3-1-expected-fixed-points"><span class="secno">3.1</span> Expected fixed points</h1>
+<p>Given that computing a fixed point is generally hard (when \(\phi\) is continuous but nonlinear) or even impossible (when \(\phi\) is discontinuous), we need a different notion of fixed point. Fortunately, by examining the proof of the Gordon--Greenwald--Marks framework, it turns out that a weaker condition suffices.</p>
+<section class="env statement"><p><span class="env-title">Definition 3.5.</span>&nbsp;&nbsp;Given a function \(\phi : \mathcal{X} \to \mathcal{X}\), an \(\epsilon\)-approximate <em>expected fixed point</em> of \(\phi\) is a distribution<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</span> \(\mu \in \Delta\left(\mathcal{X}\right)\) such that \(\left\lVert \mathbb{E}_{\mathbf{x} \sim \mu} \left[ \phi\left(\mathbf{x}\right) - \mathbf{x} \right]\right\rVert_1 \le \epsilon.\)</p>
+</section>
+<p>As we will see shortly, expected fixed points fix both problems with fixed point computation: an (approximate) expected fixed point always exists, and moreover, there is an efficient algorithm for computing one!</p>
+<p><mark class="todo">continue from here -brian</mark></p>
+<section class="bibliography" id="bibliography"><h1>Bibliography for this chapter</h1>
+<p id="bib-zhang24-efficient"><span class="bib-key">[Zha+24]</span><span class="bib-entry">B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient $Phi$-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. Advances in Neural Information Processing Systems.</span></p>
+<p id="bib-daskalakis25-efficient"><span class="bib-key">[Das+25]</span><span class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></p>
+<p id="bib-zhang25-expected"><span class="bib-key">[Zha+25]</span><span class="bib-entry">B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. International Conference on Machine Learning.</span></p>
+<p id="bib-zhang23-mediator"><span class="bib-key">[ZFS24]</span><span class="bib-entry">B. H. Zhang, G. Farina and T. Sandholm. (2024). Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games. International Conference on Learning Representations.</span></p>
+</section>
+<section class="endnotes" id="footnotes"><h1>Footnotes</h1>
+<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a>. Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</p>
+</section>
+</article>
+</main>
+</body>
+</html>
