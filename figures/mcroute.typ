@@ -1,11 +1,11 @@
 #import "../meta/gabri_notes.typ": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 
-#set page(width: auto, height: auto, margin: 2pt, fill: none)
+#set page(width: auto, height: auto, margin: (x: 10pt, y: 0pt), fill: none)
 #set text(font: "New Computer Modern", size: 10.2pt)
 
 #let body(
-  ggm: [Gordon et al. (2008)],
+  ggm: text(size: 9pt)[Gordon, Greenwald, Marks [GGM08]],
   mc_from_regret: [Section 4.1],
   regret_from_mc: [Section 4.2],
 ) = pad(top: 1cm, bottom: 2mm, diagram(
