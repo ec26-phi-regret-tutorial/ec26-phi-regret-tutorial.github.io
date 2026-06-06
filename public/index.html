@@ -95,18 +95,14 @@
     }
 
     .page-shell {
-      max-width: 1040px;
+      max-width: 920px;
       margin: 0 auto;
       padding: 34px 24px 72px;
       position: relative
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 230px;
-      gap: 34px;
-      align-items: start;
-      margin-bottom: 2.2rem
+      margin-bottom: 1.35rem
     }
 
     .eyebrow {
@@ -189,11 +185,33 @@
       margin: .2rem 0 .75rem
     }
 
+    .side-panel dl {
+      display: grid;
+      grid-template-columns: 4.6rem minmax(0, 1fr);
+      gap: .35rem .65rem;
+      margin: 0 0 .85rem
+    }
+
+    .side-panel dt {
+      color: var(--muted)
+    }
+
+    .side-panel dd {
+      margin: 0;
+      color: var(--ink)
+    }
+
+    .side-panel h1 {
+      margin: 1rem 0 .45rem;
+      font-size: 1rem;
+      line-height: 1.18
+    }
+
     .actions {
       display: flex;
       gap: .55rem;
       flex-wrap: wrap;
-      margin-top: 1.25rem
+      margin-top: 1.15rem
     }
 
     .button {
@@ -266,10 +284,16 @@
       border-left: 3px solid var(--rule)
     }
 
+    .reading-panel {
+      margin: 1.25rem 0 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule)
+    }
+
     .chapter-list {
       list-style: none;
       padding: 0;
-      margin: 1rem 0 0
+      margin: .7rem 0 0
     }
 
     .chapter-list li {
@@ -297,18 +321,35 @@
       line-height: 1.38
     }
 
+    .support-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1.8rem;
+      margin-top: 1.15rem
+    }
+
+    .support-grid .organizers {
+      grid-template-columns: 1fr;
+      gap: .35rem;
+      margin: .6rem 0 0
+    }
+
+    .support-grid .organizer {
+      margin: 0
+    }
+
     .schedule {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 1rem 0
+      grid-template-columns: 1fr;
+      gap: .7rem;
+      margin: .75rem 0 0
     }
 
     .session {
-      padding: .85rem 1rem;
-      border: 1px solid var(--rule);
-      border-radius: 6px;
-      background: #fffdf9
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent
     }
 
     .session h2 {
@@ -335,7 +376,22 @@
     }
 
     .organizer {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      align-items: center;
+      gap: .65rem;
       padding: .2rem 0
+    }
+
+    .organizer-photo {
+      display: block;
+      width: 48px;
+      height: 48px;
+      border: 1px solid #fffdf9;
+      border-radius: 50%;
+      background: var(--soft);
+      box-shadow: 0 0 0 1px var(--rule);
+      object-fit: cover
     }
 
     .organizer strong {
@@ -349,10 +405,38 @@
       line-height: 1.35
     }
 
+    .organizer .organizer-links {
+      display: flex;
+      gap: .7rem;
+      margin-top: .12rem;
+      flex-wrap: wrap
+    }
+
+    .organizer .organizer-links a {
+      font-size: .86rem;
+      line-height: 1.32
+    }
+
     .footer-note {
       margin-top: 2.4rem;
       color: var(--muted);
       font-size: .9rem
+    }
+
+    @media(min-width:1240px) {
+      .page-shell {
+        margin-left: max(24px, calc((100vw - 1240px) / 2));
+        margin-right: 0
+      }
+
+      .details-sidenote {
+        position: absolute;
+        top: 8.95rem;
+        left: calc(804px + 1cm);
+        width: 250px;
+        margin: 0;
+        font-size: .88rem
+      }
     }
 
     @media(max-width:1180px) {
@@ -376,16 +460,13 @@
         padding-right: 17px
       }
 
-      .hero {
-        display: block
-      }
-
       .lecture-title {
         font-size: 2rem
       }
 
-      .side-panel {
-        margin-top: 1.4rem
+      .side-panel,
+      .details-sidenote {
+        margin-top: 1.35rem
       }
 
       .event-meta dl {
@@ -393,6 +474,7 @@
       }
 
       .schedule,
+      .support-grid,
       .organizers {
         grid-template-columns: 1fr
       }
@@ -414,90 +496,45 @@
 <body>
   <main class="page-shell">
     <section class="hero">
-      <div>
-        <p class="eyebrow">EC&rsquo;26 tutorial</p>
-        <h1 class="lecture-title">Learning and Computation of \(\Phi\)-Equilibria</h1>
-        <section id="organizers">
-          <div class="organizers">
-            <p class="organizer"><strong>Ioannis Anagnostides</strong><span>Carnegie Mellon
-                University</span><span>ianagnos@cs.cmu.edu</span></p>
-            <p class="organizer"><strong>Gabriele Farina</strong><span>Massachusetts Institute of
-                Technology</span><span>gfarina@mit.edu</span></p>
-            <p class="organizer"><strong>Brian Hu Zhang</strong><span>Massachusetts Institute of
-                Technology</span><span>zhangbh@csail.mit.edu</span></p>
-          </div>
-        </section>
-        <p class="subtitle">A two-hour workshop on no-regret learning in games, \(\Phi\)-regret, and the algorithmic
-          frontier of equilibrium computation in complex strategy spaces.</p>
-        <div class="event-meta">
-          <dl>
-            <dt>Date</dt>
-            <dd>June 15, 2026</dd>
-            <dt>Time</dt>
-            <dd>11:00am&ndash;1:00pm ET</dd>
-            <dt>Event</dt>
-            <dd>EC&rsquo;26 tutorial</dd>
-            <dt>Audience</dt>
-            <dd>Algorithmic game theory, online learning, optimization, reinforcement learning, and theoretical computer
-              science.</dd>
-          </dl>
-        </div>
-        <div class="actions">
-          <a class="button primary" href="P1-introduction.html">Start Reading</a>
-          <a class="button" href="#schedule">Schedule</a>
-          <a class="button" href="#notes">Tutorial Notes</a>
-        </div>
-      </div>
-      <aside class="side-panel" aria-label="Prerequisites">
-        <p><strong>Prerequisites.</strong> Basic game theory and introductory online learning.</p>
-        <p>No prior knowledge of \(\Phi\)-regret or \(\Phi\)-equilibria is assumed.</p>
-        <p><strong>Keywords.</strong> Multiagent learning, regret minimization, equilibrium computation, swap regret.
-        </p>
-      </aside>
+      <p class="eyebrow">ACM EC&rsquo;26 tutorial</p>
+      <h1 class="lecture-title">Learning and Computation of \(\Phi\)-Equilibria</h1>
     </section>
     <article class="lecture-content">
-      <section id="overview">
-        <h1>Overview</h1>
-        <p>No-regret learning in games sits at the intersection of game theory and online learning. This tutorial
-          focuses on the framework of \(\Phi\)-regret and its close connection to \(\Phi\)-equilibria. The framework
-          measures a learner against a chosen class of strategy deviations \(\Phi\), interpolating between external
-          regret, swap regret, and richer notions of hindsight rationality.</p>
-        <div class="callout">The goal is to give a unified algorithmic view of recent advances in learning and
-          computation of \(\Phi\)-equilibria, especially for complex and high-dimensional strategy spaces where
-          classical swap regret is too expensive and external regret is too weak.</div>
-        <p>The tutorial begins with the foundational Gordon-Greenwald-Marks reduction and then turns to newer tools:
-          semi-separation, expected fixed points, multicalibration, and TreeSwap-style reductions for large action
-          spaces.</p>
-      </section>
-      <section id="schedule">
-        <h1>Schedule</h1>
-        <div class="schedule">
-          <section class="session">
-            <h2>Session 1</h2>
-            <span class="session-time">11:00&ndash;11:45am ET</span>
-            <p><strong>Foundations and the Gordon-Greenwald-Marks framework.</strong></p>
-            <ul>
-              <li>External and swap regret; connections to correlated equilibrium.</li>
-              <li>\(\Phi\)-regret and \(\Phi\)-equilibria.</li>
-              <li>Fixed points, deviations, and the classical black-box reduction.</li>
-            </ul>
-          </section>
-          <section class="session">
-            <h2>Session 2</h2>
-            <span class="session-time">12:00&ndash;12:45pm ET</span>
-            <p><strong>Recent advances at the frontier of tractability.</strong></p>
-            <ul>
-              <li>Linear and poly-dimensional swap regret.</li>
-              <li>Expected fixed points, multicalibration, and profile swap regret.</li>
-              <li>TreeSwap, lower bounds, and open problems.</li>
-            </ul>
-          </section>
-        </div>
-      </section>
-      <section id="notes">
+      <div id="details" class="support-grid">
+        <section id="overview" aria-label="Tutorial summary">
+          <p>No-regret learning in games sits at the intersection of game theory and online learning. This tutorial
+            focuses on \(\Phi\)-regret and its connection to \(\Phi\)-equilibria, from the
+            Gordon-Greenwald-Marks reduction to newer tools such as semi-separation, expected fixed points,
+            multicalibration, and TreeSwap-style reductions.</p>
+        </section>
+        <section id="organizers" aria-label="Organizer contact information">
+          <div class="organizers">
+            <p class="organizer"><img class="organizer-photo" src="organizers/ioannis-anagnostides.png" width="48"
+                height="48" alt="" loading="lazy" decoding="async"><span><strong>Ioannis
+                  Anagnostides</strong><span>Carnegie Mellon University</span><span class="organizer-links"><a
+                    class="email" href="mailto:ianagnos@cs.cmu.edu">email</a><a
+                    href="https://www.andrew.cmu.edu/user/ianagnos/">webpage</a></span></span></p>
+            <p class="organizer"><img class="organizer-photo" src="organizers/gabriele-farina.jpg" width="48"
+                height="48" alt="" loading="lazy" decoding="async"><span><strong>Gabriele
+                  Farina</strong><span>MIT</span>
+                <span class="organizer-links"><a class="email" href="mailto:gfarina@mit.edu">email</a><a
+                    href="https://www.mit.edu/~gfarina/">webpage</a></span></span>
+            </p>
+            <p class="organizer"><img class="organizer-photo" src="organizers/brian-hu-zhang.jpg" width="48" height="48"
+                alt="" loading="lazy" decoding="async"><span><strong>Brian Hu Zhang</strong><span>MIT</span><span
+                  class="organizer-links"><a class="email" href="mailto:zhangbh@csail.mit.edu">email</a><a
+                    href="https://brianhzhang.github.io">webpage</a></span></span></p>
+          </div>
+        </section>
+      </div>
+      <div class="actions">
+        <a class="button primary" href="P1-introduction.html">Start Reading</a>
+        <a class="button" href="#notes">Tutorial Notes</a>
+        <a class="button" href="#details">Details</a>
+      </div>
+      <section id="notes" class="reading-panel">
         <h1>Tutorial Notes</h1>
-        <p>The notes below are being prepared for the EC&rsquo;26 tutorial. They are meant to be readable as standalone
-          chapters and also as a guide through the tutorial&rsquo;s two sessions.</p>
+        <p></p>
         <ol class="chapter-list">
           <li><span class="chapter-no">1</span><span><a class="chapter-title"
                 href="P1-introduction.html">Introduction</a><span class="chapter-desc">Regret, equilibrium notions,
@@ -516,7 +553,33 @@
                 minimization for large action spaces.</span></span></li>
         </ol>
       </section>
-      <p class="footer-note">These tutorial notes are draft material prepared for the EC&rsquo;26 tutorial.
+      <aside class="side-panel details-sidenote" aria-label="Tutorial details">
+        <dl>
+          <dt>Date</dt>
+          <dd>June 15, 2026</dd>
+          <dt>Time</dt>
+          <dd>11:00am&ndash;1:00pm ET</dd>
+          <dt>Event</dt>
+          <dd>EC&rsquo;26 tutorial</dd>
+        </dl>
+        <p><strong>Prerequisites.</strong> Basic game theory and introductory online learning.</p>
+        <p>No prior knowledge of \(\Phi\)-regret or \(\Phi\)-equilibria is assumed.</p>
+        <h1>Sessions</h1>
+        <div class="schedule">
+          <section class="session">
+            <h2>Session 1</h2>
+            <span class="session-time">11:00&ndash;11:45am ET</span>
+            <p><strong>Foundations and the Gordon-Greenwald-Marks framework.</strong></p>
+          </section>
+          <section class="session">
+            <h2>Session 2</h2>
+            <span class="session-time">12:00&ndash;12:45pm ET</span>
+            <p><strong>Recent advances at the frontier of tractability.</strong></p>
+          </section>
+        </div>
+      </aside>
+      <p class="footer-note">These tutorial notes are draft material prepared for the EC&rsquo;26 tutorial that has not
+        undergone formal peer review.
         Feedback and typo reports are welcome.</p>
     </article>
   </main>
