@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile Swap Regret, Manipulability, Response-Based Approachability - Learning and Computation of Phi-Equilibria</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<style>
+@font-face{font-family:"Frutiger Notes";src:url("Frutiger_bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"New Computer Modern";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"New Computer Modern";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"New Computer Modern";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"New Computer Modern";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"NewComputerModern10";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
+:root{--paper:#fbfaf7;--ink:#171411;--muted:#6b635b;--rule:#d7d0c6;--soft:#f2efe8;--block:#eeeeee;--accent:#325d8a;--accent-dark:#173f64;--brown:#8a4c20;--serif:"New Computer Modern","NewComputerModern 10","NewComputerModern10","New Computer Modern 10","Computer Modern Serif","Latin Modern Roman",Georgia,"Times New Roman",Times,serif;--page-total:828px;--rail-width:180px;--rail-gutter:2cm;--rail-left:max(24px,calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))}
+html{background:var(--paper);scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--serif);font-size:18px;line-height:1.58}
+h1,h2,h3,h4,strong,b,.env-title,.algorithm-label,.chapter-kicker,.course-title,.course-event,.chapter-rail-heading,.chapter-rail-tool,.chapter-rail-link.is-current,.citation-note-key{font-family:"Frutiger Notes",var(--serif)}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text-decoration:underline}.ref-link{display:inline-block;padding:0 .22em;border-radius:2px;background:#e8f1fb;color:#24527e;line-height:1.28}.ref-link:hover{background:#dcebf8;color:#173f64;text-decoration:none}.citation{color:#8a4c20}.citation:hover{color:#5f3213}.citation-wrap{position:relative}.citation-note{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:#8a4c20;font-size:.78rem;font-weight:400;line-height:1.35;text-align:left}.citation-note a{color:#8a4c20}.citation-note-key{font-weight:700}
+.site-masthead{max-width:780px;margin:0 auto;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
+.course-title{font-size:1.06rem;font-weight:700}.course-title-link{display:block!important;padding:0!important;color:var(--ink)!important}.course-title-link:hover{color:var(--accent)!important;text-decoration:none!important;background:transparent!important}.course-authors{margin-top:2px;color:var(--muted);font-size:.92rem}.top-links{display:flex;gap:14px;margin-top:10px;font-size:.9rem}
+.course-sidenote{float:right;clear:right;width:210px;margin:.1rem -234px 1rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.course-sidenote .course-title{color:var(--ink);font-size:.85rem;line-height:1.25}.course-sidenote .course-authors{font-size:.78rem}.chapter-citation-sidenote{float:right;clear:right;width:210px;margin:.1rem -234px 1.2rem 24px;color:var(--muted);font-size:.72rem;line-height:1.28;text-align:left}.chapter-citation-pdf{display:block;margin:0 0 .55rem!important;padding:0!important;color:var(--accent)!important;font-family:"Frutiger Notes",var(--serif);font-size:.72rem;font-weight:700}.chapter-citation-pdf:hover{color:var(--accent-dark)!important;background:transparent!important}.chapter-citation-details{margin:0}.chapter-citation-title{display:inline-flex;align-items:center;gap:.28rem;cursor:pointer;color:var(--brown);font-family:"Frutiger Notes",var(--serif);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-citation-title::before{content:"";width:0;height:0;border-top:.28em solid transparent;border-bottom:.28em solid transparent;border-left:.42em solid currentColor;transition:transform .16s ease}.chapter-citation-details[open] .chapter-citation-title::before{transform:rotate(90deg)}.chapter-citation-title::-webkit-details-marker{display:none}.chapter-citation-title::marker{content:""}.chapter-citation-title:hover{color:#5f3213}.chapter-citation-sidenote pre{margin:.35rem 0 0;padding:.45rem .5rem;overflow-x:auto;background:#fffdf9;border-left:2px solid var(--rule);white-space:pre-wrap}.chapter-citation-sidenote code{font-size:.72rem;line-height:1.25}
+.chapter-rail{position:fixed;top:32px;left:var(--rail-left);bottom:24px;width:180px;padding:.2rem 0 1rem;border-left:1px solid var(--rule);font-size:.84rem;line-height:1.25;overflow-y:auto;scrollbar-width:thin}.chapter-rail-course{margin:0 0 .7rem;padding:0 .3rem .75rem .75rem;border-bottom:1px solid var(--rule)}.course-event{margin:0 0 .28rem;color:var(--brown);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-rail-course .course-title{color:var(--ink);font-size:.84rem;line-height:1.25}.chapter-rail-course .course-authors{margin-top:.28rem;color:var(--muted);font-size:.76rem;line-height:1.28}.chapter-rail-tools{display:flex;gap:.55rem;margin:.55rem 0 0;padding:0}.chapter-rail-tool{display:inline!important;padding:0!important;color:var(--accent)!important;font-weight:700}.chapter-rail-heading{margin:.1rem 0 .35rem;padding:0 .3rem 0 .75rem;color:var(--ink);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-rail-section-heading{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule);color:var(--muted)}.chapter-rail a{display:block;padding:.32rem .3rem .32rem .75rem;color:var(--muted)}.chapter-rail a:hover{color:var(--accent-dark);text-decoration:none;background:#fffdf9}.chapter-rail-link span{display:inline-block;width:1.45rem;color:var(--muted);font-variant-numeric:tabular-nums}.chapter-rail-link.is-current{color:var(--ink);font-weight:700;background:#fffdf9;border-left:3px solid var(--accent);margin-left:-2px}.chapter-section-link{display:grid!important;grid-template-columns:2.55rem minmax(0,1fr);align-items:baseline;font-size:.78rem}.chapter-section-no{color:var(--muted);font-variant-numeric:tabular-nums}.chapter-section-title{min-width:0}.chapter-section-l2{padding-left:1.25rem!important}.chapter-section-l3{padding-left:1.75rem!important;font-size:.74rem}.chapter-section-link.is-active{color:var(--ink);background:#fffdf9;border-left:3px solid var(--brown);margin-left:-2px}
+.page-shell{max-width:780px;margin:0 auto;padding:30px 24px 64px;position:relative}.chapter-kicker{margin:0 0 .25rem;color:var(--brown);font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.lecture-title{display:inline-block;max-width:100%;margin:0 0 calc(1.85rem + 2cm);padding-bottom:.32rem;border-bottom:4px solid #000;font-size:2.65rem;line-height:1.06;letter-spacing:0}
+.toc{margin:0 0 2rem;padding:.85rem 1rem;background:#fffdf9;border:1px solid var(--rule);font-size:.95rem}.toc ol{margin:0;padding-left:0;list-style:none}.toc li{margin:.12rem 0}.toc a{display:grid;grid-template-columns:3rem minmax(0,1fr);align-items:baseline}.toc .toc-l1{margin-left:0}.toc .toc-l2{margin-left:1.1rem}.toc .toc-l3{margin-left:2.2rem;font-size:.92em}.toc-no{color:var(--muted);font-variant-numeric:tabular-nums;text-align:left}.toc-title{min-width:0}
+.lecture-content h1,.lecture-content h2,.lecture-content h3,.lecture-content h4{line-height:1.18;letter-spacing:0}.lecture-content h1,.lecture-content h2,.lecture-content h3{position:relative}.lecture-content h1::before,.lecture-content h2::before,.lecture-content h3::before{content:"";position:absolute;left:-1.05rem;top:.18em;bottom:.16em;width:4px;background:#bdb7ad}.lecture-content h2::before{width:3px;background:#c8c2b9}.lecture-content h3::before{width:2px;background:#d1cbc3}.lecture-content h1{margin:2.2rem 0 .8rem;padding-top:.15rem;font-size:1.75rem}.lecture-content h2{margin:2rem 0 .65rem;font-size:1.38rem}.lecture-content h3{margin:1.55rem 0 .45rem;font-size:1.12rem}.secno{color:var(--muted);font-weight:400}
+.lecture-content p{margin:.72rem 0}.lecture-content ul,.lecture-content ol{padding-left:1.35rem}.lecture-content li{margin:.25rem 0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.92em}.raw-block{margin:1rem 0;padding:.75rem 1rem;overflow-x:auto;background:#fffdf9;border:1px solid var(--rule);font-size:.9rem;line-height:1.45}.raw-block code{font-size:1em}
+.env{margin:1.1rem 0;padding:.42rem .85rem;border:1px solid #d8d8d8;border-radius:3px}.env.statement{background:var(--block)}.env.algorithm{padding:.15rem 0 .45rem;background:transparent;border:0;border-radius:0}.env.proof{background:transparent;border:0;border-left:1.5px solid #a8a098;border-radius:0;padding:.16rem 0 .16rem .85rem}.env-title{font-weight:700}.env.algorithm .env-title{margin:0 0 .45rem;padding:.38rem 0 .42rem;border-top:1.5px solid #1f1f1f;border-bottom:1.5px solid #1f1f1f;font-size:.98em;font-weight:400;line-height:1.28}.algorithm-label{font-weight:700}.algorithm-caption{font-weight:400}.env.proof .env-title{font-family:var(--serif);font-style:italic;font-weight:400}.algorithm-subtitle{margin:.15rem 0 .55rem;color:var(--muted);font-style:italic}.pseudocode{--pseudo-indent:1.42rem;--pseudo-stroke:#252525;margin:.1rem 0 0;padding:.12rem 0 .08rem;border-bottom:1.5px solid #1f1f1f;font-size:.94em;line-height:1.36}.pseudo-line,.pseudo-math{position:relative;margin:0;padding-left:calc(var(--indent) * var(--pseudo-indent) + .18rem)}.pseudo-line{min-height:1.32em;padding-top:.11rem;padding-bottom:.11rem}.pseudo-text{display:block;max-width:100%;text-indent:-.04rem}.pseudo-text strong{font-weight:700}.pseudo-math{overflow-x:auto;padding-top:.08rem;padding-bottom:.12rem}.pseudo-math .katex-display{margin:.16rem 0}.pseudo-guide{position:absolute;top:-.12rem;bottom:-.12rem;left:calc((var(--guide) - .52) * var(--pseudo-indent));border-left:1.25px solid var(--pseudo-stroke)}.pseudo-guide-end{bottom:.58em}.pseudo-guide-end::after{content:"";position:absolute;left:-1.25px;bottom:0;width:.48rem;border-bottom:1.25px solid var(--pseudo-stroke)}
+.equation{box-sizing:border-box;position:relative;margin:1rem 0;overflow-x:auto;padding-right:3.5rem}.equation.is-overwide{clear:right}.equation .katex-display{margin:.35rem 0}.eqno{position:absolute;right:.2rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+.rendered-figure{position:relative;margin:1.25rem 0;text-align:center}.rendered-figure img{display:block;max-width:100%;height:auto;margin:0 auto}.figure-placeholder{margin:1.15rem 0;padding:.8rem 1rem;background:var(--soft);border:1px dashed var(--rule);color:var(--muted)}figcaption{margin-top:.5rem;color:var(--ink);text-align:left}.special-comment{margin:1rem 0;padding:.55rem .8rem .65rem 1rem;border-left:3px solid var(--rule);background:#fffdf9;color:var(--muted);font-size:.94rem}.special-comment::before{content:"\25B8";margin-right:.35rem;color:var(--muted)}.special-comment-text{display:inline}.special-comment-figure{display:block;max-width:100%;height:auto;margin:.55rem auto 0}
+.typst-fallback,.callout{margin:1rem 0;padding:.75rem 1rem;background:var(--soft);border-left:3px solid var(--rule)}.callout{font-size:.98rem}.footnote-ref{font-size:.68em;line-height:0;vertical-align:super}.footnote-ref a{color:var(--accent);text-decoration:none}.footnote{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.footnote-num{font-size:.78em;line-height:0;vertical-align:super;margin-right:.3em;color:var(--accent)}.bibliography,.endnotes{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid var(--rule)}.bibliography{font-size:16px}.endnotes{font-size:.92rem}.bibliography h1,.endnotes h1{border-top:0;margin-top:0}.bibliography p{display:grid;grid-template-columns:5.4rem minmax(0,1fr);column-gap:.7rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.endnotes{display:none}.endnotes p{display:grid;grid-template-columns:1.75rem minmax(0,1fr);column-gap:.4rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.footnote-backref{display:inline-block;font-variant-numeric:tabular-nums;text-align:right}.footnote-backref::after{content:".";color:var(--muted)}.footnote-body{min-width:0}.bib-key{color:var(--ink);font-size:1em;font-variant-numeric:tabular-nums;text-align:left}.bib-entry{min-width:0}mark{background:#fff1a8;padding:0 .15em}.todo{background:#ffd39a;color:#4a2500;border-radius:2px}.missing-ref{color:#9b2f2f}
+@media(max-width:1220px){.citation-note,.footnote,.course-sidenote{display:none}.chapter-citation-sidenote{float:none;clear:both;width:auto;margin:.75rem 0 2rem;color:var(--muted);font-size:.78rem}.chapter-citation-sidenote pre{max-width:100%}.chapter-citation-sidenote code{font-size:.76rem}.endnotes{display:block}.footnote-ref{margin-right:.1em}}
+@media(min-width:1260px){.equation.is-overwide{width:calc(100% + 234px);overflow-x:visible}.rendered-figure figcaption{position:absolute;top:0;left:calc(100% + 24px);width:210px;margin-top:0;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}}
+@media(max-width:1259px){.equation.is-overwide{display:flex;align-items:center;gap:.5rem;overflow-x:auto;padding-right:0}.equation.is-overwide .katex-display{flex:0 0 auto}.equation.is-overwide .eqno{position:static;flex:0 0 auto;padding-left:.35rem;transform:none}}
+@media(min-width:1261px){.toc{display:none}}
+@media(max-width:1260px){.chapter-rail{display:none}}
+@media(max-width:900px){.lecture-content h1::before,.lecture-content h2::before,.lecture-content h3::before{display:none}}
+@media(max-width:640px){body{font-size:16.5px}.site-masthead,.page-shell{padding-left:17px;padding-right:17px}.lecture-title{font-size:2.12rem;line-height:1.08}}
+</style>
+<script>
+function markOverwideEquations(){
+  document.querySelectorAll(".equation").forEach(function(eq){
+    eq.classList.remove("is-overwide");
+    var math = eq.querySelector(".katex-display");
+    if (!math) return;
+    var eqno = eq.querySelector(".eqno");
+    var numberWidth = eqno ? eqno.getBoundingClientRect().width + 12 : 0;
+    var available = eq.clientWidth - numberWidth;
+    var needed = Math.max(math.scrollWidth, math.getBoundingClientRect().width);
+    if (needed > available + 2) eq.classList.add("is-overwide");
+  });
+}
+window.markOverwideEquations = markOverwideEquations;
+window.addEventListener("resize", markOverwideEquations);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(markOverwideEquations);
+}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, 
+{
+  delimiters:[
+    {left:'\\[',right:'\\]',display:true},
+    {left:'\\(',right:'\\)',display:false}
+  ],
+  throwOnError:false,
+  strict:'warn'
+}
+);requestAnimationFrame(window.markOverwideEquations);"></script>
+</head>
+<body>
+<nav class="chapter-rail" aria-label="Chapters">
+<div class="chapter-rail-course"><div class="course-event">ACM EC&rsquo;26 Tutorial</div><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
+<div class="chapter-rail-heading">Chapters</div>
+<a class="chapter-rail-link" href="P1-introduction.html"><span>1</span>Introduction</a>
+<a class="chapter-rail-link" href="P2-semi_separation.html"><span>2</span>Semi-Separation</a>
+<a class="chapter-rail-link" href="P3-phi-regret-learning.html"><span>3</span>Beyond Normal Form</a>
+<a class="chapter-rail-link" href="P4-multicalibration.html"><span>4</span>Multicalibration</a>
+<a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
+<a class="chapter-rail-link is-current" href="P6-profile.html" aria-current="page"><span>6</span>Profile Swap</a>
+<div class="chapter-rail-heading chapter-rail-section-heading">This Chapter</div>
+<a class="chapter-section-link chapter-section-l1" href="#6-1-setup" data-section-link="6-1-setup"><span class="chapter-section-no">6.1</span><span class="chapter-section-title">Setup</span></a>
+<a class="chapter-section-link chapter-section-l1" href="#6-2-profile-swap-regret-and-non-manipulability" data-section-link="6-2-profile-swap-regret-and-non-manipulability"><span class="chapter-section-no">6.2</span><span class="chapter-section-title">Profile swap regret and non-manipulability</span></a>
+<a class="chapter-section-link chapter-section-l2" href="#6-2-1-manipulability-against-a-dynamic-optimizer" data-section-link="6-2-1-manipulability-against-a-dynamic-optimizer"><span class="chapter-section-no">6.2.1</span><span class="chapter-section-title">Manipulability against a dynamic optimizer</span></a>
+<a class="chapter-section-link chapter-section-l1" href="#6-3-reducing-to-an-approachability-problem" data-section-link="6-3-reducing-to-an-approachability-problem"><span class="chapter-section-no">6.3</span><span class="chapter-section-title">Reducing to an approachability problem</span></a>
+<a class="chapter-section-link chapter-section-l1" href="#6-4-response-based-approachability" data-section-link="6-4-response-based-approachability"><span class="chapter-section-no">6.4</span><span class="chapter-section-title">Response-based approachability</span></a>
+</nav>
+<main class="page-shell">
+<div class="chapter-kicker">Chapter 6</div>
+<h1 class="lecture-title">Profile Swap Regret, Manipulability, Response-Based Approachability</h1>
+<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="../P6-profile.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-6,
+  author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
+  title = {Chapter 6: Profile Swap Regret, Manipulability, Response-Based Approachability},
+  booktitle = {Learning and Computation of Phi-Equilibria},
+  note = {Chapter 6 of the ACM EC 2026 tutorial notes},
+  year = {2026},
+  url = {P6-profile.html}
+}</code></pre></details></aside>
+<nav class="toc" aria-label="Contents"><ol>
+<li class="toc-l1"><a href="#6-1-setup"><span class="toc-no">6.1</span><span class="toc-title">Setup</span></a></li>
+<li class="toc-l1"><a href="#6-2-profile-swap-regret-and-non-manipulability"><span class="toc-no">6.2</span><span class="toc-title">Profile swap regret and non-manipulability</span></a></li>
+<li class="toc-l2"><a href="#6-2-1-manipulability-against-a-dynamic-optimizer"><span class="toc-no">6.2.1</span><span class="toc-title">Manipulability against a dynamic optimizer</span></a></li>
+<li class="toc-l1"><a href="#6-3-reducing-to-an-approachability-problem"><span class="toc-no">6.3</span><span class="toc-title">Reducing to an approachability problem</span></a></li>
+<li class="toc-l1"><a href="#6-4-response-based-approachability"><span class="toc-no">6.4</span><span class="toc-title">Response-based approachability</span></a></li>
+</ol></nav>
+<article class="lecture-content">
+<p>In this chapter, we introduce the notion of <em>profile swap regret</em>, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees <em>non-manipulability</em>&mdash;in a sense that will be formalized&mdash;against a dynamic optimizer. What&rsquo;s more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-arunachaleswaran25-profile">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-arunachaleswaran25-profile">[Aru+25]</a> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider and B. Sivan. (2025). Swap Regret and Correlated Equilibria Beyond Normal-Form Games. Conference on Economics and Computation (EC).</span></span>, who also provided the first efficient algorithm. In what follows, we present the approach of <span class="citation-wrap"><a class="citation" href="#bib-anagnostides26-swap">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a><span class="citation-note"><a class="citation-note-key" href="#bib-anagnostides26-swap">[Ana+26]</a> I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. Conference on Learning Theory (COLT).</span></span>, which in turn relies on the response-based approachability algorithm of <span class="citation-wrap"><a class="citation" href="#bib-bernstein15-approachability">Bernstein and Shimkin [BS15]</a><span class="citation-note"><a class="citation-note-key" href="#bib-bernstein15-approachability">[BS15]</a> A. Bernstein and N. Shimkin. (2015). Response-Based Approachability with Applications to Generalized No-Regret Problems. Journal of Machine Learning Research.</span></span>.</p>
+<h1 id="6-1-setup"><span class="secno">6.1</span> Setup</h1>
+<p>We operate in the usual online linear optimization setting. The learner picks strategies from a convex and compact strategy set \(\mathcal{X} \subset \mathbb{R}^d\). At every round \(t \in \left[T\right]\), the learner first selects a strategy \(\mathbf{x}^{(t)} \in \mathcal{X}\); the adversary selects a utility vector \(\mathbf{u}^{(t)} \in \mathcal{U} \subseteq \mathbb{R}^d\); then the learner receives utility \(\left\langle \mathbf{x}^{(t)}, \mathbf{u}^{(t)}\right\rangle\), and observes \(\mathbf{u}^{(t)}\) as feedback. We make the standard normalization assumption \(\left\lvert \left\langle \mathbf{x}, \mathbf{u}\right\rangle\right\rvert \le 1\) for all \(\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}.\) In what follows, for a utility vector \(\mathbf{u} \in \mathcal{U}\), we define the best-response map \(b(\mathbf{u}) \in \operatorname*{\operatorname{arg}\,max}_{\mathbf{x} \in \mathcal{X}} \left\langle \mathbf{x}, \mathbf{u}\right\rangle,\) with ties broken arbitrarily.</p>
+<p><strong>Linear swap regret.</strong> We first recall the benchmark of linear swap regret. An affine map \(\phi: \mathcal{X} \to \mathbb{R}^d\) is an <em>endomorphism</em> of \(\mathcal{X}\) if \(\phi(\mathcal{X}) \subseteq \mathcal{X}\). We denote by \(\mathrm{End}(\mathcal{X})\) the set of affine endomorphisms. We write each \(\phi \in \mathrm{End}(\mathcal{X})\) as \(\phi(\mathbf{x}) = \mathbf{M} \mathbf{x} + va.\) The <em>linear swap regret</em> of the learner after \(T\) rounds is</p>
+<div class="equation">\[\mathrm{LinearSwapReg}^{\left(T\right)}
+  \coloneqq
+  \max_{\phi \in \mathrm{End}\left(\mathcal{X}\right)}
+  \sum_{t=1}^T \left\langle \phi\left(\mathbf{x}^{\left(t\right)}\right), \mathbf{u}^{\left(t\right)}\right\rangle
+  -
+  \sum_{t=1}^T \left\langle \mathbf{x}^{\left(t\right)}, \mathbf{u}^{\left(t\right)}\right\rangle.\]<span class="eqno">(1)</span></div>
+<p>This is a natural relaxation of (full) swap regret: instead of allowing arbitrary maps, the performance of the learner is compared against affine endomorphisms. In this case, the algorithm of <span class="citation-wrap"><a class="citation" href="#bib-gordon08-no">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><a class="citation-note-key" href="#bib-gordon08-no">[GGM08]</a> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. International Conference on Machine Learning.</span></span> reduces linear swap regret to external regret over the \(d(d+1)\)-dimensional set deviations. This implies an online algorithm with linear swap regret growing as \(O(d \sqrt{T})\), which is information-theoretically optimal&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-anagnostides26-swap">[Ana+26]</a><span class="citation-note"><a class="citation-note-key" href="#bib-anagnostides26-swap">[Ana+26]</a> I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. Conference on Learning Theory (COLT).</span></span>. On the other hand, the algorithm of&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-gordon08-no">Gordon, Greenwald and Marks [GGM08]</a></span> is computationally inefficient&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-daskalakis25-efficient">[Das+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-daskalakis25-efficient">[Das+25]</a> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></span>. This lecture will cover an approachability framework that circumvents this barrier.</p>
+<p><strong>Correlated strategy profiles.</strong> A basic object in the approachability formulation is the <em>correlated strategy profile (CSP)</em>. Specifically, for a realized pair \((\mathbf{x}^{(t)}, \mathbf{u}^{(t)})\), we define \(\kappa^{(t)} \coloneqq (\mathbf{u}^{(t)} \otimes \mathbf{x}^{(t)}, \mathbf{u}^{(t)}) \in \mathbb{R}^{d \times (d+1)}.\) The average CSP is</p>
+<div class="equation" id="eq-eq-kappa-bar">\[\overline{\kappa}^{\left(T\right)} \coloneqq \frac{1}{T} \sum_{t=1}^T \kappa^{\left(t\right)}.\]<span class="eqno">(2)</span></div>
+<p>For a CSP \(\kappa = (\mathbf{K}, vq)\) and an affine map \(\phi(\mathbf{x})=\mathbf{M} \mathbf{x} + va\), we use the shorthand notation \(\left\langle (\mathbf{M}, va), \kappa\right\rangle \coloneqq \left\langle \mathbf{M}, \mathbf{K}\right\rangle + \left\langle va, vq\right\rangle.\) With this notation at hand, linear swap regret can be rewritten as</p>
+<div class="equation" id="eq-eq-linear-swap-csp">\[\mathrm{LinearSwapReg}^{\left(T\right)}
+  =
+  T \max_{\phi=\left(\mathbf{M},va\right) \in \mathrm{End}\left(\mathcal{X}\right)}
+  \left\langle \left(\mathbf{M}, va\right) - \left(\mathbf{I}, 0\right), \overline{\kappa}^{\left(T\right)}\right\rangle.\]<span class="eqno">(3)</span></div>
+<p>Using this reformulation, we will shortly see how to reduce minimizing linear swap regret to a suitable approachability instance.</p>
+<h1 id="6-2-profile-swap-regret-and-non-manipulability"><span class="secno">6.2</span> Profile swap regret and non-manipulability</h1>
+<p>We now define the notion of <em>profile swap regret</em> and discuss its non-manipulability properties. To do so, we define the instantaneous regret as \(R(\mathbf{x}, \mathbf{u}) \coloneqq \max_{\mathbf{x}^* \in \mathcal{X}} \left\langle \mathbf{x}^* - \mathbf{x}, \mathbf{u}\right\rangle.\) Equivalently, we can write \(R(\mathbf{x}, \mathbf{u}) = \left\langle b(\mathbf{u}) - \mathbf{x}, \mathbf{u}\right\rangle.\) A valid decomposition of \(\overline{\kappa}^{(T)}\) can be written as</p>
+<div class="equation">\[\overline{\kappa}^{\left(T\right)} = \sum_{j=1}^m \lambda_j \left(\mathbf{u}_j \otimes \mathbf{x}_j\right),\]<span class="eqno">(4)</span></div>
+<p>where \(\lambda_j \ge 0\), \(\sum_{j=1}^m \lambda_j = 1\), \(\mathbf{x}_j \in \mathcal{X}\), and \(\mathbf{u}_j \in \mathcal{U}\).</p>
+<section class="env statement"><p><span class="env-title">Definition 6.1 <span>(Profile swap regret)</span>.</span>&nbsp;&nbsp;The <em>profile swap regret</em> of a CSP \(\overline{\kappa}^{(T)}\) is</p>
+<div class="equation" id="eq-eq-profile-swap-reg">\[\mathrm{ProfileSwapReg}^{\left(T\right)}\left(\overline{\kappa}^{\left(T\right)}\right)
+    \coloneqq
+    T \min_{\left(\lambda_j, \mathbf{x}_j, \mathbf{u}_j\right)_j}
+    \sum_j \lambda_j R\left(\mathbf{x}_j, \mathbf{u}_j\right),\]<span class="eqno">(5)</span></div>
+<p>where the minimum is over all valid convex decompositions of \(\overline{\kappa}^{(T)}\).</p>
+</section>
+<p>The definition is admittedly somewhat cumbersome, but as we shall see it unlocks certain powerful properties. Specifically, this is a good time to discuss the notion of non-manipulability due to&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-deng19-strategizing">Deng, Schneider and Sivan [DSS19]</a><span class="citation-note"><a class="citation-note-key" href="#bib-deng19-strategizing">[DSS19]</a> Y. Deng, J. Schneider and B. Sivan. (2019). Strategizing against no-regret learners. Neural information processing systems (NeurIPS).</span></span>.</p>
+<h2 id="6-2-1-manipulability-against-a-dynamic-optimizer"><span class="secno">6.2.1</span> Manipulability against a dynamic optimizer</h2>
+<p>We consider a two-player game between a <em>learner</em> and an <em>optimizer</em>. The learner follows some learning algorithm, whereas the optimizer may choose its actions strategically over time after observing how the learner updates. We let \(u_\ell\) be the learner&rsquo;s utility function and \(\mathcal{X}\) its strategy set. Similarly, we let \(u_o\) be the optimizer&rsquo;s utility function and \(\mathcal{Y}\) its strategy set.</p>
+<p>The key relevant benchmark in this setting is the optimizer&rsquo;s <em>Stackelberg value</em>, which is the best utility the optimizer can guarantee by committing to a fixed strategy \(\mathbf{y} \in \mathcal{Y}\), while the learner best-responds to that strategy (with ties broken in favor of the optimizer):</p>
+<div class="equation">\[\mathrm{Stack}\left(u_o\right)
+  \coloneqq
+  \max_{\mathbf{y} \in \mathcal{Y}}
+  \max_{\mathbf{x} \in \mathrm{BR}\left(\mathbf{y}\right)}
+  u_o \left(\mathbf{x}, \mathbf{y}\right),\]<span class="eqno">(6)</span></div>
+<p>where \(\mathrm{BR}(\mathbf{y}) \coloneqq \operatorname*{\operatorname{arg}\,max}_{\mathbf{x} \in \mathcal{X}} u_\ell (\mathbf{x}, \mathbf{y}).\) The Stackelberg value is what the optimizer can guarantee by means of a <em>static</em> commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a <em>dynamic</em> strategy: instead of playing a fixed strategy \(\mathbf{y}\), the optimizer chooses a sequence \(\mathbf{y}^{(1)}, \mathbf{y}^{(2)}, \dots\) so as to steer the learner&rsquo;s future play toward more favorable outcomes.</p>
+<p>Equivalently, even if the optimizer fully understands the learner&rsquo;s algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.</p>
+<p>A key observation crystallized by <span class="citation-wrap"><a class="citation" href="#bib-arunachaleswaran25-profile">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-arunachaleswaran25-profile">[Aru+25]</a> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider and B. Sivan. (2025). Swap Regret and Correlated Equilibria Beyond Normal-Form Games. Conference on Economics and Computation (EC).</span></span> is that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.</p>
+<section class="env statement" id="statement-prop-profile-nomanip"><p><span class="env-title">Proposition 6.2.</span>&nbsp;&nbsp;If a learning algorithm guarantees \(\mathrm{ProfileSwapReg}^{(T)} = o(T)\), it is asymptotically non-manipulable.</p>
+</section>
+<h1 id="6-3-reducing-to-an-approachability-problem"><span class="secno">6.3</span> Reducing to an approachability problem</h1>
+<p>Having introduced and motivated the notion of profile swap regret, we now reduce it to an approachability instance. We define \(\mathcal{K} \coloneqq \operatorname{conv} \left\{ (\mathbf{u} \otimes \mathbf{x}, \mathbf{u}) : \mathbf{u} \in \mathcal{U}, \mathbf{x} \in \mathcal{X} \right\}\) and \(\mathcal{S} \coloneqq \operatorname{conv} \left\{ (\mathbf{u} \otimes b(\mathbf{u}), \mathbf{u}) : \mathbf{u} \in \mathcal{U} \right\}.\) We measure approachability loss by</p>
+<div class="equation" id="eq-eq-app-loss">\[\mathrm{AppLoss}^{\left(T\right)} \coloneqq \min_{\mathbf{s} \in \mathcal{S}} \left\lVert \overline{\kappa}^{\left(T\right)} - \mathbf{s}\right\rVert_F.\]<span class="eqno">(7)</span></div>
+<p>We first point out that minimizing linear swap regret reduces to this approachability instance.</p>
+<section class="env statement" id="statement-lem-linear-swap-approach"><p><span class="env-title">Lemma 6.3.</span>&nbsp;&nbsp;For any time \(T \in \mathbb{N}\),</p>
+<div class="equation" id="eq-eq-lin-swap-app-loss">\[\mathrm{LinearSwapReg}^{\left(T\right)}
+    \le
+    2 T \mathrm{AppLoss}^{\left(T\right)}
+    \cdot
+    \max_{\phi \in \mathrm{End}\left(\mathcal{X}\right)} \left\lVert \phi\right\rVert_F.\]<span class="eqno">(8)</span></div>
+</section>
+<section class="env proof"><p><span class="env-title">Proof.</span>&nbsp;&nbsp;Let \(\mathbf{s} \in \mathcal{S}\) be closest to \(\overline{\kappa}^{(T)}\). Since \(\mathbf{s}\) is, by definition, a convex combination of points of the form \((\mathbf{u} \otimes b(\mathbf{u}), \mathbf{u})\) and \(b(\mathbf{u})\) maximizes \(\left\langle \cdot, \mathbf{u}\right\rangle\) over \(\mathcal{X}\), every endomorphism \(\phi \in \mathrm{End}(\mathcal{X})\) satisfies</p>
+<div class="equation">\[\left\langle \phi - \left(\mathbf{I}, 0\right), \mathbf{s}\right\rangle \le 0.\]<span class="eqno">(9)</span></div>
+<p>Therefore, using (<a class="ref-link" href="#eq-eq-linear-swap-csp">3</a>),</p>
+<div class="equation">\[\mathrm{LinearSwapReg}^{\left(T\right)}
+    \le
+    T \max_{\phi \in \mathrm{End}\left(\mathcal{X}\right)}
+    \left\langle \phi-\left(\mathbf{I},0\right), \overline{\kappa}^{\left(T\right)} - \mathbf{s}\right\rangle.\]<span class="eqno">(10)</span></div>
+<p>The claim now follows from Cauchy-Schwarz.</p>
+</section>
+<p>What&rsquo;s more, the same target set also captures profile swap regret. The following lemma follows essentially by the definition of profile swap regret.</p>
+<section class="env statement" id="statement-lem-profile-swap-distance"><p><span class="env-title">Lemma 6.4.</span>&nbsp;&nbsp;The profile swap distance of \(\overline{\kappa}^{(T)}\) is equal to \(\mathrm{AppLoss}^{(T)}\).</p>
+</section>
+<p>The profile swap distance of a CSP \(\overline{\kappa}^{(T)}\) is infimum Euclidean distance of \(\overline{\kappa}^{(T)}\) from a CSP with zero profile swap regret. As a result, we conclude that minimizing the approachability loss simultaneously circumscribes both linear swap regret and profile swap regret.</p>
+<h1 id="6-4-response-based-approachability"><span class="secno">6.4</span> Response-based approachability</h1>
+<p>The key observation is that the induced approachability problem can be solved efficiently through the response-based framework of&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-bernstein15-approachability">Bernstein and Shimkin [BS15]</a><span class="citation-note"><a class="citation-note-key" href="#bib-bernstein15-approachability">[BS15]</a> A. Bernstein and N. Shimkin. (2015). Response-Based Approachability with Applications to Generalized No-Regret Problems. Journal of Machine Learning Research.</span></span>; this was observed by&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-anagnostides26-swap">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a><span class="citation-note"><a class="citation-note-key" href="#bib-anagnostides26-swap">[Ana+26]</a> I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. Conference on Learning Theory (COLT).</span></span>.</p>
+<p>The algorithm proceeds by maintaining an accumulated displacement</p>
+<div class="equation">\[\mathbf{U}^{\left(t\right)} \coloneqq \sum_{\tau=1}^t \left(\kappa^{\left(\tau\right)} - \mathbf{s}^{\left(\tau\right)}\right) \in \mathbb{R}^{d \times \left(d+1\right)}.\]<span class="eqno">(11)</span></div>
+<p>At every round \(t\), it solves the bilinear zero-sum game</p>
+<div class="equation" id="eq-eq-bs-game">\[\max_{\mathbf{x} \in \mathcal{X}} \min_{\mathbf{u} \in \mathcal{U}}
+  \left\langle \mathbf{U}^{\left(t-1\right)}, \left(\mathbf{u} \otimes \mathbf{x}, \mathbf{u}\right)\right\rangle.\]<span class="eqno">(12)</span></div>
+<p>Let \((\mathbf{x}^{(t)}, \mathbf{u}_*^{(t)})\) be a pair of minimax strategies for this game. The algorithm then sets</p>
+<div class="equation">\[\mathbf{s}^{\left(t\right)} \coloneqq \left(\mathbf{u}_*^{\left(t\right)} \otimes b\left(\mathbf{u}_*^{\left(t\right)}\right), \mathbf{u}_*^{\left(t\right)}\right) \in \mathcal{S}.\]<span class="eqno">(13)</span></div>
+<p>Finally, it plays the strategy \(\mathbf{x}^{(t)}\), whereupon it observes the utility \(\mathbf{u}^{(t)}\), forms the induced \(\kappa^{(t)}\), and updates the cumulative displacement \(\mathbf{U}^{(t)}\).</p>
+<p>This response-based approachability algorithm is summarized below. All steps can be efficiently implemented through oracle access to \(\mathcal{X}\).</p>
+<section class="env algorithm"><div class="env-title"><span class="algorithm-label">Algorithm 1</span> <span class="algorithm-caption">(<span class="citation-wrap"><a class="citation" href="#bib-bernstein15-approachability">[BS15]</a></span>: Response-based approachability)</span></div>
+<div class="pseudocode">
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>Input:</strong> Horizon \(T\), sets \(\mathcal{X}, \mathcal{U}\), best-response map \(b : \mathcal{U} \to \mathcal{X}\)</span></div>
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text">Initialize \(\mathbf{U}^{(0)} \coloneqq 0 \in \mathbb{R}^{d \times (d+1)}\)</span></div>
+<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>for each</strong> round \(t = 1, \dots, T\) <strong>do</strong></span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Compute maximin strategies \((\mathbf{x}^{(t)}, \mathbf{u}_*^{(t)})\) for</span></div>
+<div class="pseudo-math" style="--indent:2"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span>\[\max_{\mathbf{x} \in \mathcal{X}} \min_{\mathbf{u} \in \mathcal{U}}
+        \left\langle \mathbf{U}^{\left(t-1\right)}, \left(\mathbf{u} \otimes \mathbf{x}, \mathbf{u}\right)\right\rangle\]</div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Set \(\mathbf{s}^{(t)} \coloneqq (\mathbf{u}_*^{(t)} \otimes b(\mathbf{u}_*^{(t)}), \mathbf{u}_*^{(t)})\)</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Play \(\mathbf{x}^{(t)}\) and observe \(\mathbf{u}^{(t)}\)</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">Set \(\kappa^{(t)} \coloneqq (\mathbf{u}^{(t)} \otimes \mathbf{x}^{(t)}, \mathbf{u}^{(t)})\)</span></div>
+<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-text">Update \(\mathbf{U}^{(t)} \coloneqq \mathbf{U}^{(t-1)} + \kappa^{(t)} - \mathbf{s}^{(t)}\)</span></div>
+</div>
+</section>
+<p>The proof of correctness crucially relies on the minimax theorem, as we formalize below.</p>
+<section class="env statement" id="statement-lem-bs-invariant"><p><span class="env-title">Lemma 6.5.</span>&nbsp;&nbsp;For every utility \(\mathbf{u}^{(t)} \in \mathcal{U}\), we have</p>
+<div class="equation" id="eq-eq-bs-invariant">\[\left\langle \mathbf{U}^{\left(t-1\right)}, \kappa^{\left(t\right)} - \mathbf{s}^{\left(t\right)}\right\rangle \ge 0.\]<span class="eqno">(14)</span></div>
+</section>
+<section class="env proof"><p><span class="env-title">Proof.</span>&nbsp;&nbsp;Let</p>
+<div class="equation">\[g_t \left(\mathbf{x}, \mathbf{u}\right) \coloneqq \left\langle \mathbf{U}^{\left(t-1\right)}, \left(\mathbf{u} \otimes \mathbf{x}, \mathbf{u}\right)\right\rangle.\]<span class="eqno">(15)</span></div>
+<p>By the minimax theorem,</p>
+<div class="equation">\[\max_{\mathbf{x} \in \mathcal{X}} \min_{\mathbf{u} \in \mathcal{U}} g_t \left(\mathbf{x}, \mathbf{u}\right)
+    =
+    \min_{\mathbf{u} \in \mathcal{U}} \max_{\mathbf{x} \in \mathcal{X}} g_t \left(\mathbf{x}, \mathbf{u}\right).\]<span class="eqno">(16)</span></div>
+<p>Thus,</p>
+<div class="equation">\[g_t \left(\mathbf{x}^{\left(t\right)}, \mathbf{u}^{\left(t\right)}\right)
+    \ge
+    \min_{\mathbf{u} \in \mathcal{U}} \max_{\mathbf{x} \in \mathcal{X}} g_t \left(\mathbf{x}, \mathbf{u}\right).\]<span class="eqno">(17)</span></div>
+<p>Since \(\mathbf{u}_*^{(t)}\) is minimax, and \(b(\mathbf{u}_*^{(t)})\) is a feasible strategy in \(\mathcal{X}\),</p>
+<div class="equation">\[\min_{\mathbf{u} \in \mathcal{U}} \max_{\mathbf{x} \in \mathcal{X}} g_t \left(\mathbf{x}, \mathbf{u}\right)
+    \ge
+    g_t \left(b\left(\mathbf{u}_*^{\left(t\right)}\right), \mathbf{u}_*^{\left(t\right)}\right).\]<span class="eqno">(18)</span></div>
+<p>Combining the two inequalities gives</p>
+<div class="equation">\[\left\langle \mathbf{U}^{\left(t-1\right)}, \kappa^{\left(t\right)}\right\rangle
+    \ge
+    \left\langle \mathbf{U}^{\left(t-1\right)}, \mathbf{s}^{\left(t\right)}\right\rangle,\]<span class="eqno">(19)</span></div>
+<p>which is exactly (<a class="ref-link" href="#eq-eq-bs-invariant">14</a>).</p>
+</section>
+<p>The invariant implies approachability by the usual Pythagorean argument.</p>
+<section class="env statement" id="statement-lem-pythagorean"><p><span class="env-title">Lemma 6.6 <span>(Pythagorean lemma)</span>.</span>&nbsp;&nbsp;Let \(\mathbf{z}^{(1)}, \dots, \mathbf{z}^{(T)}\) be vectors with \(\left\lVert \mathbf{z}^{(t)}\right\rVert_2 \le B\) for all \(t\). If</p>
+<div class="equation">\[\left\langle \sum_{\tau=1}^{t-1} \mathbf{z}^{\left(\tau\right)}, \mathbf{z}^{\left(t\right)}\right\rangle \le 0\]<span class="eqno">(20)</span></div>
+<p>for every \(t\), then</p>
+<div class="equation">\[\left\lVert \sum_{t=1}^T \mathbf{z}^{\left(t\right)}\right\rVert_2 \le B \sqrt{T}.\]<span class="eqno">(21)</span></div>
+</section>
+<p>Applying <a class="ref-link" href="#statement-lem-pythagorean">Lemma 6.6</a> with \(\mathbf{z}^{(t)} = \mathbf{s}^{(t)} - \kappa^{(t)}\) gives</p>
+<div class="equation" id="eq-eq-app-loss-rate">\[\mathrm{AppLoss}^{\left(T\right)}
+  \le
+  \left\lVert \frac{1}{T} \sum_{t=1}^T \left(\kappa^{\left(t\right)} - \mathbf{s}^{\left(t\right)}\right)\right\rVert_F
+  \le
+  \frac{2 B}{\sqrt{T}},\]<span class="eqno">(22)</span></div>
+<p>where \(B \coloneqq \max_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \left\lVert (\mathbf{u} \otimes \mathbf{x}, \mathbf{u})\right\rVert_F.\) We thus arrive at the following theorem.</p>
+<section class="env statement" id="statement-thm-bs-bound"><p><span class="env-title">Theorem 6.7.</span>&nbsp;&nbsp;For any sequence of utilities \(\mathbf{u}^{(1)}, \dots, \mathbf{u}^{(T)} \in \mathcal{U}\), the response-based approachability algorithm guarantees</p>
+<div class="equation" id="eq-eq-bs-linear-bound">\[\mathrm{LinearSwapReg}^{\left(T\right)}
+    \le
+    4 \sqrt{T}
+    \left(\max_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \left\lVert \mathbf{u}\right\rVert_2 \sqrt{\left\lVert \mathbf{x}\right\rVert_2^2 + 1}\right)
+    \left(\max_{\phi \in \mathrm{End}\left(\mathcal{X}\right)} \left\lVert \phi\right\rVert_F\right),\]<span class="eqno">(23)</span></div>
+<p>and</p>
+<div class="equation" id="eq-eq-bs-profile-bound">\[\mathrm{ProfileSwapDist}^{\left(T\right)}
+    \le
+    \frac{2}{\sqrt{T}}
+    \left(\max_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \left\lVert \mathbf{u}\right\rVert_2 \sqrt{\left\lVert \mathbf{x}\right\rVert_2^2 + 1}\right).\]<span class="eqno">(24)</span></div>
+</section>
+<p>Through suitable preconditioning, it can be shown that this algorithm guarantees optimal linear swap regret&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-anagnostides26-swap">[Ana+26]</a><span class="citation-note"><a class="citation-note-key" href="#bib-anagnostides26-swap">[Ana+26]</a> I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. Conference on Learning Theory (COLT).</span></span>. We further remark that this response-based framework can be extended to nonlinear deviations; we refer the interested reader to&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-anagnostides26-swap">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a></span>.</p>
+<section class="bibliography" id="bibliography"><h1>Bibliography for this chapter</h1>
+<p id="bib-arunachaleswaran25-profile"><span class="bib-key">[Aru+25]</span><span class="bib-entry">E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider and B. Sivan. (2025). Swap Regret and Correlated Equilibria Beyond Normal-Form Games. Conference on Economics and Computation (EC).</span></p>
+<p id="bib-anagnostides26-swap"><span class="bib-key">[Ana+26]</span><span class="bib-entry">I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. Conference on Learning Theory (COLT).</span></p>
+<p id="bib-bernstein15-approachability"><span class="bib-key">[BS15]</span><span class="bib-entry">A. Bernstein and N. Shimkin. (2015). Response-Based Approachability with Applications to Generalized No-Regret Problems. Journal of Machine Learning Research.</span></p>
+<p id="bib-gordon08-no"><span class="bib-key">[GGM08]</span><span class="bib-entry">G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. International Conference on Machine Learning.</span></p>
+<p id="bib-daskalakis25-efficient"><span class="bib-key">[Das+25]</span><span class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></p>
+<p id="bib-deng19-strategizing"><span class="bib-key">[DSS19]</span><span class="bib-entry">Y. Deng, J. Schneider and B. Sivan. (2019). Strategizing against no-regret learners. Neural information processing systems (NeurIPS).</span></p>
+</section>
+</article>
+</main>
+<script>
+(() => {
+  const links = Array.from(document.querySelectorAll("[data-section-link]"));
+  if (!links.length) return;
+  const byId = new Map(links.map((link) => [link.getAttribute("data-section-link"), link]));
+  const sections = Array.from(byId.keys())
+    .map((id) => document.getElementById(id))
+    .filter(Boolean);
+  const setActive = (id) => {
+    for (const link of links) {
+      const active = link.getAttribute("data-section-link") === id;
+      link.classList.toggle("is-active", active);
+      if (active) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    }
+  };
+  const update = () => {
+    const y = window.scrollY + 130;
+    let current = sections[0]?.id;
+    for (const section of sections) {
+      if (section.offsetTop <= y) current = section.id;
+      else break;
+    }
+    if (current) setActive(current);
+  };
+  update();
+  window.setTimeout(update, 0);
+  window.setTimeout(update, 150);
+  document.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  window.addEventListener("hashchange", update);
+})();
+</script>
+</body>
+</html>

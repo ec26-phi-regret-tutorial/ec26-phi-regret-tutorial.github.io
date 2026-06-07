@@ -8,11 +8,15 @@
 
 #let matA = $bold(A)$
 #let vx = $bold(x)$
+#let va = $bold(a)$
 #let vb = $bold(b)$
+#let vq = $bold(q)$
+#let vs = $bold(s)$
 
 #let vu = $bold(u)$
 #let vx = $bold(x)$
 #let vy = $bold(y)$
+#let vz = $bold(z)$
 #let vp = $bold(p)$
 #let vc = $bold(c)$
 
@@ -20,6 +24,7 @@
 #let matI = $upright(bold(I))$
 #let matM = $upright(bold(M))$
 #let matK = $upright(bold(K))$
+#let matU = $upright(bold(U))$
 
 #let cC = $cal(C)$
 #let cH = $cal(H)$
@@ -33,3 +38,4 @@
 #let comment = body => text(luma(128))[~~~~ $triangle.stroked.small.r$ _ #body _]
 
 #let EE = math.op(math.bb($E$), limits: true)
+#let conv = math.op("conv")

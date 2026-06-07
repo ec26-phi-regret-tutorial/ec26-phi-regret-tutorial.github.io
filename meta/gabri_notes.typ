@@ -67,7 +67,15 @@
   })
 }
 
-#let gabri_notes(body, lec_num: none, date: none, title: none, show_outline: false, extrathanks: none) = {
+#let gabri_notes(
+  body,
+  lec_num: none,
+  date: none,
+  title: none,
+  strtitle: none,
+  show_outline: false,
+  extrathanks: none,
+) = {
   lecture-bib.update(())
   counter(heading).update(0)
   set text(font: "New Computer Modern", size: 10.2pt)
@@ -112,7 +120,7 @@
     },
     footer: if not is_web {
       context box(stroke: none, inset: 0mm)[
-        #if str(lec_num).starts-with(regex("\d")) [ Chapter #lec_num #sym.bullet ] #title #if sys.inputs.at("combined", default: "false") == "false" and false [#sym.bullet EC'26 Learning and Computation of $Phi$-Equilibria] #h(1fr)~~|~ #numbering("1", ..counter(page).get())/#numbering("1", ..counter(page).final())
+        #if str(lec_num).starts-with(regex("\d")) [ Chapter #lec_num #sym.bullet ] #if strtitle != none { strtitle } else { title } #if sys.inputs.at("combined", default: "false") == "false" and false [#sym.bullet EC'26 Learning and Computation of $Phi$-Equilibria] #h(1fr)~~|~ #numbering("1", ..counter(page).get())/#numbering("1", ..counter(page).final())
       ]
     } else { none },
   )

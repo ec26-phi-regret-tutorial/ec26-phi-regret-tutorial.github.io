@@ -304,6 +304,11 @@
       padding: .45rem 0
     }
 
+    .chapter-list li+li {
+      border-top: 1px dashed #c8c3bb;
+      padding-top: .65rem
+    }
+
     .chapter-no {
       color: var(--muted);
       font-variant-numeric: tabular-nums
@@ -372,7 +377,8 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: .8rem;
-      margin: 1rem 0
+      margin: 1rem 0;
+      padding-left: .9rem
     }
 
     .organizer {
@@ -395,7 +401,8 @@
     }
 
     .organizer strong {
-      display: block
+      display: block;
+      color: var(--ink)
     }
 
     .organizer span {
@@ -516,13 +523,14 @@
                     href="https://www.andrew.cmu.edu/user/ianagnos/">webpage</a></span></span></p>
             <p class="organizer"><img class="organizer-photo" src="organizers/gabriele-farina.jpg" width="48"
                 height="48" alt="" loading="lazy" decoding="async"><span><strong>Gabriele
-                  Farina</strong><span>MIT</span>
+                  Farina</strong><span>Massachusetts Institute of Technology</span>
                 <span class="organizer-links"><a class="email" href="mailto:gfarina@mit.edu">email</a><a
                     href="https://www.mit.edu/~gfarina/">webpage</a></span></span>
             </p>
-            <p class="organizer"><img class="organizer-photo" src="organizers/brian-hu-zhang.jpg" width="48" height="48"
-                alt="" loading="lazy" decoding="async"><span><strong>Brian Hu Zhang</strong><span>MIT</span><span
-                  class="organizer-links"><a class="email" href="mailto:zhangbh@csail.mit.edu">email</a><a
+            <p class="organizer"><img class="organizer-photo" src="organizers/brian-hu-zhang.png" width="48" height="48"
+                alt="" loading="lazy" decoding="async"><span><strong>Brian Hu Zhang</strong><span>Massachusetts
+                  Institute of Technology</span><span class="organizer-links"><a class="email"
+                    href="mailto:zhangbh@csail.mit.edu">email</a><a
                     href="https://brianhzhang.github.io">webpage</a></span></span></p>
           </div>
         </section>
@@ -551,6 +559,9 @@
           <li><span class="chapter-no">5</span><span><a class="chapter-title" href="P5-treeswap.html">TreeSwap:
                 Efficient Swap Regret Minimization</a><span class="chapter-desc">Weakly sublinear swap-regret
                 minimization for large action spaces.</span></span></li>
+          <li><span class="chapter-no">6</span><span><a class="chapter-title" href="P6-profile.html">Profile Swap
+                Regret, Manipulability, and Response-Based Approachability</a><span class="chapter-desc">Profile swap
+                regret, non-manipulability, and response-based approachability.</span></span></li>
         </ol>
       </section>
       <aside class="side-panel details-sidenote" aria-label="Tutorial details">
