@@ -1,0 +1,8 @@
+[package]
+name = "notes-html-exporter"
+version = "0.1.0"
+edition = "2021"
+description = "Export the EC'26 Typst notes to a Sum-of-Squares-inspired HTML page."
+license = "MIT"
+
+[dependencies]
