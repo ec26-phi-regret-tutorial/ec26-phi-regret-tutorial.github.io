@@ -1274,37 +1274,21 @@ mark {
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn'});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
 </head>
 <body>
-<nav class="chapter-rail" aria-label="Chapters">
-<div class="chapter-rail-course"><div class="course-event">ACM EC&rsquo;26 Tutorial</div><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
-<div class="chapter-rail-heading">Chapters</div>
-<a class="chapter-rail-link" href="P1-introduction.html"><span>1</span>Introduction</a>
-<a class="chapter-rail-link" href="P2-semi_separation.html"><span>2</span>Semi-Separation</a>
-<a class="chapter-rail-link is-current" href="P3-phi-regret-learning.html" aria-current="page"><span>3</span>Beyond Normal Form</a>
-<a class="chapter-rail-link" href="P4-multicalibration.html"><span>4</span>Multicalibration</a>
-<a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
-<a class="chapter-rail-link" href="P6-profile.html"><span>6</span>Profile Swap</a>
-<div class="chapter-rail-heading chapter-rail-section-heading">This Chapter</div>
-<a class="chapter-section-link chapter-section-l1" href="#3-1-expected-fixed-points" data-section-link="3-1-expected-fixed-points"><span class="chapter-section-no">3.1</span><span class="chapter-section-title">Expected fixed points</span></a>
-</nav>
+<header class="site-masthead">
+<a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a>
+<div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div>
+<div class="top-links"><a href="index.html">Index</a><a href="pdf/P2-phi_regret.pdf">PDF</a></div></header>
 <main class="page-shell">
-<article class="lecture-content" data-lecture-number="3">
-<p class="chapter-kicker">Chapter 3</p>
+<article class="lecture-content" data-lecture-number="2">
 <h1 class="lecture-title">Beyond Normal Form</h1>
-<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="pdf/P3-phi-regret-learning.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-3,
-  author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
-  title = {Chapter 3: Beyond Normal Form},
-  booktitle = {Learning and Computation of Phi-Equilibria},
-  note = {Chapter 3 of the ACM EC 2026 tutorial notes},
-  year = {2026},
-  url = {P3-phi-regret-learning.html}
-}</code></pre></details></aside>
 <nav class="toc" aria-label="Contents"><ol>
-<li class="toc-l1"><a href="#3-1-expected-fixed-points"><span class="toc-no">3.1</span><span class="toc-title">Expected fixed points</span></a></li>
+<li class="toc-l1"><a href="#2-1-expected-fixed-points"><span class="toc-no">2.1</span><span class="toc-title">Expected fixed points</span></a></li>
+<li class="toc-l1"><a href="#2-2-semi-separation"><span class="toc-no">2.2</span><span class="toc-title">Semi-separation</span></a></li>
+<li class="toc-l1"><a href="#2-3-efficient-regret-minimization-via-semi-separation"><span class="toc-no">2.3</span><span class="toc-title">Efficient regret minimization via semi-separation</span></a></li>
 </ol></nav>
-<p><mark class="todo">my eventual intention is to merge the semi-separation chapter into this chapter. there is a lot of overlapping content -brian</mark></p>
-    <p>In this section, we will show how to construct <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizers for strategy sets <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> that are more complex than the simplex. To do so, we first define the sets of deviations that we work with.</p>
-    <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">3<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(<span id="loc-1">[</span><span class="citation-wrap"><a class="citation" href="#loc-7" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Learning and Computation of <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC1F0BE4A6BE2E3AC8BF8B959047FB7DB"></use></g></g><defs id="glyph"><symbol id="gC1F0BE4A6BE2E3AC8BF8B959047FB7DB" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria at the Frontier of Tractability”, in <em>Economics and Computation</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>])</span> <strong class="env-punct">.</strong></span></p>
+<p>In this section, we will show how to construct <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizers for strategy sets <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> that are more complex than the simplex. To do so, we first define the sets of deviations that we work with.</p>
+    <section class="env statement" id="loc-1">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">2<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(<span id="loc-2">[</span><span class="citation-wrap"><a class="citation" href="#loc-9" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Learning and Computation of <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g1F8FDDA7547F9919415BA54DCFF3330E"></use></g></g><defs id="glyph"><symbol id="g1F8FDDA7547F9919415BA54DCFF3330E" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria at the Frontier of Tractability”, in <em>Economics and Computation</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">Given a feature map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [q],
   [ ],
@@ -1319,7 +1303,10 @@ mark {
     t: [k],
   ),
 )" role="math">\(q : \mathcal{X} \to \mathbb{R}^{k}\)</span>, the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  [φ],
+  attach(
+    base: [φ],
+    b: equation(block: false, body: styled(child: [M], ..)),
+  ),
   [:],
   [ ],
   equation(block: false, body: styled(child: [X], ..)),
@@ -1327,9 +1314,9 @@ mark {
   [→],
   [ ],
   equation(block: false, body: styled(child: [X], ..)),
-)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> that can be expressed as the matrix-vector product <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi_{\mathbf{M}}: \mathcal{X} \to \mathcal{X}\)</span> that can be expressed as the matrix-vector product <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
-    equation(block: false, body: styled(child: [K], ..)),
+    equation(block: false, body: styled(child: [M], ..)),
     lr(body: sequence([(], [φ], [)])),
   ),
   [ ],
@@ -1343,8 +1330,8 @@ mark {
       ),
     ),
   ),
-)" role="math">\(\mathcal{K}(\phi ) q(\mathbf{x})\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [K], ..)),
+)" role="math">\(\mathbf{M}(\phi ) q(\mathbf{x})\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: styled(child: [M], ..)),
   [ ],
   [∈],
   [ ],
@@ -1352,7 +1339,7 @@ mark {
     base: styled(child: equation(block: false, body: [ℝ]), ..),
     t: sequence([d], [ ], [×], [ ], [k]),
   ),
-)" role="math">\(\mathcal{K} \in \mathbb{R}^{d × k}\)</span> and vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathbf{M} \in \mathbb{R}^{d × k}\)</span> and vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: styled(child: [c], ..)),
   [ ],
   [∈],
@@ -1363,8 +1350,9 @@ mark {
   ),
 )" role="math">\(\mathbf{c} \in \mathbb{R}^{d}\)</span>.</div>
     </section>
+    <p>We will assume without loss of generality that <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> contains the identity map.</p>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">3<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">2<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [q],
@@ -1421,8 +1409,17 @@ mark {
   [=],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
-    t: sequence([⊗], [ ], [≤], [ ], [ℓ]),
+    base: lr(
+      body: sequence(
+        [(],
+        [1],
+        [,],
+        [ ],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+    t: sequence([⊗], [ ], [ℓ]),
   ),
   [ ],
   [∈],
@@ -1431,7 +1428,7 @@ mark {
     base: styled(child: equation(block: false, body: [ℝ]), ..),
     t: [k],
   ),
-)" role="math">\(q(\mathbf{x}) = \mathbf{x}^{⊗ \le ℓ} \in \mathbb{R}^{k}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(q(\mathbf{x}) = (1, \mathbf{x})^{⊗ ℓ} \in \mathbb{R}^{k}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [k],
   [ ],
   [=],
@@ -1440,7 +1437,7 @@ mark {
 )" role="math">\(k =\)</span> is the set of all monomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span> up to degree <span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span>.</div>
     </section>
     <p>In general, we will describe algorithms that have complexity polynomial in the dimension <span class="math-katex-source" data-math-display="inline" data-typst-math="[k]" role="math">\(k\)</span>. Note that, in the special case of degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials, these algorithms will therefore run in time polynomial in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [d], t: [ℓ])" role="math">\(d^{ℓ}\)</span>.</p>
-    <p>In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic. Intuitively, both problems stem from the same root cause:</p>
+    <p>In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic.</p>
     <ol>
       <li value="1">
         <p><em>Fixed-point oracle</em>: Finding a fixed point of a continuous function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -1462,16 +1459,16 @@ mark {
             <p>If <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> contains nonlinear functions, then that this optimization problem is <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [NP], ..)" role="math">\(\text{NP}\)</span>-hard even when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is the hypercube <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: lr(body: sequence([[], [0], [,], [ ], [1], []])),
   t: [d],
-)" role="math">\([0, 1]^{d}\)</span> <span id="loc-2">[</span><span class="citation-wrap"><a class="citation" href="#loc-8" role="doc-biblioref">Zha+24</a><span class="citation-note"><span class="citation-note-key">[Zha+24]</span> B. H. Zhang, I. Anagnostides, G. Farina, and T. Sandholm, “Efficient <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC1F0BE4A6BE2E3AC8BF8B959047FB7DB"></use></g></g><defs id="glyph"><symbol id="gC1F0BE4A6BE2E3AC8BF8B959047FB7DB" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games”, in <em>Advances in Neural Information Processing Systems</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>].</p>
+)" role="math">\([0, 1]^{d}\)</span> <span id="loc-3">[</span><span class="citation-wrap"><a class="citation" href="#loc-10" role="doc-biblioref">Zha+24</a><span class="citation-note"><span class="citation-note-key">[Zha+24]</span> B. H. Zhang, I. Anagnostides, G. Farina, and T. Sandholm, “Efficient <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g1F8FDDA7547F9919415BA54DCFF3330E"></use></g></g><defs id="glyph"><symbol id="g1F8FDDA7547F9919415BA54DCFF3330E" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games”, in <em>Advances in Neural Information Processing Systems</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>].</p>
           </li>
           <li>
-            <p>Even if <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of linear endomorphisms, if <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> itself is only available via an oracle (<em>e.g.</em>, a separation oracle), then optimizing a linear function over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> can in general be hard <span id="loc-3">[</span><span class="citation-wrap"><a class="citation" href="#loc-9" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. <mark class="todo">why is the citation not showing?</mark></p>
+            <p>Even if <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of linear endomorphisms, if <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> itself is only available via an oracle (<em>e.g.</em>, a separation oracle), then optimizing a linear function over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> can in general be hard <span id="loc-4">[</span><span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. <mark class="todo">why is the citation not showing?</mark></p>
           </li>
         </ol>
       </li>
     </ol>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">2<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">When <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is represented by an explicit set of linear constraints, <em>i.e.</em>, <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: styled(child: [X], ..)),
   [ ],
@@ -1494,17 +1491,17 @@ mark {
       [}],
     ),
   ),
-)" role="math">\(\mathcal{X} = \{\mathbf{x} : \mathcal{A} \mathbf{x} \le \mathbf{b}\}\)</span>, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span id="loc-4">[</span><span class="citation-wrap"><a class="citation" href="#loc-10" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Expected Variational Inequalities,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2025, pp. 74422–74446.</span></span>]. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</div>
+)" role="math">\(\mathcal{X} = \{\mathbf{x} : \mathcal{A} \mathbf{x} \le \mathbf{b}\}\)</span>, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Expected Variational Inequalities,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2025, pp. 74422–74446.</span></span>]. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</div>
     </section>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">3<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
-      <div class="env-body">For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation <span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">ZFS24</a><span class="citation-note"><span class="citation-note-key">[ZFS24]</span> B. H. Zhang, G. Farina, and T. Sandholm, “Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games,” in <em>International Conference on Learning Representations</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>]. We will not detail it here, though.</div>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">2<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation <span id="loc-6">[</span><span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">ZFS24</a><span class="citation-note"><span class="citation-note-key">[ZFS24]</span> B. H. Zhang, G. Farina, and T. Sandholm, “Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games,” in <em>International Conference on Learning Representations</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>]. We will not detail it here, though.</div>
     </section>
     <p>We will show how to circumvent both of the above issues. We start with the fixed point computation.</p>
-    <h1 id="3-1-expected-fixed-points" class="notes-heading" data-level="1" data-number="3.1"><span class="secno">3.1</span> Expected fixed points</h1>
+    <h1 id="2-1-expected-fixed-points" class="notes-heading" data-level="1" data-number="2.1"><span class="secno">2.1</span> Expected fixed points</h1>
     <p>Given that computing a fixed point is generally hard (when <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is continuous but nonlinear) or even impossible (when <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is discontinuous), we need a different notion of fixed point. Fortunately, by examining the proof of the Gordon–Greenwald–Marks framework, it turns out that a weaker condition suffices.</p>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">3<span class="env-number-separator">.</span>5</strong> <span class="env-extra">(Expected fixed point [<span class="citation-wrap"><a class="citation" href="#loc-8" role="doc-biblioref">Zha+24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">2<span class="env-number-separator">.</span>5</strong> <span class="env-extra">(Expected fixed point [<span class="citation-wrap"><a class="citation" href="#loc-10" role="doc-biblioref">Zha+24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>Given a function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
@@ -1577,7 +1574,7 @@ mark {
         [‖],
       ),
     ),
-    b: [1],
+    b: [2],
   ),
   [ ],
   [≤],
@@ -1628,27 +1625,534 @@ mark {
         [‖],
       ),
     ),
-    b: [1],
+    b: [2],
   ),
   [ ],
   [≤],
   [ ],
   [ϵ],
   [.],
-)">\[\displaystyle \left\Vert \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left[\phi \left(\mathbf{x}\right) - \mathbf{x}\right]\right\Vert_{1} \le \epsilon .\]</span></div>
+)">\[\displaystyle \left\Vert \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left[\phi \left(\mathbf{x}\right) - \mathbf{x}\right]\right\Vert_{2} \le \epsilon .\]</span></div>
         </figure>
       </div>
     </section>
     <p>As we will see shortly, expected fixed points fix both problems with fixed point computation: an (approximate) expected fixed point always exists, and moreover, there is an efficient algorithm for computing one!</p>
-    <p><mark class="todo">continue from here -brian</mark></p>
+    <section class="env statement" id="loc-8">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">2<span class="env-number-separator">.</span>6</strong> <span class="env-extra">(Expected fixed point computation)</span> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">There is an algorithm with runtime <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [poly],
+  lr(
+    body: sequence([(], [d], [,], [ ], [1], [/], [ϵ], [)]),
+  ),
+)" role="math">\(\text{poly}(d, 1/\epsilon )\)</span> that, given query access to <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  styled(child: [X], ..),
+  [ ],
+  [→],
+  [ ],
+  styled(child: [X], ..),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> and oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>, outputs an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate expected fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>.</div>
+    </section>
+    <p>The existence of this algorithm proves, as a corollary, that <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate expected fixed points always exist for every <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [>], [ ], [0])" role="math">\(\epsilon &gt; 0\)</span>. Although we will not need it here, it also turns out to be true that <em>exact</em> expected fixed points also always exist (even when <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is discontinuous) [<span class="citation-wrap"><a class="citation" href="#loc-9" role="doc-biblioref">Zha+25</a></span>]. The “either-or” nature of the above theorem will become useful shortly.</p>
+    <section class="env proof">
+      <p class="env-heading"><span class="env-title"><em>Proof.</em></span></p>
+      <div class="env-body">
+        <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [1], [)])),
+  ),
+  [ ],
+  [∈],
+  [ ],
+  styled(child: [X], ..),
+)" role="math">\(\mathbf{x}^{(1)} \in \mathcal{X}\)</span> be arbitrary, and consider the sequence of points <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [1], [)])),
+  ),
+  [,],
+  [ ],
+  […],
+  [,],
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [K], [)])),
+  ),
+)" role="math">\(\mathbf{x}^{(1)}, \dots , \mathbf{x}^{(K)}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [k], [)])),
+  ),
+  [ ],
+  [=],
+  [ ],
+  sequence(
+    [φ],
+    lr(
+      body: sequence(
+        [(],
+        attach(
+          base: equation(block: false, body: styled(child: [x], ..)),
+          t: lr(body: sequence([(], [k], [−], [1], [)])),
+        ),
+        [)],
+      ),
+    ),
+  ),
+)" role="math">\(\mathbf{x}^{(k)} = \phi (\mathbf{x}^{(k-1)})\)</span> for each <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([k], [ ], [>], [ ], [0])" role="math">\(k &gt; 0\)</span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> be the uniform distribution on <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+  body: sequence(
+    [{],
+    attach(
+      base: equation(block: false, body: styled(child: [x], ..)),
+      t: lr(body: sequence([(], [1], [)])),
+    ),
+    [,],
+    [,],
+    [ ],
+    […],
+    [,],
+    [ ],
+    attach(
+      base: equation(block: false, body: styled(child: [x], ..)),
+      t: lr(body: sequence([(], [K], [)])),
+    ),
+    [}],
+  ),
+)" role="math">\(\{\mathbf{x}^{(1)},, \dots , \mathbf{x}^{(K)}\}\)</span>. Then, by a telescoping sum, we have</p>
+        <figure class="equation" role="math">
+          <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      equation(block: false, body: styled(child: [x], ..)),
+      [ ],
+      [∼],
+      [ ],
+      [μ],
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [[],
+      sequence(
+        [φ],
+        lr(
+          body: sequence(
+            [(],
+            equation(block: false, body: styled(child: [x], ..)),
+            [)],
+          ),
+        ),
+      ),
+      [ ],
+      [−],
+      [ ],
+      equation(block: false, body: styled(child: [x], ..)),
+      []],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(base: [∑], t: [K], b: sequence([k], [=], [1])),
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      sequence(
+        [φ],
+        lr(
+          body: sequence(
+            [(],
+            attach(
+              base: equation(block: false, body: styled(child: [x], ..)),
+              t: lr(body: sequence([(], [k], [)])),
+            ),
+            [)],
+          ),
+        ),
+      ),
+      [ ],
+      [−],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [k], [)])),
+      ),
+      [)],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(base: [∑], t: [K], b: sequence([k], [=], [1])),
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [k], [+], [1], [)])),
+      ),
+      [ ],
+      [−],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [k], [)])),
+      ),
+      [)],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [K], [+], [1], [)])),
+      ),
+      [ ],
+      [−],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [1], [)])),
+      ),
+      [)],
+    ),
+  ),
+)"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      equation(block: false, body: styled(child: [x], ..)),
+      [ ],
+      [∼],
+      [ ],
+      [μ],
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [[],
+      sequence(
+        [φ],
+        lr(
+          body: sequence(
+            [(],
+            equation(block: false, body: styled(child: [x], ..)),
+            [)],
+          ),
+        ),
+      ),
+      [ ],
+      [−],
+      [ ],
+      equation(block: false, body: styled(child: [x], ..)),
+      []],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(base: [∑], t: [K], b: sequence([k], [=], [1])),
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      sequence(
+        [φ],
+        lr(
+          body: sequence(
+            [(],
+            attach(
+              base: equation(block: false, body: styled(child: [x], ..)),
+              t: lr(body: sequence([(], [k], [)])),
+            ),
+            [)],
+          ),
+        ),
+      ),
+      [ ],
+      [−],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [k], [)])),
+      ),
+      [)],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(base: [∑], t: [K], b: sequence([k], [=], [1])),
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [k], [+], [1], [)])),
+      ),
+      [ ],
+      [−],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [k], [)])),
+      ),
+      [)],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [K], [+], [1], [)])),
+      ),
+      [ ],
+      [−],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [1], [)])),
+      ),
+      [)],
+    ),
+  ),
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left[\phi \left(\mathbf{x}\right) - \mathbf{x}\right] = \frac{1}{K} \sum_{k=1}^{K} \left(\phi \left(\mathbf{x}^{\left(k\right)}\right) - \mathbf{x}^{\left(k\right)}\right) = \frac{1}{K} \sum_{k=1}^{K} \left(\mathbf{x}^{\left(k+1\right)} - \mathbf{x}^{\left(k\right)}\right) = \frac{1}{K} \left(\mathbf{x}^{\left(K+1\right)} - \mathbf{x}^{\left(1\right)}\right)\]</span></div>
+        </figure>
+        <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [K], [+], [1], [)])),
+  ),
+  [ ],
+  [≔],
+  [ ],
+  sequence(
+    [φ],
+    lr(
+      body: sequence(
+        [(],
+        attach(
+          base: equation(block: false, body: styled(child: [x], ..)),
+          t: lr(body: sequence([(], [K], [)])),
+        ),
+        [)],
+      ),
+    ),
+  ),
+)" role="math">\(\mathbf{x}^{(K+1)} \coloneqq \phi (\mathbf{x}^{(K)})\)</span> for notational simplicity. But the right-hand side has norm at most <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  sequence(
+    [diam],
+    lr(body: sequence([(], styled(child: [X], ..), [)])),
+  ),
+  [/],
+  [K],
+)" role="math">\(\text{diam}(\mathcal{X})/K\)</span>, so setting <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [K],
+  [ ],
+  [=],
+  [ ],
+  sequence(
+    [diam],
+    lr(body: sequence([(], styled(child: [X], ..), [)])),
+  ),
+  [/],
+  [ϵ],
+)" role="math">\(K = \text{diam}(\mathcal{X})/\epsilon\)</span> completes the proof.</p>
+      </div>
+    </section>
+    <h1 id="2-2-semi-separation" class="notes-heading" data-level="1" data-number="2.2"><span class="secno">2.2</span> Semi-separation</h1>
+    <p><a href="#loc-8">Theorem 2.6</a> also, conveniently, solves the second problem. The key observation, as it turns out, is that it is not actually necessary to be able to efficiently optimize/separate over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. In fact, it is sufficient to be able to perform the following task, which we call <em>semi-separation</em>.</p>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">2<span class="env-number-separator">.</span>7</strong> <span class="env-extra">(Semi-separation)</span> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">
+        <p>In the <em>semi-separation</em> problem we are given a function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: [d],
+  ),
+)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> and we have to compute <em>either</em></p>
+        <ul>
+          <li>an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-expected fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [μ],
+  [ ],
+  [∈],
+  [ ],
+  sequence(
+    [Δ],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [X], ..)),
+        [)],
+      ),
+    ),
+  ),
+)" role="math">\(\mu \in \Delta (\mathcal{X})\)</span> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>, <em>or</em></li>
+          <li>a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: styled(child: [x], ..)),
+  [ ],
+  [∈],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  sequence(
+    [φ],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+  ),
+  [ ],
+  [∉],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span>.</li>
+        </ul>
+      </div>
+    </section>
+    <p>The proof of <a href="#loc-8">Theorem 2.6</a> also gives a solution to the semi-separation problem: indeed, while constructing the sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [1], [)])),
+  ),
+  [,],
+  [ ],
+  […],
+  [,],
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [K], [)])),
+  ),
+)" role="math">\(\mathbf{x}^{(1)}, \dots , \mathbf{x}^{(K)}\)</span>, if any <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: styled(child: [x], ..)),
+  t: lr(body: sequence([(], [k], [)])),
+)" role="math">\(\mathbf{x}^{(k)}\)</span> is not in <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>, we can immediately output <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: styled(child: [x], ..)),
+  t: lr(body: sequence([(], [k], [−], [1], [)])),
+)" role="math">\(\mathbf{x}^{(k-1)}\)</span>.</p>
+    <p>It is instructive to contemplate briefly the implications of this result. A point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: styled(child: [x], ..)),
+  [ ],
+  [∈],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  sequence(
+    [φ],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+  ),
+  [ ],
+  [∉],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span> gives a separating direction <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [a], ..)),
+    t: [⊤],
+  ),
+  [ ],
+  sequence(
+    [φ],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+  ),
+  [ ],
+  [≤],
+  [ ],
+  [b],
+)" role="math">\(\mathbf{a}^{⊤} \phi (\mathbf{x}) \le b\)</span> separating <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  lr(
+    body: sequence(
+      [(],
+      equation(block: false, body: styled(child: [x], ..)),
+      [)],
+    ),
+  ),
+)" role="math">\(\phi (\mathbf{x})\)</span> from <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span>; the same constraint can be used to separate <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> from <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. Determining whether a given function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  styled(child: [X], ..),
+  [ ],
+  [→],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: [d],
+  ),
+)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> actually has image in <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span> is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point <em>or</em> a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∉], [ ], attach(base: [Φ], t: [q]))" role="math">\(\phi \notin \Phi^{q}\)</span>.</p>
+    <h1 id="2-3-efficient-regret-minimization-via-semi-separation" class="notes-heading" data-level="1" data-number="2.3"><span class="secno">2.3</span> Efficient regret minimization via semi-separation</h1>
+    <p>We now show how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> expressible in the form given by <a href="#loc-1">Definition 2.1</a>. <mark class="todo">actually do this</mark></p>
     <section class="bibliography" id="bibliography">
       <h1 class="notes-heading notes-heading-unnumbered" data-level="1">Bibliography for this chapter</h1>
       <table class="bibliography-table">
-        <tbody><tr id="loc-7" class="bibliography-row">
+        <tbody><tr id="loc-9" class="bibliography-row">
           <td class="bib-key">[Zha+25]</td>
           <td class="bib-entry">B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Learning and Computation of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(<span class="bib-math">Φ</span>\)</span>-Equilibria at the Frontier of Tractability. <em>Economics and Computation</em>.</td>
         </tr>
-        <tr id="loc-8" class="bibliography-row">
+        <tr id="loc-10" class="bibliography-row">
           <td class="bib-key">[Zha+24]</td>
           <td class="bib-entry">B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(<span class="bib-math">Φ</span>\)</span>-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. <em>Advances in Neural Information Processing Systems</em>.</td>
         </tr>
@@ -1659,37 +2163,6 @@ mark {
 </section>
 </article>
 </main>
-<script>
-(() => {
-  const links = Array.from(document.querySelectorAll("[data-section-link]"));
-  if (!links.length) return;
-  const byId = new Map(links.map((link) => [link.getAttribute("data-section-link"), link]));
-  const sections = Array.from(byId.keys()).map((id) => document.getElementById(id)).filter(Boolean);
-  const setActive = (id) => {
-    for (const link of links) {
-      const active = link.getAttribute("data-section-link") === id;
-      link.classList.toggle("is-active", active);
-      if (active) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
-    }
-  };
-  const update = () => {
-    const y = window.scrollY + 130;
-    let current = sections[0]?.id;
-    for (const section of sections) {
-      if (section.offsetTop <= y) current = section.id;
-      else break;
-    }
-    if (current) setActive(current);
-  };
-  update();
-  window.setTimeout(update, 0);
-  window.setTimeout(update, 150);
-  document.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  window.addEventListener("hashchange", update);
-})();
-</script>
 <script>
 (() => {
   function boxWidth(el){

@@ -1309,7 +1309,7 @@ mark {
 <li class="toc-l1"><a href="#6-3-reducing-to-an-approachability-problem"><span class="toc-no">6.3</span><span class="toc-title">Reducing to an approachability problem</span></a></li>
 <li class="toc-l1"><a href="#6-4-response-based-approachability"><span class="toc-no">6.4</span><span class="toc-title">Response-based approachability</span></a></li>
 </ol></nav>
-<p>In this chapter, we introduce the notion of <em>profile swap regret</em>, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees <em>non-manipulability</em>—in a sense that will be formalized—against a dynamic optimizer. What’s more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-10" id="loc-1" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a><span class="citation-note"><span class="citation-note-key">[Aru+25]</span> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider, and B. Sivan, “Swap Regret and Correlated Equilibria Beyond Normal-Form Games,” in <em>Conference on Economics and Computation (EC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>, who also provided the first efficient algorithm. In what follows, we present the approach of <span class="citation-wrap"><a class="citation" href="#loc-11" id="loc-2" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a><span class="citation-note"><span class="citation-note-key">[Ana+26]</span> I. Anagnostides, G. Farina, M. Fishelson, H. Luo, and J. Schneider, “Swap Regret Minimization Through Response-Based Approachability,” in <em>Conference on Learning Theory (COLT)</em>,<span style="white-space: pre-wrap">  </span>2026.</span></span>, which in turn relies on the response-based approachability algorithm of <span class="citation-wrap"><a class="citation" href="#loc-12" id="loc-3" role="doc-biblioref">Bernstein and Shimkin [BS15]</a><span class="citation-note"><span class="citation-note-key">[BS15]</span> A. Bernstein and N. Shimkin, “Response-Based Approachability with Applications to Generalized No-Regret Problems,” <em>Journal of Machine Learning Research</em>, vol. 16, no. 1, pp. 747–773, 2015.</span></span>.</p>
+<p>In this chapter, we introduce the notion of <em>profile swap regret</em>, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees <em>non-manipulability</em>—in a sense that will be formalized soon—against a dynamic optimizer. What’s more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-11" id="loc-1" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a><span class="citation-note"><span class="citation-note-key">[Aru+25]</span> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider, and B. Sivan, “Swap Regret and Correlated Equilibria Beyond Normal-Form Games,” in <em>Conference on Economics and Computation (EC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>, who also provided the first efficient algorithm. In what follows, we present the approach of <span class="citation-wrap"><a class="citation" href="#loc-12" id="loc-2" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a><span class="citation-note"><span class="citation-note-key">[Ana+26]</span> I. Anagnostides, G. Farina, M. Fishelson, H. Luo, and J. Schneider, “Swap Regret Minimization Through Response-Based Approachability,” in <em>Conference on Learning Theory (COLT)</em>,<span style="white-space: pre-wrap">  </span>2026.</span></span>, which in turn relies on the response-based approachability algorithm of <span class="citation-wrap"><a class="citation" href="#loc-13" id="loc-3" role="doc-biblioref">Bernstein and Shimkin [BS15]</a><span class="citation-note"><span class="citation-note-key">[BS15]</span> A. Bernstein and N. Shimkin, “Response-Based Approachability with Applications to Generalized No-Regret Problems,” <em>Journal of Machine Learning Research</em>, vol. 16, no. 1, pp. 747–773, 2015.</span></span>.</p>
     <h1 id="6-1-setup" class="notes-heading" data-level="1" data-number="6.1"><span class="secno">6.1</span> Setup</h1>
     <p>We operate in the usual online linear optimization setting. The learner picks strategies from a convex and compact strategy set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: styled(child: [X], ..)),
@@ -1370,7 +1370,7 @@ mark {
       [⟩],
     ),
   ),
-)" role="math">\(\left\langle \mathbf{x}^{(t)},\mathbf{u}^{(t)} \right\rangle\)</span>, and observes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\left\langle \mathbf{x}^{(t)},\mathbf{u}^{(t)} \right\rangle\)</span> and observes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: styled(child: [u], ..)),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span> as feedback. We make the standard normalization assumption <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -1704,12 +1704,12 @@ mark {
   [.],
 )">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \coloneqq \operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \sum_{t=1}^{T} \left\langle \phi \left(\mathbf{x}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} \right\rangle - \sum_{t=1}^{T} \left\langle \mathbf{x}^{\left(t\right)},\mathbf{u}^{\left(t\right)} \right\rangle .\]</span></div>
     </figure>
-    <p>This is a natural relaxation of (full) swap regret: instead of allowing arbitrary maps, the performance of the learner is compared against affine endomorphisms. In this case, the algorithm of <span class="citation-wrap"><a class="citation" href="#loc-13" id="loc-4" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald, and C. Marks, “No-regret learning in convex games,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2008.</span></span> reduces linear swap regret to external regret over the <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([d], lr(body: sequence([(], [d], [+], [1], [)])))" role="math">\(d(d+1)\)</span>-dimensional set deviations. This implies an online algorithm with linear swap regret growing as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>This is a natural relaxation of (full) swap regret: instead of allowing arbitrary maps, the performance of the learner is compared against affine endomorphisms. In this case, the algorithm of <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-4" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald, and C. Marks, “No-regret learning in convex games,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2008.</span></span> reduces linear swap regret to external regret over the <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([d], lr(body: sequence([(], [d], [+], [1], [)])))" role="math">\(d(d+1)\)</span>-dimensional set of deviations. This implies an online algorithm with linear swap regret growing as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
   lr(
     body: sequence([(], [d], [ ], root(radicand: [T]), [)]),
   ),
-)" role="math">\(O(d \sqrt[]{T})\)</span>, which is information-theoretically optimal&nbsp;[<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Ana+26</a></span>]. On the other hand, the algorithm of&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is computationally inefficient&nbsp;<span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. This lecture will cover an approachability framework that circumvents this barrier.</p>
+)" role="math">\(O(d \sqrt[]{T})\)</span>, which is information-theoretically optimal&nbsp;[<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>]. On the other hand, the algorithm of&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is computationally inefficient&nbsp;<span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. This lecture will cover an approachability framework that circumvents this computational barrier.</p>
     <p><strong>Correlated strategy profiles.</strong> A basic object in the approachability formulation is the <em>correlated strategy profile (CSP)</em>. Specifically, for a realized pair <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
@@ -2054,7 +2054,7 @@ mark {
   [.],
 )">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} = T \operatorname*{max}_{\phi =\left(\mathbf{M},\mathbf{a}\right) \in \text{End}\left(\mathcal{X}\right)} \left\langle \left(\mathbf{M}, \mathbf{a}\right) - \left(\mathbf{I}, 0\right),\overline{κ}^{\left(T\right)} \right\rangle .\]</span> <span class="eqno">(2)</span></div>
     </figure>
-    <p>Using this reformulation, we will shortly see how to reduce minimizing linear swap regret to a suitable approachability instance.</p>
+    <p>Using this reformulation, we will shortly see how to reduce minimizing linear swap regret to a suitable approachability problem.</p>
     <h1 id="6-2-profile-swap-regret-and-non-manipulability" class="notes-heading" data-level="1" data-number="6.2"><span class="secno">6.2</span> Profile swap regret and non-manipulability</h1>
     <p>We now define the notion of <em>profile swap regret</em> and discuss its non-manipulability properties. To do so, we define the instantaneous regret as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
@@ -2404,7 +2404,7 @@ mark {
 )" role="math">\(\overline{κ}^{(T)}\)</span>.</p>
       </div>
     </section>
-    <p>The definition is admittedly somewhat cumbersome, but as we shall see it unlocks certain powerful properties. Specifically, this is a good time to discuss the notion of non-manipulability due to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-15" id="loc-7" role="doc-biblioref">Deng, Schneider and Sivan [DSS19]</a><span class="citation-note"><span class="citation-note-key">[DSS19]</span> Y. Deng, J. Schneider, and B. Sivan, “Strategizing against no-regret learners,” <em>Neural information processing systems (NeurIPS)</em>, 2019.</span></span>.</p>
+    <p>The definition is admittedly somewhat cumbersome, but as we shall see it unlocks certain powerful properties. This is a good time to discuss the notion of non-manipulability due to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-16" id="loc-7" role="doc-biblioref">Deng, Schneider and Sivan [DSS19]</a><span class="citation-note"><span class="citation-note-key">[DSS19]</span> Y. Deng, J. Schneider, and B. Sivan, “Strategizing against no-regret learners,” <em>Neural information processing systems (NeurIPS)</em>, 2019.</span></span>.</p>
     <h2 id="6-2-1-manipulability-against-a-dynamic-optimizer" class="notes-heading" data-level="2" data-number="6.2.1"><span class="secno">6.2.1</span> Manipulability against a dynamic optimizer</h2>
     <p>We consider a two-player game between a <em>learner</em> and an <em>optimizer</em>. The learner follows some learning algorithm, whereas the optimizer may choose its actions strategically over time after observing how the learner updates. We let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [ℓ])" role="math">\(u_{ℓ}\)</span> be the learner’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span> its strategy set. Similarly, we let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [o])" role="math">\(u_{o}\)</span> be the optimizer’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [Y], ..)" role="math">\(\mathcal{Y}\)</span> its strategy set.</p>
     <p>The key relevant benchmark in this setting is the optimizer’s <em>Stackelberg value</em>, which is the best utility the optimizer can guarantee by committing to a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2583,9 +2583,8 @@ mark {
   [,],
   [ ],
   […],
-)" role="math">\(\mathbf{y}^{(1)}, \mathbf{y}^{(2)}, \dots\)</span> so as to steer the learner’s future play toward more favorable outcomes.</p>
-    <p>Equivalently, even if the optimizer fully understands the learner’s algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.</p>
-    <p>A key observation crystallized by <span class="citation-wrap"><a class="citation" href="#loc-10" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a></span> is that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.</p>
+)" role="math">\(\mathbf{y}^{(1)}, \mathbf{y}^{(2)}, \dots\)</span> so as to steer the learner’s future play toward more favorable outcomes. (It’s interesting to note that this steering problem can be computationally intractable&nbsp;<span id="loc-8">[</span><span class="citation-wrap"><a class="citation" href="#loc-17" role="doc-biblioref">ADD24</a><span class="citation-note"><span class="citation-note-key">[ADD24]</span> A. Assos, Y. Dagan, and C. Daskalakis, “Maximizing utility in multi-agent environments by anticipating the behavior of other learners,” in <em>Neural Information Processing Systems (NeurIPS)</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>].) Equivalently, even if the optimizer fully understands the learner’s algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.</p>
+    <p>A beautiful connection crystallized by <span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a></span> reassures us that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.</p>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Proposition</strong> <strong class="env-number">6<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If a learning algorithm guarantees <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2597,7 +2596,7 @@ mark {
   [=],
   [ ],
   sequence([o], lr(body: sequence([(], [T], [)]))),
-)" role="math">\(\text{ProfileSwapReg}^{(T)} = o(T)\)</span>, it is asymptotically non-manipulable.</div>
+)" role="math">\(\text{ProfileSwapReg}^{(T)} = o(T)\)</span>, it is non-manipulable.</div>
     </section>
     <h1 id="6-3-reducing-to-an-approachability-problem" class="notes-heading" data-level="1" data-number="6.3"><span class="secno">6.3</span> Reducing to an approachability problem</h1>
     <p>Having introduced and motivated the notion of profile swap regret, we now reduce it to an approachability instance. We define <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2771,7 +2770,7 @@ mark {
     </figure>
     <p>We first point out that minimizing linear swap regret reduces to this approachability instance.</p>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>For any time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [T],
@@ -3147,7 +3146,7 @@ mark {
     </section>
     <p>What’s more, the same target set also captures profile swap regret. The following lemma follows essentially by the definition of profile swap regret.</p>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>4</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>4</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">The profile swap distance of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
@@ -3159,13 +3158,13 @@ mark {
     <p>The profile swap distance of a CSP <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
-)" role="math">\(\overline{κ}^{(T)}\)</span> is infimum Euclidean distance of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\overline{κ}^{(T)}\)</span> is the infimum Euclidean distance of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
 )" role="math">\(\overline{κ}^{(T)}\)</span> from a CSP with zero profile swap regret. As a result, we conclude that minimizing the approachability loss simultaneously circumscribes both linear swap regret and profile swap regret.</p>
     <h1 id="6-4-response-based-approachability" class="notes-heading" data-level="1" data-number="6.4"><span class="secno">6.4</span> Response-based approachability</h1>
-    <p>The key observation is that the induced approachability problem can be solved efficiently through the response-based framework of&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Bernstein and Shimkin [BS15]</a></span> this was observed by&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a></span>.</p>
-    <p>The algorithm proceeds by maintaining an accumulated displacement</p>
+    <p>The key observation now is that the induced approachability problem can be solved efficiently through the response-based approachability framework of&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">Bernstein and Shimkin [BS15]</a></span>. This was recently leveraged by&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a></span>.</p>
+    <p>The algorithm proceeds by maintaining the accumulated displacement</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -3479,7 +3478,7 @@ mark {
 )" role="math">\(\mathcal{U}^{(t)}\)</span>.</p>
     <p>This response-based approachability algorithm is summarized below. All steps can be efficiently implemented through oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>.</p>
     <section class="env algorithm">
-      <div class="env-title"><strong>Algorithm</strong> [<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">BS15</a></span>]: Response-based approachability</div>
+      <div class="env-title"><strong>Algorithm</strong> [<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">BS15</a></span>]: Response-based approachability</div>
       <div class="pseudocode">
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><strong>Input:</strong> Horizon <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span>, sets <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3784,7 +3783,7 @@ mark {
     </section>
     <p>The proof of correctness crucially relies on the minimax theorem, as we formalize below.</p>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>5</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">BS15</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>5</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">BS15</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>For every utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -3796,7 +3795,7 @@ mark {
   [ ],
   styled(child: [U], ..),
 )" role="math">\(\mathbf{u}^{(t)} \in \mathcal{U}\)</span>, we have</p>
-        <figure class="equation" id="loc-8" role="math">
+        <figure class="equation" id="loc-9" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   lr(
     body: sequence(
@@ -4226,7 +4225,7 @@ mark {
   base: equation(block: false, body: styled(child: [u], ..)),
   t: lr(body: sequence([(], [t], [)])),
   b: [∗],
-)" role="math">\(\mathbf{u}_{∗}^{(t)}\)</span> is minimax, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathbf{u}_{∗}^{(t)}\)</span> is minimax optimal and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [b],
   lr(
     body: sequence(
@@ -4455,11 +4454,11 @@ mark {
   [,],
 )">\[\displaystyle \left\langle \mathcal{U}^{\left(t-1\right)},κ^{\left(t\right)} \right\rangle \ge \left\langle \mathcal{U}^{\left(t-1\right)},\mathbf{s}^{\left(t\right)} \right\rangle ,\]</span></div>
         </figure>
-        <p>which is exactly (<a href="#loc-8">7</a>).</p>
+        <p>which is exactly (<a href="#loc-9">7</a>).</p>
       </div>
     </section>
     <p>The invariant implies approachability by the usual Pythagorean argument.</p>
-    <section class="env statement" id="loc-9">
+    <section class="env statement" id="loc-10">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>6</strong> <span class="env-extra">(Pythagorean lemma)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -4614,7 +4613,7 @@ mark {
         </figure>
       </div>
     </section>
-    <p>Applying <a href="#loc-9">Lemma 6.6</a> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Applying <a href="#loc-10">Lemma 6.6</a> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: styled(child: [z], ..)),
     t: lr(body: sequence([(], [t], [)])),
@@ -4773,7 +4772,7 @@ mark {
   [.],
 )" role="math">\(B \coloneqq \operatorname*{max}_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \Vert (\mathbf{u} ⊗ \mathbf{x}, \mathbf{u})\Vert_{F}.\)</span> We thus arrive at the following theorem.</p>
     <section class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">6<span class="env-number-separator">.</span>7</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">6<span class="env-number-separator">.</span>7</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>For any sequence of utilities <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -5129,33 +5128,37 @@ mark {
         </figure>
       </div>
     </section>
-    <p>Through suitable preconditioning, it can be shown that this algorithm guarantees optimal linear swap regret&nbsp;[<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Ana+26</a></span>]. We further remark that this response-based framework can be extended to nonlinear deviations; we refer the interested reader to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a></span>.</p>
+    <p>Through suitable preconditioning, it can be shown that this algorithm guarantees optimal linear swap regret&nbsp;[<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>]. We further remark that this response-based framework can be extended to nonlinear deviations; we refer the interested reader to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a></span>.</p>
     <section class="bibliography" id="bibliography">
       <h1 class="notes-heading notes-heading-unnumbered" data-level="1">Bibliography for this chapter</h1>
       <table class="bibliography-table">
-        <tbody><tr id="loc-10" class="bibliography-row">
+        <tbody><tr id="loc-11" class="bibliography-row">
           <td class="bib-key">[Aru+25]</td>
           <td class="bib-entry">E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider and B. Sivan. (2025). Swap Regret and Correlated Equilibria Beyond Normal-Form Games. <em>Conference on Economics and Computation (EC)</em>.</td>
         </tr>
-        <tr id="loc-11" class="bibliography-row">
+        <tr id="loc-12" class="bibliography-row">
           <td class="bib-key">[Ana+26]</td>
           <td class="bib-entry">I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. <em>Conference on Learning Theory (COLT)</em>.</td>
         </tr>
-        <tr id="loc-12" class="bibliography-row">
+        <tr id="loc-13" class="bibliography-row">
           <td class="bib-key">[BS15]</td>
           <td class="bib-entry">A. Bernstein and N. Shimkin. (2015). Response-Based Approachability with Applications to Generalized No-Regret Problems. <em>Journal of Machine Learning Research</em>, 16, 747–773.</td>
         </tr>
-        <tr id="loc-13" class="bibliography-row">
+        <tr id="loc-14" class="bibliography-row">
           <td class="bib-key">[GGM08]</td>
           <td class="bib-entry">G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</td>
         </tr>
-        <tr id="loc-14" class="bibliography-row">
+        <tr id="loc-15" class="bibliography-row">
           <td class="bib-key">[Das+25]</td>
           <td class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</td>
         </tr>
-        <tr id="loc-15" class="bibliography-row">
+        <tr id="loc-16" class="bibliography-row">
           <td class="bib-key">[DSS19]</td>
           <td class="bib-entry">Y. Deng, J. Schneider and B. Sivan. (2019). Strategizing against no-regret learners. <em>Neural information processing systems (NeurIPS)</em>.</td>
+        </tr>
+        <tr id="loc-17" class="bibliography-row">
+          <td class="bib-key">[ADD24]</td>
+          <td class="bib-entry">A. Assos, Y. Dagan and C. Daskalakis. (2024). Maximizing utility in multi-agent environments by anticipating the behavior of other learners. <em>Neural Information Processing Systems (NeurIPS)</em>.</td>
         </tr>
       </tbody></table>
     </section></article>

@@ -1,4 +1,4 @@
-CHAPTERS := P1-introduction P2-semi_separation P3-phi-regret-learning P4-multicalibration P5-treeswap P6-profile
+CHAPTERS := P1-introduction P2-phi_regret P3-ellipsoid P4-multicalibration P5-treeswap P6-profile
 SOURCES := $(addsuffix .typ,$(CHAPTERS))
 PUBLIC_HTML := $(addprefix public/,$(addsuffix .html,$(CHAPTERS)))
 PUBLIC_PDF := $(addprefix public/pdf/,$(addsuffix .pdf,$(CHAPTERS)))
