@@ -2243,7 +2243,7 @@ mark {
     ),
     annotation: sequence([≤], [ ], [1]),
   ),
-)">\(\displaystyle = \frac{1}{K} \sum_{k=1}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{k}^{\left(t\right)}\right) - \boldsymbol{x}_{k-1}^{\left(t\right)} \right\rangle + \frac{1}{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]}\left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{0}^{\left(t\right)}\right) - \boldsymbol{x}_{K-1}^{\left(t\right)} \right\rangle\)</span></div>
+)">\(\displaystyle = \frac{1}{K} \sum_{k=1}^{K-1} \underbrace{\mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{k}^{\left(t\right)}\right) - \boldsymbol{x}_{k-1}^{\left(t\right)} \right\rangle}_{\le \epsilon} + \frac{1}{K} \underbrace{\mathop{\mathbb{E}}\limits_{t \in \left[T\right]}\left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{0}^{\left(t\right)}\right) - \boldsymbol{x}_{K-1}^{\left(t\right)} \right\rangle}_{\le 1}\)</span></div>
           <div class="equation-line is-unnumbered has-alignment" data-line="4" data-math-display="block" data-typst-math="sequence(
   align-point(),
   [ ],

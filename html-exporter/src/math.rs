@@ -224,6 +224,9 @@ fn convert_call(name: &str, inner: &str) -> String {
         "dot" => accent_command("dot", &args),
         "overline" => accent_command("overline", &args),
         "underline" => accent_command("underline", &args),
+        "accent" => accent_mark_command(&args),
+        "underbrace" => brace_annotation_command("underbrace", &args),
+        "overbrace" => brace_annotation_command("overbrace", &args),
         "h" => convert_horizontal_space(&args),
         "linebreak" => "\\\\".to_owned(),
         "align-point" => "&".to_owned(),
@@ -458,6 +461,48 @@ fn accent_command(name: &str, args: &[Arg]) -> String {
         .map(convert_expr)
         .unwrap_or_default();
     format!("\\{name}{{{}}}", body.trim())
+}
+
+fn accent_mark_command(args: &[Arg]) -> String {
+    let body = named_arg(args, "base")
+        .or_else(|| named_arg(args, "body"))
+        .or_else(|| positional_arg(args, 0))
+        .map(convert_expr)
+        .unwrap_or_default();
+    let command = named_arg(args, "accent")
+        .and_then(quoted_literal)
+        .and_then(accent_mark_to_command)
+        .unwrap_or("hat");
+    format!("\\{command}{{{}}}", body.trim())
+}
+
+fn accent_mark_to_command(accent: &str) -> Option<&'static str> {
+    match accent {
+        "\u{302}" | "\\u{302}" => Some("hat"),
+        "\u{303}" | "\\u{303}" => Some("tilde"),
+        "\u{307}" | "\\u{307}" => Some("dot"),
+        "\u{20d7}" | "\\u{20d7}" => Some("vec"),
+        _ => None,
+    }
+}
+
+fn brace_annotation_command(name: &str, args: &[Arg]) -> String {
+    let body = named_arg(args, "body")
+        .or_else(|| positional_arg(args, 0))
+        .map(convert_expr)
+        .unwrap_or_default();
+    let annotation = named_arg(args, "annotation")
+        .or_else(|| named_arg(args, "label"))
+        .or_else(|| positional_arg(args, 1))
+        .map(convert_expr)
+        .unwrap_or_default();
+    let body = body.trim();
+    let annotation = annotation.trim();
+    if annotation.is_empty() {
+        format!("\\{name}{{{body}}}")
+    } else {
+        format!("\\{name}{{{body}}}_{{{annotation}}}")
+    }
 }
 
 fn convert_horizontal_space(args: &[Arg]) -> String {
@@ -1261,6 +1306,30 @@ mod tests {
         assert_eq!(
             typst_repr_to_katex("styled(child: attach(base: [x], b: [i]), ..)"),
             "\\boldsymbol{x}_{i}"
+        );
+    }
+
+    #[test]
+    fn converts_low_level_hat_accent_repr() {
+        assert_eq!(
+            typst_repr_to_katex(
+                r#"accent(base: equation(block: false, body: [𝐱]), accent: "\u{302}")"#
+            ),
+            r"\hat{\boldsymbol{x}}"
+        );
+    }
+
+    #[test]
+    fn converts_brace_annotations() {
+        assert_eq!(
+            typst_repr_to_katex(
+                "underbrace(body: sequence([x], [ ], [+], [ ], [y]), annotation: sequence([≤], [ ], [ϵ]))"
+            ),
+            r"\underbrace{x + y}_{\le \epsilon}"
+        );
+        assert_eq!(
+            typst_repr_to_katex("overbrace(body: [x], annotation: [n])"),
+            r"\overbrace{x}_{n}"
         );
     }
 
