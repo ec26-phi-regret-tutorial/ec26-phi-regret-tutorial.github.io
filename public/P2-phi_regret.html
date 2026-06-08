@@ -58,6 +58,7 @@ b,
 .chapter-rail-heading,
 .chapter-rail-tool,
 .chapter-rail-link.is-current,
+.chapter-section-link.is-active,
 .citation-note-key {
     font-family: "Frutiger Notes", var(--serif)
 }
@@ -329,8 +330,8 @@ a:hover {
     color: var(--ink);
     font-weight: 700;
     background: #fffdf9;
-    border-left: 3px solid var(--accent);
-    margin-left: -2px
+    border-left: 6px solid var(--brown);
+    margin-left: -5px
 }
 
 .chapter-section-link {
@@ -360,9 +361,10 @@ a:hover {
 
 .chapter-section-link.is-active {
     color: var(--ink);
+    font-weight: 700;
     background: #fffdf9;
-    border-left: 3px solid var(--brown);
-    margin-left: -2px
+    border-left: 6px solid var(--accent);
+    margin-left: -5px
 }
 
 .page-shell {
