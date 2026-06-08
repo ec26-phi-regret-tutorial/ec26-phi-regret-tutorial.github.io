@@ -85,7 +85,7 @@ We now show how to use a semi-separation oracle to construct an efficient regret
 
 #import "figures/phi-fixed-point.typ": body as phi_fixed_point
 
-#figure(caption: [#todo[Add caption]], scale(80%, phi_fixed_point))
+#figure(caption: [#todo[Add caption]], scale(90%, phi_fixed_point))
 
 
 // #colbreak()
