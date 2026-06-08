@@ -83,6 +83,11 @@ It is instructive to contemplate briefly the implications of this result. A poin
 We now show how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree. #todo("actually do this")
 
 
+#import "figures/phi-fixed-point.typ": body as phi_fixed_point
+
+#figure(caption: [#todo[Add caption]], scale(80%, phi_fixed_point))
+
+
 // #colbreak()
 
 #lec_bibliography("../meta/refs.bib")
