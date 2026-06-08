@@ -1,6 +1,6 @@
 #import "meta/gabri_notes.typ": *
 
-#show: gabri_notes.with(lec_num: 3, date: none, title: "Ellipsoid against hope")
+#show: gabri_notes.with(lec_num: 3, date: none, title: "Ellipsoid Against Hope")
 
 
 
