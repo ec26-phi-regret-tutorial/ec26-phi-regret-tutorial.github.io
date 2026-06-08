@@ -768,7 +768,7 @@ code {
 .equation-aligned {
     display: grid;
     --equation-align-gutter: .28rem;
-    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(3.5rem, max-content);
+    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(0, 1fr) minmax(0, max-content);
     align-items: center;
     column-gap: var(--equation-align-gutter);
     row-gap: .35rem
@@ -804,7 +804,7 @@ code {
 }
 
 .equation-align-full {
-    grid-column: 2 / 4;
+    grid-column: 1 / 5;
     justify-self: center;
     min-width: max-content;
     line-height: 0
@@ -820,7 +820,7 @@ code {
 }
 
 .equation-aligned .eqno {
-    grid-column: 4;
+    grid-column: 5;
     align-self: center
 }
 
@@ -856,6 +856,7 @@ span[role="math"].math-katex-source {
 }
 
 .math-katex-source .katex {
+    font-size: 1.15em;
     vertical-align: baseline
 }
 
@@ -4289,7 +4290,7 @@ mark {
     <p>If every valid linear endomorphism has spectral norm at most <span class="math-katex-source" data-math-display="inline" data-typst-math="[S]" role="math">\(S\)</span>, then each test above lies in a Frobenius ball of radius on the order of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   root(radicand: [d]),
   lr(body: sequence([(], [S], [ ], [+], [ ], [1], [)])),
-)" role="math">\(\sqrt[]{d}(S + 1)\)</span>. Instead of learning over valid endomorphisms, we can learn over the larger class</p>
+)" role="math">\(\sqrt{d}(S + 1)\)</span>. Instead of learning over valid endomorphisms, we can learn over the larger class</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [𝓗],
@@ -4724,7 +4725,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(B L S \sqrt[]{d T})\)</span> linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-11" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [Das+25]</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>, while avoiding semi-separation altogether.</p>
+)" role="math">\(O(B L S \sqrt{d T})\)</span> linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-11" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [Das+25]</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>, while avoiding semi-separation altogether.</p>
     <h2 id="4-2-3-rkhs-deviations" class="notes-heading" data-level="2" data-number="4.2.3"><span class="secno">4.2.3</span> RKHS deviations</h2>
     <p>The same idea extends beyond finite-dimensional linear classes. Suppose that the deviation functions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],

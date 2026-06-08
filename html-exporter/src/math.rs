@@ -185,7 +185,13 @@ fn convert_call(name: &str, inner: &str) -> String {
                 .or_else(|| positional_arg(&args, 1))
                 .map(convert_expr)
                 .unwrap_or_default();
-            format!("\\sqrt[{}]{{{}}}", index.trim(), body.trim())
+            let index = index.trim();
+            let body = body.trim();
+            if index.is_empty() {
+                format!("\\sqrt{{{body}}}")
+            } else {
+                format!("\\sqrt[{index}]{{{body}}}")
+            }
         }
         "vec" => accent_command("vec", &args),
         "hat" => accent_command("hat", &args),
@@ -1231,6 +1237,22 @@ mod tests {
         assert!(out.contains(r#"\(x\le y\)"#));
         assert!(out.contains("math-katex-source"));
         assert!(!out.contains("<svg>"));
+    }
+
+    #[test]
+    fn root_omits_empty_optional_argument() {
+        let input = r#"<p>on the order of <span role="math" data-typst-math="root(radicand: [d])" data-math-display="inline"><svg></svg></span>. Then</p>"#;
+        let out = postprocess_html_math(input.to_owned(), MathMode::Katex);
+        assert!(out.contains(r#"\(\sqrt{d}\)"#), "{out}");
+        assert!(!out.contains(r#"\sqrt[]{d}"#), "{out}");
+    }
+
+    #[test]
+    fn root_preserves_nonempty_optional_argument() {
+        assert_eq!(
+            typst_repr_to_katex("root(index: [n], radicand: [d])"),
+            r"\sqrt[n]{d}"
+        );
     }
 
     #[test]

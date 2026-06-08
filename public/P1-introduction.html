@@ -768,7 +768,7 @@ code {
 .equation-aligned {
     display: grid;
     --equation-align-gutter: .28rem;
-    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(3.5rem, max-content);
+    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(0, 1fr) minmax(0, max-content);
     align-items: center;
     column-gap: var(--equation-align-gutter);
     row-gap: .35rem
@@ -804,7 +804,7 @@ code {
 }
 
 .equation-align-full {
-    grid-column: 2 / 4;
+    grid-column: 1 / 5;
     justify-self: center;
     min-width: max-content;
     line-height: 0
@@ -820,7 +820,7 @@ code {
 }
 
 .equation-aligned .eqno {
-    grid-column: 4;
+    grid-column: 5;
     align-self: center
 }
 
@@ -856,6 +856,7 @@ span[role="math"].math-katex-source {
 }
 
 .math-katex-source .katex {
+    font-size: 1.15em;
     vertical-align: baseline
 }
 
@@ -5219,7 +5220,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(\sqrt[]{T |\mathcal{A}| \operatorname{log} |\mathcal{A}|})\)</span>.</div>
+)" role="math">\(O(\sqrt{T |\mathcal{A}| \operatorname{log} |\mathcal{A}|})\)</span>.</div>
     </section>
     <p>The naive argument here would only yield a swap regret bound of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
@@ -5244,7 +5245,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(|\mathcal{A}| \sqrt[]{T \operatorname{log} |\mathcal{A}|})\)</span> since each MWU algorithm incurs an external regret bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(O(|\mathcal{A}| \sqrt{T \operatorname{log} |\mathcal{A}|})\)</span> since each MWU algorithm incurs an external regret bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
   lr(
     body: sequence(
@@ -5263,7 +5264,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(\sqrt[]{T \operatorname{log} |\mathcal{A}|})\)</span>. However, one can make use of the structure of the utilities to obtain the improved bound claimed in <a href="#loc-17">Theorem 1.12</a>. In particular, we observe that for any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(O(\sqrt{T \operatorname{log} |\mathcal{A}|})\)</span>. However, one can make use of the structure of the utilities to obtain the improved bound claimed in <a href="#loc-17">Theorem 1.12</a>. In particular, we observe that for any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [t],
   [ ],
   [∈],

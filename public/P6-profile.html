@@ -768,7 +768,7 @@ code {
 .equation-aligned {
     display: grid;
     --equation-align-gutter: .28rem;
-    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(3.5rem, max-content);
+    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(0, 1fr) minmax(0, max-content);
     align-items: center;
     column-gap: var(--equation-align-gutter);
     row-gap: .35rem
@@ -804,7 +804,7 @@ code {
 }
 
 .equation-align-full {
-    grid-column: 2 / 4;
+    grid-column: 1 / 5;
     justify-self: center;
     min-width: max-content;
     line-height: 0
@@ -820,7 +820,7 @@ code {
 }
 
 .equation-aligned .eqno {
-    grid-column: 4;
+    grid-column: 5;
     align-self: center
 }
 
@@ -856,6 +856,7 @@ span[role="math"].math-katex-source {
 }
 
 .math-katex-source .katex {
+    font-size: 1.15em;
     vertical-align: baseline
 }
 
@@ -1672,7 +1673,7 @@ mark {
   lr(
     body: sequence([(], [d], [ ], root(radicand: [T]), [)]),
   ),
-)" role="math">\(O(d \sqrt[]{T})\)</span>, which is information-theoretically optimal&nbsp;[<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>]. On the other hand, the algorithm of&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is computationally inefficient&nbsp;<span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. This lecture will cover an approachability framework that circumvents this computational barrier.</p>
+)" role="math">\(O(d \sqrt{T})\)</span>, which is information-theoretically optimal&nbsp;[<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>]. On the other hand, the algorithm of&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is computationally inefficient&nbsp;<span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. This lecture will cover an approachability framework that circumvents this computational barrier.</p>
     <p><strong>Correlated strategy profiles.</strong> A basic object in the approachability formulation is the <em>correlated strategy profile (CSP)</em>. Specifically, for a realized pair <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
@@ -4470,7 +4471,7 @@ mark {
   [ ],
   root(radicand: [T]),
   [.],
-)">\[\displaystyle \left\Vert \sum_{t=1}^{T} \boldsymbol{z}^{\left(t\right)}\right\Vert_{2} \le B \sqrt[]{T}.\]</span></div>
+)">\[\displaystyle \left\Vert \sum_{t=1}^{T} \boldsymbol{z}^{\left(t\right)}\right\Vert_{2} \le B \sqrt{T}.\]</span></div>
         </figure>
       </div>
     </section>
@@ -4582,7 +4583,7 @@ mark {
     denom: root(radicand: [T]),
   ),
   [,],
-)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \le \left\Vert \frac{1}{T} \sum_{t=1}^{T} \left(κ^{\left(t\right)} - \boldsymbol{s}^{\left(t\right)}\right)\right\Vert_{F} \le \frac{2 B}{\sqrt[]{T}},\]</span> <span class="eqno">(8)</span></div>
+)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \le \left\Vert \frac{1}{T} \sum_{t=1}^{T} \left(κ^{\left(t\right)} - \boldsymbol{s}^{\left(t\right)}\right)\right\Vert_{F} \le \frac{2 B}{\sqrt{T}},\]</span> <span class="eqno">(8)</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [B],
@@ -4827,7 +4828,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \le 4 \sqrt[]{T} \left(\operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \left\Vert \boldsymbol{u}\right\Vert_{2} \sqrt[]{\left\Vert \boldsymbol{x}\right\Vert_{2}^{2} + 1}\right) \left(\operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \left\Vert \phi \right\Vert_{F}\right),\]</span> <span class="eqno">(9)</span></div>
+)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \le 4 \sqrt{T} \left(\operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \left\Vert \boldsymbol{u}\right\Vert_{2} \sqrt{\left\Vert \boldsymbol{x}\right\Vert_{2}^{2} + 1}\right) \left(\operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \left\Vert \phi \right\Vert_{F}\right),\]</span> <span class="eqno">(9)</span></div>
         </figure>
         <p>and</p>
         <figure class="equation" role="math">
@@ -4945,7 +4946,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \text{ProfileSwapDist}^{\left(T\right)} \le \frac{2}{\sqrt[]{T}} \left(\operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \left\Vert \boldsymbol{u}\right\Vert_{2} \sqrt[]{\left\Vert \boldsymbol{x}\right\Vert_{2}^{2} + 1}\right).\]</span> <span class="eqno">(10)</span></div>
+)">\[\displaystyle \text{ProfileSwapDist}^{\left(T\right)} \le \frac{2}{\sqrt{T}} \left(\operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \left\Vert \boldsymbol{u}\right\Vert_{2} \sqrt{\left\Vert \boldsymbol{x}\right\Vert_{2}^{2} + 1}\right).\]</span> <span class="eqno">(10)</span></div>
         </figure>
       </div>
     </section>
