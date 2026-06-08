@@ -1278,8 +1278,8 @@ mark {
 <div class="chapter-rail-course"><div class="course-event">ACM EC&rsquo;26 Tutorial</div><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
 <div class="chapter-rail-heading">Chapters</div>
 <a class="chapter-rail-link" href="P1-introduction.html"><span>1</span>Introduction</a>
-<a class="chapter-rail-link" href="P2-semi_separation.html"><span>2</span>Semi-Separation</a>
-<a class="chapter-rail-link" href="P3-phi-regret-learning.html"><span>3</span>Beyond Normal Form</a>
+<a class="chapter-rail-link" href="P2-phi_regret.html"><span>2</span>Beyond Normal Form</a>
+<a class="chapter-rail-link" href="P3-ellipsoid.html"><span>3</span>Ellipsoid Against Hope</a>
 <a class="chapter-rail-link" href="P4-multicalibration.html"><span>4</span>Multicalibration</a>
 <a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
 <a class="chapter-rail-link is-current" href="P6-profile.html" aria-current="page"><span>6</span>Profile Swap</a>
@@ -1312,14 +1312,11 @@ mark {
 <p>In this chapter, we introduce the notion of <em>profile swap regret</em>, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees <em>non-manipulability</em>—in a sense that will be formalized soon—against a dynamic optimizer. What’s more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-11" id="loc-1" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a><span class="citation-note"><span class="citation-note-key">[Aru+25]</span> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider, and B. Sivan, “Swap Regret and Correlated Equilibria Beyond Normal-Form Games,” in <em>Conference on Economics and Computation (EC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>, who also provided the first efficient algorithm. In what follows, we present the approach of <span class="citation-wrap"><a class="citation" href="#loc-12" id="loc-2" role="doc-biblioref">Anagnostides, Farina, Fishelson, Luo and Schneider [Ana+26]</a><span class="citation-note"><span class="citation-note-key">[Ana+26]</span> I. Anagnostides, G. Farina, M. Fishelson, H. Luo, and J. Schneider, “Swap Regret Minimization Through Response-Based Approachability,” in <em>Conference on Learning Theory (COLT)</em>,<span style="white-space: pre-wrap">  </span>2026.</span></span>, which in turn relies on the response-based approachability algorithm of <span class="citation-wrap"><a class="citation" href="#loc-13" id="loc-3" role="doc-biblioref">Bernstein and Shimkin [BS15]</a><span class="citation-note"><span class="citation-note-key">[BS15]</span> A. Bernstein and N. Shimkin, “Response-Based Approachability with Applications to Generalized No-Regret Problems,” <em>Journal of Machine Learning Research</em>, vol. 16, no. 1, pp. 747–773, 2015.</span></span>.</p>
     <h1 id="6-1-setup" class="notes-heading" data-level="1" data-number="6.1"><span class="secno">6.1</span> Setup</h1>
     <p>We operate in the usual online linear optimization setting. The learner picks strategies from a convex and compact strategy set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [⊂],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [d],
-  ),
+  attach(base: equation(block: false, body: [ℝ]), t: [d]),
 )" role="math">\(\mathcal{X} \subset \mathbb{R}^{d}\)</span>. At every round <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [t],
   [ ],
@@ -1328,16 +1325,16 @@ mark {
   lr(body: sequence([[], [T], []])),
 )" role="math">\(t \in [T]\)</span>, the learner first selects a strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\mathbf{x}^{(t)} \in \mathcal{X}\)</span>; the adversary selects a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -1347,10 +1344,7 @@ mark {
   [ ],
   [⊆],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [d],
-  ),
+  attach(base: equation(block: false, body: [ℝ]), t: [d]),
 )" role="math">\(\mathbf{u}^{(t)} \in \mathcal{U} \subseteq \mathbb{R}^{d}\)</span>; then the learner receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
   block: false,
   body: lr(
@@ -1358,12 +1352,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1371,7 +1365,7 @@ mark {
     ),
   ),
 )" role="math">\(\left\langle \mathbf{x}^{(t)},\mathbf{u}^{(t)} \right\rangle\)</span> and observes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span> as feedback. We make the standard normalization assumption <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   lr(
@@ -1383,9 +1377,9 @@ mark {
           body: sequence(
             [⟨],
             [ ],
-            equation(block: false, body: styled(child: [x], ..)),
+            equation(block: false, body: [𝐱]),
             [,],
-            equation(block: false, body: styled(child: [u], ..)),
+            equation(block: false, body: [𝐮]),
             [ ],
             [⟩],
           ),
@@ -1399,21 +1393,21 @@ mark {
   [ ],
   [1],
 )" role="math">\(|\left\langle \mathbf{x},\mathbf{u} \right\rangle | \le 1\)</span> for all <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [,],
   [ ],
-  equation(block: false, body: styled(child: [u], ..)),
+  equation(block: false, body: [𝐮]),
   [ ],
   [∈],
   [ ],
   styled(child: [U], ..),
   [.],
 )" role="math">\(\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}.\)</span> In what follows, for a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [u], ..)),
+  equation(block: false, body: [𝐮]),
   [ ],
   [∈],
   [ ],
@@ -1422,11 +1416,7 @@ mark {
   sequence(
     [b],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [u], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐮]), [)]),
     ),
   ),
   [ ],
@@ -1445,11 +1435,11 @@ mark {
       limits: true,
     ),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -1459,9 +1449,9 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
         [,],
-        equation(block: false, body: styled(child: [u], ..)),
+        equation(block: false, body: [𝐮]),
         [ ],
         [⟩],
       ),
@@ -1473,37 +1463,26 @@ mark {
   [φ],
   [:],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [d],
-  ),
-)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> is an <em>endomorphism</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [ℝ]), t: [d]),
+)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> is an <em>endomorphism</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [X], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝓧]), [)]),
     ),
   ),
   [ ],
   [⊆],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\phi (\mathcal{X}) \subseteq \mathcal{X}\)</span>. We denote by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [End],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [X], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓧]), [)]),
   ),
 )" role="math">\(\text{End}(\mathcal{X})\)</span> the set of affine endomorphisms. We write each <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
@@ -1513,34 +1492,26 @@ mark {
   sequence(
     [End],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [X], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝓧]), [)]),
     ),
   ),
 )" role="math">\(\phi \in \text{End}(\mathcal{X})\)</span> as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
   [ ],
   [=],
   [ ],
-  equation(block: false, body: styled(child: [M], ..)),
+  equation(block: false, body: [𝐌]),
   [ ],
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [+],
   [ ],
-  equation(block: false, body: styled(child: [a], ..)),
+  equation(block: false, body: [𝐚]),
   [.],
 )" role="math">\(\phi (\mathbf{x}) = \mathbf{M} \mathbf{x} + \mathbf{a}.\)</span> The <em>linear swap regret</em> of the learner after <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds is</p>
     <figure class="equation" role="math">
@@ -1562,11 +1533,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -1584,7 +1551,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -1593,7 +1560,7 @@ mark {
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1610,12 +1577,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1641,11 +1608,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -1663,7 +1626,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -1672,7 +1635,7 @@ mark {
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1689,12 +1652,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1714,13 +1677,13 @@ mark {
   body: sequence(
     [(],
     attach(
-      base: equation(block: false, body: styled(child: [x], ..)),
+      base: equation(block: false, body: [𝐱]),
       t: lr(body: sequence([(], [t], [)])),
     ),
     [,],
     [ ],
     attach(
-      base: equation(block: false, body: styled(child: [u], ..)),
+      base: equation(block: false, body: [𝐮]),
       t: lr(body: sequence([(], [t], [)])),
     ),
     [)],
@@ -1734,20 +1697,20 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
       [⊗],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [)],
@@ -1757,7 +1720,7 @@ mark {
   [∈],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    base: equation(block: false, body: [ℝ]),
     t: sequence(
       [d],
       [ ],
@@ -1767,7 +1730,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(κ^{(t)} \coloneqq (\mathbf{u}^{(t)} ⊗ \mathbf{x}^{(t)}, \mathbf{u}^{(t)}) \in \mathbb{R}^{d × (d+1)}.\)</span> The average CSP is</p>
+)" role="math">\(κ^{(t)} \coloneqq (\mathbf{u}^{(t)} ⊗ \mathbf{x}^{(t)}, \mathbf{u}^{(t)}) \in \mathbb{R}^{d \times (d+1)}.\)</span> The average CSP is</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -1807,32 +1770,28 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [K], ..)),
+      equation(block: false, body: [𝐊]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [q], ..)),
+      equation(block: false, body: [𝐪]),
       [)],
     ),
   ),
-)" role="math">\(κ = (\mathcal{K}, \mathbf{q})\)</span> and an affine map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(κ = (\mathbf{K}, \mathbf{q})\)</span> and an affine map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
   [=],
-  equation(block: false, body: styled(child: [M], ..)),
+  equation(block: false, body: [𝐌]),
   [ ],
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [+],
   [ ],
-  equation(block: false, body: styled(child: [a], ..)),
+  equation(block: false, body: [𝐚]),
 )" role="math">\(\phi (\mathbf{x})=\mathbf{M} \mathbf{x} + \mathbf{a}\)</span>, we use the shorthand notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
@@ -1843,10 +1802,10 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [M], ..)),
+            equation(block: false, body: [𝐌]),
             [,],
             [ ],
-            equation(block: false, body: styled(child: [a], ..)),
+            equation(block: false, body: [𝐚]),
             [)],
           ),
         ),
@@ -1866,9 +1825,9 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [M], ..)),
+        equation(block: false, body: [𝐌]),
         [,],
-        equation(block: false, body: styled(child: [K], ..)),
+        equation(block: false, body: [𝐊]),
         [ ],
         [⟩],
       ),
@@ -1883,16 +1842,16 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [a], ..)),
+        equation(block: false, body: [𝐚]),
         [,],
-        equation(block: false, body: styled(child: [q], ..)),
+        equation(block: false, body: [𝐪]),
         [ ],
         [⟩],
       ),
     ),
   ),
   [.],
-)" role="math">\(\left\langle (\mathbf{M}, \mathbf{a}),κ \right\rangle \coloneqq \left\langle \mathbf{M},\mathcal{K} \right\rangle + \left\langle \mathbf{a},\mathbf{q} \right\rangle .\)</span> With this notation at hand, linear swap regret can be rewritten as</p>
+)" role="math">\(\left\langle (\mathbf{M}, \mathbf{a}),κ \right\rangle \coloneqq \left\langle \mathbf{M},\mathbf{K} \right\rangle + \left\langle \mathbf{a},\mathbf{q} \right\rangle .\)</span> With this notation at hand, linear swap regret can be rewritten as</p>
     <figure class="equation" id="loc-6" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -1912,9 +1871,9 @@ mark {
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [M], ..)),
+          equation(block: false, body: [𝐌]),
           [,],
-          equation(block: false, body: styled(child: [a], ..)),
+          equation(block: false, body: [𝐚]),
           [)],
         ),
       ),
@@ -1924,11 +1883,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -1942,10 +1897,10 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [M], ..)),
+            equation(block: false, body: [𝐌]),
             [,],
             [ ],
-            equation(block: false, body: styled(child: [a], ..)),
+            equation(block: false, body: [𝐚]),
             [)],
           ),
         ),
@@ -1955,7 +1910,7 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [I], ..)),
+            equation(block: false, body: [𝐈]),
             [,],
             [ ],
             [0],
@@ -1991,9 +1946,9 @@ mark {
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [M], ..)),
+          equation(block: false, body: [𝐌]),
           [,],
-          equation(block: false, body: styled(child: [a], ..)),
+          equation(block: false, body: [𝐚]),
           [)],
         ),
       ),
@@ -2003,11 +1958,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -2021,10 +1972,10 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [M], ..)),
+            equation(block: false, body: [𝐌]),
             [,],
             [ ],
-            equation(block: false, body: styled(child: [a], ..)),
+            equation(block: false, body: [𝐚]),
             [)],
           ),
         ),
@@ -2034,7 +1985,7 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [I], ..)),
+            equation(block: false, body: [𝐈]),
             [,],
             [ ],
             [0],
@@ -2062,10 +2013,10 @@ mark {
     lr(
       body: sequence(
         [(],
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
         [,],
         [ ],
-        equation(block: false, body: styled(child: [u], ..)),
+        equation(block: false, body: [𝐮]),
         [)],
       ),
     ),
@@ -2077,13 +2028,13 @@ mark {
     base: op(text: [max], limits: true),
     b: sequence(
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: [∗],
       ),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -2095,16 +2046,16 @@ mark {
         [ ],
         sequence(
           attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
+            base: equation(block: false, body: [𝐱]),
             t: [∗],
           ),
           [ ],
           [−],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
         ),
         [,],
-        equation(block: false, body: styled(child: [u], ..)),
+        equation(block: false, body: [𝐮]),
         [ ],
         [⟩],
       ),
@@ -2117,10 +2068,10 @@ mark {
     lr(
       body: sequence(
         [(],
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
         [,],
         [ ],
-        equation(block: false, body: styled(child: [u], ..)),
+        equation(block: false, body: [𝐮]),
         [)],
       ),
     ),
@@ -2138,20 +2089,16 @@ mark {
           sequence(
             [b],
             lr(
-              body: sequence(
-                [(],
-                equation(block: false, body: styled(child: [u], ..)),
-                [)],
-              ),
+              body: sequence([(], equation(block: false, body: [𝐮]), [)]),
             ),
           ),
           [ ],
           [−],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
         ),
         [,],
-        equation(block: false, body: styled(child: [u], ..)),
+        equation(block: false, body: [𝐮]),
         [ ],
         [⟩],
       ),
@@ -2178,17 +2125,11 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐮]), b: [j]),
       [ ],
       [⊗],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [j]),
       [)],
     ),
   ),
@@ -2208,17 +2149,11 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐮]), b: [j]),
       [ ],
       [⊗],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [j]),
       [)],
     ),
   ),
@@ -2234,19 +2169,13 @@ mark {
   [ ],
   [1],
 )" role="math">\(\sum_{j=1}^{m} \lambda_{j} = 1\)</span>, <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
-    b: [j],
-  ),
+  attach(base: equation(block: false, body: [𝐱]), b: [j]),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\mathbf{x}_{j} \in \mathcal{X}\)</span>, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
-    b: [j],
-  ),
+  attach(base: equation(block: false, body: [𝐮]), b: [j]),
   [ ],
   [∈],
   [ ],
@@ -2289,16 +2218,10 @@ mark {
           attach(base: [λ], b: [j]),
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [j],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [j]),
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [u], ..)),
-            b: [j],
-          ),
+          attach(base: equation(block: false, body: [𝐮]), b: [j]),
           [)],
         ),
       ),
@@ -2314,16 +2237,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [j]),
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐮]), b: [j]),
       [)],
     ),
   ),
@@ -2357,16 +2274,10 @@ mark {
           attach(base: [λ], b: [j]),
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [j],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [j]),
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [u], ..)),
-            b: [j],
-          ),
+          attach(base: equation(block: false, body: [𝐮]), b: [j]),
           [)],
         ),
       ),
@@ -2382,16 +2293,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [j]),
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
-        b: [j],
-      ),
+      attach(base: equation(block: false, body: [𝐮]), b: [j]),
       [)],
     ),
   ),
@@ -2408,11 +2313,11 @@ mark {
     <h2 id="6-2-1-manipulability-against-a-dynamic-optimizer" class="notes-heading" data-level="2" data-number="6.2.1"><span class="secno">6.2.1</span> Manipulability against a dynamic optimizer</h2>
     <p>We consider a two-player game between a <em>learner</em> and an <em>optimizer</em>. The learner follows some learning algorithm, whereas the optimizer may choose its actions strategically over time after observing how the learner updates. We let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [ℓ])" role="math">\(u_{ℓ}\)</span> be the learner’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span> its strategy set. Similarly, we let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [o])" role="math">\(u_{o}\)</span> be the optimizer’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [Y], ..)" role="math">\(\mathcal{Y}\)</span> its strategy set.</p>
     <p>The key relevant benchmark in this setting is the optimizer’s <em>Stackelberg value</em>, which is the best utility the optimizer can guarantee by committing to a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [y], ..)),
+  equation(block: false, body: [𝐲]),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [Y], ..)),
+  equation(block: false, body: [𝓨]),
 )" role="math">\(\mathbf{y} \in \mathcal{Y}\)</span>, while the learner best-responds to that strategy (with ties broken in favor of the optimizer):</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -2426,29 +2331,25 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [Y], ..)),
+      equation(block: false, body: [𝓨]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
       sequence(
         [BR],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [y], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐲]), [)]),
         ),
       ),
     ),
@@ -2459,10 +2360,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [)],
     ),
   ),
@@ -2478,29 +2379,25 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [Y], ..)),
+      equation(block: false, body: [𝓨]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
       sequence(
         [BR],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [y], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐲]), [)]),
         ),
       ),
     ),
@@ -2511,10 +2408,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [)],
     ),
   ),
@@ -2525,11 +2422,7 @@ mark {
   sequence(
     [BR],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [y], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐲]), [)]),
     ),
   ),
   [ ],
@@ -2548,11 +2441,11 @@ mark {
       limits: true,
     ),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -2561,23 +2454,23 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [)],
     ),
   ),
   [.],
-)" role="math">\(\text{BR}(\mathbf{y}) \coloneqq \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{max}}\limits_{\mathbf{x} \in \mathcal{X}} u_{ℓ} (\mathbf{x}, \mathbf{y}).\)</span> The Stackelberg value is what the optimizer can guarantee by means of a <em>static</em> commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a <em>dynamic</em> strategy: instead of playing a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [y], ..))" role="math">\(\mathbf{y}\)</span>, the optimizer chooses a sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\text{BR}(\mathbf{y}) \coloneqq \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{max}}\limits_{\mathbf{x} \in \mathcal{X}} u_{ℓ} (\mathbf{x}, \mathbf{y}).\)</span> The Stackelberg value is what the optimizer can guarantee by means of a <em>static</em> commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a <em>dynamic</em> strategy: instead of playing a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐲])" role="math">\(\mathbf{y}\)</span>, the optimizer chooses a sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [y], ..)),
+    base: equation(block: false, body: [𝐲]),
     t: lr(body: sequence([(], [1], [)])),
   ),
   [,],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [y], ..)),
+    base: equation(block: false, body: [𝐲]),
     t: lr(body: sequence([(], [2], [)])),
   ),
   [,],
@@ -2612,32 +2505,32 @@ mark {
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
       [ ],
       [:],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
       styled(child: [U], ..),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
       [}],
     ),
   ),
@@ -2654,30 +2547,26 @@ mark {
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
           sequence(
             [b],
             lr(
-              body: sequence(
-                [(],
-                equation(block: false, body: styled(child: [u], ..)),
-                [)],
-              ),
+              body: sequence([(], equation(block: false, body: [𝐮]), [)]),
             ),
           ),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
       [ ],
       [:],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -2686,7 +2575,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(S \coloneqq \operatorname{conv} \{(\mathbf{u} ⊗ b(\mathbf{u}), \mathbf{u}) : \mathbf{u} \in \mathcal{U}\}.\)</span> We measure approachability loss by</p>
+)" role="math">\(\mathcal{S} \coloneqq \operatorname{conv} \{(\mathbf{u} ⊗ b(\mathbf{u}), \mathbf{u}) : \mathbf{u} \in \mathcal{U}\}.\)</span> We measure approachability loss by</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -2699,7 +2588,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [s], ..)),
+      equation(block: false, body: [𝐬]),
       [ ],
       [∈],
       [ ],
@@ -2719,7 +2608,7 @@ mark {
           [ ],
           [−],
           [ ],
-          equation(block: false, body: styled(child: [s], ..)),
+          equation(block: false, body: [𝐬]),
         ),
         [‖],
       ),
@@ -2738,7 +2627,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [s], ..)),
+      equation(block: false, body: [𝐬]),
       [ ],
       [∈],
       [ ],
@@ -2758,7 +2647,7 @@ mark {
           [ ],
           [−],
           [ ],
-          equation(block: false, body: styled(child: [s], ..)),
+          equation(block: false, body: [𝐬]),
         ),
         [‖],
       ),
@@ -2766,7 +2655,7 @@ mark {
     b: [F],
   ),
   [.],
-)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \coloneqq \operatorname*{min}_{\mathbf{s} \in S} \left\Vert \overline{κ}^{\left(T\right)} - \mathbf{s}\right\Vert_{F}.\]</span> <span class="eqno">(4)</span></div>
+)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \coloneqq \operatorname*{min}_{\mathbf{s} \in \mathcal{S}} \left\Vert \overline{κ}^{\left(T\right)} - \mathbf{s}\right\Vert_{F}.\]</span> <span class="eqno">(4)</span></div>
     </figure>
     <p>We first point out that minimizing linear swap regret reduces to this approachability instance.</p>
     <section class="env statement">
@@ -2777,7 +2666,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: equation(block: false, body: [ℕ]), ..),
+  equation(block: false, body: [ℕ]),
 )" role="math">\(T \in \mathbb{N}\)</span>,</p>
         <figure class="equation" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -2809,11 +2698,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -2853,11 +2738,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -2876,44 +2757,36 @@ mark {
       <p class="env-heading"><span class="env-title"><em>Proof.</em></span></p>
       <div class="env-body">
         <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [s], ..)),
+  equation(block: false, body: [𝐬]),
   [ ],
   [∈],
   [ ],
   styled(child: [S], ..),
-)" role="math">\(\mathbf{s} \in S\)</span> be closest to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\mathbf{s} \in \mathcal{S}\)</span> be closest to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
-)" role="math">\(\overline{κ}^{(T)}\)</span>. Since <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [s], ..))" role="math">\(\mathbf{s}\)</span> is, by definition, a convex combination of points of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+)" role="math">\(\overline{κ}^{(T)}\)</span>. Since <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐬])" role="math">\(\mathbf{s}\)</span> is, by definition, a convex combination of points of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
-    equation(block: false, body: styled(child: [u], ..)),
+    equation(block: false, body: [𝐮]),
     [ ],
     [⊗],
     [ ],
     sequence(
       [b],
       lr(
-        body: sequence(
-          [(],
-          equation(block: false, body: styled(child: [u], ..)),
-          [)],
-        ),
+        body: sequence([(], equation(block: false, body: [𝐮]), [)]),
       ),
     ),
     [,],
     [ ],
-    equation(block: false, body: styled(child: [u], ..)),
+    equation(block: false, body: [𝐮]),
     [)],
   ),
 )" role="math">\((\mathbf{u} ⊗ b(\mathbf{u}), \mathbf{u})\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [b],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [u], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝐮]), [)]),
   ),
 )" role="math">\(b(\mathbf{u})\)</span> maximizes <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
   block: false,
@@ -2923,12 +2796,12 @@ mark {
       [ ],
       [·],
       [,],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [⟩],
     ),
   ),
-)" role="math">\(\left\langle \cdot ,\mathbf{u} \right\rangle\)</span> over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span>, every endomorphism <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\left\langle \cdot ,\mathbf{u} \right\rangle\)</span> over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, every endomorphism <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [ ],
   [∈],
@@ -2936,11 +2809,7 @@ mark {
   sequence(
     [End],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [X], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝓧]), [)]),
     ),
   ),
 )" role="math">\(\phi \in \text{End}(\mathcal{X})\)</span> satisfies</p>
@@ -2958,7 +2827,7 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [I], ..)),
+            equation(block: false, body: [𝐈]),
             [,],
             [ ],
             [0],
@@ -2967,7 +2836,7 @@ mark {
         ),
       ),
       [,],
-      equation(block: false, body: styled(child: [s], ..)),
+      equation(block: false, body: [𝐬]),
       [ ],
       [⟩],
     ),
@@ -2990,7 +2859,7 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [I], ..)),
+            equation(block: false, body: [𝐈]),
             [,],
             [ ],
             [0],
@@ -2999,7 +2868,7 @@ mark {
         ),
       ),
       [,],
-      equation(block: false, body: styled(child: [s], ..)),
+      equation(block: false, body: [𝐬]),
       [ ],
       [⟩],
     ),
@@ -3033,11 +2902,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -3053,7 +2918,7 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [I], ..)),
+            equation(block: false, body: [𝐈]),
             [,],
             [0],
             [)],
@@ -3069,7 +2934,7 @@ mark {
         [ ],
         [−],
         [ ],
-        equation(block: false, body: styled(child: [s], ..)),
+        equation(block: false, body: [𝐬]),
       ),
       [ ],
       [⟩],
@@ -3096,11 +2961,7 @@ mark {
       sequence(
         [End],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [X], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓧]), [)]),
         ),
       ),
     ),
@@ -3116,7 +2977,7 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [I], ..)),
+            equation(block: false, body: [𝐈]),
             [,],
             [0],
             [)],
@@ -3132,7 +2993,7 @@ mark {
         [ ],
         [−],
         [ ],
-        equation(block: false, body: styled(child: [s], ..)),
+        equation(block: false, body: [𝐬]),
       ),
       [ ],
       [⟩],
@@ -3168,7 +3029,7 @@ mark {
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [U], ..)),
+    base: equation(block: false, body: [𝐔]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -3184,7 +3045,7 @@ mark {
       [−],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [s], ..)),
+        base: equation(block: false, body: [𝐬]),
         t: lr(body: sequence([(], [τ], [)])),
       ),
       [)],
@@ -3194,7 +3055,7 @@ mark {
   [∈],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    base: equation(block: false, body: [ℝ]),
     t: sequence(
       [d],
       [ ],
@@ -3206,7 +3067,7 @@ mark {
   [.],
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [U], ..)),
+    base: equation(block: false, body: [𝐔]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -3222,7 +3083,7 @@ mark {
       [−],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [s], ..)),
+        base: equation(block: false, body: [𝐬]),
         t: lr(body: sequence([(], [τ], [)])),
       ),
       [)],
@@ -3232,7 +3093,7 @@ mark {
   [∈],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    base: equation(block: false, body: [ℝ]),
     t: sequence(
       [d],
       [ ],
@@ -3242,7 +3103,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \mathcal{U}^{\left(t\right)} \coloneqq \sum_{τ=1}^{t} \left(κ^{\left(τ\right)} - \mathbf{s}^{\left(τ\right)}\right) \in \mathbb{R}^{d × \left(d+1\right)}.\]</span></div>
+)">\[\displaystyle \mathbf{U}^{\left(t\right)} \coloneqq \sum_{τ=1}^{t} \left(κ^{\left(τ\right)} - \mathbf{s}^{\left(τ\right)}\right) \in \mathbb{R}^{d \times \left(d+1\right)}.\]</span></div>
     </figure>
     <p>At every round <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span>, it solves the bilinear zero-sum game</p>
     <figure class="equation" role="math">
@@ -3250,18 +3111,18 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -3274,21 +3135,21 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
@@ -3301,18 +3162,18 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -3325,21 +3186,21 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
@@ -3348,19 +3209,19 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathcal{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle .\]</span> <span class="eqno">(6)</span></div>
+)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathbf{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle .\]</span> <span class="eqno">(6)</span></div>
     </figure>
     <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
     attach(
-      base: equation(block: false, body: styled(child: [x], ..)),
+      base: equation(block: false, body: [𝐱]),
       t: lr(body: sequence([(], [t], [)])),
     ),
     [,],
     [ ],
     attach(
-      base: equation(block: false, body: styled(child: [u], ..)),
+      base: equation(block: false, body: [𝐮]),
       t: lr(body: sequence([(], [t], [)])),
       b: [∗],
     ),
@@ -3370,7 +3231,7 @@ mark {
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [s], ..)),
+    base: equation(block: false, body: [𝐬]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -3380,7 +3241,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -3393,7 +3254,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [∗],
             ),
@@ -3404,7 +3265,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -3418,7 +3279,7 @@ mark {
   [.],
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [s], ..)),
+    base: equation(block: false, body: [𝐬]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -3428,7 +3289,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -3441,7 +3302,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [∗],
             ),
@@ -3452,7 +3313,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -3464,25 +3325,25 @@ mark {
   [ ],
   styled(child: [S], ..),
   [.],
-)">\[\displaystyle \mathbf{s}^{\left(t\right)} \coloneqq \left(\mathbf{u}_{∗}^{\left(t\right)} ⊗ b\left(\mathbf{u}_{∗}^{\left(t\right)}\right), \mathbf{u}_{∗}^{\left(t\right)}\right) \in S.\]</span></div>
+)">\[\displaystyle \mathbf{s}^{\left(t\right)} \coloneqq \left(\mathbf{u}_{∗}^{\left(t\right)} ⊗ b\left(\mathbf{u}_{∗}^{\left(t\right)}\right), \mathbf{u}_{∗}^{\left(t\right)}\right) \in \mathcal{S}.\]</span></div>
     </figure>
     <p>Finally, it plays the strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [x], ..)),
+  base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{x}^{(t)}\)</span>, whereupon it observes the utility <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span>, forms the induced <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [κ], t: lr(body: sequence([(], [t], [)])))" role="math">\(κ^{(t)}\)</span>, and updates the cumulative displacement <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [U], ..)),
+  base: equation(block: false, body: [𝐔]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathcal{U}^{(t)}\)</span>.</p>
+)" role="math">\(\mathbf{U}^{(t)}\)</span>.</p>
     <p>This response-based approachability algorithm is summarized below. All steps can be efficiently implemented through oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>.</p>
     <section class="env algorithm">
       <div class="env-title"><strong>Algorithm</strong> [<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">BS15</a></span>]: Response-based approachability</div>
       <div class="pseudocode">
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><strong>Input:</strong> Horizon <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span>, sets <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [,],
   [ ],
   styled(child: [U], ..),
@@ -3495,13 +3356,13 @@ mark {
   [ ],
   [→],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(b : \mathcal{U} \to \mathcal{X}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text">Initialize <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [U], ..)),
+    base: equation(block: false, body: [𝐔]),
     t: lr(body: sequence([(], [0], [)])),
   ),
   [ ],
@@ -3512,7 +3373,7 @@ mark {
   [∈],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    base: equation(block: false, body: [ℝ]),
     t: sequence(
       [d],
       [ ],
@@ -3521,7 +3382,7 @@ mark {
       lr(body: sequence([(], [d], [+], [1], [)])),
     ),
   ),
-)" role="math">\(\mathcal{U}^{(0)} \coloneqq 0 \in \mathbb{R}^{d × (d+1)}\)</span></div>
+)" role="math">\(\mathbf{U}^{(0)} \coloneqq 0 \in \mathbb{R}^{d \times (d+1)}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><strong>for each</strong> round <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3545,13 +3406,13 @@ mark {
   body: sequence(
     [(],
     attach(
-      base: equation(block: false, body: styled(child: [x], ..)),
+      base: equation(block: false, body: [𝐱]),
       t: lr(body: sequence([(], [t], [)])),
     ),
     [,],
     [ ],
     attach(
-      base: equation(block: false, body: styled(child: [u], ..)),
+      base: equation(block: false, body: [𝐮]),
       t: lr(body: sequence([(], [t], [)])),
       b: [∗],
     ),
@@ -3563,18 +3424,18 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -3587,21 +3448,21 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
@@ -3613,18 +3474,18 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -3637,21 +3498,21 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
@@ -3659,7 +3520,7 @@ mark {
       [⟩],
     ),
   ),
-)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathcal{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle\]</span></div>
+)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathbf{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle\]</span></div>
             </figure>
           </div>
         </div>
@@ -3667,7 +3528,7 @@ mark {
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
           <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [s], ..)),
+    base: equation(block: false, body: [𝐬]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -3677,7 +3538,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -3690,7 +3551,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [∗],
             ),
@@ -3701,7 +3562,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -3713,10 +3574,10 @@ mark {
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
           <div class="pseudo-text">Play <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [x], ..)),
+  base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{x}^{(t)}\)</span> and observe <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span></div>
         </div>
@@ -3731,20 +3592,20 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
       [⊗],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [)],
@@ -3756,14 +3617,14 @@ mark {
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
           <div class="pseudo-text">Update <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [U], ..)),
+    base: equation(block: false, body: [𝐔]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [≔],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [U], ..)),
+    base: equation(block: false, body: [𝐔]),
     t: lr(body: sequence([(], [t], [−], [1], [)])),
   ),
   [ ],
@@ -3774,10 +3635,10 @@ mark {
   [−],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [s], ..)),
+    base: equation(block: false, body: [𝐬]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\mathcal{U}^{(t)} \coloneqq \mathcal{U}^{(t-1)} + κ^{(t)} - \mathbf{s}^{(t)}\)</span></div>
+)" role="math">\(\mathbf{U}^{(t)} \coloneqq \mathbf{U}^{(t-1)} + κ^{(t)} - \mathbf{s}^{(t)}\)</span></div>
         </div>
       </div>
     </section>
@@ -3787,7 +3648,7 @@ mark {
       <div class="env-body">
         <p>For every utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -3802,7 +3663,7 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
@@ -3812,7 +3673,7 @@ mark {
         [−],
         [ ],
         attach(
-          base: equation(block: false, body: styled(child: [s], ..)),
+          base: equation(block: false, body: [𝐬]),
           t: lr(body: sequence([(], [t], [)])),
         ),
       ),
@@ -3831,7 +3692,7 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
@@ -3841,7 +3702,7 @@ mark {
         [−],
         [ ],
         attach(
-          base: equation(block: false, body: styled(child: [s], ..)),
+          base: equation(block: false, body: [𝐬]),
           t: lr(body: sequence([(], [t], [)])),
         ),
       ),
@@ -3854,7 +3715,7 @@ mark {
   [ ],
   [0],
   [.],
-)">\[\displaystyle \left\langle \mathcal{U}^{\left(t-1\right)},κ^{\left(t\right)} - \mathbf{s}^{\left(t\right)} \right\rangle \ge 0.\]</span> <span class="eqno">(7)</span></div>
+)">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} - \mathbf{s}^{\left(t\right)} \right\rangle \ge 0.\]</span> <span class="eqno">(7)</span></div>
         </figure>
       </div>
     </section>
@@ -3869,10 +3730,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -3884,21 +3745,21 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
@@ -3913,10 +3774,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -3928,21 +3789,21 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       lr(
         body: sequence(
           [(],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [⊗],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [)],
         ),
       ),
@@ -3951,7 +3812,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle g_{t} \left(\mathbf{x}, \mathbf{u}\right) \coloneqq \left\langle \mathcal{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle .\]</span></div>
+)">\[\displaystyle g_{t} \left(\mathbf{x}, \mathbf{u}\right) \coloneqq \left\langle \mathbf{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle .\]</span></div>
         </figure>
         <p>By the minimax theorem,</p>
         <figure class="equation" role="math">
@@ -3959,18 +3820,18 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -3983,10 +3844,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -3996,7 +3857,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4007,11 +3868,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -4020,10 +3881,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4032,18 +3893,18 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4056,10 +3917,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4069,7 +3930,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4080,11 +3941,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -4093,10 +3954,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4112,13 +3973,13 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [)],
@@ -4130,7 +3991,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4141,11 +4002,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -4154,10 +4015,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4169,13 +4030,13 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [)],
@@ -4187,7 +4048,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4198,11 +4059,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -4211,10 +4072,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4222,7 +4083,7 @@ mark {
 )">\[\displaystyle g_{t} \left(\mathbf{x}^{\left(t\right)}, \mathbf{u}^{\left(t\right)}\right) \ge \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} g_{t} \left(\mathbf{x}, \mathbf{u}\right).\]</span></div>
         </figure>
         <p>Since <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
   b: [∗],
 )" role="math">\(\mathbf{u}_{∗}^{(t)}\)</span> is minimax optimal and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -4231,20 +4092,20 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
       [)],
     ),
   ),
-)" role="math">\(b(\mathbf{u}_{∗}^{(t)})\)</span> is a feasible strategy in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span>,</p>
+)" role="math">\(b(\mathbf{u}_{∗}^{(t)})\)</span> is a feasible strategy in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>,</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4255,11 +4116,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -4268,10 +4129,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4289,7 +4150,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [∗],
             ),
@@ -4300,7 +4161,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -4312,7 +4173,7 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4323,11 +4184,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -4336,10 +4197,10 @@ mark {
   lr(
     body: sequence(
       [(],
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [)],
     ),
   ),
@@ -4357,7 +4218,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [∗],
             ),
@@ -4368,7 +4229,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [∗],
       ),
@@ -4386,7 +4247,7 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
@@ -4403,12 +4264,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [s], ..)),
+        base: equation(block: false, body: [𝐬]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4422,7 +4283,7 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
@@ -4439,12 +4300,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [U], ..)),
+        base: equation(block: false, body: [𝐔]),
         t: lr(body: sequence([(], [t], [−], [1], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [s], ..)),
+        base: equation(block: false, body: [𝐬]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4452,7 +4313,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \left\langle \mathcal{U}^{\left(t-1\right)},κ^{\left(t\right)} \right\rangle \ge \left\langle \mathcal{U}^{\left(t-1\right)},\mathbf{s}^{\left(t\right)} \right\rangle ,\]</span></div>
+)">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} \right\rangle \ge \left\langle \mathbf{U}^{\left(t-1\right)},\mathbf{s}^{\left(t\right)} \right\rangle ,\]</span></div>
         </figure>
         <p>which is exactly (<a href="#loc-9">7</a>).</p>
       </div>
@@ -4463,7 +4324,7 @@ mark {
       <div class="env-body">
         <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [z], ..)),
+    base: equation(block: false, body: [𝐳]),
     t: lr(body: sequence([(], [1], [)])),
   ),
   [,],
@@ -4472,7 +4333,7 @@ mark {
   [,],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [z], ..)),
+    base: equation(block: false, body: [𝐳]),
     t: lr(body: sequence([(], [T], [)])),
   ),
 )" role="math">\(\mathbf{z}^{(1)}, \dots , \mathbf{z}^{(T)}\)</span> be vectors with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -4481,7 +4342,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [z], ..)),
+          base: equation(block: false, body: [𝐳]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -4508,13 +4369,13 @@ mark {
         ),
         [ ],
         attach(
-          base: equation(block: false, body: styled(child: [z], ..)),
+          base: equation(block: false, body: [𝐳]),
           t: lr(body: sequence([(], [τ], [)])),
         ),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [z], ..)),
+        base: equation(block: false, body: [𝐳]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4538,13 +4399,13 @@ mark {
         ),
         [ ],
         attach(
-          base: equation(block: false, body: styled(child: [z], ..)),
+          base: equation(block: false, body: [𝐳]),
           t: lr(body: sequence([(], [τ], [)])),
         ),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [z], ..)),
+        base: equation(block: false, body: [𝐳]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4568,7 +4429,7 @@ mark {
           attach(base: [∑], t: [T], b: sequence([t], [=], [1])),
           [ ],
           attach(
-            base: equation(block: false, body: styled(child: [z], ..)),
+            base: equation(block: false, body: [𝐳]),
             t: lr(body: sequence([(], [t], [)])),
           ),
         ),
@@ -4593,7 +4454,7 @@ mark {
           attach(base: [∑], t: [T], b: sequence([t], [=], [1])),
           [ ],
           attach(
-            base: equation(block: false, body: styled(child: [z], ..)),
+            base: equation(block: false, body: [𝐳]),
             t: lr(body: sequence([(], [t], [)])),
           ),
         ),
@@ -4615,14 +4476,14 @@ mark {
     </section>
     <p>Applying <a href="#loc-10">Lemma 6.6</a> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [z], ..)),
+    base: equation(block: false, body: [𝐳]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [=],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [s], ..)),
+    base: equation(block: false, body: [𝐬]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -4656,7 +4517,7 @@ mark {
               [−],
               [ ],
               attach(
-                base: equation(block: false, body: styled(child: [s], ..)),
+                base: equation(block: false, body: [𝐬]),
                 t: lr(body: sequence([(], [t], [)])),
               ),
               [)],
@@ -4701,7 +4562,7 @@ mark {
               [−],
               [ ],
               attach(
-                base: equation(block: false, body: styled(child: [s], ..)),
+                base: equation(block: false, body: [𝐬]),
                 t: lr(body: sequence([(], [t], [)])),
               ),
               [)],
@@ -4731,14 +4592,14 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
       [,],
       [ ],
-      equation(block: false, body: styled(child: [u], ..)),
+      equation(block: false, body: [𝐮]),
       [ ],
       [∈],
       [ ],
@@ -4753,14 +4614,14 @@ mark {
         lr(
           body: sequence(
             [(],
-            equation(block: false, body: styled(child: [u], ..)),
+            equation(block: false, body: [𝐮]),
             [ ],
             [⊗],
             [ ],
-            equation(block: false, body: styled(child: [x], ..)),
+            equation(block: false, body: [𝐱]),
             [,],
             [ ],
-            equation(block: false, body: styled(child: [u], ..)),
+            equation(block: false, body: [𝐮]),
             [)],
           ),
         ),
@@ -4776,7 +4637,7 @@ mark {
       <div class="env-body">
         <p>For any sequence of utilities <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [1], [)])),
   ),
   [,],
@@ -4785,7 +4646,7 @@ mark {
   [,],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [T], [)])),
   ),
   [ ],
@@ -4812,14 +4673,14 @@ mark {
       attach(
         base: op(text: [max], limits: true),
         b: sequence(
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [ ],
           [∈],
           [ ],
-          equation(block: false, body: styled(child: [X], ..)),
+          equation(block: false, body: [𝓧]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [∈],
           [ ],
@@ -4829,11 +4690,7 @@ mark {
       [ ],
       attach(
         base: lr(
-          body: sequence(
-            [‖],
-            equation(block: false, body: styled(child: [u], ..)),
-            [‖],
-          ),
+          body: sequence([‖], equation(block: false, body: [𝐮]), [‖]),
         ),
         b: [2],
       ),
@@ -4842,11 +4699,7 @@ mark {
         radicand: sequence(
           attach(
             base: lr(
-              body: sequence(
-                [‖],
-                equation(block: false, body: styled(child: [x], ..)),
-                [‖],
-              ),
+              body: sequence([‖], equation(block: false, body: [𝐱]), [‖]),
             ),
             t: [2],
             b: [2],
@@ -4874,11 +4727,7 @@ mark {
           sequence(
             [End],
             lr(
-              body: sequence(
-                [(],
-                equation(block: false, body: styled(child: [X], ..)),
-                [)],
-              ),
+              body: sequence([(], equation(block: false, body: [𝓧]), [)]),
             ),
           ),
         ),
@@ -4910,14 +4759,14 @@ mark {
       attach(
         base: op(text: [max], limits: true),
         b: sequence(
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [ ],
           [∈],
           [ ],
-          equation(block: false, body: styled(child: [X], ..)),
+          equation(block: false, body: [𝓧]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [∈],
           [ ],
@@ -4927,11 +4776,7 @@ mark {
       [ ],
       attach(
         base: lr(
-          body: sequence(
-            [‖],
-            equation(block: false, body: styled(child: [u], ..)),
-            [‖],
-          ),
+          body: sequence([‖], equation(block: false, body: [𝐮]), [‖]),
         ),
         b: [2],
       ),
@@ -4940,11 +4785,7 @@ mark {
         radicand: sequence(
           attach(
             base: lr(
-              body: sequence(
-                [‖],
-                equation(block: false, body: styled(child: [x], ..)),
-                [‖],
-              ),
+              body: sequence([‖], equation(block: false, body: [𝐱]), [‖]),
             ),
             t: [2],
             b: [2],
@@ -4972,11 +4813,7 @@ mark {
           sequence(
             [End],
             lr(
-              body: sequence(
-                [(],
-                equation(block: false, body: styled(child: [X], ..)),
-                [)],
-              ),
+              body: sequence([(], equation(block: false, body: [𝓧]), [)]),
             ),
           ),
         ),
@@ -5010,14 +4847,14 @@ mark {
       attach(
         base: op(text: [max], limits: true),
         b: sequence(
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [ ],
           [∈],
           [ ],
-          equation(block: false, body: styled(child: [X], ..)),
+          equation(block: false, body: [𝓧]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [∈],
           [ ],
@@ -5027,11 +4864,7 @@ mark {
       [ ],
       attach(
         base: lr(
-          body: sequence(
-            [‖],
-            equation(block: false, body: styled(child: [u], ..)),
-            [‖],
-          ),
+          body: sequence([‖], equation(block: false, body: [𝐮]), [‖]),
         ),
         b: [2],
       ),
@@ -5040,11 +4873,7 @@ mark {
         radicand: sequence(
           attach(
             base: lr(
-              body: sequence(
-                [‖],
-                equation(block: false, body: styled(child: [x], ..)),
-                [‖],
-              ),
+              body: sequence([‖], equation(block: false, body: [𝐱]), [‖]),
             ),
             t: [2],
             b: [2],
@@ -5075,14 +4904,14 @@ mark {
       attach(
         base: op(text: [max], limits: true),
         b: sequence(
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
           [ ],
           [∈],
           [ ],
-          equation(block: false, body: styled(child: [X], ..)),
+          equation(block: false, body: [𝓧]),
           [,],
           [ ],
-          equation(block: false, body: styled(child: [u], ..)),
+          equation(block: false, body: [𝐮]),
           [ ],
           [∈],
           [ ],
@@ -5092,11 +4921,7 @@ mark {
       [ ],
       attach(
         base: lr(
-          body: sequence(
-            [‖],
-            equation(block: false, body: styled(child: [u], ..)),
-            [‖],
-          ),
+          body: sequence([‖], equation(block: false, body: [𝐮]), [‖]),
         ),
         b: [2],
       ),
@@ -5105,11 +4930,7 @@ mark {
         radicand: sequence(
           attach(
             base: lr(
-              body: sequence(
-                [‖],
-                equation(block: false, body: styled(child: [x], ..)),
-                [‖],
-              ),
+              body: sequence([‖], equation(block: false, body: [𝐱]), [‖]),
             ),
             t: [2],
             b: [2],

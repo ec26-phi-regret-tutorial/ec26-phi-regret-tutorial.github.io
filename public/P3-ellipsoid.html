@@ -1274,20 +1274,38 @@ mark {
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn'});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
 </head>
 <body>
-<header class="site-masthead">
-<a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a>
-<div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div>
-<div class="top-links"><a href="index.html">Index</a><a href="pdf/P3-ellipsoid.pdf">PDF</a></div></header>
+<nav class="chapter-rail" aria-label="Chapters">
+<div class="chapter-rail-course"><div class="course-event">ACM EC&rsquo;26 Tutorial</div><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
+<div class="chapter-rail-heading">Chapters</div>
+<a class="chapter-rail-link" href="P1-introduction.html"><span>1</span>Introduction</a>
+<a class="chapter-rail-link" href="P2-phi_regret.html"><span>2</span>Beyond Normal Form</a>
+<a class="chapter-rail-link is-current" href="P3-ellipsoid.html" aria-current="page"><span>3</span>Ellipsoid Against Hope</a>
+<a class="chapter-rail-link" href="P4-multicalibration.html"><span>4</span>Multicalibration</a>
+<a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
+<a class="chapter-rail-link" href="P6-profile.html"><span>6</span>Profile Swap</a>
+<div class="chapter-rail-heading chapter-rail-section-heading">This Chapter</div>
+<a class="chapter-section-link chapter-section-l1" href="#3-1-ellipsoid-against-hope" data-section-link="3-1-ellipsoid-against-hope"><span class="chapter-section-no">3.1</span><span class="chapter-section-title">Ellipsoid against hope</span></a>
+<a class="chapter-section-link chapter-section-l1" href="#3-2-application-to-computing-correlated-equilibria" data-section-link="3-2-application-to-computing-correlated-equilibria"><span class="chapter-section-no">3.2</span><span class="chapter-section-title">Application to computing correlated equilibria</span></a>
+</nav>
 <main class="page-shell">
 <article class="lecture-content" data-lecture-number="3">
+<p class="chapter-kicker">Chapter 3</p>
 <h1 class="lecture-title">Ellipsoid Against Hope</h1>
+<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="pdf/P3-ellipsoid.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-3,
+  author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
+  title = {Chapter 3: Ellipsoid Against Hope},
+  booktitle = {Learning and Computation of Phi-Equilibria},
+  note = {Chapter 3 of the ACM EC 2026 tutorial notes},
+  year = {2026},
+  url = {P3-ellipsoid.html}
+}</code></pre></details></aside>
 <nav class="toc" aria-label="Contents"><ol>
 <li class="toc-l1"><a href="#3-1-ellipsoid-against-hope"><span class="toc-no">3.1</span><span class="toc-title">Ellipsoid against hope</span></a></li>
 <li class="toc-l1"><a href="#3-2-application-to-computing-correlated-equilibria"><span class="toc-no">3.2</span><span class="toc-title">Application to computing correlated equilibria</span></a></li>
 </ol></nav>
 <p>The techniques we have covered so far based on regret minimization lead to a running time complexity growing polynomially in <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([1], [/], [ϵ])" role="math">\(1/\epsilon\)</span>, where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ε], [ ], [>], [ ], [0])" role="math">\(\epsilon &gt; 0\)</span> is the approximation quality of the equilibrium—be it a Nash equilibrium in zero-sum games or a (coarse) correlated equilibrium in general-sum games. Specifically, if we employ algorithms with (<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-)regret bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="root(radicand: [T])" role="math">\(\sqrt[]{T}\)</span> as a function of the time horizon, we need <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([1], [/], attach(base: [ϵ], t: [2]))" role="math">\(1/\epsilon^{2}\)</span> iterations to reach an equilibrium. Can we do better in the regime where <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span> is, say, exponentially small? The other main approach we have introduced for equilibrium computation is based on linear programming, which has the advantage of finding an <em>exact</em> equilibrium. But, as we have already seen, the LP describing (C)CEs has a number of variables that scales <em>exponentially</em> with the number of players.</p>
     <h1 id="3-1-ellipsoid-against-hope" class="notes-heading" data-level="1" data-number="3.1"><span class="secno">3.1</span> Ellipsoid against hope</h1>
-    <p>We will now introduce <em>ellipsoid against hope</em> (EAH), a polynomial-time algorithm for computing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria even in games with many players and complex strategy sets. It was first introduced by <span class="citation-wrap"><a class="citation" href="#loc-13" id="loc-1" role="doc-biblioref">Papadimitriou and Roughgarden [PR08]</a><span class="citation-note"><span class="citation-note-key">[PR08]</span> C. H. Papadimitriou and T. Roughgarden, “Computing correlated equilibria in multi-player games,” <em>Journal of the ACM</em>, 2008.</span></span>. In what follows, we mostly follow the generalized version of the algorithm due to <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-2" role="doc-biblioref">Farina and Pipis [FP24]</a><span class="citation-note"><span class="citation-note-key">[FP24]</span> G. Farina and C. Pipis, “Polynomial-Time Computation of Exact <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g1F8FDDA7547F9919415BA54DCFF3330E"></use></g></g><defs id="glyph"><symbol id="g1F8FDDA7547F9919415BA54DCFF3330E" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria in Polyhedral Games”, in <em>Neural Information Processing Systems</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span> and <span class="citation-wrap"><a class="citation" href="#loc-15" id="loc-3" role="doc-biblioref">Zhang, Anagnostides, Tewolde, Berker, Farina, Conitzer and Sandholm [Zha+25]</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Learning and Computation of <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g1F8FDDA7547F9919415BA54DCFF3330E"></use></g></g><defs id="glyph"><symbol id="g1F8FDDA7547F9919415BA54DCFF3330E" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria at the Frontier of Tractability”, in <em>Economics and Computation</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>. To be clear, this algorithm works in the centralized model, and it’s not compatible with the framework of online learning, although as we shall see similarities do exist between the two approaches.</p>
+    <p>We will now introduce <em>ellipsoid against hope</em> (EAH), a polynomial-time algorithm for computing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria even in games with many players and complex strategy sets. It was first introduced by <span class="citation-wrap"><a class="citation" href="#loc-13" id="loc-1" role="doc-biblioref">Papadimitriou and Roughgarden [PR08]</a><span class="citation-note"><span class="citation-note-key">[PR08]</span> C. H. Papadimitriou and T. Roughgarden, “Computing correlated equilibria in multi-player games,” <em>Journal of the ACM</em>, 2008.</span></span>. In what follows, we mostly follow the generalized version of the algorithm due to <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-2" role="doc-biblioref">Farina and Pipis [FP24]</a><span class="citation-note"><span class="citation-note-key">[FP24]</span> G. Farina and C. Pipis, “Polynomial-Time Computation of Exact <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC1F0BE4A6BE2E3AC8BF8B959047FB7DB"></use></g></g><defs id="glyph"><symbol id="gC1F0BE4A6BE2E3AC8BF8B959047FB7DB" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria in Polyhedral Games”, in <em>Neural Information Processing Systems</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span> and <span class="citation-wrap"><a class="citation" href="#loc-15" id="loc-3" role="doc-biblioref">Zhang, Anagnostides, Tewolde, Berker, Farina, Conitzer and Sandholm [Zha+25]</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Learning and Computation of <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC1F0BE4A6BE2E3AC8BF8B959047FB7DB"></use></g></g><defs id="glyph"><symbol id="gC1F0BE4A6BE2E3AC8BF8B959047FB7DB" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria at the Frontier of Tractability”, in <em>Economics and Computation</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>. To be clear, this algorithm works in the centralized model, and it’s not compatible with the framework of online learning, although as we shall see similarities do exist between the two approaches.</p>
     <p>Our goal is to compute an <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium</em> of a multilinear game, that is, a correlated distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [μ],
   [ ],
@@ -1298,10 +1316,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [X], ..)),
-          b: [1],
-        ),
+        attach(base: equation(block: false, body: [𝓧]), b: [1]),
         [ ],
         [×],
         [ ],
@@ -1310,14 +1325,14 @@ mark {
         [×],
         [ ],
         attach(
-          base: styled(child: equation(block: false, body: styled(child: [X], ..)), ..),
+          base: styled(child: equation(block: false, body: [𝓧]), ..),
           b: [n],
         ),
         [)],
       ),
     ),
   ),
-)" role="math">\(\mu \in \Delta (\mathcal{X}_{1} × \dots × \mathcal{X}_{n})\)</span> such that for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mu \in \Delta (\mathcal{X}_{1} \times \dots \times \mathcal{X}_{n})\)</span> such that for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
   [∈],
@@ -1330,42 +1345,30 @@ mark {
   [ ],
   attach(base: [Φ], b: [i]),
 )" role="math">\(\phi_{i} \in \Phi_{i}\)</span> mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
   [ ],
   [→],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
 )" role="math">\(\mathcal{X}_{i} \to \mathcal{X}_{i}\)</span>,</p>
     <figure class="equation" id="loc-4" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -1381,19 +1384,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -1402,26 +1399,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -1442,17 +1433,14 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [i]),
           [)],
         ),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -1466,26 +1454,20 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -1501,19 +1483,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -1522,26 +1498,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -1562,17 +1532,14 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [i]),
           [)],
         ),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -1599,22 +1566,18 @@ mark {
   [ ],
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [X], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓧]), [)]),
   ),
   [ ],
   [ such that ],
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∼],
       [ ],
@@ -1626,16 +1589,12 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [x], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐱]), [)]),
         ),
       ),
       [ ],
@@ -1651,11 +1610,11 @@ mark {
   [ ],
   [∀],
   [ ],
-  styled(child: [y], ..),
+  [𝐲],
   [ ],
   [∈],
   [ ],
-  styled(child: [Y], ..),
+  [𝓨],
   [,],
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   [find ],
@@ -1666,22 +1625,18 @@ mark {
   [ ],
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [X], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓧]), [)]),
   ),
   [ ],
   [ such that ],
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∼],
       [ ],
@@ -1693,16 +1648,12 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [x], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐱]), [)]),
         ),
       ),
       [ ],
@@ -1718,55 +1669,43 @@ mark {
   [ ],
   [∀],
   [ ],
-  styled(child: [y], ..),
+  [𝐲],
   [ ],
   [∈],
   [ ],
-  styled(child: [Y], ..),
+  [𝓨],
   [,],
 )">\[\displaystyle \text{find } \mu \in \Delta \left(\mathcal{X}\right) \text{ such that } \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left\langle \mathbf{y},G\left(\mathbf{x}\right) \right\rangle \ge 0 \quad \forall \mathbf{y} \in \mathcal{Y},\]</span> <span class="eqno">(2)</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [⊆],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [d],
-  ),
+  attach(base: equation(block: false, body: [ℝ]), t: [d]),
   [,],
   [ ],
-  equation(block: false, body: styled(child: [Y], ..)),
+  equation(block: false, body: [𝓨]),
   [ ],
   [⊆],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [k],
-  ),
+  attach(base: equation(block: false, body: [ℝ]), t: [k]),
 )" role="math">\(\mathcal{X} \subseteq \mathbb{R}^{d}, \mathcal{Y} \subseteq \mathbb{R}^{k}\)</span>, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [G],
   [ ],
   [:],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [k],
-  ),
+  attach(base: equation(block: false, body: [ℝ]), t: [k]),
 )" role="math">\(G : \mathcal{X} \to \mathbb{R}^{k}\)</span> is a function that can be evaluated efficiently. The crux in the optimization problem (<a href="#loc-6">2</a>) lies in the fact that <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> resides in a high-dimensional space; a canonical case to think about is when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [=],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [1],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [1]),
   [ ],
   [×],
   [ ],
@@ -1774,45 +1713,36 @@ mark {
   [ ],
   [×],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [n],
-  ),
-)" role="math">\(\mathcal{X} = \mathcal{A}_{1} × \dots × \mathcal{A}_{n}\)</span> in a normal-form game, so that even describing a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> could require specifying <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [𝓐]), b: [n]),
+)" role="math">\(\mathcal{X} = \mathcal{A}_{1} \times \dots \times \mathcal{A}_{n}\)</span> in a normal-form game, so that even describing a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> could require specifying <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [∏], t: [n], b: sequence([i], [=], [1])),
   [ ],
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [|],
   [ ],
   [−],
   [ ],
   [1],
-)" role="math">\(\prod_{i=1}^{n} |\mathcal{A}_{i}| - 1\)</span> coordinates. We assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [Y], ..))" role="math">\(\mathcal{Y}\)</span>, which corresponds to the set of deviations, admits a <em>separation oracle</em>; under mild geometric assumptions, it’s equivalent to posit merely a <em>membership oracle</em>, which returns whether a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [y], ..)),
+)" role="math">\(\prod_{i=1}^{n} |\mathcal{A}_{i}| - 1\)</span> coordinates. We assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span>, which corresponds to the set of deviations, admits a <em>separation oracle</em>; under mild geometric assumptions, it’s equivalent to posit merely a <em>membership oracle</em>, which returns whether a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: [𝐲]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [k],
-  ),
-)" role="math">\(\mathbf{y} \in \mathbb{R}^{k}\)</span> belongs to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [Y], ..))" role="math">\(\mathcal{Y}\)</span> or not. A special case is when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [Y], ..))" role="math">\(\mathcal{Y}\)</span> is a polytope described with a polynomial number of constraints, as is the case for swap regret in normal-form games—each player’s set of deviations amounts to the set of stochastic matrices.</p>
+  attach(base: equation(block: false, body: [ℝ]), t: [k]),
+)" role="math">\(\mathbf{y} \in \mathbb{R}^{k}\)</span> belongs to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> or not. A special case is when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> is a polytope described with a polynomial number of constraints, as is the case for swap regret in normal-form games—each player’s set of deviations amounts to the set of stochastic matrices.</p>
     <p>The key assumption in the EAH framework [<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>] is the existence of a <em>good-enough-response (GER)</em> oracle, which, given any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [y], ..)),
+  equation(block: false, body: [𝐲]),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [Y], ..)),
+  equation(block: false, body: [𝓨]),
 )" role="math">\(\mathbf{y} \in \mathcal{Y}\)</span>, returns a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
@@ -1820,16 +1750,12 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [y], ..)),
+        equation(block: false, body: [𝐲]),
         [,],
         sequence(
           [G],
           lr(
-            body: sequence(
-              [(],
-              equation(block: false, body: styled(child: [x], ..)),
-              [)],
-            ),
+            body: sequence([(], equation(block: false, body: [𝐱]), [)]),
           ),
         ),
         [ ],
@@ -1842,16 +1768,16 @@ mark {
   [ ],
   [0],
 )" role="math">\(\left\langle \mathbf{y},G(\mathbf{x}) \right\rangle \ge 0\)</span>.</p>
-    <p>The EAH algorithm enables solving (<a href="#loc-6">2</a>) with just a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [Y], ..))" role="math">\(\mathcal{Y}\)</span> and a GER oracle. The basic idea is to consider an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate version of the dual of (<a href="#loc-6">2</a>),</p>
+    <p>The EAH algorithm enables solving (<a href="#loc-6">2</a>) with just a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle. The basic idea is to consider an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate version of the dual of (<a href="#loc-6">2</a>),</p>
     <figure class="equation" id="loc-7" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [find ],
   [ ],
-  styled(child: [y], ..),
+  [𝐲],
   [ ],
   [∈],
   [ ],
-  styled(child: [Y], ..),
+  [𝓨],
   [ ],
   [ such that ],
   [ ],
@@ -1859,16 +1785,12 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [x], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐱]), [)]),
         ),
       ),
       [ ],
@@ -1886,20 +1808,20 @@ mark {
   [ ],
   [∀],
   [ ],
-  styled(child: [x], ..),
+  [𝐱],
   [ ],
   [∈],
   [ ],
-  styled(child: [X], ..),
+  [𝓧],
   [.],
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   [find ],
   [ ],
-  styled(child: [y], ..),
+  [𝐲],
   [ ],
   [∈],
   [ ],
-  styled(child: [Y], ..),
+  [𝓨],
   [ ],
   [ such that ],
   [ ],
@@ -1907,16 +1829,12 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [x], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐱]), [)]),
         ),
       ),
       [ ],
@@ -1934,45 +1852,42 @@ mark {
   [ ],
   [∀],
   [ ],
-  styled(child: [x], ..),
+  [𝐱],
   [ ],
   [∈],
   [ ],
-  styled(child: [X], ..),
+  [𝓧],
   [.],
 )">\[\displaystyle \text{find } \mathbf{y} \in \mathcal{Y} \text{ such that } \left\langle \mathbf{y},G\left(\mathbf{x}\right) \right\rangle \le - \epsilon \quad \forall \mathbf{x} \in \mathcal{X}.\]</span> <span class="eqno">(3)</span></div>
     </figure>
     <p>On account of the fact that a GER oracle exists, (<a href="#loc-7">3</a>) is guaranteed to be infeasible. Even so, EAH proceeds by executing the ellipsoid algorithm on that infeasible program—this is where the apt name “ellipsoid against hope” comes from. In every step <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span> of the algorithm, we have a candidate <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [y], ..)),
+    base: equation(block: false, body: [𝐲]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [Y], ..)),
+  equation(block: false, body: [𝓨]),
 )" role="math">\(\mathbf{y}^{(t)} \in \mathcal{Y}\)</span> and use the GER oracle to produce a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [x], t: lr(body: sequence([(], [t], [)]))),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(x^{(t)} \in \mathcal{X}\)</span> that refutes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [y], ..)),
+  base: equation(block: false, body: [𝐲]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{y}^{(t)}\)</span>; in fact, an entire halfspace in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: styled(child: equation(block: false, body: [ℝ]), ..),
-  t: [k],
-)" role="math">\(\mathbb{R}^{k}\)</span>. This goes on until the volume of the ellipsoid has shrank to a small enough amount. It then follows that</p>
+)" role="math">\(\mathbf{y}^{(t)}\)</span>; in fact, an entire halfspace in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [ℝ]), t: [k])" role="math">\(\mathbb{R}^{k}\)</span>. This goes on until the volume of the ellipsoid has shrank to a small enough amount. It then follows that</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [∀],
   [ ],
-  styled(child: [y], ..),
+  [𝐲],
   [ ],
   [∈],
   [ ],
-  styled(child: [Y], ..),
+  [𝓨],
   [ ],
   [∃],
   [ ],
@@ -1988,7 +1903,7 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
@@ -1996,7 +1911,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -2017,11 +1932,11 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   [∀],
   [ ],
-  styled(child: [y], ..),
+  [𝐲],
   [ ],
   [∈],
   [ ],
-  styled(child: [Y], ..),
+  [𝓨],
   [ ],
   [∃],
   [ ],
@@ -2037,7 +1952,7 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
@@ -2045,7 +1960,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -2071,11 +1986,11 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [Y], ..)),
+      equation(block: false, body: [𝓨]),
     ),
   ),
   [ ],
@@ -2103,7 +2018,7 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
@@ -2111,7 +2026,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -2133,11 +2048,11 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [Y], ..)),
+      equation(block: false, body: [𝓨]),
     ),
   ),
   [ ],
@@ -2165,7 +2080,7 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
@@ -2173,7 +2088,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -2215,11 +2130,11 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [Y], ..)),
+      equation(block: false, body: [𝓨]),
     ),
   ),
   [ ],
@@ -2231,7 +2146,7 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
@@ -2239,7 +2154,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -2277,11 +2192,11 @@ mark {
   attach(
     base: op(text: [min], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [Y], ..)),
+      equation(block: false, body: [𝓨]),
     ),
   ),
   [ ],
@@ -2293,7 +2208,7 @@ mark {
     body: sequence(
       [⟨],
       [ ],
-      equation(block: false, body: styled(child: [y], ..)),
+      equation(block: false, body: [𝐲]),
       [,],
       sequence(
         [G],
@@ -2301,7 +2216,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -2323,7 +2238,7 @@ mark {
     </figure>
     <p>In other words, there is a convex combination of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [1], [)])),
   ),
   [,],
@@ -2332,7 +2247,7 @@ mark {
   [,],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [T], [)])),
   ),
 )" role="math">\(\mathbf{x}^{(1)}, \dots , \mathbf{x}^{(T)}\)</span> that refutes any possible <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2340,11 +2255,11 @@ mark {
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [Y], ..)),
+  equation(block: false, body: [𝓨]),
 )" role="math">\(y \in \mathcal{Y}\)</span>. That convex combination, which is a <em>certificate of dual infeasibility</em>, will thus be an approximate solution to (<a href="#loc-6">2</a>). The key point is that the resulting zero-sum game in (<a href="#loc-8">4</a>) is much smaller than the one we started with, and can be solved with standard techniques.</p>
     <section class="env statement" id="loc-9">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>1</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
-      <div class="env-body">Assuming the existence of a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [Y], ..))" role="math">\(\mathcal{Y}\)</span> and a GER oracle, EAH runs in time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+      <div class="env-body">Assuming the existence of a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle, EAH runs in time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
   lr(
     body: sequence(
@@ -2366,65 +2281,44 @@ mark {
     </section>
     <h1 id="3-2-application-to-computing-correlated-equilibria" class="notes-heading" data-level="1" data-number="3.2"><span class="secno">3.2</span> Application to computing correlated equilibria</h1>
     <p>Let’s now see to apply this algorithm to solve (<a href="#loc-4">1</a>). As before, we assume that each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], b: [i])" role="math">\(\Phi_{i}\)</span> contains linear functions of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝐱]), b: [i]),
   [ ],
   [↦],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   attach(base: [q], b: [i]),
   [ ],
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [i],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [i]),
       [)],
     ),
   ),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
 )" role="math">\(\mathbf{x}_{i} \mapsto \mathbf{M}_{i} q_{i} (\mathbf{x}_{i}) \in \mathcal{X}_{i}\)</span> for some feature map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [q], b: [i]),
   [:],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
   [ ],
   [→],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    base: equation(block: false, body: [ℝ]),
     t: attach(base: [k], b: [i]),
   ),
-)" role="math">\(q_{i}: \mathcal{X}_{i} \to \mathbb{R}^{k_{i}}\)</span>. For these notes, we will assume that the set of valid matrices <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [M], ..)),
-  b: [i],
-)" role="math">\(\mathbf{M}_{i}\)</span> form a convex, compact set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [Y], ..)),
-    b: [i],
-  ),
+)" role="math">\(q_{i}: \mathcal{X}_{i} \to \mathbb{R}^{k_{i}}\)</span>. For these notes, we will assume that the set of valid matrices <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐌]), b: [i])" role="math">\(\mathbf{M}_{i}\)</span> form a convex, compact set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [𝓨]), b: [i]),
   [ ],
   [⊂],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    base: equation(block: false, body: [ℝ]),
     t: sequence(
       attach(base: [d], b: [i]),
       [ ],
@@ -2433,33 +2327,27 @@ mark {
       attach(base: [k], b: [i]),
     ),
   ),
-)" role="math">\(\mathcal{Y}_{i} \subset \mathbb{R}^{d_{i} × k_{i}}\)</span>; this assumption can be relaxed using a similar idea to the semi-separation oracle [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>]. we will later briefly explain how to relax this assumption. Then a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium is a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> such that</p>
+)" role="math">\(\mathcal{Y}_{i} \subset \mathbb{R}^{d_{i} \times k_{i}}\)</span>; this assumption can be relaxed using a similar idea to the semi-separation oracle [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>]. we will later briefly explain how to relax this assumption. Then a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium is a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> such that</p>
     <figure class="equation" id="loc-10" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(base: [∑], t: [n], b: sequence([i], [=], [1])),
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -2475,17 +2363,11 @@ mark {
       [⟨],
       [ ],
       sequence(
-        attach(
-          base: equation(block: false, body: styled(child: [I], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐈]), b: [i]),
         [ ],
         [−],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [M], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐌]), b: [i]),
       ),
       [,],
       sequence(
@@ -2495,7 +2377,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               b: sequence([−], [i]),
             ),
             [)],
@@ -2509,10 +2391,7 @@ mark {
           lr(
             body: sequence(
               [(],
-              attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
-                b: [i],
-              ),
+              attach(base: equation(block: false, body: [𝐱]), b: [i]),
               [)],
             ),
           ),
@@ -2540,43 +2419,31 @@ mark {
   lr(body: sequence([[], [n], []])),
   [,],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [Y], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓨]), b: [i]),
   [,],
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(base: [∑], t: [n], b: sequence([i], [=], [1])),
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -2592,17 +2459,11 @@ mark {
       [⟨],
       [ ],
       sequence(
-        attach(
-          base: equation(block: false, body: styled(child: [I], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐈]), b: [i]),
         [ ],
         [−],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [M], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐌]), b: [i]),
       ),
       [,],
       sequence(
@@ -2612,7 +2473,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               b: sequence([−], [i]),
             ),
             [)],
@@ -2626,10 +2487,7 @@ mark {
           lr(
             body: sequence(
               [(],
-              attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
-                b: [i],
-              ),
+              attach(base: equation(block: false, body: [𝐱]), b: [i]),
               [)],
             ),
           ),
@@ -2657,29 +2515,17 @@ mark {
   lr(body: sequence([[], [n], []])),
   [,],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [Y], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓨]), b: [i]),
   [,],
 )">\[\displaystyle \sum_{i=1}^{n} \mathop{\mathbb{E}}\limits_{\left(\mathbf{x}_{1}, \dots , \mathbf{x}_{n}\right) \sim \mu} \left\langle \mathbf{I}_{i} - \mathbf{M}_{i},u_{i} \left(\mathbf{x}_{-i}\right) ⊗ q\left(\mathbf{x}_{i}\right) \right\rangle \ge - \epsilon \quad \forall i \in \left[n\right], \mathbf{M}_{i} \in \mathcal{Y}_{i},\]</span> <span class="eqno">(5)</span></div>
     </figure>
-    <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [I], ..)),
-  b: [i],
-)" role="math">\(\mathbf{I}_{i}\)</span> is the matrix for which <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+    <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐈]), b: [i])" role="math">\(\mathbf{I}_{i}\)</span> is the matrix for which <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: [φ],
-  b: attach(
-    base: equation(block: false, body: styled(child: [I], ..)),
-    b: [i],
-  ),
+  b: attach(base: equation(block: false, body: [𝐈]), b: [i]),
 )" role="math">\(\phi_{\mathbf{I}_{i}}\)</span> is the identity map. This indeed adheres to (<a href="#loc-6">2</a>).</p>
     <p>What’s left is to prove that (<a href="#loc-10">5</a>) admits an efficient GER oracle. To do so, let’s consider any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
@@ -2688,17 +2534,11 @@ mark {
   [ ],
   lr(body: sequence([[], [n], []])),
 )" role="math">\(i \in [n]\)</span> and deviation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [Y], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓨]), b: [i]),
 )" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span>. Taking <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [μ], b: [i]),
   [ ],
@@ -2709,45 +2549,33 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [X], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝓧]), b: [i]),
         [)],
       ),
     ),
   ),
 )" role="math">\(\mu_{i} \in \Delta (\mathcal{X}_{i})\)</span> to be an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate expected fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: [φ],
-  b: attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
-    b: [i],
-  ),
+  b: attach(base: equation(block: false, body: [𝐌]), b: [i]),
 )" role="math">\(\phi_{\mathbf{M}_{i}}\)</span>, we have</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -2763,27 +2591,18 @@ mark {
       [⟨],
       [ ],
       sequence(
-        attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐱]), b: [i]),
         [ ],
         [−],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [M], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐌]), b: [i]),
         [ ],
         sequence(
           [q],
           lr(
             body: sequence(
               [(],
-              attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
-                b: [i],
-              ),
+              attach(base: equation(block: false, body: [𝐱]), b: [i]),
               [)],
             ),
           ),
@@ -2797,7 +2616,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               b: sequence([−], [i]),
             ),
             [)],
@@ -2828,7 +2647,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 b: sequence([−], [i]),
               ),
               [)],
@@ -2844,26 +2663,20 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -2879,27 +2692,18 @@ mark {
       [⟨],
       [ ],
       sequence(
-        attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐱]), b: [i]),
         [ ],
         [−],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [M], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐌]), b: [i]),
         [ ],
         sequence(
           [q],
           lr(
             body: sequence(
               [(],
-              attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
-                b: [i],
-              ),
+              attach(base: equation(block: false, body: [𝐱]), b: [i]),
               [)],
             ),
           ),
@@ -2913,7 +2717,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               b: sequence([−], [i]),
             ),
             [)],
@@ -2944,7 +2748,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 b: sequence([−], [i]),
               ),
               [)],
@@ -3007,23 +2811,16 @@ mark {
   [ ],
   [:],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [d],
-  ),
-)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span>, consider the EAH problem with <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [Y], ..))" role="math">\(\mathcal{Y}\)</span> set to the unit <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [ℓ], b: [2])" role="math">\(ℓ_{2}\)</span>-ball, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [ℝ]), t: [d]),
+)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span>, consider the EAH problem with <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> set to the unit <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [ℓ], b: [2])" role="math">\(ℓ_{2}\)</span>-ball, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [G],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
   [ ],
@@ -3032,50 +2829,39 @@ mark {
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
   [ ],
   [−],
   [ ],
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
 )" role="math">\(G(\mathbf{x}) = \phi (\mathbf{x}) - \mathbf{x}\)</span>. Then, by <a href="#loc-9">Theorem 3.1</a>, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [y], ..)),
+  equation(block: false, body: [𝐲]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: [d],
-  ),
-)" role="math">\(\mathbf{y} \in \mathbb{R}^{d}\)</span>, we need to find <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [ℝ]), t: [d]),
+)" role="math">\(\mathbf{y} \in \mathbb{R}^{d}\)</span>, we need to find <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
     body: lr(
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [y], ..)),
+        equation(block: false, body: [𝐲]),
         [,],
         sequence(
           sequence(
             [φ],
             lr(
-              body: sequence(
-                [(],
-                equation(block: false, body: styled(child: [x], ..)),
-                [)],
-              ),
+              body: sequence([(], equation(block: false, body: [𝐱]), [)]),
             ),
           ),
           [ ],
           [−],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
         ),
         [ ],
         [⟩],
@@ -3087,7 +2873,7 @@ mark {
   [ ],
   [0],
 )" role="math">\(\left\langle \mathbf{y},\phi (\mathbf{x}) - \mathbf{x} \right\rangle \ge 0\)</span>. But this is easy: we can simply take <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [∈],
   [ ],
@@ -3105,13 +2891,13 @@ mark {
     ),
     b: sequence(
       accent(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         accent: &quot;\u{302}&quot;,
       ),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -3121,10 +2907,10 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [y], ..)),
+        equation(block: false, body: [𝐲]),
         [,],
         accent(
-          base: equation(block: false, body: styled(child: [x], ..)),
+          base: equation(block: false, body: [𝐱]),
           accent: &quot;\u{302}&quot;,
         ),
         [ ],
@@ -3136,32 +2922,24 @@ mark {
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
   [ ],
   [∉],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
-)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span>, in which case we output <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span> as a certificate of infeasibility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>, or <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: [𝓧]),
+)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span>, in which case we output <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span> as a certificate of infeasibility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>, or <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\phi (\mathbf{x}) \in \mathcal{X}\)</span>, in which case <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
@@ -3169,23 +2947,19 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [y], ..)),
+        equation(block: false, body: [𝐲]),
         [,],
         sequence(
           sequence(
             [φ],
             lr(
-              body: sequence(
-                [(],
-                equation(block: false, body: styled(child: [x], ..)),
-                [)],
-              ),
+              body: sequence([(], equation(block: false, body: [𝐱]), [)]),
             ),
           ),
           [ ],
           [−],
           [ ],
-          equation(block: false, body: styled(child: [x], ..)),
+          equation(block: false, body: [𝐱]),
         ),
         [ ],
         [⟩],
@@ -3196,7 +2970,7 @@ mark {
   [≥],
   [ ],
   [0],
-)" role="math">\(\left\langle \mathbf{y},\phi (\mathbf{x}) - \mathbf{x} \right\rangle \ge 0\)</span> by definition of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span>.</div>
+)" role="math">\(\left\langle \mathbf{y},\phi (\mathbf{x}) - \mathbf{x} \right\rangle \ge 0\)</span> by definition of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span>.</div>
     </section>
     <p>Finally, if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [μ], b: [i]),
@@ -3208,10 +2982,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [X], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝓧]), b: [i]),
         [)],
       ),
     ),
@@ -3226,7 +2997,7 @@ mark {
   [×],
   [ ],
   attach(base: [μ], b: [n]),
-)" role="math">\(\mu_{1} × \dots × \mu_{n}\)</span> is a GER solution satisfying (<a href="#loc-10">5</a>). We therefore have:</p>
+)" role="math">\(\mu_{1} \times \dots \times \mu_{n}\)</span> is a GER solution satisfying (<a href="#loc-10">5</a>). We therefore have:</p>
     <section class="env statement" id="loc-11">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>], [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>] <mark class="todo">is it possible to do <code>#cite[one, two]</code>, like in latex?</mark>)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3279,7 +3050,7 @@ mark {
   [×],
   [ ],
   attach(base: [μ], b: [n]),
-)" role="math">\(\mu = \mu_{1} × \dots × \mu_{n}\)</span> (which has support that increases exponentially with the number of players <span class="math-katex-source" data-math-display="inline" data-typst-math="[n]" role="math">\(n\)</span>); and</p>
+)" role="math">\(\mu = \mu_{1} \times \dots \times \mu_{n}\)</span> (which has support that increases exponentially with the number of players <span class="math-katex-source" data-math-display="inline" data-typst-math="[n]" role="math">\(n\)</span>); and</p>
           </li>
           <li>
             <p>to ensure that an expected fixed point solution actually guarantees separation: for example, if instead we had arbitrary concave utilities <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3291,7 +3062,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -3302,11 +3073,11 @@ mark {
               <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∼],
       [ ],
@@ -3324,11 +3095,7 @@ mark {
         sequence(
           [u],
           lr(
-            body: sequence(
-              [(],
-              equation(block: false, body: styled(child: [x], ..)),
-              [)],
-            ),
+            body: sequence([(], equation(block: false, body: [𝐱]), [)]),
           ),
         ),
       ),
@@ -3337,17 +3104,13 @@ mark {
         sequence(
           [φ],
           lr(
-            body: sequence(
-              [(],
-              equation(block: false, body: styled(child: [x], ..)),
-              [)],
-            ),
+            body: sequence([(], equation(block: false, body: [𝐱]), [)]),
           ),
         ),
         [ ],
         [−],
         [ ],
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
       ),
       [ ],
       [⟩],
@@ -3361,11 +3124,11 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∼],
       [ ],
@@ -3383,11 +3146,7 @@ mark {
         sequence(
           [u],
           lr(
-            body: sequence(
-              [(],
-              equation(block: false, body: styled(child: [x], ..)),
-              [)],
-            ),
+            body: sequence([(], equation(block: false, body: [𝐱]), [)]),
           ),
         ),
       ),
@@ -3396,17 +3155,13 @@ mark {
         sequence(
           [φ],
           lr(
-            body: sequence(
-              [(],
-              equation(block: false, body: styled(child: [x], ..)),
-              [)],
-            ),
+            body: sequence([(], equation(block: false, body: [𝐱]), [)]),
           ),
         ),
         [ ],
         [−],
         [ ],
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
       ),
       [ ],
       [⟩],
@@ -3425,28 +3180,13 @@ mark {
         <p>The first issue is not circumventable, and is generally a barrier to efficient equilibrium computation in concave games with many players. The second issue is not circumventable in general, as it would imply the ability to compute fixed points of contraction maps. However, it <em>is</em> circumventable in the special case where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([u], lr(body: sequence([(], [·], [)])))" role="math">\(u(\cdot )\)</span> is <em>quadratic</em> concave for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>; therefore, it is possible to compute <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria in quadratic games with a constant number of players. The required techniques, however, are beyond the scope of this document. We refer the interested reader to our recent preprint on this topic <span id="loc-12">[</span><span class="citation-wrap"><a class="citation" href="#loc-16" role="doc-biblioref">Ana+26</a><span class="citation-note"><span class="citation-note-key">[Ana+26]</span> I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm, and B. H. Zhang, “On the Complexity of Correlated Equilibria Beyond Normal-Form Games,” <em>arXiv preprint <a href="https://arxiv.org/abs/2605.17665">arXiv:2605.17665</a></em>, 2026.</span></span>].</p>
       </li>
       <li value="3">
-        <p><em>Non-separable sets <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. So far in this section, we have assumed that the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [Y], ..)),
-  b: [i],
-)" role="math">\(\mathcal{Y}_{i}\)</span> admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization, it is sufficient to take <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [Y], ..)),
-  b: [i],
-)" role="math">\(\mathcal{Y}_{i}\)</span> to be a <em>superset</em> of the valid deviations and rely on the semi-separation oracle to declare when a given matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
-    b: [i],
-  ),
+        <p><em>Non-separable sets <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. So far in this section, we have assumed that the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization, it is sufficient to take <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> to be a <em>superset</em> of the valid deviations and rely on the semi-separation oracle to declare when a given matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [Y], ..)),
-    b: [i],
-  ),
-)" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span> is invalid. Therefore, <a href="#loc-11">Theorem 3.3</a> also generalizes to the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [Y], ..)),
-  b: [i],
-)" role="math">\(\mathcal{Y}_{i}\)</span> only admits an efficient <em>semi</em>-separation oracle, such as the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> discussed in the regret minimization section. For more details, we refer the interested reader to our paper [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>].</p>
+  attach(base: equation(block: false, body: [𝓨]), b: [i]),
+)" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span> is invalid. Therefore, <a href="#loc-11">Theorem 3.3</a> also generalizes to the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> only admits an efficient <em>semi</em>-separation oracle, such as the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> discussed in the regret minimization section. For more details, we refer the interested reader to our paper [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>].</p>
       </li>
     </ol>
     <section class="bibliography" id="bibliography">
@@ -3474,6 +3214,37 @@ mark {
 </section>
 </article>
 </main>
+<script>
+(() => {
+  const links = Array.from(document.querySelectorAll("[data-section-link]"));
+  if (!links.length) return;
+  const byId = new Map(links.map((link) => [link.getAttribute("data-section-link"), link]));
+  const sections = Array.from(byId.keys()).map((id) => document.getElementById(id)).filter(Boolean);
+  const setActive = (id) => {
+    for (const link of links) {
+      const active = link.getAttribute("data-section-link") === id;
+      link.classList.toggle("is-active", active);
+      if (active) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    }
+  };
+  const update = () => {
+    const y = window.scrollY + 130;
+    let current = sections[0]?.id;
+    for (const section of sections) {
+      if (section.offsetTop <= y) current = section.id;
+      else break;
+    }
+    if (current) setActive(current);
+  };
+  update();
+  window.setTimeout(update, 0);
+  window.setTimeout(update, 150);
+  document.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  window.addEventListener("hashchange", update);
+})();
+</script>
 <script>
 (() => {
   function boxWidth(el){

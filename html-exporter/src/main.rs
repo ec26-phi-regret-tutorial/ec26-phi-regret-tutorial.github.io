@@ -42,15 +42,15 @@ const CHAPTERS: &[ChapterNav] = &[
     },
     ChapterNav {
         number: 2,
-        source: "P2-semi_separation.typ",
-        href: "P2-semi_separation.html",
-        short_title: "Semi-Separation",
+        source: "P2-phi_regret.typ",
+        href: "P2-phi_regret.html",
+        short_title: "Beyond Normal Form",
     },
     ChapterNav {
         number: 3,
-        source: "P3-phi-regret-learning.typ",
-        href: "P3-phi-regret-learning.html",
-        short_title: "Beyond Normal Form",
+        source: "P3-ellipsoid.typ",
+        href: "P3-ellipsoid.html",
+        short_title: "Ellipsoid Against Hope",
     },
     ChapterNav {
         number: 4,

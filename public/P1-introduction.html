@@ -1278,8 +1278,8 @@ mark {
 <div class="chapter-rail-course"><div class="course-event">ACM EC&rsquo;26 Tutorial</div><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
 <div class="chapter-rail-heading">Chapters</div>
 <a class="chapter-rail-link is-current" href="P1-introduction.html" aria-current="page"><span>1</span>Introduction</a>
-<a class="chapter-rail-link" href="P2-semi_separation.html"><span>2</span>Semi-Separation</a>
-<a class="chapter-rail-link" href="P3-phi-regret-learning.html"><span>3</span>Beyond Normal Form</a>
+<a class="chapter-rail-link" href="P2-phi_regret.html"><span>2</span>Beyond Normal Form</a>
+<a class="chapter-rail-link" href="P3-ellipsoid.html"><span>3</span>Ellipsoid Against Hope</a>
 <a class="chapter-rail-link" href="P4-multicalibration.html"><span>4</span>Multicalibration</a>
 <a class="chapter-rail-link" href="P5-treeswap.html"><span>5</span>TreeSwap</a>
 <a class="chapter-rail-link" href="P6-profile.html"><span>6</span>Profile Swap</a>
@@ -1323,15 +1323,15 @@ mark {
   lr(body: sequence([[], [T], []])),
 )" role="math">\(t \in [T]\)</span>, the learner specifies a mixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
-)" role="math">\(\mathbf{x}^{(t)} \in \mathcal{X}\)</span>, where <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is a convex and compact set. (A canonical case arises when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is a probability simplex over a finite set of actions, but our focus here is on the general setting.) The environment then selects a <em>utility vector</em> <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  equation(block: false, body: [𝓧]),
+)" role="math">\(\mathbf{x}^{(t)} \in \mathcal{X}\)</span>, where <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a convex and compact set. (A canonical case arises when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a probability simplex over a finite set of actions, but our focus here is on the general setting.) The environment then selects a <em>utility vector</em> <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span>, so that the utility obtained by the learner at that round is <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
   block: false,
@@ -1340,12 +1340,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1353,7 +1353,7 @@ mark {
     ),
   ),
 )" role="math">\(\left\langle \mathbf{x}^{(t)},\mathbf{u}^{(t)} \right\rangle\)</span>. In the full-feedback setting, which is the focus of these notes, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span> is revealed to the learner after the end of the round. An online algorithm produces a sequence of strategies based on the feedback observed up to that point.</p>
     <p>What’s a sensible way of measuring the performance of the learner in this online environment? There are different notions of <em>hindsight rationality</em>. Perhaps the most common performance benchmark is <em>regret</em>, defined as</p>
@@ -1366,11 +1366,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -1385,10 +1385,10 @@ mark {
           body: sequence(
             [⟨],
             [ ],
-            equation(block: false, body: styled(child: [x], ..)),
+            equation(block: false, body: [𝐱]),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -1409,12 +1409,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1430,11 +1430,11 @@ mark {
   attach(
     base: op(text: [max], limits: true),
     b: sequence(
-      equation(block: false, body: styled(child: [x], ..)),
+      equation(block: false, body: [𝐱]),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
     ),
   ),
   [ ],
@@ -1449,10 +1449,10 @@ mark {
           body: sequence(
             [⟨],
             [ ],
-            equation(block: false, body: styled(child: [x], ..)),
+            equation(block: false, body: [𝐱]),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -1473,12 +1473,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -1497,19 +1497,13 @@ mark {
   [∈],
   [ ],
   lr(body: sequence([[], [n], []])),
-)" role="math">\(i \in [n]\)</span> has a finite set of available actions <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [A], ..)),
-  b: [i],
-)" role="math">\(\mathcal{A}_{i}\)</span>; we will use the shorthand notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(i \in [n]\)</span> has a finite set of available actions <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓐]), b: [i])" role="math">\(\mathcal{A}_{i}\)</span>; we will use the shorthand notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [m], b: [i]),
   [ ],
   [≔],
   [ ],
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [|],
 )" role="math">\(m_{i} \coloneqq |\mathcal{A}_{i}|\)</span> for the number of actions. Every player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
@@ -1534,10 +1528,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [1],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [1]),
   [ ],
   [×],
   [ ],
@@ -1545,11 +1536,8 @@ mark {
   [ ],
   [×],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [n],
-  ),
-)" role="math">\((a_{1}, \dots , a_{n}) \in \mathcal{A}_{1} × \dots × \mathcal{A}_{n}\)</span> to a real value <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [𝓐]), b: [n]),
+)" role="math">\((a_{1}, \dots , a_{n}) \in \mathcal{A}_{1} \times \dots \times \mathcal{A}_{n}\)</span> to a real value <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [u], b: [i]),
   [ ],
   lr(
@@ -1575,10 +1563,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [i]),
         [)],
       ),
     ),
@@ -1605,10 +1590,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [1],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [1]),
         [)],
       ),
     ),
@@ -1625,15 +1607,12 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [n],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [n]),
         [)],
       ),
     ),
   ),
-)" role="math">\((x_{1}, \dots , x_{n}) \in \Delta (\mathcal{A}_{1}) × \dots × \Delta (\mathcal{A}_{n})\)</span>, the <em>expected utility</em> of player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\((x_{1}, \dots , x_{n}) \in \Delta (\mathcal{A}_{1}) \times \dots \times \Delta (\mathcal{A}_{n})\)</span>, the <em>expected utility</em> of player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
   [∈],
@@ -1647,19 +1626,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -1669,7 +1642,7 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -1692,19 +1665,13 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -1738,19 +1705,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -1759,7 +1720,7 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -1782,19 +1743,13 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -1846,10 +1801,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [1]),
       [ ],
       [×],
       [ ],
@@ -1857,10 +1809,7 @@ mark {
       [ ],
       [×],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [n]),
     ),
   ),
   [ ],
@@ -1879,7 +1828,7 @@ mark {
   ),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     b: attach(base: [i], tr: primes(count: 1)),
   ),
   [ ],
@@ -1932,10 +1881,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [1]),
       [ ],
       [×],
       [ ],
@@ -1943,10 +1889,7 @@ mark {
       [ ],
       [×],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [n]),
     ),
   ),
   [ ],
@@ -1965,7 +1908,7 @@ mark {
   ),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     b: attach(base: [i], tr: primes(count: 1)),
   ),
   [ ],
@@ -1996,7 +1939,7 @@ mark {
     ),
   ),
   [.],
-)">\(\displaystyle = \sum_{\left(a_{1}, \dots , a_{n}\right) \in \mathcal{A}_{1} × \dots × \mathcal{A}_{n}} \quad \prod_{i' = 1}^{n} \mathbf{x}_{i'} \left[a_{i'}\right] u_{i} \left(a_{1}, \dots , a_{n}\right).\)</span></div>
+)">\(\displaystyle = \sum_{\left(a_{1}, \dots , a_{n}\right) \in \mathcal{A}_{1} \times \dots \times \mathcal{A}_{n}} \quad \prod_{i' = 1}^{n} \mathbf{x}_{i'} \left[a_{i'}\right] u_{i} \left(a_{1}, \dots , a_{n}\right).\)</span></div>
     </figure>
     <p>Each player is trying to maximize its expected utility.</p>
     <h2 id="1-2-1-correlated-and-coarse-correlated-equilibria" class="notes-heading" data-level="2" data-number="1.2.1"><span class="secno">1.2.1</span> Correlated and coarse correlated equilibria</h2>
@@ -2015,10 +1958,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [1],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [1]),
         [ ],
         [×],
         [ ],
@@ -2026,15 +1966,12 @@ mark {
         [ ],
         [×],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [n],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [n]),
         [)],
       ),
     ),
   ),
-)" role="math">\(\mu \in \Delta (\mathcal{A}_{1} × \dots × \mathcal{A}_{n})\)</span> is an <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-coarse correlated equilibrium (CCE)</em> if for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mu \in \Delta (\mathcal{A}_{1} \times \dots \times \mathcal{A}_{n})\)</span> is an <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-coarse correlated equilibrium (CCE)</em> if for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
   [∈],
@@ -2048,16 +1985,13 @@ mark {
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
 )" role="math">\(a_{i'} \in \mathcal{A}_{i}\)</span>,</p>
         <figure class="equation" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2107,7 +2041,7 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2160,7 +2094,7 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2210,7 +2144,7 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2264,7 +2198,7 @@ mark {
         </figure>
       </div>
     </section>
-    <p>This definition mirrors Nash equilibria, but with a critical difference: the underlying distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> can be <em>correlated</em>; by contrast, in a Nash equilibrium <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> has to be a <em>product distribution</em>, reflecting the fact that players randomize independently. To explain this, let’s consider the following two distributions with respect to some <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 × 2\)</span> bimatrix game (meaning that each of the two players has two available actions).</p>
+    <p>This definition mirrors Nash equilibria, but with a critical difference: the underlying distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> can be <em>correlated</em>; by contrast, in a Nash equilibrium <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> has to be a <em>product distribution</em>, reflecting the fact that players randomize independently. To explain this, let’s consider the following two distributions with respect to some <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> bimatrix game (meaning that each of the two players has two available actions).</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [μ],
@@ -2333,15 +2267,12 @@ mark {
 )">\[\displaystyle \mu = \begin{pmatrix}\frac{1}{2} &amp; 0 \\ 0 &amp; \frac{1}{2}\end{pmatrix}, \quad \mu' = \begin{pmatrix}\frac{1}{6} &amp; \frac{1}{6} \\ \frac{1}{3} &amp; \frac{1}{3}\end{pmatrix}.\]</span></div>
     </figure>
     <p>Both are distributions over <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [1],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [1]),
   [ ],
   [×],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: styled(child: [A], ..)), ..),
+    base: styled(child: equation(block: false, body: [𝓐]), ..),
     b: [2],
   ),
   [ ],
@@ -2352,7 +2283,7 @@ mark {
   [×],
   [ ],
   lr(body: sequence([{], [1], [,], [ ], [2], [}])),
-)" role="math">\(\mathcal{A}_{1} × \mathcal{A}_{2} = \{1, 2\} × \{1, 2\}\)</span>, but only <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [μ], tr: primes(count: 1))" role="math">\(\mu'\)</span> is a product distribution. Indeed, if Player 1—the row player—plays <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+)" role="math">\(\mathcal{A}_{1} \times \mathcal{A}_{2} = \{1, 2\} \times \{1, 2\}\)</span>, but only <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [μ], tr: primes(count: 1))" role="math">\(\mu'\)</span> is a product distribution. Indeed, if Player 1—the row player—plays <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
     frac(num: [1], denom: [3]),
@@ -2385,10 +2316,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [1],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [1]),
         [ ],
         [×],
         [ ],
@@ -2396,15 +2324,12 @@ mark {
         [ ],
         [×],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [A], ..)),
-          b: [n],
-        ),
+        attach(base: equation(block: false, body: [𝓐]), b: [n]),
         [)],
       ),
     ),
   ),
-)" role="math">\(\mu \in \Delta (\mathcal{A}_{1} × \dots × \mathcal{A}_{n})\)</span> is an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-<em>correlated equilibrium (CE)</em> if for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mu \in \Delta (\mathcal{A}_{1} \times \dots \times \mathcal{A}_{n})\)</span> is an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-<em>correlated equilibrium (CE)</em> if for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
   [∈],
@@ -2415,23 +2340,17 @@ mark {
   [ ],
   [:],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [ ],
   [→],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
 )" role="math">\(\phi_{i} : \mathcal{A}_{i} \to \mathcal{A}_{i}\)</span>, we have</p>
         <figure class="equation" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2479,7 +2398,7 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2532,7 +2451,7 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2580,7 +2499,7 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
@@ -2657,7 +2576,7 @@ mark {
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
-        <p>We consider the “game of chicken.” This is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 × 2\)</span> game—played between two drivers who are rapidly approaching an intersection from different streets—whose utilities are tabulated below. Each player can either play “Stop” or “Go.” If both players elect to “Go” a crash ensues—a bad outcome for both players. If a player chooses to “Stop” it gets no utility from the game, whereas if it proceeds while the other player chooses to “Stop” it gets a utility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[1]" role="math">\(1\)</span> for safely crossing the intersection.</p>
+        <p>We consider the “game of chicken.” This is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> game—played between two drivers who are rapidly approaching an intersection from different streets—whose utilities are tabulated below. Each player can either play “Stop” or “Go.” If both players elect to “Go” a crash ensues—a bad outcome for both players. If a player chooses to “Stop” it gets no utility from the game, whereas if it proceeds while the other player chooses to “Stop” it gets a utility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[1]" role="math">\(1\)</span> for safely crossing the intersection.</p>
         <p>This game has exactly three Nash equilibria: i) (Go, Stop), ii) (Stop, Go), and iii) <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
@@ -2700,7 +2619,7 @@ mark {
         <aside class="special-comment">
           <div class="special-comment-text">The game of chicken.</div>
           <div class="special-comment-figure">
-            <svg class="typst-frame" height="51.555908203125pt" style="overflow: visible; width: 10.044613486842104em; height: 5.426937705592105em;" viewBox="0 0 95.423828125 51.555908203125" width="95.423828125pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 34.15771484375 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g5AF8E977351FE42BCF766FD69A176939"></use><use fill="#000000" fill-rule="nonzero" x="5.329833984375" y="0" xlink:href="#g615298C0A2673C7C67A1E3645A040621"></use><use fill="#000000" fill-rule="nonzero" x="8.609375" y="0" xlink:href="#g937E5B4387EEAA620F21C07D85180F9B"></use><use fill="#000000" fill-rule="nonzero" x="13.73046875" y="0" xlink:href="#g36C170B5C006DD96472611F1FE04C519"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 70.8648681640625 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gFB884D732D5D6B224A68403946C21371"></use><use fill="#000000" fill-rule="nonzero" x="6.888427734375" y="0" xlink:href="#g937E5B4387EEAA620F21C07D85180F9B"></use></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 5 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g5AF8E977351FE42BCF766FD69A176939"></use><use fill="#000000" fill-rule="nonzero" x="5.329833984375" y="0" xlink:href="#g615298C0A2673C7C67A1E3645A040621"></use><use fill="#000000" fill-rule="nonzero" x="8.609375" y="0" xlink:href="#g937E5B4387EEAA620F21C07D85180F9B"></use><use fill="#000000" fill-rule="nonzero" x="13.73046875" y="0" xlink:href="#g36C170B5C006DD96472611F1FE04C519"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 35.479736328125 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use><use fill="#000000" fill-rule="nonzero" x="5.830810546875" y="0" xlink:href="#gA36FE7B2D697916B22E45036FC51BB31"></use><use fill="#000000" fill-rule="nonzero" x="10.682861328125" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 69.4871826171875 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use><use fill="#000000" fill-rule="nonzero" x="5.830810546875" y="0" xlink:href="#gA36FE7B2D697916B22E45036FC51BB31"></use><use fill="#000000" fill-rule="nonzero" x="10.682861328125" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g></g></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 8.5740966796875 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gFB884D732D5D6B224A68403946C21371"></use><use fill="#000000" fill-rule="nonzero" x="6.888427734375" y="0" xlink:href="#g937E5B4387EEAA620F21C07D85180F9B"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 36.3541259765625 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use><use fill="#000000" fill-rule="nonzero" x="4.08203125" y="0" xlink:href="#gA36FE7B2D697916B22E45036FC51BB31"></use><use fill="#000000" fill-rule="nonzero" x="8.93408203125" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 63.3154296875 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g2865D243806A961BAC9AF5B3CC5061B6"></use><use fill="#000000" fill-rule="nonzero" x="6.109130859375" y="0" xlink:href="#g4F8920495C95D01D1EAB0A233FBE8374"></use><use fill="#000000" fill-rule="nonzero" x="11.128173828125" y="0" xlink:href="#gA36FE7B2D697916B22E45036FC51BB31"></use><use fill="#000000" fill-rule="nonzero" x="15.980224609375" y="0" xlink:href="#g2865D243806A961BAC9AF5B3CC5061B6"></use><use fill="#000000" fill-rule="nonzero" x="22.08935546875" y="0" xlink:href="#g4F8920495C95D01D1EAB0A233FBE8374"></use></g></g></g></g></g></g><defs id="glyph"><symbol id="g5AF8E977351FE42BCF766FD69A176939" overflow="visible"><path d="M 0 0m 4.550537 3.0197754 q 0.20874023 -0.2319336 0.30847168 -0.5079346 q 0.099731445 -0.27600098 0.099731445 -0.64245605 q 0 -0.8720703 -0.6447754 -1.4379883 q -0.6447754 -0.56591797 -1.6003418 -0.56591797 q -0.44067383 0 -0.88134766 0.13684082 q -0.44067383 0.13684082 -0.7607422 0.33166504 l -0.19946289 -0.33862305 h -0.37109375 l -0.064941406 2.2543945 h 0.37573242 q 0.1159668 -0.41748047 0.2713623 -0.7537842 q 0.15539551 -0.3363037 0.41052246 -0.62854004 q 0.24121094 -0.27368164 0.56359863 -0.43603516 q 0.3223877 -0.16235352 0.7491455 -0.16235352 q 0.32006836 0 0.55895996 0.083496094 q 0.2388916 0.083496094 0.3873291 0.23657227 q 0.1484375 0.15307617 0.22033691 0.35949707 q 0.071899414 0.2064209 0.071899414 0.47546387 q 0 0.3942871 -0.22265625 0.7352295 q -0.22265625 0.34094238 -0.6633301 0.5172119 q -0.30151367 0.12060547 -0.6911621 0.26672363 q -0.38964844 0.14611816 -0.6726074 0.27600098 q -0.5566406 0.25048828 -0.8651123 0.6563721 q -0.30847168 0.4058838 -0.30847168 1.0599365 q 0 0.37573242 0.15307617 0.70043945 q 0.15307617 0.32470703 0.43603516 0.579834 q 0.26904297 0.24121094 0.63549805 0.37805176 q 0.36645508 0.13684082 0.76538086 0.13684082 q 0.45458984 0 0.8140869 -0.13916016 q 0.35949707 -0.13916016 0.6563721 -0.32470703 l 0.19018555 0.3154297 h 0.37109375 l 0.037109375 -2.1848145 h -0.37573242 q -0.10205078 0.37573242 -0.22961426 0.71899414 q -0.12756348 0.34326172 -0.33166504 0.62158203 q -0.19946289 0.26904297 -0.48706055 0.42907715 q -0.28759766 0.16003418 -0.7050781 0.16003418 q -0.44067383 0 -0.75146484 -0.28295898 q -0.31079102 -0.28295898 -0.31079102 -0.6911621 q 0 -0.4267578 0.19946289 -0.70739746 q 0.19946289 -0.28063965 0.579834 -0.46154785 q 0.33862305 -0.16235352 0.6656494 -0.28063965 q 0.32702637 -0.11828613 0.6331787 -0.25280762 q 0.2783203 -0.12060547 0.5357666 -0.27368164 q 0.2574463 -0.15307617 0.44763184 -0.35717773 Z "></path></symbol><symbol id="g615298C0A2673C7C67A1E3645A040621" overflow="visible"><path d="M 0 0m 3.1589355 0.19946289 q -0.30151367 -0.12524414 -0.57055664 -0.21105957 q -0.26904297 -0.08581543 -0.6586914 -0.08581543 q -0.5751953 0 -0.80944824 0.289917 q -0.23425293 0.289917 -0.23425293 0.8187256 v 3.0986328 h -0.8256836 v 0.4453125 h 0.8442383 v 1.4240723 h 0.8442383 v -1.4240723 h 1.3127441 v -0.4453125 h -1.3034668 v -2.5559082 q 0 -0.28759766 0.020874023 -0.48010254 q 0.020874023 -0.19250488 0.099731445 -0.3363037 q 0.07421875 -0.13452148 0.22265625 -0.20410156 q 0.1484375 -0.06958008 0.39892578 -0.06958008 q 0.1159668 0 0.34094238 0.020874023 q 0.22497559 0.020874023 0.31774902 0.053344727 v -0.33862305 Z "></path></symbol><symbol id="g937E5B4387EEAA620F21C07D85180F9B" overflow="visible"><path d="M 0 0m 4.791748 2.333252 q 0 -0.48242188 -0.15307617 -0.9486084 q -0.15307617 -0.46618652 -0.43603516 -0.79089355 q -0.32006836 -0.37109375 -0.7421875 -0.55200195 q -0.42211914 -0.1809082 -0.94628906 -0.1809082 q -0.43603516 0 -0.83032227 0.16467285 q -0.3942871 0.16467285 -0.70043945 0.48010254 q -0.30151367 0.31079102 -0.48010254 0.75842285 q -0.17858887 0.44763184 -0.17858887 1.0042725 q 0 1.0715332 0.62390137 1.753418 q 0.62390137 0.68188477 1.6351318 0.68188477 q 0.9602051 0 1.5841064 -0.6470947 q 0.62390137 -0.6470947 0.62390137 -1.7232666 Z m -0.9602051 -0.009277344 q 0 0.3479004 -0.06958008 0.7352295 q -0.06958008 0.3873291 -0.20874023 0.6563721 q -0.1484375 0.28759766 -0.38964844 0.46154785 q -0.24121094 0.1739502 -0.5891113 0.1739502 q -0.35717773 0 -0.60998535 -0.17626953 q -0.25280762 -0.17626953 -0.41052246 -0.48242188 q -0.1484375 -0.28295898 -0.20874023 -0.6447754 q -0.060302734 -0.3618164 -0.060302734 -0.70043945 q 0 -0.4453125 0.071899414 -0.82336426 q 0.071899414 -0.37805176 0.22961426 -0.67492676 q 0.15771484 -0.296875 0.39660645 -0.46618652 q 0.2388916 -0.16931152 0.59143066 -0.16931152 q 0.579834 0 0.91845703 0.5612793 q 0.33862305 0.5612793 0.33862305 1.5493164 Z "></path></symbol><symbol id="g36C170B5C006DD96472611F1FE04C519" overflow="visible"><path d="M 0 0m 4.5134277 4.031006 q 0.27368164 -0.32470703 0.42443848 -0.7537842 q 0.15075684 -0.42907715 0.15075684 -0.9810791 q 0 -0.5427246 -0.1809082 -0.99035645 q -0.1809082 -0.44763184 -0.4777832 -0.7630615 q -0.31079102 -0.32006836 -0.6911621 -0.49169922 q -0.3803711 -0.17163086 -0.8071289 -0.17163086 q -0.4128418 0 -0.6772461 0.09277344 q -0.2644043 0.09277344 -0.43139648 0.21801758 h -0.037109375 v -1.3730469 q 0 -0.16699219 0.064941406 -0.2783203 q 0.064941406 -0.111328125 0.19946289 -0.16235352 q 0.111328125 -0.041748047 0.31774902 -0.08117676 q 0.2064209 -0.03942871 0.34094238 -0.044067383 v -0.31079102 h -2.5559082 v 0.31079102 q 0.14379883 0.009277344 0.2783203 0.02319336 q 0.13452148 0.013916016 0.24121094 0.04638672 q 0.13916016 0.04638672 0.19482422 0.16235352 q 0.055664063 0.1159668 0.055664063 0.27368164 v 4.865967 q 0 0.13916016 -0.06958008 0.26904297 q -0.06958008 0.12988281 -0.1809082 0.20874023 q -0.083496094 0.055664063 -0.2319336 0.08581543 q -0.1484375 0.030151367 -0.28759766 0.03942871 v 0.30151367 l 1.5585938 0.10205078 l 0.064941406 -0.055664063 v -0.5148926 l 0.037109375 -0.009277344 q 0.24121094 0.2783203 0.5983887 0.4638672 q 0.35717773 0.18554688 0.7097168 0.18554688 q 0.4267578 0 0.7816162 -0.1809082 q 0.3548584 -0.1809082 0.60998535 -0.48706055 Z m -0.7561035 -3.2888184 q 0.18554688 0.28759766 0.27368164 0.66796875 q 0.088134766 0.3803711 0.088134766 0.84887695 q 0 0.34326172 -0.07421875 0.70043945 q -0.07421875 0.35717773 -0.2319336 0.62158203 q -0.15771484 0.26904297 -0.4128418 0.43603516 q -0.25512695 0.16699219 -0.6123047 0.16699219 q -0.34326172 0 -0.58447266 -0.15075684 q -0.24121094 -0.15075684 -0.41748047 -0.35949707 v -2.7043457 q 0.041748047 -0.12524414 0.13684082 -0.25976563 q 0.09509277 -0.13452148 0.21105957 -0.2319336 q 0.14379883 -0.1159668 0.31079102 -0.18786621 q 0.16699219 -0.071899414 0.40820313 -0.071899414 q 0.25976563 0 0.50097656 0.13684082 q 0.24121094 0.13684082 0.40356445 0.3873291 Z "></path></symbol><symbol id="gFB884D732D5D6B224A68403946C21371" overflow="visible"><path d="M 0 0m 6.8234863 2.630127 q -0.111328125 -0.013916016 -0.29919434 -0.044067383 q -0.18786621 -0.030151367 -0.303833 -0.08581543 q -0.13916016 -0.06958008 -0.19714355 -0.19714355 q -0.0579834 -0.12756348 -0.0579834 -0.29919434 v -0.5102539 q 0 -0.5566406 0.006958008 -0.75146484 q 0.006958008 -0.19482422 0.016235352 -0.32006836 q -0.61694336 -0.2783203 -1.229248 -0.4267578 q -0.6123047 -0.1484375 -1.201416 -0.1484375 q -0.6308594 0 -1.215332 0.23657227 q -0.58447266 0.23657227 -1.0205078 0.6726074 q -0.44067383 0.44067383 -0.70043945 1.0715332 q -0.25976563 0.6308594 -0.25976563 1.4101563 q 0 0.75146484 0.24816895 1.3939209 q 0.24816895 0.64245605 0.7027588 1.1156006 q 0.44067383 0.4638672 1.0506592 0.7213135 q 0.60998535 0.2574463 1.3057861 0.2574463 q 0.5566406 0 0.9694824 -0.13452148 q 0.4128418 -0.13452148 0.7282715 -0.32470703 l 0.19018555 0.3154297 h 0.37109375 l 0.041748047 -2.3007813 h -0.3803711 q -0.09741211 0.3803711 -0.24121094 0.7491455 q -0.14379883 0.3687744 -0.37109375 0.66101074 q -0.22729492 0.29223633 -0.5543213 0.46618652 q -0.32702637 0.1739502 -0.7816162 0.1739502 q -0.4963379 0 -0.8859863 -0.20178223 q -0.38964844 -0.20178223 -0.6772461 -0.600708 q -0.28295898 -0.38500977 -0.43603516 -0.9602051 q -0.15307617 -0.5751953 -0.15307617 -1.2849121 q 0 -0.6262207 0.15075684 -1.180542 q 0.15075684 -0.5543213 0.4383545 -0.95788574 q 0.28759766 -0.4128418 0.71899414 -0.64941406 q 0.43139648 -0.23657227 0.97875977 -0.23657227 q 0.40820313 0 0.74450684 0.12524414 q 0.3363037 0.12524414 0.47546387 0.2644043 q 0.037109375 0.24121094 0.03942871 0.48706055 q 0.002319336 0.24584961 0.002319336 0.41748047 v 0.3618164 q 0 0.19482422 -0.053344727 0.34558105 q -0.053344727 0.15075684 -0.22033691 0.22033691 q -0.15307617 0.06958008 -0.41516113 0.10437012 q -0.26208496 0.03479004 -0.41052246 0.044067383 v 0.33862305 h 2.885254 v -0.33862305 Z "></path></symbol><symbol id="gC2A2FE7DB966CE7F988F2E9BC1D31227" overflow="visible"><path d="M 0 0m 4.763916 4.3325195 q 0.296875 -0.35717773 0.44299316 -0.8372803 q 0.14611816 -0.48010254 0.14611816 -1.0042725 q 0 -0.6308594 -0.1809082 -1.1295166 q -0.1809082 -0.49865723 -0.4963379 -0.8280029 q -0.32470703 -0.33862305 -0.77001953 -0.5102539 q -0.4453125 -0.17163086 -0.9926758 -0.17163086 q -0.5983887 0 -1.0668945 0.19946289 q -0.46850586 0.19946289 -0.7607422 0.5473633 q -0.30615234 0.3618164 -0.45690918 0.8465576 q -0.15075684 0.4847412 -0.15075684 1.0460205 q 0 0.55200195 0.14611816 1.0158691 q 0.14611816 0.4638672 0.45690918 0.8395996 q 0.296875 0.3618164 0.76538086 0.57055664 q 0.46850586 0.20874023 1.0715332 0.20874023 q 0.63549805 0 1.0900879 -0.2133789 q 0.45458984 -0.2133789 0.7561035 -0.579834 Z m -0.43603516 -1.8415527 q 0 1.1040039 -0.37805176 1.7116699 q -0.37805176 0.607666 -1.0274658 0.607666 q -0.6586914 0 -1.0390625 -0.607666 q -0.3803711 -0.607666 -0.3803711 -1.7116699 q 0 -1.0483398 0.36413574 -1.6861572 q 0.36413574 -0.6378174 1.0460205 -0.6378174 q 0.68188477 0 1.0483398 0.6378174 q 0.36645508 0.6378174 0.36645508 1.6861572 Z "></path></symbol><symbol id="gA36FE7B2D697916B22E45036FC51BB31" overflow="visible"><path d="M 0 0m 1.9899902 0.16235352 q 0 -0.33398438 -0.15075684 -0.6308594 q -0.15075684 -0.296875 -0.34558105 -0.5102539 q -0.19946289 -0.22265625 -0.42211914 -0.3942871 q -0.22265625 -0.17163086 -0.40820313 -0.26904297 l -0.2133789 0.31079102 q 0.22265625 0.13916016 0.39892578 0.2783203 q 0.17626953 0.13916016 0.28759766 0.2783203 q 0.13916016 0.16235352 0.23657227 0.35253906 q 0.09741211 0.19018555 0.12524414 0.43139648 h -0.23657227 q -0.31079102 0 -0.4847412 0.16235352 q -0.1739502 0.16235352 -0.1739502 0.43603516 q 0 0.19482422 0.15771484 0.37805176 q 0.15771484 0.18322754 0.43139648 0.18322754 q 0.39892578 0 0.5983887 -0.26672363 q 0.19946289 -0.26672363 0.19946289 -0.73986816 Z "></path></symbol><symbol id="g855A17A8E39EE5ECCCFA143FEF0B41FB" overflow="visible"><path d="M 0 0m 3.7526855 0 h -3.1264648 v 0.3293457 q 0.13916016 0.009277344 0.43371582 0.03942871 q 0.29455566 0.030151367 0.4058838 0.06262207 q 0.14379883 0.04638672 0.22033691 0.15075684 q 0.076538086 0.10437012 0.076538086 0.31311035 v 3.2563477 h -1.1550293 v 0.38964844 h 0.25512695 q 0.50097656 0 0.897583 0.18554688 q 0.39660645 0.18554688 0.5682373 0.39892578 h 0.38500977 q -0.013916016 -0.30151367 -0.027832031 -0.7050781 q -0.013916016 -0.40356445 -0.013916016 -0.7236328 v -2.7507324 q 0 -0.16235352 0.071899414 -0.289917 q 0.071899414 -0.12756348 0.2064209 -0.18786621 q 0.12060547 -0.05102539 0.3942871 -0.09277344 q 0.27368164 -0.041748047 0.40820313 -0.04638672 v -0.3293457 Z "></path></symbol><symbol id="g2865D243806A961BAC9AF5B3CC5061B6" overflow="visible"><path d="M 0 0m 5.4179688 2.30542 h -4.7268066 v 0.579834 h 4.7268066 v -0.579834 Z "></path></symbol><symbol id="g4F8920495C95D01D1EAB0A233FBE8374" overflow="visible"><path d="M 0 0m 3.9104004 2.175537 q 0.30615234 -0.24121094 0.5079346 -0.62158203 q 0.20178223 -0.3803711 0.20178223 -0.95092773 q 0 -0.99731445 -0.68188477 -1.6467285 q -0.68188477 -0.64941406 -1.7302246 -0.64941406 q -0.8117676 0 -1.3730469 0.38500977 q -0.5612793 0.38500977 -0.5612793 0.8952637 q 0 0.23657227 0.1159668 0.4128418 q 0.1159668 0.17626953 0.35717773 0.17626953 q 0.2783203 0 0.42443848 -0.14611816 q 0.14611816 -0.14611816 0.14611816 -0.31774902 q 0 -0.1484375 -0.05102539 -0.37109375 q -0.05102539 -0.22265625 -0.07885742 -0.3293457 q 0.037109375 -0.032470703 0.12060547 -0.088134766 q 0.083496094 -0.055664063 0.19946289 -0.10668945 q 0.12060547 -0.05102539 0.29455566 -0.0904541 q 0.1739502 -0.03942871 0.4058838 -0.03942871 q 0.296875 0 0.5612793 0.12060547 q 0.2644043 0.12060547 0.4453125 0.35717773 q 0.19946289 0.25976563 0.29919434 0.59143066 q 0.099731445 0.33166504 0.099731445 0.84191895 q 0 0.65405273 -0.36413574 1.0831299 q -0.36413574 0.42907715 -0.95788574 0.42907715 q -0.37109375 0 -0.69348145 -0.13916016 q -0.3223877 -0.13916016 -0.57751465 -0.4638672 l -0.31079102 0.12060547 l 0.3942871 3.349121 h 3.321289 v -0.8256836 h -2.9455566 l -0.24121094 -1.9667969 q 0.20874023 0.1484375 0.5496826 0.29455566 q 0.34094238 0.14611816 0.7491455 0.14611816 q 0.33862305 0 0.7027588 -0.10437012 q 0.36413574 -0.10437012 0.6702881 -0.34558105 Z "></path></symbol></defs></svg>
+            <svg class="typst-frame" height="49.746826171875pt" style="overflow: visible; width: 10.044613486842104em; height: 5.236508018092105em;" viewBox="0 0 95.423828125 49.746826171875" width="95.423828125pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 34.15771484375 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g174CC4F5E79CF2121503DE3B3EDEB9E0"></use><use fill="#000000" fill-rule="nonzero" x="5.329833984375" y="0" xlink:href="#gA72D24D411C889244A12C2D4DA25C920"></use><use fill="#000000" fill-rule="nonzero" x="8.609375" y="0" xlink:href="#gB9002E0E686D522A5744B17BC9FED9DE"></use><use fill="#000000" fill-rule="nonzero" x="13.73046875" y="0" xlink:href="#gCC71E37D3B6381298E947E75CE5C6113"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 70.8648681640625 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g8756BD7A7D02E55364A3A074807BBCC7"></use><use fill="#000000" fill-rule="nonzero" x="6.888427734375" y="0" xlink:href="#gB9002E0E686D522A5744B17BC9FED9DE"></use></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 5 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g174CC4F5E79CF2121503DE3B3EDEB9E0"></use><use fill="#000000" fill-rule="nonzero" x="5.329833984375" y="0" xlink:href="#gA72D24D411C889244A12C2D4DA25C920"></use><use fill="#000000" fill-rule="nonzero" x="8.609375" y="0" xlink:href="#gB9002E0E686D522A5744B17BC9FED9DE"></use><use fill="#000000" fill-rule="nonzero" x="13.73046875" y="0" xlink:href="#gCC71E37D3B6381298E947E75CE5C6113"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 35.479736328125 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use><use fill="#000000" fill-rule="nonzero" x="5.830810546875" y="0" xlink:href="#gD073010F0DF4DF26FB7590A10CD3CA29"></use><use fill="#000000" fill-rule="nonzero" x="10.682861328125" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 69.4871826171875 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use><use fill="#000000" fill-rule="nonzero" x="5.830810546875" y="0" xlink:href="#gD073010F0DF4DF26FB7590A10CD3CA29"></use><use fill="#000000" fill-rule="nonzero" x="10.682861328125" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g></g></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 8.5740966796875 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g8756BD7A7D02E55364A3A074807BBCC7"></use><use fill="#000000" fill-rule="nonzero" x="6.888427734375" y="0" xlink:href="#gB9002E0E686D522A5744B17BC9FED9DE"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 36.3541259765625 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use><use fill="#000000" fill-rule="nonzero" x="4.08203125" y="0" xlink:href="#gD073010F0DF4DF26FB7590A10CD3CA29"></use><use fill="#000000" fill-rule="nonzero" x="8.93408203125" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 63.3154296875 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g7FC84013002C315BC3B796ECC0AA4AF4"></use><use fill="#000000" fill-rule="nonzero" x="6.109130859375" y="0" xlink:href="#g68B0EDF18BEB2EDB35229BF33C1C5154"></use><use fill="#000000" fill-rule="nonzero" x="11.128173828125" y="0" xlink:href="#gD073010F0DF4DF26FB7590A10CD3CA29"></use><use fill="#000000" fill-rule="nonzero" x="15.980224609375" y="0" xlink:href="#g7FC84013002C315BC3B796ECC0AA4AF4"></use><use fill="#000000" fill-rule="nonzero" x="22.08935546875" y="0" xlink:href="#g68B0EDF18BEB2EDB35229BF33C1C5154"></use></g></g></g></g></g></g><defs id="glyph"><symbol id="g174CC4F5E79CF2121503DE3B3EDEB9E0" overflow="visible"><path d="M 0 0m 4.550537 3.0197754 q 0.20874023 -0.2319336 0.30847168 -0.5079346 q 0.099731445 -0.27600098 0.099731445 -0.64245605 q 0 -0.8720703 -0.6447754 -1.4379883 q -0.6447754 -0.56591797 -1.6003418 -0.56591797 q -0.44067383 0 -0.88134766 0.13684082 q -0.44067383 0.13684082 -0.7607422 0.33166504 l -0.19946289 -0.33862305 h -0.37109375 l -0.064941406 2.2543945 h 0.37573242 q 0.1159668 -0.41748047 0.2713623 -0.7537842 q 0.15539551 -0.3363037 0.41052246 -0.62854004 q 0.24121094 -0.27368164 0.56359863 -0.43603516 q 0.3223877 -0.16235352 0.7491455 -0.16235352 q 0.32006836 0 0.55895996 0.083496094 q 0.2388916 0.083496094 0.3873291 0.23657227 q 0.1484375 0.15307617 0.22033691 0.35949707 q 0.071899414 0.2064209 0.071899414 0.47546387 q 0 0.3942871 -0.22265625 0.7352295 q -0.22265625 0.34094238 -0.6633301 0.5172119 q -0.30151367 0.12060547 -0.6911621 0.26672363 q -0.38964844 0.14611816 -0.6726074 0.27600098 q -0.5566406 0.25048828 -0.8651123 0.6563721 q -0.30847168 0.4058838 -0.30847168 1.0599365 q 0 0.37573242 0.15307617 0.70043945 q 0.15307617 0.32470703 0.43603516 0.579834 q 0.26904297 0.24121094 0.63549805 0.37805176 q 0.36645508 0.13684082 0.76538086 0.13684082 q 0.45458984 0 0.8140869 -0.13916016 q 0.35949707 -0.13916016 0.6563721 -0.32470703 l 0.19018555 0.3154297 h 0.37109375 l 0.037109375 -2.1848145 h -0.37573242 q -0.10205078 0.37573242 -0.22961426 0.71899414 q -0.12756348 0.34326172 -0.33166504 0.62158203 q -0.19946289 0.26904297 -0.48706055 0.42907715 q -0.28759766 0.16003418 -0.7050781 0.16003418 q -0.44067383 0 -0.75146484 -0.28295898 q -0.31079102 -0.28295898 -0.31079102 -0.6911621 q 0 -0.4267578 0.19946289 -0.70739746 q 0.19946289 -0.28063965 0.579834 -0.46154785 q 0.33862305 -0.16235352 0.6656494 -0.28063965 q 0.32702637 -0.11828613 0.6331787 -0.25280762 q 0.2783203 -0.12060547 0.5357666 -0.27368164 q 0.2574463 -0.15307617 0.44763184 -0.35717773 Z "></path></symbol><symbol id="gA72D24D411C889244A12C2D4DA25C920" overflow="visible"><path d="M 0 0m 3.1589355 0.19946289 q -0.30151367 -0.12524414 -0.57055664 -0.21105957 q -0.26904297 -0.08581543 -0.6586914 -0.08581543 q -0.5751953 0 -0.80944824 0.289917 q -0.23425293 0.289917 -0.23425293 0.8187256 v 3.0986328 h -0.8256836 v 0.4453125 h 0.8442383 v 1.4240723 h 0.8442383 v -1.4240723 h 1.3127441 v -0.4453125 h -1.3034668 v -2.5559082 q 0 -0.28759766 0.020874023 -0.48010254 q 0.020874023 -0.19250488 0.099731445 -0.3363037 q 0.07421875 -0.13452148 0.22265625 -0.20410156 q 0.1484375 -0.06958008 0.39892578 -0.06958008 q 0.1159668 0 0.34094238 0.020874023 q 0.22497559 0.020874023 0.31774902 0.053344727 v -0.33862305 Z "></path></symbol><symbol id="gB9002E0E686D522A5744B17BC9FED9DE" overflow="visible"><path d="M 0 0m 4.791748 2.333252 q 0 -0.48242188 -0.15307617 -0.9486084 q -0.15307617 -0.46618652 -0.43603516 -0.79089355 q -0.32006836 -0.37109375 -0.7421875 -0.55200195 q -0.42211914 -0.1809082 -0.94628906 -0.1809082 q -0.43603516 0 -0.83032227 0.16467285 q -0.3942871 0.16467285 -0.70043945 0.48010254 q -0.30151367 0.31079102 -0.48010254 0.75842285 q -0.17858887 0.44763184 -0.17858887 1.0042725 q 0 1.0715332 0.62390137 1.753418 q 0.62390137 0.68188477 1.6351318 0.68188477 q 0.9602051 0 1.5841064 -0.6470947 q 0.62390137 -0.6470947 0.62390137 -1.7232666 Z m -0.9602051 -0.009277344 q 0 0.3479004 -0.06958008 0.7352295 q -0.06958008 0.3873291 -0.20874023 0.6563721 q -0.1484375 0.28759766 -0.38964844 0.46154785 q -0.24121094 0.1739502 -0.5891113 0.1739502 q -0.35717773 0 -0.60998535 -0.17626953 q -0.25280762 -0.17626953 -0.41052246 -0.48242188 q -0.1484375 -0.28295898 -0.20874023 -0.6447754 q -0.060302734 -0.3618164 -0.060302734 -0.70043945 q 0 -0.4453125 0.071899414 -0.82336426 q 0.071899414 -0.37805176 0.22961426 -0.67492676 q 0.15771484 -0.296875 0.39660645 -0.46618652 q 0.2388916 -0.16931152 0.59143066 -0.16931152 q 0.579834 0 0.91845703 0.5612793 q 0.33862305 0.5612793 0.33862305 1.5493164 Z "></path></symbol><symbol id="gCC71E37D3B6381298E947E75CE5C6113" overflow="visible"><path d="M 0 0m 4.5134277 4.031006 q 0.27368164 -0.32470703 0.42443848 -0.7537842 q 0.15075684 -0.42907715 0.15075684 -0.9810791 q 0 -0.5427246 -0.1809082 -0.99035645 q -0.1809082 -0.44763184 -0.4777832 -0.7630615 q -0.31079102 -0.32006836 -0.6911621 -0.49169922 q -0.3803711 -0.17163086 -0.8071289 -0.17163086 q -0.4128418 0 -0.6772461 0.09277344 q -0.2644043 0.09277344 -0.43139648 0.21801758 h -0.037109375 v -1.3730469 q 0 -0.16699219 0.064941406 -0.2783203 q 0.064941406 -0.111328125 0.19946289 -0.16235352 q 0.111328125 -0.041748047 0.31774902 -0.08117676 q 0.2064209 -0.03942871 0.34094238 -0.044067383 v -0.31079102 h -2.5559082 v 0.31079102 q 0.14379883 0.009277344 0.2783203 0.02319336 q 0.13452148 0.013916016 0.24121094 0.04638672 q 0.13916016 0.04638672 0.19482422 0.16235352 q 0.055664063 0.1159668 0.055664063 0.27368164 v 4.865967 q 0 0.13916016 -0.06958008 0.26904297 q -0.06958008 0.12988281 -0.1809082 0.20874023 q -0.083496094 0.055664063 -0.2319336 0.08581543 q -0.1484375 0.030151367 -0.28759766 0.03942871 v 0.30151367 l 1.5585938 0.10205078 l 0.064941406 -0.055664063 v -0.5148926 l 0.037109375 -0.009277344 q 0.24121094 0.2783203 0.5983887 0.4638672 q 0.35717773 0.18554688 0.7097168 0.18554688 q 0.4267578 0 0.7816162 -0.1809082 q 0.3548584 -0.1809082 0.60998535 -0.48706055 Z m -0.7561035 -3.2888184 q 0.18554688 0.28759766 0.27368164 0.66796875 q 0.088134766 0.3803711 0.088134766 0.84887695 q 0 0.34326172 -0.07421875 0.70043945 q -0.07421875 0.35717773 -0.2319336 0.62158203 q -0.15771484 0.26904297 -0.4128418 0.43603516 q -0.25512695 0.16699219 -0.6123047 0.16699219 q -0.34326172 0 -0.58447266 -0.15075684 q -0.24121094 -0.15075684 -0.41748047 -0.35949707 v -2.7043457 q 0.041748047 -0.12524414 0.13684082 -0.25976563 q 0.09509277 -0.13452148 0.21105957 -0.2319336 q 0.14379883 -0.1159668 0.31079102 -0.18786621 q 0.16699219 -0.071899414 0.40820313 -0.071899414 q 0.25976563 0 0.50097656 0.13684082 q 0.24121094 0.13684082 0.40356445 0.3873291 Z "></path></symbol><symbol id="g8756BD7A7D02E55364A3A074807BBCC7" overflow="visible"><path d="M 0 0m 6.8234863 2.630127 q -0.111328125 -0.013916016 -0.29919434 -0.044067383 q -0.18786621 -0.030151367 -0.303833 -0.08581543 q -0.13916016 -0.06958008 -0.19714355 -0.19714355 q -0.0579834 -0.12756348 -0.0579834 -0.29919434 v -0.5102539 q 0 -0.5566406 0.006958008 -0.75146484 q 0.006958008 -0.19482422 0.016235352 -0.32006836 q -0.61694336 -0.2783203 -1.229248 -0.4267578 q -0.6123047 -0.1484375 -1.201416 -0.1484375 q -0.6308594 0 -1.215332 0.23657227 q -0.58447266 0.23657227 -1.0205078 0.6726074 q -0.44067383 0.44067383 -0.70043945 1.0715332 q -0.25976563 0.6308594 -0.25976563 1.4101563 q 0 0.75146484 0.24816895 1.3939209 q 0.24816895 0.64245605 0.7027588 1.1156006 q 0.44067383 0.4638672 1.0506592 0.7213135 q 0.60998535 0.2574463 1.3057861 0.2574463 q 0.5566406 0 0.9694824 -0.13452148 q 0.4128418 -0.13452148 0.7282715 -0.32470703 l 0.19018555 0.3154297 h 0.37109375 l 0.041748047 -2.3007813 h -0.3803711 q -0.09741211 0.3803711 -0.24121094 0.7491455 q -0.14379883 0.3687744 -0.37109375 0.66101074 q -0.22729492 0.29223633 -0.5543213 0.46618652 q -0.32702637 0.1739502 -0.7816162 0.1739502 q -0.4963379 0 -0.8859863 -0.20178223 q -0.38964844 -0.20178223 -0.6772461 -0.600708 q -0.28295898 -0.38500977 -0.43603516 -0.9602051 q -0.15307617 -0.5751953 -0.15307617 -1.2849121 q 0 -0.6262207 0.15075684 -1.180542 q 0.15075684 -0.5543213 0.4383545 -0.95788574 q 0.28759766 -0.4128418 0.71899414 -0.64941406 q 0.43139648 -0.23657227 0.97875977 -0.23657227 q 0.40820313 0 0.74450684 0.12524414 q 0.3363037 0.12524414 0.47546387 0.2644043 q 0.037109375 0.24121094 0.03942871 0.48706055 q 0.002319336 0.24584961 0.002319336 0.41748047 v 0.3618164 q 0 0.19482422 -0.053344727 0.34558105 q -0.053344727 0.15075684 -0.22033691 0.22033691 q -0.15307617 0.06958008 -0.41516113 0.10437012 q -0.26208496 0.03479004 -0.41052246 0.044067383 v 0.33862305 h 2.885254 v -0.33862305 Z "></path></symbol><symbol id="gDD628D52A77621A01604C188A9D3AA5" overflow="visible"><path d="M 0 0m 4.763916 4.3325195 q 0.296875 -0.35717773 0.44299316 -0.8372803 q 0.14611816 -0.48010254 0.14611816 -1.0042725 q 0 -0.6308594 -0.1809082 -1.1295166 q -0.1809082 -0.49865723 -0.4963379 -0.8280029 q -0.32470703 -0.33862305 -0.77001953 -0.5102539 q -0.4453125 -0.17163086 -0.9926758 -0.17163086 q -0.5983887 0 -1.0668945 0.19946289 q -0.46850586 0.19946289 -0.7607422 0.5473633 q -0.30615234 0.3618164 -0.45690918 0.8465576 q -0.15075684 0.4847412 -0.15075684 1.0460205 q 0 0.55200195 0.14611816 1.0158691 q 0.14611816 0.4638672 0.45690918 0.8395996 q 0.296875 0.3618164 0.76538086 0.57055664 q 0.46850586 0.20874023 1.0715332 0.20874023 q 0.63549805 0 1.0900879 -0.2133789 q 0.45458984 -0.2133789 0.7561035 -0.579834 Z m -0.43603516 -1.8415527 q 0 1.1040039 -0.37805176 1.7116699 q -0.37805176 0.607666 -1.0274658 0.607666 q -0.6586914 0 -1.0390625 -0.607666 q -0.3803711 -0.607666 -0.3803711 -1.7116699 q 0 -1.0483398 0.36413574 -1.6861572 q 0.36413574 -0.6378174 1.0460205 -0.6378174 q 0.68188477 0 1.0483398 0.6378174 q 0.36645508 0.6378174 0.36645508 1.6861572 Z "></path></symbol><symbol id="gD073010F0DF4DF26FB7590A10CD3CA29" overflow="visible"><path d="M 0 0m 1.9899902 0.16235352 q 0 -0.33398438 -0.15075684 -0.6308594 q -0.15075684 -0.296875 -0.34558105 -0.5102539 q -0.19946289 -0.22265625 -0.42211914 -0.3942871 q -0.22265625 -0.17163086 -0.40820313 -0.26904297 l -0.2133789 0.31079102 q 0.22265625 0.13916016 0.39892578 0.2783203 q 0.17626953 0.13916016 0.28759766 0.2783203 q 0.13916016 0.16235352 0.23657227 0.35253906 q 0.09741211 0.19018555 0.12524414 0.43139648 h -0.23657227 q -0.31079102 0 -0.4847412 0.16235352 q -0.1739502 0.16235352 -0.1739502 0.43603516 q 0 0.19482422 0.15771484 0.37805176 q 0.15771484 0.18322754 0.43139648 0.18322754 q 0.39892578 0 0.5983887 -0.26672363 q 0.19946289 -0.26672363 0.19946289 -0.73986816 Z "></path></symbol><symbol id="g9F2719F24038ADCA7CE2D3A635339AA" overflow="visible"><path d="M 0 0m 3.7526855 0 h -3.1264648 v 0.3293457 q 0.13916016 0.009277344 0.43371582 0.03942871 q 0.29455566 0.030151367 0.4058838 0.06262207 q 0.14379883 0.04638672 0.22033691 0.15075684 q 0.076538086 0.10437012 0.076538086 0.31311035 v 3.2563477 h -1.1550293 v 0.38964844 h 0.25512695 q 0.50097656 0 0.897583 0.18554688 q 0.39660645 0.18554688 0.5682373 0.39892578 h 0.38500977 q -0.013916016 -0.30151367 -0.027832031 -0.7050781 q -0.013916016 -0.40356445 -0.013916016 -0.7236328 v -2.7507324 q 0 -0.16235352 0.071899414 -0.289917 q 0.071899414 -0.12756348 0.2064209 -0.18786621 q 0.12060547 -0.05102539 0.3942871 -0.09277344 q 0.27368164 -0.041748047 0.40820313 -0.04638672 v -0.3293457 Z "></path></symbol><symbol id="g7FC84013002C315BC3B796ECC0AA4AF4" overflow="visible"><path d="M 0 0m 5.4179688 2.30542 h -4.7268066 v 0.579834 h 4.7268066 v -0.579834 Z "></path></symbol><symbol id="g68B0EDF18BEB2EDB35229BF33C1C5154" overflow="visible"><path d="M 0 0m 3.9104004 2.175537 q 0.30615234 -0.24121094 0.5079346 -0.62158203 q 0.20178223 -0.3803711 0.20178223 -0.95092773 q 0 -0.99731445 -0.68188477 -1.6467285 q -0.68188477 -0.64941406 -1.7302246 -0.64941406 q -0.8117676 0 -1.3730469 0.38500977 q -0.5612793 0.38500977 -0.5612793 0.8952637 q 0 0.23657227 0.1159668 0.4128418 q 0.1159668 0.17626953 0.35717773 0.17626953 q 0.2783203 0 0.42443848 -0.14611816 q 0.14611816 -0.14611816 0.14611816 -0.31774902 q 0 -0.1484375 -0.05102539 -0.37109375 q -0.05102539 -0.22265625 -0.07885742 -0.3293457 q 0.037109375 -0.032470703 0.12060547 -0.088134766 q 0.083496094 -0.055664063 0.19946289 -0.10668945 q 0.12060547 -0.05102539 0.29455566 -0.0904541 q 0.1739502 -0.03942871 0.4058838 -0.03942871 q 0.296875 0 0.5612793 0.12060547 q 0.2644043 0.12060547 0.4453125 0.35717773 q 0.19946289 0.25976563 0.29919434 0.59143066 q 0.099731445 0.33166504 0.099731445 0.84191895 q 0 0.65405273 -0.36413574 1.0831299 q -0.36413574 0.42907715 -0.95788574 0.42907715 q -0.37109375 0 -0.69348145 -0.13916016 q -0.3223877 -0.13916016 -0.57751465 -0.4638672 l -0.31079102 0.12060547 l 0.3942871 3.349121 h 3.321289 v -0.8256836 h -2.9455566 l -0.24121094 -1.9667969 q 0.20874023 0.1484375 0.5496826 0.29455566 q 0.34094238 0.14611816 0.7491455 0.14611816 q 0.33862305 0 0.7027588 -0.10437012 q 0.36413574 -0.10437012 0.6702881 -0.34558105 Z "></path></symbol></defs></svg>
           </div>
         </aside>
       </div>
@@ -2708,7 +2627,7 @@ mark {
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
-        <p>Our next example clarifies the difference between CCEs and CEs. We consider a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([4], [ ], [×], [ ], [4])" role="math">\(4 × 4\)</span> bimatrix game described with the payoff matrices</p>
+        <p>Our next example clarifies the difference between CCEs and CEs. We consider a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([4], [ ], [×], [ ], [4])" role="math">\(4 \times 4\)</span> bimatrix game described with the payoff matrices</p>
         <figure class="equation" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(base: [M], b: [R]),
@@ -2801,29 +2720,20 @@ mark {
   attach(base: [∏], t: [n], b: sequence([i], [=], [1])),
   [ ],
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [|],
 )" role="math">\(\prod_{i=1}^{n} |\mathcal{A}_{i}|\)</span> variables and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [∑], t: [n], b: sequence([i], [=], [1])),
   [ ],
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [|],
   [ ],
   lr(
     body: sequence(
       [(],
       [|],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [i],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [i]),
       [|],
       [ ],
       [−],
@@ -2842,37 +2752,25 @@ mark {
   lr(body: sequence([[], [n], []])),
 )" role="math">\(i \in [n]\)</span> is <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   attach(
     base: [|],
     t: sequence(
       [|],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [i],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [i]),
       [|],
     ),
   ),
 )" role="math">\(|\mathcal{A}_{i}|^{|\mathcal{A}_{i}|}\)</span>, it’s enough to consider only a certain subset of swap deviations—ones that only change a <em>single</em> action; such deviations are called <em>internal</em>—with size <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [|],
   [ ],
   lr(
     body: sequence(
       [(],
       [|],
-      attach(
-        base: equation(block: false, body: styled(child: [A], ..)),
-        b: [i],
-      ),
+      attach(base: equation(block: false, body: [𝓐]), b: [i]),
       [|],
       [ ],
       [−],
@@ -2886,10 +2784,7 @@ mark {
   attach(base: [∏], t: [n], b: sequence([i], [=], [1])),
   [ ],
   [|],
-  attach(
-    base: equation(block: false, body: styled(child: [A], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓐]), b: [i]),
   [|],
   [ ],
   [−],
@@ -2903,11 +2798,11 @@ mark {
   [ ],
   [:],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span>, <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret is defined as</p>
     <figure class="equation" id="eq-Phiregret" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -2938,7 +2833,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                   ),
                   [)],
@@ -2947,7 +2842,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -2968,12 +2863,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -3010,7 +2905,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                   ),
                   [)],
@@ -3019,7 +2914,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -3040,12 +2935,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -3074,42 +2969,38 @@ mark {
       [∃],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         tr: primes(count: 1),
       ),
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [X], ..)),
+      equation(block: false, body: [𝓧]),
       [ ],
       [ such that ],
       [ ],
       sequence(
         [φ],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [x], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝐱]), [)]),
         ),
       ),
       [ ],
       [=],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         tr: primes(count: 1),
       ),
       [}],
     ),
   ),
 )" role="math">\(\Phi_{\text{const}} = \{\phi : \exists \mathbf{x}' \in \mathcal{X} \text{ such that } \phi (\mathbf{x}) = \mathbf{x}'\}\)</span>; this is indeed the most standard definition of regret in online learning, typically referred to as <em>external</em> regret. The key point about (<a href="#eq-Phiregret">5</a>) is that the richer the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>, the stronger the induced notion of hindsight rationality. The other end of the spectrum where <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of all possible deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\mathcal{X} \to \mathcal{X}\)</span> gives rise to <em>swap regret</em>. The next example shows that an algorithm can experience large swap regret even when its external regret is small.</p>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>6</strong> <strong class="env-punct">.</strong></span></p>
@@ -3233,7 +3124,7 @@ mark {
         <p>Under that deviation, the learner would be able to collect maximal utility, implying that the swap regret of the learner is <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([Ω], lr(body: sequence([(], [T], [)])))" role="math">\(\Omega (T)\)</span>.</p>
         <figure class="rendered-figure typst" id="loc-6">
           <div class="figure-body">
-            <svg class="typst-frame" height="51.555908203125pt" style="overflow: visible; width: 16.608835320723685em; height: 5.426937705592105em;" viewBox="0 0 157.783935546875 51.555908203125" width="157.783935546875pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-group"><g><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 15.306640625 34.37060546875)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 31.137451171875 0)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 46.96826171875 17.185302734375)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 62.799072265625 34.37060546875)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 78.6298828125 0)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 94.460693359375 17.185302734375)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 110.29150390625 34.37060546875)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 126.122314453125 0)"></path><path class="typst-shape" d="M 0 0v 17.185303 h 15.830811 v -17.185303 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 141.953125 17.185302734375)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 0 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 15.306640625 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 31.137451171875 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 46.96826171875 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 62.799072265625 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 78.6298828125 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 94.460693359375 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 110.29150390625 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 126.122314453125 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 141.953125 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 52.406303 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 157.783935546875 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 0)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 17.185302734375)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 34.37060546875)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 51.555908203125)"></path><g class="typst-text" transform="matrix(1 0 0 -1 5.6123046875 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 20.306640625 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 36.137451171875 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 52.8426513671875 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 67.799072265625 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 83.6298828125 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 100.3350830078125 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 115.29150390625 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 131.122314453125 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 147.8275146484375 12.185302734375)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 5 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gE384D8A357381E6F136440DA496B1213"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 20.306640625 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 37.0118408203125 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 51.96826171875 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 67.799072265625 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 84.5042724609375 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 99.460693359375 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 115.29150390625 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 131.9967041015625 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 146.953125 29.37060546875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g></g></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 5.032470703125 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gE98BA868E63F66326C9AB3605687352A"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 21.1810302734375 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 36.137451171875 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 51.96826171875 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 68.6734619140625 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 83.6298828125 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 99.460693359375 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 116.1658935546875 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g855A17A8E39EE5ECCCFA143FEF0B41FB"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 131.122314453125 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 146.953125 46.555908203125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC2A2FE7DB966CE7F988F2E9BC1D31227"></use></g></g></g></g></g></g><defs id="glyph"><symbol id="g855A17A8E39EE5ECCCFA143FEF0B41FB" overflow="visible"><path d="M 0 0m 3.7526855 0 h -3.1264648 v 0.3293457 q 0.13916016 0.009277344 0.43371582 0.03942871 q 0.29455566 0.030151367 0.4058838 0.06262207 q 0.14379883 0.04638672 0.22033691 0.15075684 q 0.076538086 0.10437012 0.076538086 0.31311035 v 3.2563477 h -1.1550293 v 0.38964844 h 0.25512695 q 0.50097656 0 0.897583 0.18554688 q 0.39660645 0.18554688 0.5682373 0.39892578 h 0.38500977 q -0.013916016 -0.30151367 -0.027832031 -0.7050781 q -0.013916016 -0.40356445 -0.013916016 -0.7236328 v -2.7507324 q 0 -0.16235352 0.071899414 -0.289917 q 0.071899414 -0.12756348 0.2064209 -0.18786621 q 0.12060547 -0.05102539 0.3942871 -0.09277344 q 0.27368164 -0.041748047 0.40820313 -0.04638672 v -0.3293457 Z "></path></symbol><symbol id="gC2A2FE7DB966CE7F988F2E9BC1D31227" overflow="visible"><path d="M 0 0m 4.763916 4.3325195 q 0.296875 -0.35717773 0.44299316 -0.8372803 q 0.14611816 -0.48010254 0.14611816 -1.0042725 q 0 -0.6308594 -0.1809082 -1.1295166 q -0.1809082 -0.49865723 -0.4963379 -0.8280029 q -0.32470703 -0.33862305 -0.77001953 -0.5102539 q -0.4453125 -0.17163086 -0.9926758 -0.17163086 q -0.5983887 0 -1.0668945 0.19946289 q -0.46850586 0.19946289 -0.7607422 0.5473633 q -0.30615234 0.3618164 -0.45690918 0.8465576 q -0.15075684 0.4847412 -0.15075684 1.0460205 q 0 0.55200195 0.14611816 1.0158691 q 0.14611816 0.4638672 0.45690918 0.8395996 q 0.296875 0.3618164 0.76538086 0.57055664 q 0.46850586 0.20874023 1.0715332 0.20874023 q 0.63549805 0 1.0900879 -0.2133789 q 0.45458984 -0.2133789 0.7561035 -0.579834 Z m -0.43603516 -1.8415527 q 0 1.1040039 -0.37805176 1.7116699 q -0.37805176 0.607666 -1.0274658 0.607666 q -0.6586914 0 -1.0390625 -0.607666 q -0.3803711 -0.607666 -0.3803711 -1.7116699 q 0 -1.0483398 0.36413574 -1.6861572 q 0.36413574 -0.6378174 1.0460205 -0.6378174 q 0.68188477 0 1.0483398 0.6378174 q 0.36645508 0.6378174 0.36645508 1.6861572 Z "></path></symbol><symbol id="gE384D8A357381E6F136440DA496B1213" overflow="visible"><path d="M 0 0m 4.8566895 0 h -4.3464355 v 0.6308594 q 0.12524414 0.14379883 0.3479004 0.3223877 q 0.22265625 0.17858887 0.5288086 0.3873291 q 0.18554688 0.12524414 0.4453125 0.27368164 q 0.25976563 0.1484375 0.5891113 0.32470703 q 0.36645508 0.19482422 0.56359863 0.34326172 q 0.19714355 0.1484375 0.35949707 0.36645508 q 0.10668945 0.14379883 0.17163086 0.35949707 q 0.064941406 0.21569824 0.064941406 0.614624 q 0 0.579834 -0.31079102 0.8511963 q -0.31079102 0.2713623 -0.79785156 0.2713623 q -0.30151367 0 -0.57055664 -0.11828613 q -0.26904297 -0.11828613 -0.40356445 -0.32702637 q 0.032470703 -0.1484375 0.08117676 -0.35253906 q 0.048706055 -0.20410156 0.048706055 -0.39892578 q 0 -0.17626953 -0.14611816 -0.31311035 q -0.14611816 -0.13684082 -0.43371582 -0.13684082 q -0.2319336 0 -0.35717773 0.16003418 q -0.12524414 0.16003418 -0.12524414 0.42907715 q 0 0.25048828 0.13916016 0.5032959 q 0.13916016 0.25280762 0.39892578 0.46618652 q 0.25512695 0.20874023 0.6308594 0.33862305 q 0.37573242 0.12988281 0.8117676 0.12988281 q 0.95092773 0 1.5098877 -0.42443848 q 0.55895996 -0.42443848 0.55895996 -1.1341553 q 0 -0.33862305 -0.099731445 -0.61694336 q -0.099731445 -0.2783203 -0.3223877 -0.49169922 q -0.24584961 -0.23657227 -0.5751953 -0.4058838 q -0.3293457 -0.16931152 -1.0065918 -0.4708252 q -0.40356445 -0.1809082 -0.75146484 -0.37805176 q -0.3479004 -0.19714355 -0.57055664 -0.38269043 h 3.5671387 v -0.8210449 Z "></path></symbol><symbol id="gE98BA868E63F66326C9AB3605687352A" overflow="visible"><path d="M 0 0m 2.2590332 -1.6931152 q -0.43603516 0 -0.79785156 0.10900879 q -0.3618164 0.10900879 -0.62158203 0.29455566 q -0.25976563 0.18554688 -0.40124512 0.4267578 q -0.14147949 0.24121094 -0.14147949 0.4963379 q 0 0.22729492 0.111328125 0.41052246 q 0.111328125 0.18322754 0.35717773 0.18322754 q 0.2783203 0 0.42443848 -0.13684082 q 0.14611816 -0.13684082 0.14611816 -0.31311035 q 0 -0.1484375 -0.048706055 -0.37573242 q -0.048706055 -0.22729492 -0.076538086 -0.32470703 q 0.032470703 -0.041748047 0.11828613 -0.111328125 q 0.08581543 -0.06958008 0.21105957 -0.12524414 q 0.1484375 -0.06958008 0.31079102 -0.111328125 q 0.16235352 -0.041748047 0.45922852 -0.041748047 q 0.2783203 0 0.5357666 0.09277344 q 0.2574463 0.09277344 0.4522705 0.296875 q 0.20410156 0.2133789 0.31774902 0.49865723 q 0.11364746 0.28527832 0.11364746 0.7491455 q 0 0.25048828 -0.053344727 0.4963379 q -0.053344727 0.24584961 -0.19714355 0.4267578 q -0.14379883 0.1809082 -0.39196777 0.28063965 q -0.24816895 0.099731445 -0.62854004 0.099731445 h -0.607666 v 0.53344727 h 0.40356445 q 0.6401367 0 0.9230957 0.35253906 q 0.28295898 0.35253906 0.28295898 1.0622559 q 0 0.579834 -0.27368164 0.87438965 q -0.27368164 0.29455566 -0.7746582 0.29455566 q -0.24121094 0 -0.39660645 -0.0579834 q -0.15539551 -0.0579834 -0.25280762 -0.11364746 q -0.1159668 -0.064941406 -0.19018555 -0.14379883 q -0.07421875 -0.07885742 -0.111328125 -0.1159668 q 0.032470703 -0.1484375 0.07885742 -0.36413574 q 0.04638672 -0.21569824 0.04638672 -0.41052246 q 0 -0.17163086 -0.14611816 -0.30847168 q -0.14611816 -0.13684082 -0.42907715 -0.13684082 q -0.24584961 0 -0.35949707 0.17626953 q -0.11364746 0.17626953 -0.11364746 0.40820313 q 0 0.24121094 0.13452148 0.49169922 q 0.13452148 0.25048828 0.39892578 0.46850586 q 0.2644043 0.21801758 0.6447754 0.35253906 q 0.3803711 0.13452148 0.876709 0.13452148 q 0.57055664 0 0.9439697 -0.16931152 q 0.3734131 -0.16931152 0.586792 -0.41052246 q 0.20874023 -0.23657227 0.28759766 -0.4963379 q 0.07885742 -0.25976563 0.07885742 -0.4453125 q 0 -0.2319336 -0.064941406 -0.46618652 q -0.064941406 -0.23425293 -0.2133789 -0.43371582 q -0.16235352 -0.21801758 -0.42907715 -0.39660645 q -0.26672363 -0.17858887 -0.6702881 -0.289917 v -0.07421875 q 0.25976563 -0.02319336 0.5543213 -0.1159668 q 0.29455566 -0.09277344 0.5311279 -0.27368164 q 0.24584961 -0.19018555 0.40356445 -0.48937988 q 0.15771484 -0.29919434 0.15771484 -0.75842285 q 0 -0.890625 -0.71435547 -1.4449463 q -0.71435547 -0.5543213 -1.7858887 -0.5543213 Z "></path></symbol></defs></svg>
+            <svg class="typst-frame" height="49.746826171875pt" style="overflow: visible; width: 16.608835320723685em; height: 5.236508018092105em;" viewBox="0 0 157.783935546875 49.746826171875" width="157.783935546875pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-group"><g><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 15.306640625 33.16455078125)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 31.137451171875 0)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 46.96826171875 16.582275390625)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 62.799072265625 33.16455078125)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 78.6298828125 0)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 94.460693359375 16.582275390625)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 110.29150390625 33.16455078125)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 126.122314453125 0)"></path><path class="typst-shape" d="M 0 0v 16.582275 h 15.830811 v -16.582275 Z " fill="#cccccc" fill-rule="nonzero" transform="matrix(1 0 0 1 141.953125 16.582275390625)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 0 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 15.306640625 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 31.137451171875 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 46.96826171875 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 62.799072265625 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 78.6298828125 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 94.460693359375 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 110.29150390625 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 126.122314453125 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 141.953125 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0v 50.59722 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 157.783935546875 -0.4251968503937008)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 0)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 16.582275390625)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 33.16455078125)"></path><path class="typst-shape" d="M 0 0h 158.63432 " fill="none" stroke="#aaaaaa" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-width="0.8503937007874016" transform="matrix(1 0 0 1 -0.4251968503937008 49.746826171875)"></path><g class="typst-text" transform="matrix(1 0 0 -1 5.6123046875 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 20.306640625 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 36.137451171875 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 52.8426513671875 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 67.799072265625 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 83.6298828125 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 100.3350830078125 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 115.29150390625 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 131.122314453125 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 147.8275146484375 11.582275390625)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 5 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g7F799CBEB29191E82CF5788BCDC85DD7"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 20.306640625 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 37.0118408203125 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 51.96826171875 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 67.799072265625 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 84.5042724609375 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 99.460693359375 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 115.29150390625 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 131.9967041015625 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 146.953125 28.16455078125)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g></g></g><g class="typst-group"><g><g class="typst-text" transform="matrix(1 0 0 -1 5.032470703125 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gF340AE4EE9B396DFF896BB68D8660A8C"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 21.1810302734375 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 36.137451171875 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 51.96826171875 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 68.6734619140625 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 83.6298828125 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 99.460693359375 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 116.1658935546875 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#g9F2719F24038ADCA7CE2D3A635339AA"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 131.122314453125 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g><g class="typst-text" transform="matrix(1 0 0 -1 146.953125 44.746826171875)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gDD628D52A77621A01604C188A9D3AA5"></use></g></g></g></g></g></g><defs id="glyph"><symbol id="g9F2719F24038ADCA7CE2D3A635339AA" overflow="visible"><path d="M 0 0m 3.7526855 0 h -3.1264648 v 0.3293457 q 0.13916016 0.009277344 0.43371582 0.03942871 q 0.29455566 0.030151367 0.4058838 0.06262207 q 0.14379883 0.04638672 0.22033691 0.15075684 q 0.076538086 0.10437012 0.076538086 0.31311035 v 3.2563477 h -1.1550293 v 0.38964844 h 0.25512695 q 0.50097656 0 0.897583 0.18554688 q 0.39660645 0.18554688 0.5682373 0.39892578 h 0.38500977 q -0.013916016 -0.30151367 -0.027832031 -0.7050781 q -0.013916016 -0.40356445 -0.013916016 -0.7236328 v -2.7507324 q 0 -0.16235352 0.071899414 -0.289917 q 0.071899414 -0.12756348 0.2064209 -0.18786621 q 0.12060547 -0.05102539 0.3942871 -0.09277344 q 0.27368164 -0.041748047 0.40820313 -0.04638672 v -0.3293457 Z "></path></symbol><symbol id="gDD628D52A77621A01604C188A9D3AA5" overflow="visible"><path d="M 0 0m 4.763916 4.3325195 q 0.296875 -0.35717773 0.44299316 -0.8372803 q 0.14611816 -0.48010254 0.14611816 -1.0042725 q 0 -0.6308594 -0.1809082 -1.1295166 q -0.1809082 -0.49865723 -0.4963379 -0.8280029 q -0.32470703 -0.33862305 -0.77001953 -0.5102539 q -0.4453125 -0.17163086 -0.9926758 -0.17163086 q -0.5983887 0 -1.0668945 0.19946289 q -0.46850586 0.19946289 -0.7607422 0.5473633 q -0.30615234 0.3618164 -0.45690918 0.8465576 q -0.15075684 0.4847412 -0.15075684 1.0460205 q 0 0.55200195 0.14611816 1.0158691 q 0.14611816 0.4638672 0.45690918 0.8395996 q 0.296875 0.3618164 0.76538086 0.57055664 q 0.46850586 0.20874023 1.0715332 0.20874023 q 0.63549805 0 1.0900879 -0.2133789 q 0.45458984 -0.2133789 0.7561035 -0.579834 Z m -0.43603516 -1.8415527 q 0 1.1040039 -0.37805176 1.7116699 q -0.37805176 0.607666 -1.0274658 0.607666 q -0.6586914 0 -1.0390625 -0.607666 q -0.3803711 -0.607666 -0.3803711 -1.7116699 q 0 -1.0483398 0.36413574 -1.6861572 q 0.36413574 -0.6378174 1.0460205 -0.6378174 q 0.68188477 0 1.0483398 0.6378174 q 0.36645508 0.6378174 0.36645508 1.6861572 Z "></path></symbol><symbol id="g7F799CBEB29191E82CF5788BCDC85DD7" overflow="visible"><path d="M 0 0m 4.8566895 0 h -4.3464355 v 0.6308594 q 0.12524414 0.14379883 0.3479004 0.3223877 q 0.22265625 0.17858887 0.5288086 0.3873291 q 0.18554688 0.12524414 0.4453125 0.27368164 q 0.25976563 0.1484375 0.5891113 0.32470703 q 0.36645508 0.19482422 0.56359863 0.34326172 q 0.19714355 0.1484375 0.35949707 0.36645508 q 0.10668945 0.14379883 0.17163086 0.35949707 q 0.064941406 0.21569824 0.064941406 0.614624 q 0 0.579834 -0.31079102 0.8511963 q -0.31079102 0.2713623 -0.79785156 0.2713623 q -0.30151367 0 -0.57055664 -0.11828613 q -0.26904297 -0.11828613 -0.40356445 -0.32702637 q 0.032470703 -0.1484375 0.08117676 -0.35253906 q 0.048706055 -0.20410156 0.048706055 -0.39892578 q 0 -0.17626953 -0.14611816 -0.31311035 q -0.14611816 -0.13684082 -0.43371582 -0.13684082 q -0.2319336 0 -0.35717773 0.16003418 q -0.12524414 0.16003418 -0.12524414 0.42907715 q 0 0.25048828 0.13916016 0.5032959 q 0.13916016 0.25280762 0.39892578 0.46618652 q 0.25512695 0.20874023 0.6308594 0.33862305 q 0.37573242 0.12988281 0.8117676 0.12988281 q 0.95092773 0 1.5098877 -0.42443848 q 0.55895996 -0.42443848 0.55895996 -1.1341553 q 0 -0.33862305 -0.099731445 -0.61694336 q -0.099731445 -0.2783203 -0.3223877 -0.49169922 q -0.24584961 -0.23657227 -0.5751953 -0.4058838 q -0.3293457 -0.16931152 -1.0065918 -0.4708252 q -0.40356445 -0.1809082 -0.75146484 -0.37805176 q -0.3479004 -0.19714355 -0.57055664 -0.38269043 h 3.5671387 v -0.8210449 Z "></path></symbol><symbol id="gF340AE4EE9B396DFF896BB68D8660A8C" overflow="visible"><path d="M 0 0m 2.2590332 -1.6931152 q -0.43603516 0 -0.79785156 0.10900879 q -0.3618164 0.10900879 -0.62158203 0.29455566 q -0.25976563 0.18554688 -0.40124512 0.4267578 q -0.14147949 0.24121094 -0.14147949 0.4963379 q 0 0.22729492 0.111328125 0.41052246 q 0.111328125 0.18322754 0.35717773 0.18322754 q 0.2783203 0 0.42443848 -0.13684082 q 0.14611816 -0.13684082 0.14611816 -0.31311035 q 0 -0.1484375 -0.048706055 -0.37573242 q -0.048706055 -0.22729492 -0.076538086 -0.32470703 q 0.032470703 -0.041748047 0.11828613 -0.111328125 q 0.08581543 -0.06958008 0.21105957 -0.12524414 q 0.1484375 -0.06958008 0.31079102 -0.111328125 q 0.16235352 -0.041748047 0.45922852 -0.041748047 q 0.2783203 0 0.5357666 0.09277344 q 0.2574463 0.09277344 0.4522705 0.296875 q 0.20410156 0.2133789 0.31774902 0.49865723 q 0.11364746 0.28527832 0.11364746 0.7491455 q 0 0.25048828 -0.053344727 0.4963379 q -0.053344727 0.24584961 -0.19714355 0.4267578 q -0.14379883 0.1809082 -0.39196777 0.28063965 q -0.24816895 0.099731445 -0.62854004 0.099731445 h -0.607666 v 0.53344727 h 0.40356445 q 0.6401367 0 0.9230957 0.35253906 q 0.28295898 0.35253906 0.28295898 1.0622559 q 0 0.579834 -0.27368164 0.87438965 q -0.27368164 0.29455566 -0.7746582 0.29455566 q -0.24121094 0 -0.39660645 -0.0579834 q -0.15539551 -0.0579834 -0.25280762 -0.11364746 q -0.1159668 -0.064941406 -0.19018555 -0.14379883 q -0.07421875 -0.07885742 -0.111328125 -0.1159668 q 0.032470703 -0.1484375 0.07885742 -0.36413574 q 0.04638672 -0.21569824 0.04638672 -0.41052246 q 0 -0.17163086 -0.14611816 -0.30847168 q -0.14611816 -0.13684082 -0.42907715 -0.13684082 q -0.24584961 0 -0.35949707 0.17626953 q -0.11364746 0.17626953 -0.11364746 0.40820313 q 0 0.24121094 0.13452148 0.49169922 q 0.13452148 0.25048828 0.39892578 0.46850586 q 0.2644043 0.21801758 0.6447754 0.35253906 q 0.3803711 0.13452148 0.876709 0.13452148 q 0.57055664 0 0.9439697 -0.16931152 q 0.3734131 -0.16931152 0.586792 -0.41052246 q 0.20874023 -0.23657227 0.28759766 -0.4963379 q 0.07885742 -0.25976563 0.07885742 -0.4453125 q 0 -0.2319336 -0.064941406 -0.46618652 q -0.064941406 -0.23425293 -0.2133789 -0.43371582 q -0.16235352 -0.21801758 -0.42907715 -0.39660645 q -0.26672363 -0.17858887 -0.6702881 -0.289917 v -0.07421875 q 0.25976563 -0.02319336 0.5543213 -0.1159668 q 0.29455566 -0.09277344 0.5311279 -0.27368164 q 0.24584961 -0.19018555 0.40356445 -0.48937988 q 0.15771484 -0.29919434 0.15771484 -0.75842285 q 0 -0.890625 -0.71435547 -1.4449463 q -0.71435547 -0.5543213 -1.7858887 -0.5543213 Z "></path></symbol></defs></svg>
           </div>
           <figcaption><span class="figcaption-label">Table 1.</span> An example of a learner with large swap regret but zero external regret.</figcaption>
         </figure>
@@ -3248,47 +3139,29 @@ mark {
   [ ],
   lr(body: sequence([[], [n], []])),
 )" role="math">\(i \in [n]\)</span> selects a strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝐱]), b: [i]),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
-)" role="math">\(\mathbf{x}_{i} \in \mathcal{X}_{i}\)</span> from a convex and compact set <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [X], ..)),
-  b: [i],
-)" role="math">\(\mathcal{X}_{i}\)</span>, so that for any joint strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
+)" role="math">\(\mathbf{x}_{i} \in \mathcal{X}_{i}\)</span> from a convex and compact set <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓧]), b: [i])" role="math">\(\mathcal{X}_{i}\)</span>, so that for any joint strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
   [ ],
   [∈],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [1],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [1]),
   [ ],
   [×],
   [ ],
@@ -3296,29 +3169,20 @@ mark {
   [ ],
   [×],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [n],
-  ),
-)" role="math">\((\mathbf{x}_{1}, \dots , \mathbf{x}_{n}) \in \mathcal{X}_{1} × \dots × \mathcal{X}_{n}\)</span>, the utility can be expressed as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: equation(block: false, body: [𝓧]), b: [n]),
+)" role="math">\((\mathbf{x}_{1}, \dots , \mathbf{x}_{n}) \in \mathcal{X}_{1} \times \dots \times \mathcal{X}_{n}\)</span>, the utility can be expressed as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [u], b: [i]),
   [ ],
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -3331,22 +3195,16 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
-          b: [i],
-        ),
+        attach(base: equation(block: false, body: [𝐱]), b: [i]),
         [,],
         sequence(
-          attach(
-            base: equation(block: false, body: styled(child: [u], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐮]), b: [i]),
           [ ],
           lr(
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 b: sequence([−], [i]),
               ),
               [)],
@@ -3358,13 +3216,7 @@ mark {
       ),
     ),
   ),
-)" role="math">\(u_{i} (\mathbf{x}_{1}, \dots , \mathbf{x}_{n}) = \left\langle \mathbf{x}_{i},\mathbf{u}_{i} (\mathbf{x}_{-i}) \right\rangle\)</span> for some utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
-  b: [i],
-)" role="math">\(\mathbf{u}_{i}\)</span> that does not depend on <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [x], ..)),
-  b: [i],
-)" role="math">\(\mathbf{x}_{i}\)</span>. This is a useful abstraction for encompassing both normal- and extensive-form games, the latter under the so-called sequence-form representation.</p>
+)" role="math">\(u_{i} (\mathbf{x}_{1}, \dots , \mathbf{x}_{n}) = \left\langle \mathbf{x}_{i},\mathbf{u}_{i} (\mathbf{x}_{-i}) \right\rangle\)</span> for some utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐮]), b: [i])" role="math">\(\mathbf{u}_{i}\)</span> that does not depend on <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐱]), b: [i])" role="math">\(\mathbf{x}_{i}\)</span>. This is a useful abstraction for encompassing both normal- and extensive-form games, the latter under the so-called sequence-form representation.</p>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>7</strong> <span class="env-extra">(<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -3378,10 +3230,7 @@ mark {
     lr(
       body: sequence(
         [(],
-        attach(
-          base: equation(block: false, body: styled(child: [X], ..)),
-          b: [1],
-        ),
+        attach(base: equation(block: false, body: [𝓧]), b: [1]),
         [ ],
         [×],
         [ ],
@@ -3389,15 +3238,12 @@ mark {
         [ ],
         [×],
         [ ],
-        attach(
-          base: equation(block: false, body: styled(child: [X], ..)),
-          b: [n],
-        ),
+        attach(base: equation(block: false, body: [𝓧]), b: [n]),
         [)],
       ),
     ),
   ),
-)" role="math">\(\mu \in \Delta (\mathcal{X}_{1} × \dots × \mathcal{X}_{n})\)</span> is an <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium</em> if for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mu \in \Delta (\mathcal{X}_{1} \times \dots \times \mathcal{X}_{n})\)</span> is an <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium</em> if for any player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
   [∈],
@@ -3407,42 +3253,30 @@ mark {
   attach(base: [φ], b: [i]),
   [:],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
   [ ],
   [→],
   [ ],
-  attach(
-    base: equation(block: false, body: styled(child: [X], ..)),
-    b: [i],
-  ),
+  attach(base: equation(block: false, body: [𝓧]), b: [i]),
 )" role="math">\(\phi_{i}: \mathcal{X}_{i} \to \mathcal{X}_{i}\)</span>,</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -3458,19 +3292,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -3479,26 +3307,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -3519,17 +3341,14 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [i]),
           [)],
         ),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -3543,26 +3362,20 @@ mark {
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -3578,19 +3391,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -3599,26 +3406,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -3639,17 +3440,14 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [i]),
           [)],
         ),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -3683,16 +3481,13 @@ mark {
   base: lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
-        b: [i],
-      ),
+      attach(base: equation(block: false, body: [𝐮]), b: [i]),
       [ ],
       lr(
         body: sequence(
           [(],
           attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
+            base: equation(block: false, body: [𝐱]),
             t: lr(body: sequence([(], [t], [)])),
             b: sequence([−], [i]),
           ),
@@ -3714,7 +3509,7 @@ mark {
   attach(base: [∑], t: [T], b: sequence([t], [=], [1])),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
     b: [1],
   ),
@@ -3726,7 +3521,7 @@ mark {
   [⊗],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
     b: [n],
   ),
@@ -3752,7 +3547,7 @@ mark {
     </section>
     <p>Above, <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
     b: [1],
   ),
@@ -3764,7 +3559,7 @@ mark {
   [⊗],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
     b: [n],
   ),
@@ -3772,7 +3567,7 @@ mark {
   body: sequence(
     [(],
     attach(
-      base: equation(block: false, body: styled(child: [x], ..)),
+      base: equation(block: false, body: [𝐱]),
       t: lr(body: sequence([(], [t], [)])),
       b: [1],
     ),
@@ -3782,7 +3577,7 @@ mark {
     [,],
     [ ],
     attach(
-      base: equation(block: false, body: styled(child: [x], ..)),
+      base: equation(block: false, body: [𝐱]),
       t: lr(body: sequence([(], [t], [)])),
       b: [n],
     ),
@@ -3835,7 +3630,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                     b: [i],
                   ),
@@ -3845,7 +3640,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [i],
             ),
@@ -3867,13 +3662,13 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
         b: [i],
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [i],
       ),
@@ -3915,7 +3710,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                     b: [i],
                   ),
@@ -3925,7 +3720,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
               b: [i],
             ),
@@ -3947,13 +3742,13 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
         b: [i],
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
         b: [i],
       ),
@@ -3993,7 +3788,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 t: lr(body: sequence([(], [t], [)])),
                 b: [i],
               ),
@@ -4003,7 +3798,7 @@ mark {
           [,],
           [ ],
           attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
+            base: equation(block: false, body: [𝐱]),
             t: lr(body: sequence([(], [t], [)])),
             b: sequence([−], [i]),
           ),
@@ -4024,7 +3819,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
         b: [1],
       ),
@@ -4034,7 +3829,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
         b: [n],
       ),
@@ -4072,7 +3867,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 t: lr(body: sequence([(], [t], [)])),
                 b: [i],
               ),
@@ -4082,7 +3877,7 @@ mark {
           [,],
           [ ],
           attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
+            base: equation(block: false, body: [𝐱]),
             t: lr(body: sequence([(], [t], [)])),
             b: sequence([−], [i]),
           ),
@@ -4103,7 +3898,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
         b: [1],
       ),
@@ -4113,7 +3908,7 @@ mark {
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
         b: [n],
       ),
@@ -4135,7 +3930,7 @@ mark {
   attach(base: [⨂], t: [n], b: sequence([i], [=], [1])),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
     b: [i],
   ),
@@ -4162,26 +3957,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -4202,17 +3991,14 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [i]),
           [)],
         ),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -4223,26 +4009,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -4258,19 +4038,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -4296,26 +4070,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -4336,17 +4104,14 @@ mark {
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [i],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [i]),
           [)],
         ),
       ),
       [,],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         b: sequence([−], [i]),
       ),
       [)],
@@ -4357,26 +4122,20 @@ mark {
   [ ],
   attach(
     base: op(
-      text: styled(child: equation(block: false, body: [E]), ..),
+      text: equation(block: false, body: [𝔼]),
       limits: true,
     ),
     b: sequence(
       lr(
         body: sequence(
           [(],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [1],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [1]),
           [,],
           [ ],
           […],
           [,],
           [ ],
-          attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
-            b: [n],
-          ),
+          attach(base: equation(block: false, body: [𝐱]), b: [n]),
           [)],
         ),
       ),
@@ -4392,19 +4151,13 @@ mark {
   lr(
     body: sequence(
       [(],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [1],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [1]),
       [,],
       [ ],
       […],
       [,],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [n],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [n]),
       [)],
     ),
   ),
@@ -4418,40 +4171,32 @@ mark {
     <p><strong>Reducing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to external regret.</strong> The key idea in the construction of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is that one can reduce minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to minimizing external regret. The framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> provides a general template based on two basic subroutines.</p>
     <ol>
       <li value="1">A <em>fixed-point oracle</em>: for any deviation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∈], [ ], [Φ])" role="math">\(\phi \in \Phi\)</span>, it outputs a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [=],
   [ ],
   sequence(
     [φ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [x], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
 )" role="math">\(\mathbf{x} = \phi (\mathbf{x})\)</span>.</li>
       <li value="2">An online algorithm <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> minimizing <em>external regret</em> with respect to <em>the set <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>.</li>
     </ol>
-    <p>Regarding the fixed-point oracle, we will assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of continuous functions mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span>, so that the <em>existence</em> of a fixed point is guaranteed by Brouwer’s fixed-point theorem; whether such a fixed point can be computed efficiently is a different story. (As we shall see in the sequel, computing approximate fixed points of general functions is known to be equivalent to finding Nash equilibria [<span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">DGP08</a></span>], which defeats the purpose.) For now, we can assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> is structured enough so that it admits an efficient fixed-point oracle; for example, this is the case when <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains only linear deviations. A final point is that it will be enough if one has instead an <em>approximate</em> fixed-point oracle, in that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Regarding the fixed-point oracle, we will assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of continuous functions mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, so that the <em>existence</em> of a fixed point is guaranteed by Brouwer’s fixed-point theorem; whether such a fixed point can be computed efficiently is a different story. (As we shall see in the sequel, computing approximate fixed points of general functions is known to be equivalent to finding Nash equilibria [<span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">DGP08</a></span>], which defeats the purpose.) For now, we can assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> is structured enough so that it admits an efficient fixed-point oracle; for example, this is the case when <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains only linear deviations. A final point is that it will be enough if one has instead an <em>approximate</em> fixed-point oracle, in that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   lr(
     body: sequence(
       [‖],
       sequence(
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
         [ ],
         [−],
         [ ],
         sequence(
           [φ],
           lr(
-            body: sequence(
-              [(],
-              equation(block: false, body: styled(child: [x], ..)),
-              [)],
-            ),
+            body: sequence([(], equation(block: false, body: [𝐱]), [)]),
           ),
         ),
       ),
@@ -4474,16 +4219,16 @@ mark {
   lr(body: sequence([[], [T], []])),
 )" role="math">\(t \in [T]\)</span>, it obtains the next strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [φ], t: lr(body: sequence([(], [t], [)])))" role="math">\(\phi^{(t)}\)</span> of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>. <span class="math-katex-source" data-math-display="inline" data-typst-math="[R]" role="math">\(R\)</span> then produces as the next strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [X], ..)),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\mathbf{x}^{(t)} \in \mathcal{X}\)</span> any fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [φ], t: lr(body: sequence([(], [t], [)])))" role="math">\(\phi^{(t)}\)</span> through the fixed-point oracle.</li>
       <li>Next, upon observing <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span>, <span class="math-katex-source" data-math-display="inline" data-typst-math="[R]" role="math">\(R\)</span> feeds to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> the utility function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -4509,7 +4254,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 t: lr(body: sequence([(], [t], [)])),
               ),
               [)],
@@ -4518,7 +4263,7 @@ mark {
         ),
         [,],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [ ],
@@ -4576,7 +4321,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                   ),
                   [)],
@@ -4585,7 +4330,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -4606,12 +4351,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4646,7 +4391,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                   ),
                   [)],
@@ -4655,7 +4400,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -4676,12 +4421,12 @@ mark {
       [⟨],
       [ ],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4715,7 +4460,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                   ),
                   [)],
@@ -4724,7 +4469,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -4750,7 +4495,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -4759,7 +4504,7 @@ mark {
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4792,7 +4537,7 @@ mark {
                 body: sequence(
                   [(],
                   attach(
-                    base: equation(block: false, body: styled(child: [x], ..)),
+                    base: equation(block: false, body: [𝐱]),
                     t: lr(body: sequence([(], [t], [)])),
                   ),
                   [)],
@@ -4801,7 +4546,7 @@ mark {
             ),
             [,],
             attach(
-              base: equation(block: false, body: styled(child: [u], ..)),
+              base: equation(block: false, body: [𝐮]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [ ],
@@ -4827,7 +4572,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
             ),
             [)],
@@ -4836,7 +4581,7 @@ mark {
       ),
       [,],
       attach(
-        base: equation(block: false, body: styled(child: [u], ..)),
+        base: equation(block: false, body: [𝐮]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [ ],
@@ -4848,7 +4593,7 @@ mark {
         </figure>
         <p>since <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -4860,7 +4605,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [)],
@@ -4990,7 +4735,7 @@ mark {
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
           <div class="pseudo-text"><strong>return</strong> a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -5001,7 +4746,7 @@ mark {
     body: sequence(
       [(],
       attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
+        base: equation(block: false, body: [𝐱]),
         t: lr(body: sequence([(], [t], [)])),
       ),
       [)],
@@ -5011,7 +4756,7 @@ mark {
         </div>
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><strong>function</strong> <code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [u], ..)),
+  base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{u}^{(t)}\)</span>):</div>
         </div>
@@ -5042,7 +4787,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 t: lr(body: sequence([(], [t], [)])),
               ),
               [)],
@@ -5051,7 +4796,7 @@ mark {
         ),
         [,],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [ ],
@@ -5081,20 +4826,12 @@ mark {
     <p>Finally, we will see how to make use of the previous framework to minimize swap regret when the underlying strategy set is the probability simplex—corresponding to normal-form games. The resulting algorithm was first developed by <span class="citation-wrap"><a class="citation" href="#loc-26" id="loc-14" role="doc-biblioref">Blum and Mansour [BM07]</a><span class="citation-note"><span class="citation-note-key">[BM07]</span> A. Blum and Y. Mansour, “From External to Internal Regret,” <em>Journal of Machine Learning Research</em>, vol. 8, pp. 1307–1324, 2007.</span></span> (we also refer to a closely related algorithm due to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-27" id="loc-15" role="doc-biblioref">Stoltz and Lugosi [SL05]</a><span class="citation-note"><span class="citation-note-key">[SL05]</span> G. Stoltz and G. Lugosi, “Internal regret in on-line portfolio selection,” <em>Machine Learning</em>, vol. 59, no. 1–2, pp. 125–159, 2005.</span></span>). As alluded to above, the key to applying the framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is to understand the structure of the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>. In this special case, it is enough to consider only <em>linear functions</em> mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [A], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span> to <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [A], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span>, for which there is a simple combinatorial characterization in terms of <em>(column)-stochastic</em> matrices.</p>
     <section class="env statement" id="loc-16">
@@ -5107,11 +4844,7 @@ mark {
   sequence(
     [Δ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [A], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝓐]), [)]),
     ),
   ),
   [ ],
@@ -5120,51 +4853,39 @@ mark {
   sequence(
     [Δ],
     lr(
-      body: sequence(
-        [(],
-        equation(block: false, body: styled(child: [A], ..)),
-        [)],
-      ),
+      body: sequence([(], equation(block: false, body: [𝓐]), [)]),
     ),
   ),
 )" role="math">\(\phi : \Delta (\mathcal{A}) \to \Delta (\mathcal{A})\)</span> can be equivalently expressed as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [↦],
   [ ],
-  equation(block: false, body: styled(child: [M], ..)),
+  equation(block: false, body: [𝐌]),
   [ ],
-  equation(block: false, body: styled(child: [x], ..)),
-)" role="math">\(\mathbf{x} \mapsto \mathbf{M} \mathbf{x}\)</span> for some stochastic matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [M], ..))" role="math">\(\mathbf{M}\)</span>.</div>
+  equation(block: false, body: [𝐱]),
+)" role="math">\(\mathbf{x} \mapsto \mathbf{M} \mathbf{x}\)</span> for some stochastic matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐌])" role="math">\(\mathbf{M}\)</span>.</div>
     </section>
     <p>In proof, since <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is linear it can be expressed as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [ ],
   [↦],
   [ ],
-  equation(block: false, body: styled(child: [M], ..)),
+  equation(block: false, body: [𝐌]),
   [ ],
-  equation(block: false, body: styled(child: [x], ..)),
-)" role="math">\(\mathbf{x} \mapsto \mathbf{M} \mathbf{x}\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [M], ..))" role="math">\(\mathbf{M}\)</span>. Now, every column of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [M], ..))" role="math">\(\mathbf{M}\)</span> is equal to the output of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> for the probability distribution that places all the probability in the corresponding action profile. Since <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: [𝐱]),
+)" role="math">\(\mathbf{x} \mapsto \mathbf{M} \mathbf{x}\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐌])" role="math">\(\mathbf{M}\)</span>. Now, every column of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐌])" role="math">\(\mathbf{M}\)</span> is equal to the output of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> for the probability distribution that places all the probability in the corresponding action profile. Since <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [A], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span> to <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [A], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
-)" role="math">\(\Delta (\mathcal{A})\)</span>, it follows that every column of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [M], ..))" role="math">\(\mathbf{M}\)</span> is a probability distribution.</p>
-    <p>Armed with the characterization of <a href="#loc-16">Lemma 1.10</a>, we now see how to implement the two oracles required in the framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. First, a stochastic matrix induces a Markov chain over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [A], ..))" role="math">\(\mathcal{A}\)</span>. Any <em>stationary distribution</em> of that Markov chain is a fixed point, and can be computed efficiently as it boils down to solving a linear system. (More broadly, when the underlying set <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is a polytope and <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> comprises linear deviations, computing a fixed point amounts to solving a linear program, which can be done in polynomial time.)</p>
+)" role="math">\(\Delta (\mathcal{A})\)</span>, it follows that every column of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐌])" role="math">\(\mathbf{M}\)</span> is a probability distribution.</p>
+    <p>Armed with the characterization of <a href="#loc-16">Lemma 1.10</a>, we now see how to implement the two oracles required in the framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. First, a stochastic matrix induces a Markov chain over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓐])" role="math">\(\mathcal{A}\)</span>. Any <em>stationary distribution</em> of that Markov chain is a fixed point, and can be computed efficiently as it boils down to solving a linear system. (More broadly, when the underlying set <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a polytope and <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> comprises linear deviations, computing a fixed point amounts to solving a linear program, which can be done in polynomial time.)</p>
     <p>The next step is to minimize regret with respect to the set of stochastic matrices. By definition, the set of stochastic matrices is a product of simplices—one probability distribution for each column:</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -5178,10 +4899,7 @@ mark {
             base: lr(
               body: sequence(
                 [(],
-                attach(
-                  base: equation(block: false, body: styled(child: [x], ..)),
-                  b: [a],
-                ),
+                attach(base: equation(block: false, body: [𝐱]), b: [a]),
                 [)],
               ),
             ),
@@ -5190,7 +4908,7 @@ mark {
               [ ],
               [∈],
               [ ],
-              equation(block: false, body: styled(child: [A], ..)),
+              equation(block: false, body: [𝓐]),
             ),
           ),
           []],
@@ -5199,21 +4917,14 @@ mark {
       [ ],
       [:],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [a],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [a]),
       [ ],
       [∈],
       [ ],
       sequence(
         [Δ],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [A], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓐]), [)]),
         ),
       ),
       [ ],
@@ -5225,7 +4936,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [}],
     ),
   ),
@@ -5241,10 +4952,7 @@ mark {
             base: lr(
               body: sequence(
                 [(],
-                attach(
-                  base: equation(block: false, body: styled(child: [x], ..)),
-                  b: [a],
-                ),
+                attach(base: equation(block: false, body: [𝐱]), b: [a]),
                 [)],
               ),
             ),
@@ -5253,7 +4961,7 @@ mark {
               [ ],
               [∈],
               [ ],
-              equation(block: false, body: styled(child: [A], ..)),
+              equation(block: false, body: [𝓐]),
             ),
           ),
           []],
@@ -5262,21 +4970,14 @@ mark {
       [ ],
       [:],
       [ ],
-      attach(
-        base: equation(block: false, body: styled(child: [x], ..)),
-        b: [a],
-      ),
+      attach(base: equation(block: false, body: [𝐱]), b: [a]),
       [ ],
       [∈],
       [ ],
       sequence(
         [Δ],
         lr(
-          body: sequence(
-            [(],
-            equation(block: false, body: styled(child: [A], ..)),
-            [)],
-          ),
+          body: sequence([(], equation(block: false, body: [𝓐]), [)]),
         ),
       ),
       [ ],
@@ -5288,7 +4989,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [}],
     ),
   ),
@@ -5296,19 +4997,19 @@ mark {
 )">\[\displaystyle \left\{\left[\left(\mathbf{x}_{a}\right)_{a \in \mathcal{A}}\right] : \mathbf{x}_{a} \in \Delta \left(\mathcal{A}\right) \quad \forall a \in \mathcal{A}\right\},\]</span></div>
     </figure>
     <p>where, for <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  equation(block: false, body: styled(child: [x], ..)),
+  equation(block: false, body: [𝐱]),
   [,],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     tr: primes(count: 1),
   ),
   [ ],
   [∈],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: equation(block: false, body: styled(child: [A], ..)),
+    base: equation(block: false, body: [ℝ]),
+    t: equation(block: false, body: [𝓐]),
   ),
 )" role="math">\(\mathbf{x}, \mathbf{x}' \in \mathbb{R}^{\mathcal{A}}\)</span>, <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
@@ -5316,11 +5017,11 @@ mark {
     lr(
       body: sequence(
         [(],
-        equation(block: false, body: styled(child: [x], ..)),
+        equation(block: false, body: [𝐱]),
         [,],
         [ ],
         attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
+          base: equation(block: false, body: [𝐱]),
           tr: primes(count: 1),
         ),
         [)],
@@ -5333,11 +5034,7 @@ mark {
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">1<span class="env-number-separator">.</span>11</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is an efficient no-regret algorithm for minimizing external regret over the set of stochastic matrices.</div>
     </section>
-    <p>The overall construction is given below. It consists of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  [|],
-  equation(block: false, body: styled(child: [A], ..)),
-  [|],
-)" role="math">\(|\mathcal{A}|\)</span> separate regret minimizers, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+    <p>The overall construction is given below. It consists of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([|], equation(block: false, body: [𝓐]), [|])" role="math">\(|\mathcal{A}|\)</span> separate regret minimizers, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: lr(
     body: sequence([(], attach(base: [R], b: [a]), [)]),
   ),
@@ -5346,22 +5043,18 @@ mark {
     [ ],
     [∈],
     [ ],
-    equation(block: false, body: styled(child: [A], ..)),
+    equation(block: false, body: [𝓐]),
   ),
 )" role="math">\((R_{a})_{a \in \mathcal{A}}\)</span>, each of which operates over <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Δ],
   lr(
-    body: sequence(
-      [(],
-      equation(block: false, body: styled(child: [A], ..)),
-      [)],
-    ),
+    body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span>. To obtain the next strategy, we create the stochastic matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [M], ..)),
+  base: equation(block: false, body: [𝐌]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{M}^{(t)}\)</span> in which each column is given by the strategy of the corresponding regret minimizer, and then output any fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: styled(child: [M], ..)),
+  base: equation(block: false, body: [𝐌]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in <a href="#loc-12">Theorem 1.9</a>, can be cast as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [u], b: [Φ]),
@@ -5381,7 +5074,7 @@ mark {
             body: sequence(
               [(],
               attach(
-                base: equation(block: false, body: styled(child: [x], ..)),
+                base: equation(block: false, body: [𝐱]),
                 t: lr(body: sequence([(], [t], [)])),
               ),
               [)],
@@ -5390,7 +5083,7 @@ mark {
         ),
         [,],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [ ],
@@ -5408,16 +5101,16 @@ mark {
         [⟨],
         [ ],
         sequence(
-          equation(block: false, body: styled(child: [M], ..)),
+          equation(block: false, body: [𝐌]),
           [ ],
           attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
+            base: equation(block: false, body: [𝐱]),
             t: lr(body: sequence([(], [t], [)])),
           ),
         ),
         [,],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [ ],
@@ -5434,18 +5127,18 @@ mark {
       body: sequence(
         [⟨],
         [ ],
-        equation(block: false, body: styled(child: [M], ..)),
+        equation(block: false, body: [𝐌]),
         [,],
         sequence(
           attach(
-            base: equation(block: false, body: styled(child: [u], ..)),
+            base: equation(block: false, body: [𝐮]),
             t: lr(body: sequence([(], [t], [)])),
           ),
           [ ],
           [⊗],
           [ ],
           attach(
-            base: equation(block: false, body: styled(child: [x], ..)),
+            base: equation(block: false, body: [𝐱]),
             t: lr(body: sequence([(], [t], [)])),
           ),
         ),
@@ -5461,7 +5154,7 @@ mark {
       body: sequence(
         [(],
         attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
+          base: equation(block: false, body: [𝐱]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [)],
@@ -5471,33 +5164,33 @@ mark {
   [ ],
   [=],
   [ ],
-  equation(block: false, body: styled(child: [M], ..)),
+  equation(block: false, body: [𝐌]),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
 )" role="math">\(\phi (\mathbf{x}^{(t)}) = \mathbf{M} \mathbf{x}^{(t)}\)</span>. In other words, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> observes the utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [⊗],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
 )" role="math">\(\mathbf{u}^{(t)} ⊗ \mathbf{x}^{(t)}\)</span>. Moreover, one should forward to each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> its corresponding component, which is <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   lr(body: sequence([[], [a], []])),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
 )" role="math">\(\mathbf{x}^{(t)}[a] \mathbf{u}^{(t)}\)</span>. If we instantiate each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> with MWU and invoke <a href="#loc-12">Theorem 1.9</a>, we arrive at the following result.</p>
@@ -5513,13 +5206,13 @@ mark {
           [T],
           [ ],
           [|],
-          equation(block: false, body: styled(child: [A], ..)),
+          equation(block: false, body: [𝓐]),
           [|],
           [ ],
           op(text: [log], limits: false),
           [ ],
           [|],
-          equation(block: false, body: styled(child: [A], ..)),
+          equation(block: false, body: [𝓐]),
           [|],
         ),
       ),
@@ -5534,7 +5227,7 @@ mark {
     body: sequence(
       [(],
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
       [ ],
       root(
@@ -5544,7 +5237,7 @@ mark {
           op(text: [log], limits: false),
           [ ],
           [|],
-          equation(block: false, body: styled(child: [A], ..)),
+          equation(block: false, body: [𝓐]),
           [|],
         ),
       ),
@@ -5563,7 +5256,7 @@ mark {
           op(text: [log], limits: false),
           [ ],
           [|],
-          equation(block: false, body: styled(child: [A], ..)),
+          equation(block: false, body: [𝓐]),
           [|],
         ),
       ),
@@ -5586,7 +5279,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
     ),
   ),
   [ ],
@@ -5595,7 +5288,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
           b: [a],
         ),
@@ -5613,7 +5306,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -5630,7 +5323,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
     ),
   ),
   [ ],
@@ -5639,7 +5332,7 @@ mark {
       body: sequence(
         [(],
         attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
+          base: equation(block: false, body: [𝐱]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         lr(body: sequence([[], [a], []])),
@@ -5656,7 +5349,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -5674,7 +5367,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
     ),
   ),
   [ ],
@@ -5683,7 +5376,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
           b: [a],
         ),
@@ -5701,7 +5394,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -5718,7 +5411,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
     ),
   ),
   [ ],
@@ -5727,7 +5420,7 @@ mark {
       body: sequence(
         [(],
         attach(
-          base: equation(block: false, body: styled(child: [x], ..)),
+          base: equation(block: false, body: [𝐱]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         lr(body: sequence([[], [a], []])),
@@ -5744,7 +5437,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -5767,13 +5460,13 @@ mark {
   frac(
     num: sequence(
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
       [ ],
       op(text: [log], limits: false),
       [ ],
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
     ),
     denom: [η],
@@ -5790,7 +5483,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -5805,13 +5498,13 @@ mark {
   frac(
     num: sequence(
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
       [ ],
       op(text: [log], limits: false),
       [ ],
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
     ),
     denom: [η],
@@ -5832,13 +5525,13 @@ mark {
   frac(
     num: sequence(
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
       [ ],
       op(text: [log], limits: false),
       [ ],
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
     ),
     denom: [η],
@@ -5855,7 +5548,7 @@ mark {
       body: sequence(
         [‖],
         attach(
-          base: equation(block: false, body: styled(child: [u], ..)),
+          base: equation(block: false, body: [𝐮]),
           t: lr(body: sequence([(], [t], [)])),
         ),
         [‖],
@@ -5870,13 +5563,13 @@ mark {
   frac(
     num: sequence(
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
       [ ],
       op(text: [log], limits: false),
       [ ],
       [|],
-      equation(block: false, body: styled(child: [A], ..)),
+      equation(block: false, body: [𝓐]),
       [|],
     ),
     denom: [η],
@@ -5900,7 +5593,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [A], ..)),
+  equation(block: false, body: [𝓐]),
 )" role="math">\(a \in \mathcal{A}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:0">
@@ -5913,14 +5606,14 @@ mark {
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [A], ..)),
+  equation(block: false, body: [𝓐]),
 )" role="math">\(a \in \mathcal{A}\)</span> <strong>do</strong></div>
         </div>
         <div class="pseudo-line" style="--indent:2">
           <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span></p>
           <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
     b: [a],
   ),
@@ -5935,7 +5628,7 @@ mark {
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
           <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
+    base: equation(block: false, body: [𝐌]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
@@ -5949,7 +5642,7 @@ mark {
           body: sequence(
             [(],
             attach(
-              base: equation(block: false, body: styled(child: [x], ..)),
+              base: equation(block: false, body: [𝐱]),
               t: lr(body: sequence([(], [t], [)])),
               b: [a],
             ),
@@ -5961,7 +5654,7 @@ mark {
           [ ],
           [∈],
           [ ],
-          equation(block: false, body: styled(child: [A], ..)),
+          equation(block: false, body: [𝓐]),
         ),
       ),
       []],
@@ -5973,19 +5666,19 @@ mark {
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
           <div class="pseudo-text"><strong>return</strong> a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [=],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [M], ..)),
+    base: equation(block: false, body: [𝐌]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
 )" role="math">\(\mathbf{x}^{(t)} = \mathbf{M}^{(t)} \mathbf{x}^{(t)}\)</span></div>
@@ -5993,15 +5686,15 @@ mark {
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   [ ],
   [∈],
   [ ],
   attach(
-    base: styled(child: equation(block: false, body: [ℝ]), ..),
-    t: equation(block: false, body: styled(child: [A], ..)),
+    base: equation(block: false, body: [ℝ]),
+    t: equation(block: false, body: [𝓐]),
   ),
 )" role="math">\(\mathbf{u}^{(t)} \in \mathbb{R}^{\mathcal{A}}\)</span>):</div>
         </div>
@@ -6012,14 +5705,14 @@ mark {
   [ ],
   [∈],
   [ ],
-  equation(block: false, body: styled(child: [A], ..)),
+  equation(block: false, body: [𝓐]),
 )" role="math">\(a \in \mathcal{A}\)</span> <strong>do</strong></div>
         </div>
         <div class="pseudo-line" style="--indent:2">
           <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span></p>
           <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
     b: [a],
   ),
@@ -6027,13 +5720,13 @@ mark {
   [≔],
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [x], ..)),
+    base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
   ),
   lr(body: sequence([[], [a], []])),
   [ ],
   attach(
-    base: equation(block: false, body: styled(child: [u], ..)),
+    base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
 )" role="math">\(\mathbf{u}_{a}^{(t)} \coloneqq \mathbf{x}^{(t)}[a] \mathbf{u}^{(t)}\)</span></div>
@@ -6044,7 +5737,7 @@ mark {
   body: sequence(
     [(],
     attach(
-      base: equation(block: false, body: styled(child: [u], ..)),
+      base: equation(block: false, body: [𝐮]),
       t: lr(body: sequence([(], [t], [)])),
       b: [a],
     ),

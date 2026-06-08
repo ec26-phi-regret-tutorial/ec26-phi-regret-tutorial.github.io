@@ -374,7 +374,7 @@ fn convert_styled_child(input: &str) -> String {
     let converted = convert_expr(input);
     let stripped = strip_tex_text_wrappers(converted.trim());
     match stripped {
-        "A" | "C" | "H" | "K" | "U" | "X" | "Y" => format!("\\mathcal{{{stripped}}}"),
+        "A" | "C" | "H" | "K" | "S" | "U" | "X" | "Y" => format!("\\mathcal{{{stripped}}}"),
         "R" | "N" | "Q" | "B" => format!("\\mathbb{{{stripped}}}"),
         "a" | "b" | "c" | "p" | "q" | "s" | "u" | "x" | "y" | "z" | "I" | "M" => {
             format!("\\mathbf{{{stripped}}}")
@@ -780,6 +780,7 @@ fn char_to_tex(ch: char) -> String {
         'σ' => tex_command("sigma"),
         'Ω' => tex_command("Omega"),
         'Θ' => tex_command("Theta"),
+        '𝔹' => "\\mathbb{B}".to_owned(),
         'ℝ' => "\\mathbb{R}".to_owned(),
         'ℕ' => "\\mathbb{N}".to_owned(),
         'ℚ' => "\\mathbb{Q}".to_owned(),
@@ -789,6 +790,7 @@ fn char_to_tex(ch: char) -> String {
         '𝓒' => "\\mathcal{C}".to_owned(),
         '𝓗' => "\\mathcal{H}".to_owned(),
         '𝓚' => "\\mathcal{K}".to_owned(),
+        '𝓢' => "\\mathcal{S}".to_owned(),
         '𝓤' => "\\mathcal{U}".to_owned(),
         '𝓧' => "\\mathcal{X}".to_owned(),
         '𝓨' => "\\mathcal{Y}".to_owned(),
@@ -814,6 +816,7 @@ fn char_to_tex(ch: char) -> String {
         '∉' => tex_command("notin"),
         '⊂' => tex_command("subset"),
         '⊆' => tex_command("subseteq"),
+        '×' => tex_command("times"),
         '∀' => tex_command("forall"),
         '∃' => tex_command("exists"),
         '∑' => tex_command("sum"),
@@ -1152,6 +1155,23 @@ mod tests {
         assert_eq!(
             typst_repr_to_katex(input),
             "\\mathbf{c} ^{(t)} \\in \\mathcal{C}"
+        );
+    }
+
+    #[test]
+    fn direct_calligraphic_s_fallback_is_preserved() {
+        assert_eq!(
+            typst_repr_to_katex("styled(child: [S], ..)"),
+            "\\mathcal{S}"
+        );
+    }
+
+    #[test]
+    fn unicode_math_alphabet_notation_is_unambiguous() {
+        let input = "sequence([𝓢], [ ], [⊂], [ ], [𝓧], [ ], [×], [ ], [𝐱], [ ], [∈], [ ], [ℝ])";
+        assert_eq!(
+            typst_repr_to_katex(input),
+            "\\mathcal{S} \\subset \\mathcal{X} \\times \\mathbf{x} \\in \\mathbb{R}"
         );
     }
 

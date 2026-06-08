@@ -654,7 +654,6 @@
 #let NP = text(font: "Georgia", "NP")
 #let coNP = text(font: "Georgia", "co-NP")
 #let cone = math.op("cone")
-#let cK = $cal(K)$
 #let nablat = math.op($tilde(nabla)#h(-1mm)$)
 #let div(a, b, dgf: $phi$) = $#text(font: "Georgia", "D") _#dgf (#a mid(||) #b)$
 #let divt(a, b) = $#text(font: "Georgia", "D") _(phi_t) (#a mid(||) #b)$
@@ -669,5 +668,42 @@
 )
 #let dom = math.op("dom")
 #let diag = math.op("diag")
+
+// HTML math export currently sees Typst `cal`, `bold`, and `bb` mainly as
+// `styled(child: ..., ..)`, which loses the original style command. Use
+// Unicode math alphabet symbols in the shared notation macros so the KaTeX
+// postprocessor receives an unambiguous representation.
+#let BB = $𝔹$
+#let CC = $ℂ$
+#let NN = $ℕ$
+#let QQ = $ℚ$
+#let RR = $ℝ$
+#let EE = math.op($𝔼$, limits: true)
+
+#let matA = $𝐀$
+#let matI = $𝐈$
+#let matK = $𝐊$
+#let matM = $𝐌$
+#let matU = $𝐔$
+
+#let va = $𝐚$
+#let vb = $𝐛$
+#let vc = $𝐜$
+#let vp = $𝐩$
+#let vq = $𝐪$
+#let vs = $𝐬$
+#let vu = $𝐮$
+#let vx = $𝐱$
+#let vy = $𝐲$
+#let vz = $𝐳$
+
+#let cA = $𝓐$
+#let cC = $𝓒$
+#let cH = $𝓗$
+#let cK = $𝓚$
+#let cS = $𝓢$
+#let cU = $𝓤$
+#let cX = $𝓧$
+#let cY = $𝓨$
 // [#math.cal("N")#h(-.8mm)#math.cal("P")]
 // #let coNP = [co-#NP]

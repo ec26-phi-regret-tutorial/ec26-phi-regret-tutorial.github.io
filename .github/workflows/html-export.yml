@@ -26,4 +26,4 @@ jobs:
           workspaces: html-exporter -> target
 
       - name: Regenerate HTML
-        run: make check-html
+        run: make html
