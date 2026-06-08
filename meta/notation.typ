@@ -6,7 +6,6 @@
 #let RR = bb($RR$)
 #let EE = math.op(bb($E$), limits: true)
 
-#let matA = $bold(A)$
 #let vx = $bold(x)$
 #let va = $bold(a)$
 #let vb = $bold(b)$
