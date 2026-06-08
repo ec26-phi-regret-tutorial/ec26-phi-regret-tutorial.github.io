@@ -1,6 +1,8 @@
+mod chapters;
 mod math;
 mod options;
 
+use chapters::{ChapterNav, ExportConfig};
 use math::MathMode;
 use options::Config;
 use regex::{Captures, Regex};
@@ -22,55 +24,7 @@ use typst_kit::download::{Downloader, ProgressSink};
 use typst_kit::fonts::{FontSlot, Fonts};
 use typst_kit::package::PackageStorage;
 
-const BIBTEX_AUTHORS: &str = "Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu";
 const PAGE_CSS: &str = include_str!("gabri-notes.css");
-
-#[derive(Clone, Copy)]
-struct ChapterNav {
-    number: u8,
-    source: &'static str,
-    href: &'static str,
-    short_title: &'static str,
-}
-
-const CHAPTERS: &[ChapterNav] = &[
-    ChapterNav {
-        number: 1,
-        source: "P1-introduction.typ",
-        href: "P1-introduction.html",
-        short_title: "Introduction",
-    },
-    ChapterNav {
-        number: 2,
-        source: "P2-phi_regret.typ",
-        href: "P2-phi_regret.html",
-        short_title: "Beyond Normal Form",
-    },
-    ChapterNav {
-        number: 3,
-        source: "P3-ellipsoid.typ",
-        href: "P3-ellipsoid.html",
-        short_title: "Ellipsoid Against Hope",
-    },
-    ChapterNav {
-        number: 4,
-        source: "P4-multicalibration.typ",
-        href: "P4-multicalibration.html",
-        short_title: "Multicalibration",
-    },
-    ChapterNav {
-        number: 5,
-        source: "P5-treeswap.typ",
-        href: "P5-treeswap.html",
-        short_title: "TreeSwap",
-    },
-    ChapterNav {
-        number: 6,
-        source: "P6-profile.typ",
-        href: "P6-profile.html",
-        short_title: "Profile Swap",
-    },
-];
 
 fn main() {
     if let Err(err) = run() {
@@ -81,6 +35,7 @@ fn main() {
 
 fn run() -> Result<(), String> {
     let config = options::parse()?;
+    let export_config = load_export_config(&config)?;
     let raw_html = compile_typst_html(&config)?;
     let mut document = HtmlParts::parse(&raw_html);
     let title = config
@@ -99,9 +54,21 @@ fn run() -> Result<(), String> {
     document.body_html = body_html;
     document.rendered_endnotes = rendered_endnotes;
 
-    let html = render_document(&config, &title, &document);
+    let html = render_document(&config, &title, &document, export_config.as_ref());
     write_output(&config, html)?;
     Ok(())
+}
+
+fn load_export_config(config: &Config) -> Result<Option<ExportConfig>, String> {
+    let Some(path) = &config.export_config else {
+        return Ok(None);
+    };
+    let path = if path.is_absolute() {
+        path.clone()
+    } else {
+        config.root.join(path)
+    };
+    ExportConfig::load(&path).map(Some)
 }
 
 fn compile_typst_html(config: &Config) -> Result<String, String> {
@@ -442,15 +409,8 @@ fn non_empty_attr(element: &ElementRef, name: &str) -> Option<String> {
         .map(str::to_owned)
 }
 
-fn chapter_index_from_input(input: &Path) -> Option<usize> {
-    let file_name = input.file_name()?.to_string_lossy();
-    CHAPTERS
-        .iter()
-        .position(|chapter| chapter.source == file_name.as_ref())
-}
-
-fn current_chapter(config: &Config) -> Option<usize> {
-    chapter_index_from_input(&config.input)
+fn current_chapter(config: &Config, chapters: &ExportConfig) -> Option<usize> {
+    chapters.current_index_for_input(&config.input)
 }
 
 fn extract_bibliography(dom: &Html) -> Vec<BibliographyItem> {
@@ -678,8 +638,13 @@ fn rewrite_footnotes(body: String, endnotes: &[Endnote]) -> (String, Vec<Rendere
     (body, rendered)
 }
 
-fn render_document(config: &Config, title: &str, document: &HtmlParts) -> String {
-    let current = current_chapter(config);
+fn render_document(
+    config: &Config,
+    title: &str,
+    document: &HtmlParts,
+    export_config: Option<&ExportConfig>,
+) -> String {
+    let current = export_config.and_then(|export_config| current_chapter(config, export_config));
     let mut html = String::new();
     html.push_str("<!doctype html>\n<html lang=\"en\">\n<head>\n");
     html.push_str("  <meta charset=\"utf-8\">\n");
@@ -692,8 +657,13 @@ fn render_document(config: &Config, title: &str, document: &HtmlParts) -> String
     html.push_str(math::katex_script_assets(config.math_mode));
     html.push_str("</head>\n<body>\n");
 
-    if let Some(current) = current {
-        html.push_str(&render_chapter_rail(current, &document.headings, config));
+    if let (Some(export_config), Some(current)) = (export_config, current) {
+        html.push_str(&render_chapter_rail(
+            export_config,
+            current,
+            &document.headings,
+            config,
+        ));
     } else {
         html.push_str(&render_masthead(config));
     }
@@ -703,11 +673,11 @@ fn render_document(config: &Config, title: &str, document: &HtmlParts) -> String
         write!(html, " data-lecture-number=\"{}\"", escape_attr(number)).unwrap();
     }
     html.push_str(">\n");
-    if let Some(current) = current {
+    if let (Some(export_config), Some(current)) = (export_config, current) {
         write!(
             html,
             "<p class=\"chapter-kicker\">Chapter {}</p>\n",
-            CHAPTERS[current].number
+            export_config.chapters[current].number
         )
         .unwrap();
     }
@@ -717,9 +687,10 @@ fn render_document(config: &Config, title: &str, document: &HtmlParts) -> String
         escape_html(title)
     )
     .unwrap();
-    if let Some(current) = current {
+    if let (Some(export_config), Some(current)) = (export_config, current) {
         html.push_str(&render_chapter_citation_sidenote(
-            current,
+            export_config,
+            &export_config.chapters[current],
             title,
             &config.site_title,
             config.pdf_href.as_deref(),
@@ -778,23 +749,25 @@ fn render_masthead(config: &Config) -> String {
 }
 
 fn render_chapter_citation_sidenote(
-    current: usize,
+    export_config: &ExportConfig,
+    chapter: &ChapterNav,
     title: &str,
     site_title: &str,
     pdf_href: Option<&str>,
 ) -> String {
-    let chapter = CHAPTERS[current];
-    let key = format!(
-        "anagnostides-farina-zhang-2026-phi-equilibria-chapter-{}",
-        chapter.number
-    );
+    let citation = &export_config.how_to_cite;
+    let key = format!("{}-chapter-{}", citation.key_prefix, chapter.number);
+    let href = chapter.href().expect("chapter href was validated");
+    let citation_title = citation.citation_title(chapter.number, title);
+    let citation_note = citation.citation_note(chapter.number, title);
     let bibtex = format!(
-        "@misc{{{key},\n  author = {{{}}},\n  title = {{{}}},\n  booktitle = {{{}}},\n  note = {{Chapter {} of the ACM EC 2026 tutorial notes}},\n  year = {{2026}},\n  url = {{{}}}\n}}",
-        BIBTEX_AUTHORS,
-        bibtex_escape(&format!("Chapter {}: {title}", chapter.number)),
+        "@misc{{{key},\n  author = {{{}}},\n  title = {{{}}},\n  booktitle = {{{}}},\n  note = {{{}}},\n  year = {{{}}},\n  url = {{{}}}\n}}",
+        citation.authors,
+        bibtex_escape(&citation_title),
         bibtex_escape(site_title),
-        chapter.number,
-        chapter.href
+        bibtex_escape(&citation_note),
+        citation.year,
+        href
     );
     let mut out = String::from(
         "<aside class=\"chapter-citation-sidenote\" aria-label=\"Chapter links and citation\">",
@@ -820,7 +793,12 @@ fn render_chapter_citation_sidenote(
     out
 }
 
-fn render_chapter_rail(current: usize, headings: &[Heading], config: &Config) -> String {
+fn render_chapter_rail(
+    export_config: &ExportConfig,
+    current: usize,
+    headings: &[Heading],
+    config: &Config,
+) -> String {
     let mut out = String::from("<nav class=\"chapter-rail\" aria-label=\"Chapters\">\n");
     out.push_str("<div class=\"chapter-rail-course\"><div class=\"course-event\">ACM EC&rsquo;26 Tutorial</div>");
     if let Some(index) = &config.index_href {
@@ -846,7 +824,7 @@ fn render_chapter_rail(current: usize, headings: &[Heading], config: &Config) ->
     )
     .unwrap();
     out.push_str("<div class=\"chapter-rail-heading\">Chapters</div>\n");
-    for (idx, chapter) in CHAPTERS.iter().enumerate() {
+    for (idx, chapter) in export_config.chapters.iter().enumerate() {
         let class = if idx == current {
             "chapter-rail-link is-current"
         } else {
@@ -861,10 +839,10 @@ fn render_chapter_rail(current: usize, headings: &[Heading], config: &Config) ->
             out,
             "<a class=\"{}\" href=\"{}\"{}><span>{}</span>{}</a>\n",
             class,
-            escape_attr(chapter.href),
+            escape_attr(&chapter.href().expect("chapter href was validated")),
             aria,
             chapter.number,
-            escape_html(chapter.short_title)
+            escape_html(&chapter.short_title)
         )
         .unwrap();
     }

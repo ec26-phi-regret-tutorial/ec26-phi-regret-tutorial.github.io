@@ -1,11 +1,12 @@
-CHAPTERS := P1-introduction P2-phi_regret P3-ellipsoid P4-multicalibration P5-treeswap P6-profile
+EXPORT_CONFIG := html-export.yaml
+CHAPTERS := $(basename $(shell sed -n 's/^[[:space:]]*source:[[:space:]]*//p' $(EXPORT_CONFIG)))
 SOURCES := $(addsuffix .typ,$(CHAPTERS))
 PUBLIC_HTML := $(addprefix public/,$(addsuffix .html,$(CHAPTERS)))
 PUBLIC_PDF := $(addprefix public/pdf/,$(addsuffix .pdf,$(CHAPTERS)))
 FIGURE_SOURCES := $(wildcard figures/*.typ)
 PUBLIC_FIGURES := $(patsubst figures/%.typ,public/figures/%.svg,$(FIGURE_SOURCES))
 EXPORTER := cargo run --release --manifest-path html-exporter/Cargo.toml --
-EXPORT_FLAGS := --root . --math katex
+EXPORT_FLAGS := --root . --math katex --config $(EXPORT_CONFIG)
 TYPST := typst
 
 .PHONY: html pdf test-html check-html clean-html

@@ -15,6 +15,7 @@ pub(crate) struct Config {
     pub(crate) authors: String,
     pub(crate) index_href: Option<String>,
     pub(crate) pdf_href: Option<String>,
+    pub(crate) export_config: Option<PathBuf>,
     pub(crate) math_mode: MathMode,
 }
 
@@ -43,6 +44,9 @@ pub(crate) fn parse(
     /// Header PDF link.
     #[opt(long)]
     pdf: Option<String>,
+    /// YAML file containing chapter and citation metadata.
+    #[opt(long = "config")]
+    export_config: Option<PathBuf>,
     /// Math rendering backend: svg or katex. Defaults to katex.
     #[opt(long)]
     math: Option<String>,
@@ -74,6 +78,7 @@ pub(crate) fn parse(
         authors: authors.unwrap_or_else(|| DEFAULT_AUTHORS.to_owned()),
         index_href,
         pdf_href: pdf,
+        export_config,
         math_mode,
     })
 }

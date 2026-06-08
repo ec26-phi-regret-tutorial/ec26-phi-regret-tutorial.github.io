@@ -1,0 +1,26 @@
+how_to_cite:
+  authors: Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu
+  key_prefix: anagnostides-farina-zhang-2026-phi-equilibria
+  title_template: "Chapter {number}: {title}"
+  note_template: Chapter {number} of the ACM EC 2026 tutorial notes
+  year: 2026
+
+chapters:
+  - number: 1
+    source: P1-introduction.typ
+    short_title: Introduction
+  - number: 2
+    source: P2-phi_regret.typ
+    short_title: Beyond Normal Form
+  - number: 3
+    source: P3-ellipsoid.typ
+    short_title: Ellipsoid Against Hope
+  - number: 4
+    source: P4-multicalibration.typ
+    short_title: Multicalibration
+  - number: 5
+    source: P5-treeswap.typ
+    short_title: TreeSwap
+  - number: 6
+    source: P6-profile.typ
+    short_title: Profile Swap

@@ -159,14 +159,27 @@ fn convert_call(name: &str, inner: &str) -> String {
         "frac" => {
             let num = named_arg(&args, "num")
                 .or_else(|| positional_arg(&args, 0))
-                .map(convert_expr)
+                .map(convert_arg_expr)
                 .unwrap_or_default();
             let denom = named_arg(&args, "denom")
                 .or_else(|| named_arg(&args, "den"))
                 .or_else(|| positional_arg(&args, 1))
-                .map(convert_expr)
+                .map(convert_arg_expr)
                 .unwrap_or_default();
             format!("\\frac{{{}}}{{{}}}", num.trim(), denom.trim())
+        }
+        "binom" => {
+            let upper = named_arg(&args, "upper")
+                .or_else(|| named_arg(&args, "top"))
+                .or_else(|| positional_arg(&args, 0))
+                .map(convert_arg_expr)
+                .unwrap_or_default();
+            let lower = named_arg(&args, "lower")
+                .or_else(|| named_arg(&args, "bottom"))
+                .or_else(|| positional_arg(&args, 1))
+                .map(convert_arg_expr)
+                .unwrap_or_default();
+            format!("\\binom{{{}}}{{{}}}", upper.trim(), lower.trim())
         }
         "sqrt" => {
             let body = named_arg(&args, "body")
@@ -212,6 +225,15 @@ fn convert_call(name: &str, inner: &str) -> String {
                 }
             })
             .unwrap_or_default(),
+    }
+}
+
+fn convert_arg_expr(input: &str) -> String {
+    let items = tuple_items(input);
+    if items.len() == 1 {
+        convert_expr(items[0])
+    } else {
+        convert_expr(input)
     }
 }
 
@@ -1252,6 +1274,18 @@ mod tests {
         assert_eq!(
             typst_repr_to_katex("root(index: [n], radicand: [d])"),
             r"\sqrt[n]{d}"
+        );
+    }
+
+    #[test]
+    fn converts_typst_binomial_repr() {
+        assert_eq!(
+            typst_repr_to_katex("binom(upper: [d], lower: (sequence([≤], [ ], [ℓ]),))"),
+            r"\binom{d}{\le ℓ}"
+        );
+        assert_eq!(
+            typst_repr_to_katex("sequence([k], [ ], [=], [ ], binom(upper: [d], lower: (sequence([≤], [ ], [ℓ]),)))"),
+            r"k = \binom{d}{\le ℓ}"
         );
     }
 
