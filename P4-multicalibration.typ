@@ -11,7 +11,7 @@ At a high level, the moral of this section is the following, also depicted in @f
   One can construct a $Phi$-regret minimizer starting from a powerful enough _multicalibrated forecaster_ of the upcoming utility, and best respond to such forecast. In turn, the task of constructing such a forecaster admits a reduction to online learning in the style of Gordon-Greenwald-Marks, with expected variational inequalities replacing expected fixed points as the nonlinear optimization primitive.
 ]
 
-As we will show towards the end of the chapter, this forecasting-based reduction comes with algorithmic benefits that forego the need for complicated semiseparation (#todo[Ref Chapter 3]). We note however that it is not known whether a forecasting-based approach can yield fast _offline_ algorithms for $Phi$-equilibrium computation (_cf._ #todo[Ref Chapter 2]).
+As we will show towards the end of the chapter, this forecasting-based reduction comes with algorithmic benefits that forego the need for complicated semiseparation (_cf._ @sec:eah-equilibria). We note however that it is not known whether a forecasting-based approach can yield fast _offline_ algorithms for $Phi$-equilibrium computation (_cf._ @sec:regret-via-semiseparation).
 
 // In particular, we will seek to establish the following diagram.
 
@@ -49,7 +49,7 @@ As we show in @theorem:mcfromregret, multicalibration admits a black-box reducti
   $ EE_(vp tilde D) [ ip(S(vp), vu - vp) ] <= epsilon quad forall vu in cU. $ <eq:evi>
 ]
 
-One way to parse (@eq:evi) is as a randomized self-consistency condition. The distribution $D$ may place mass on several forecasts; nevertheless, after averaging over that randomness, no possible utility vector $vu in cU$ has positive correlation with the residual direction $S(vp)$ by more than $epsilon$. This is exactly what will make the regret analysis telescope. Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions; for our purposes, the important point is that EVIs are a standalone optimization primitive, just as fixed points were in the Gordon-Greenwald-Marks theorem from Chapter 1.
+One way to parse (@eq:evi) is as a randomized self-consistency condition. The distribution $D$ may place mass on several forecasts; nevertheless, after averaging over that randomness, no possible utility vector $vu in cU$ has positive correlation with the residual direction $S(vp)$ by more than $epsilon$. This is exactly what will make the regret analysis telescope. Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions; for our purposes, the important point is that EVIs are a standalone optimization primitive, just as fixed points were in @theorem:Gordon.
 
 Now suppose that we have an external-regret minimizer $R_cH$ whose decision set is the class of tests $cH$. In each round, it chooses a test $h^((t)) in cH$; after the utility vector is revealed, it receives the linear utility
 
@@ -264,3 +264,6 @@ So, if we have an online learner over the RKHS ball associated with $Gamma'$, @t
 The moral is that forecasting separates the two hard-looking parts of $Phi$-regret. Best response converts forecasts to actions; multicalibration certifies that no deviation can systematically exploit the forecast errors; and EVIs provide the self-consistency condition that makes the forecaster black-box reducible to ordinary external regret.
 
 #lec_bibliography("meta/refs.bib")
+
+#crossrefs("P1-introduction.typ")
+#crossrefs("P3-ellipsoid.typ")

@@ -29,7 +29,7 @@ In these settings, we run into two fundamental issues when trying directly to ge
 
   + If $Phi^q$ contains nonlinear functions, then that this optimization problem is $NP$-hard even when $cX$ is the hypercube $[0, 1]^d$ #citep(<Zhang24:Efficient>).
 
-  + Even if $Phi^q$ is the set of linear endomorphisms, if $cX$ itself is only available via an oracle (e.g., a separation oracle), then optimizing a linear function over $Phi^q$ can in general be hard  #citep(<Daskalakis25:Efficient>). #todo("why is the citation not showing?")
+  + Even if $Phi^q$ is the set of linear endomorphisms, if $cX$ itself is only available via an oracle (e.g., a separation oracle), then optimizing a linear function over $Phi^q$ can in general be hard  #citep(<Daskalakis25:Efficient>).
 
 #remark[
   When $cX$ is represented by an explicit set of linear constraints, i.e., $cX = { vx : matA vx <= vb }$, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints #citep(<Zhang25:Expected>). This is true, for instance, for _extensive-form games_. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.
@@ -57,7 +57,7 @@ As we will see shortly, expected fixed points fix both problems with fixed point
 The existence of this algorithm proves, as a corollary, that $eps$-approximate expected fixed points always exist for every $eps > 0$. Although we will not need it here, it also turns out to be true that _exact_ expected fixed points also always exist (even when $phi$ is discontinuous) #citep(<Zhang25:Learning>). The "either-or" nature of the above theorem will become useful shortly.
 
 #proof[
-  Let $vx^((1)) in cal(X)$ be arbitrary, and consider the sequence of points $vx^((1)), ..., vx^((K))$ where $vx^((k)) = phi(vx^((k-1)))$ for each $k > 0$. Let $mu$ be the uniform distribution on ${vx^((1)),, ..., vx^((K))}$. Then, by a telescoping sum, we have
+  Let $vx^((1)) in cal(X)$ be arbitrary, and consider the sequence of points $vx^((1)), ..., vx^((K))$ where $vx^((k)) = phi(vx^((k-1)))$ for each $k > 0$. Let $mu$ be the uniform distribution on ${vx^((1)), ..., vx^((K))}$. Then, by a telescoping sum, we have
   $
     EE_(vx ~ mu) [ phi(vx) - vx ] = 1/K sum_(k=1)^K (phi(vx^((k))) - vx^((k)) ) = 1/K sum_(k=1)^K (vx^((k+1)) - vx^((k)) ) = 1/K (vx^((K+1)) - vx^((1)))
   $
@@ -78,7 +78,7 @@ The proof of @thm:efp also gives a solution to the semi-separation problem: inde
 
 It is instructive to contemplate briefly the implications of this result. A point $vx in cX$ such that $phi(vx) in.not cX$ gives a separating direction $va^top phi(vx) <= b$ separating $phi(vx)$ from $cX$; the same constraint can be used to separate $phi$ from $Phi^q$. Determining whether a given function $phi : cal(X) -> RR^d$ actually has image in $cal(X)$ is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point _or_ a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when $phi in.not Phi^q$.
 
-= Efficient regret minimization via semi-separation
+= Efficient regret minimization via semi-separation <sec:regret-via-semiseparation>
 
 We now show how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree. #todo("actually do this")
 

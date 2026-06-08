@@ -28,12 +28,14 @@
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
-    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --anchor-offset: 32px
 }
 
 html {
     background: var(--paper);
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--anchor-offset)
 }
 
 body {
@@ -115,8 +117,17 @@ a:hover {
     font-weight: 700
 }
 
+.notes-heading,
+.env.statement[id],
+figure[id],
+.equation[id] {
+    scroll-margin-top: var(--anchor-offset)
+}
+
 .env.statement .citation-note,
-.env.proof .citation-note {
+.env.proof .citation-note,
+.env.statement .footnote,
+.env.proof .footnote {
     margin-right: calc(-234px - .85rem - 1px);
     margin-left: calc(24px + .85rem + 1px)
 }
@@ -1949,7 +1960,7 @@ mark {
     <h2 id="1-2-1-correlated-and-coarse-correlated-equilibria" class="notes-heading" data-level="2" data-number="1.2.1"><span class="secno">1.2.1</span> Correlated and coarse correlated equilibria</h2>
     <p>A major criticism of the Nash equilibrium is that, even though one always exists—as guaranteed by the famous theorem of John Nash&nbsp;<span id="loc-1">[</span><span class="citation-wrap"><a class="citation" href="#loc-18" role="doc-biblioref">Nas50</a><span class="citation-note"><span class="citation-note-key">[Nas50]</span> J. Nash. (1950). Equilibrium points in N-person games. <em>Proceedings of the National Academy of Sciences</em>, 36, 48–49.</span></span>]—it is computationally intractable to find one <span id="loc-2">[</span><span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">DGP08</a><span class="citation-note"><span class="citation-note-key">[DGP08]</span> C. Daskalakis, P. Goldberg and C. Papadimitriou. (2008). The Complexity of Computing a Nash Equilibrium. <em>SIAM Journal on Computing</em>.</span></span>]—let alone a welfare-optimal one <span id="loc-3">[</span><span class="citation-wrap"><a class="citation" href="#loc-20" role="doc-biblioref">GZ89</a><span class="citation-note"><span class="citation-note-key">[GZ89]</span> I. Gilboa and E. Zemel. (1989). Nash and Correlated Equilibria: Some Complexity Considerations. <em>Games and Economic Behavior</em>, 1, 80–93.</span></span>]. As result, we shouldn’t expect simple, computationally bounded learning algorithms to converge to Nash equilibria; this raises the question: what are no-regret dynamics converging to in general-sum games?</p>
     <p>It turns out that no-regret learning is inherently tied to <em>coarse correlated equilibria</em> <span id="loc-4">[</span><span class="citation-wrap"><a class="citation" href="#loc-21" role="doc-biblioref">MV78</a><span class="citation-note"><span class="citation-note-key">[MV78]</span> H. Moulin and J.-P. Vial. (1978). Strategically zero-sum games: The class of games whose completely mixed equilibria cannot be improved upon. <em>International Journal of Game Theory</em>, 7, 201–221.</span></span>]. Let’s begin by recalling the basic definition and start building some intuition about this solution concept; for now, we restrict our attention to normal-form games.</p>
-    <section class="env statement">
+    <section id="definition-1-1" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Coarse correlated equilibrium)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>A correlated distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2307,7 +2318,7 @@ mark {
   ),
 )" role="math">\((\frac{1}{2}, \frac{1}{2})\)</span>, the induced distribution over the <span class="math-katex-source" data-math-display="inline" data-typst-math="[4]" role="math">\(4\)</span> outcomes matches <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [μ], tr: primes(count: 1))" role="math">\(\mu'\)</span>. In contrast, no pair of strategies gives rise to <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span>.</p>
     <p>A Nash equilibrium is always a CCE; a Nash equilibrium is basically an <em>uncorrelated</em> (coarse) correlated equilibrium. But the set of CCEs can unlock new outcomes. Before we examine a concrete example, we also introduce the stronger notion of a <em>correlated equilibrium</em>, famously put forward by <span class="citation-wrap"><a class="citation" href="#loc-22" id="loc-5" role="doc-biblioref">Aumann [Aum74]</a><span class="citation-note"><span class="citation-note-key">[Aum74]</span> R. Aumann. (1974). Subjectivity and Correlation in Randomized Strategies. <em>Journal of Mathematical Economics</em>, 1, 67–96.</span></span>.</p>
-    <section class="env statement">
+    <section id="definition-1-2" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>2</strong> <span class="env-extra">(Correlated equilibrium)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>A correlated distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2577,7 +2588,7 @@ mark {
   lr(body: sequence([[], [n], []])),
 )" role="math">\(i \in [n]\)</span> as a <em>recommendation</em>. From this point of view, a distribution is a CCE or a CE if no player has an incentive to deviate from the recommendation, but for CEs the set of possible deviations is richer: in a CE, a player can decide whether to deviate <em>after</em> observing the recommendation, while in a CCE the decision has to be made in advance. This makes a CCE harder to justify in some applications, as one would need some binding mechanism to ensure the player would not be able to deviate after observing the recommendation.</p>
     <p>We now go over a concrete example to further elucidate these concepts.</p>
-    <section class="env statement">
+    <section id="example-1-3" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>We consider the “game of chicken.” This is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> game—played between two drivers who are rapidly approaching an intersection from different streets—whose utilities are tabulated below. Each player can either play “Stop” or “Go.” If both players elect to “Go” a crash ensues—a bad outcome for both players. If a player chooses to “Stop” it gets no utility from the game, whereas if it proceeds while the other player chooses to “Stop” it gets a utility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[1]" role="math">\(1\)</span> for safely crossing the intersection.</p>
@@ -2628,7 +2639,7 @@ mark {
         </aside>
       </div>
     </section>
-    <section class="env statement">
+    <section id="example-1-4" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>Our next example clarifies the difference between CCEs and CEs. We consider a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([4], [ ], [×], [ ], [4])" role="math">\(4 \times 4\)</span> bimatrix game described with the payoff matrices</p>
@@ -2718,7 +2729,7 @@ mark {
     </section>
     <h2 id="1-2-2-computational-properties" class="notes-heading" data-level="2" data-number="1.2.2"><span class="secno">1.2.2</span> Computational properties</h2>
     <p>We have seen that CCEs and CEs produce new outcomes that are not attainable under independent randomization. Moreover, correlated equilibrium concepts have better computational properties than Nash equilibria. Specifically, a key property is that the set of (C)CEs is convex and can be described through a linear program.</p>
-    <section class="env statement">
+    <section id="proposition-1-5" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Proposition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>5</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is a linear program with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [∏], t: [n], b: sequence([i], [=], [1])),
@@ -3006,7 +3017,7 @@ mark {
   [ ],
   equation(block: false, body: [𝓧]),
 )" role="math">\(\mathcal{X} \to \mathcal{X}\)</span> gives rise to <em>swap regret</em>. The next example shows that an algorithm can experience large swap regret even when its external regret is small.</p>
-    <section class="env statement">
+    <section id="example-1-6" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>6</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>Let’s say the learner picks a distribution over three actions, “1,” “2,” and “3.” Suppose further that the sequence of utilities and selected actions follow the pattern shown in <a href="#loc-6">Table&nbsp;1</a>, where we can assume <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3221,7 +3232,7 @@ mark {
     ),
   ),
 )" role="math">\(u_{i} (\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}) = \left\langle \boldsymbol{x}_{i},\boldsymbol{u}_{i} (\boldsymbol{x}_{-i}) \right\rangle\)</span> for some utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐮]), b: [i])" role="math">\(\boldsymbol{u}_{i}\)</span> that does not depend on <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐱]), b: [i])" role="math">\(\boldsymbol{x}_{i}\)</span>. This is a useful abstraction for encompassing both normal- and extensive-form games, the latter under the so-called sequence-form representation.</p>
-    <section class="env statement">
+    <section id="definition-1-7" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>7</strong> <span class="env-extra">(<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>A correlated distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3466,7 +3477,7 @@ mark {
         </figure>
       </div>
     </section>
-    <section class="env statement" id="loc-9">
+    <section class="env statement" id="theorem-1-8">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>8</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">Suppose that each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
@@ -3587,7 +3598,7 @@ mark {
     ),
     [)],
   ),
-)" role="math">\((\boldsymbol{x}_{1}^{(t)}, \dots , \boldsymbol{x}_{n}^{(t)})\)</span>; <span class="math-katex-source" data-math-display="inline" data-typst-math="[⊗]" role="math">\(⊗\)</span> denotes the tensor product. The distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> produced by <a href="#loc-9">Theorem 1.8</a> is a <em>mixture</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> product distributions. Correlation arises by playing multiple iterations of the game. As a special case, <a href="#loc-9">Theorem 1.8</a> implies that players minimizing swap regret converge—in terms of the average correlated distribution of play—to correlated equilibria, whereas external regret is associated with <em>coarse</em> correlated equilibria.</p>
+)" role="math">\((\boldsymbol{x}_{1}^{(t)}, \dots , \boldsymbol{x}_{n}^{(t)})\)</span>; <span class="math-katex-source" data-math-display="inline" data-typst-math="[⊗]" role="math">\(⊗\)</span> denotes the tensor product. The distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> produced by <a href="#theorem-1-8">Theorem&nbsp;1.8</a> is a <em>mixture</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> product distributions. Correlation arises by playing multiple iterations of the game. As a special case, <a href="#theorem-1-8">Theorem&nbsp;1.8</a> implies that players minimizing swap regret converge—in terms of the average correlated distribution of play—to correlated equilibria, whereas external regret is associated with <em>coarse</em> correlated equilibria.</p>
     <section class="env proof">
       <p class="env-heading"><span class="env-title"><em>Proof.</em></span></p>
       <div class="env-body">
@@ -4171,7 +4182,7 @@ mark {
       </div>
     </section>
     <h1 id="1-3-a-framework-for-minimizing-regret" class="notes-heading" data-level="1" data-number="1.3"><span class="secno">1.3</span> A framework for minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</h1>
-    <p>Having connected <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret with <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria, we now introduce the elegant framework of <span class="citation-wrap"><a class="citation" href="#loc-25" id="loc-11" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</span></span> to minimize <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret in the online learning setting; by virtue of <a href="#loc-9">Theorem 1.8</a>, one can then compute a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium by having each player employ such algorithms.</p>
+    <p>Having connected <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret with <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria, we now introduce the elegant framework of <span class="citation-wrap"><a class="citation" href="#loc-25" id="loc-11" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</span></span> to minimize <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret in the online learning setting; by virtue of <a href="#theorem-1-8">Theorem&nbsp;1.8</a>, one can then compute a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium by having each player employ such algorithms.</p>
     <p><strong>Reducing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to external regret.</strong> The key idea in the construction of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is that one can reduce minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to minimizing external regret. The framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> provides a general template based on two basic subroutines.</p>
     <ol>
       <li value="1">A <em>fixed-point oracle</em>: for any deviation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∈], [ ], [Φ])" role="math">\(\phi \in \Phi\)</span>, it outputs a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -4277,7 +4288,7 @@ mark {
   ),
 )" role="math">\(u_{\Phi}^{(t)}: \phi \mapsto \left\langle \phi (\boldsymbol{x}^{(t)}),\boldsymbol{u}^{(t)} \right\rangle\)</span>.</li>
     </ul>
-    <section class="env statement" id="loc-12">
+    <section class="env statement" id="theorem-1-9">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>9</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">GGM08</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Reg], t: lr(body: sequence([(], [T], [)])))" role="math">\(\text{Reg}^{(T)}\)</span> is the external regret of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Φ],
@@ -4838,7 +4849,7 @@ mark {
     body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span>, for which there is a simple combinatorial characterization in terms of <em>(column)-stochastic</em> matrices.</p>
-    <section class="env statement" id="loc-16">
+    <section class="env statement" id="lemma-1-10">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">1<span class="env-number-separator">.</span>10</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">Any linear function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
@@ -4889,7 +4900,7 @@ mark {
     body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span>, it follows that every column of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐌])" role="math">\(\mathbf{M}\)</span> is a probability distribution.</p>
-    <p>Armed with the characterization of <a href="#loc-16">Lemma 1.10</a>, we now see how to implement the two oracles required in the framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. First, a stochastic matrix induces a Markov chain over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓐])" role="math">\(\mathcal{A}\)</span>. Any <em>stationary distribution</em> of that Markov chain is a fixed point, and can be computed efficiently as it boils down to solving a linear system. (More broadly, when the underlying set <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a polytope and <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> comprises linear deviations, computing a fixed point amounts to solving a linear program, which can be done in polynomial time.)</p>
+    <p>Armed with the characterization of <a href="#lemma-1-10">Lemma&nbsp;1.10</a>, we now see how to implement the two oracles required in the framework of <span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. First, a stochastic matrix induces a Markov chain over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓐])" role="math">\(\mathcal{A}\)</span>. Any <em>stationary distribution</em> of that Markov chain is a fixed point, and can be computed efficiently as it boils down to solving a linear system. (More broadly, when the underlying set <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a polytope and <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> comprises linear deviations, computing a fixed point amounts to solving a linear program, which can be done in polynomial time.)</p>
     <p>The next step is to minimize regret with respect to the set of stochastic matrices. By definition, the set of stochastic matrices is a product of simplices—one probability distribution for each column:</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -5034,7 +5045,7 @@ mark {
     []],
   ),
 )" role="math">\([(\boldsymbol{x}, \boldsymbol{x}')]\)</span> denotes the matrix with columns <span class="math-katex-source" data-math-display="inline" data-typst-math="[x]" role="math">\(x\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [x], tr: primes(count: 1))" role="math">\(x'\)</span>. Minimizing (external) regret over such a set can be accomplished by simply having an independent regret minimizer for each column.</p>
-    <section class="env statement">
+    <section id="lemma-1-11" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">1<span class="env-number-separator">.</span>11</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is an efficient no-regret algorithm for minimizing external regret over the set of stochastic matrices.</div>
     </section>
@@ -5060,7 +5071,7 @@ mark {
 )" role="math">\(\mathbf{M}^{(t)}\)</span> in which each column is given by the strategy of the corresponding regret minimizer, and then output any fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐌]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in <a href="#loc-12">Theorem 1.9</a>, can be cast as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in <a href="#theorem-1-9">Theorem&nbsp;1.9</a>, can be cast as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [u], b: [Φ]),
   lr(body: sequence([(], [φ], [)])),
   [ ],
@@ -5197,8 +5208,8 @@ mark {
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\boldsymbol{x}^{(t)}[a] \boldsymbol{u}^{(t)}\)</span>. If we instantiate each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> with MWU and invoke <a href="#loc-12">Theorem 1.9</a>, we arrive at the following result.</p>
-    <section class="env statement" id="loc-17">
+)" role="math">\(\boldsymbol{x}^{(t)}[a] \boldsymbol{u}^{(t)}\)</span>. If we instantiate each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> with MWU and invoke <a href="#theorem-1-9">Theorem&nbsp;1.9</a>, we arrive at the following result.</p>
+    <section class="env statement" id="theorem-1-12">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>12</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-26" role="doc-biblioref">BM07</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is an online algorithm whose swap regret is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
@@ -5267,7 +5278,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(\sqrt{T \operatorname{log} |\mathcal{A}|})\)</span>. However, one can make use of the structure of the utilities to obtain the improved bound claimed in <a href="#loc-17">Theorem 1.12</a>. In particular, we observe that for any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(O(\sqrt{T \operatorname{log} |\mathcal{A}|})\)</span>. However, one can make use of the structure of the utilities to obtain the improved bound claimed in <a href="#theorem-1-12">Theorem&nbsp;1.12</a>. In particular, we observe that for any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [t],
   [ ],
   [∈],
@@ -5453,7 +5464,7 @@ mark {
   [.],
 )">\[\displaystyle \sum_{a \in \mathcal{A}} \left\Vert \boldsymbol{u}_{a}^{\left(t\right)}\right\Vert_{∞}^{2} = \left\Vert \boldsymbol{u}^{\left(t\right)}\right\Vert_{∞}^{2} \sum_{a \in \mathcal{A}} \left(\boldsymbol{x}^{\left(t\right)}\left[a\right]\right)^{2} \le \left\Vert \boldsymbol{u}^{\left(t\right)}\right\Vert_{∞}^{2}.\]</span></div>
     </figure>
-    <p>So, using the regret bound of MWU together with <a href="#loc-12">Theorem 1.9</a>,</p>
+    <p>So, using the regret bound of MWU together with <a href="#theorem-1-9">Theorem&nbsp;1.9</a>,</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [Φ],
@@ -5871,6 +5882,95 @@ mark {
   window.setTimeout(markOverwideEquations, 0);
   window.setTimeout(markOverwideEquations, 80);
   window.setTimeout(markOverwideEquations, 300);
+})();
+</script>
+<script>
+(() => {
+  let version = 0;
+
+  function hashTarget(){
+    const raw = window.location.hash ? window.location.hash.slice(1) : "";
+    if (!raw) return null;
+    try {
+      return document.getElementById(decodeURIComponent(raw));
+    } catch (_) {
+      return document.getElementById(raw);
+    }
+  }
+
+  function anchorOffset(){
+    const value = window.getComputedStyle(document.documentElement).getPropertyValue("--anchor-offset");
+    return parseFloat(value) || 0;
+  }
+
+  function targetDistance(target){
+    return target.getBoundingClientRect().top - anchorOffset();
+  }
+
+  function scrollToTarget(target){
+    const top = target.getBoundingClientRect().top + window.pageYOffset - anchorOffset();
+    const y = Math.max(0, top);
+    try {
+      window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    } catch (_) {
+      window.scrollTo(0, y);
+    }
+  }
+
+  function afterLoad(){
+    if (document.readyState === "complete") return Promise.resolve();
+    return new Promise(function(resolve){
+      window.addEventListener("load", resolve, { once: true });
+    });
+  }
+
+  function afterFonts(){
+    if (document.fonts && document.fonts.ready) {
+      return document.fonts.ready.catch(function(){});
+    }
+    return Promise.resolve();
+  }
+
+  function afterStableLayout(callback){
+    let lastHeight = -1;
+    let stableFrames = 0;
+    let frames = 0;
+    function tick(){
+      const height = document.documentElement.scrollHeight;
+      if (height === lastHeight) stableFrames += 1;
+      else {
+        stableFrames = 0;
+        lastHeight = height;
+      }
+      frames += 1;
+      if (stableFrames >= 2 || frames >= 24) callback();
+      else window.requestAnimationFrame(tick);
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  function scheduleHashScroll(){
+    const target = hashTarget();
+    if (!target) return;
+    const current = ++version;
+    Promise.all([afterLoad(), afterFonts()]).then(function(){
+      afterStableLayout(function(){
+        if (current !== version) return;
+        const target = hashTarget();
+        if (!target) return;
+        scrollToTarget(target);
+        window.setTimeout(function(){
+          if (current === version) {
+            const target = hashTarget();
+            if (target && Math.abs(targetDistance(target)) > 1) scrollToTarget(target);
+          }
+        }, 160);
+      });
+    });
+  }
+
+  scheduleHashScroll();
+  window.addEventListener("hashchange", scheduleHashScroll);
 })();
 </script>
 </body>

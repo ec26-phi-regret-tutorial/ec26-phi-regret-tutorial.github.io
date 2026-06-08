@@ -28,12 +28,14 @@
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
-    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --anchor-offset: 32px
 }
 
 html {
     background: var(--paper);
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--anchor-offset)
 }
 
 body {
@@ -115,8 +117,17 @@ a:hover {
     font-weight: 700
 }
 
+.notes-heading,
+.env.statement[id],
+figure[id],
+.equation[id] {
+    scroll-margin-top: var(--anchor-offset)
+}
+
 .env.statement .citation-note,
-.env.proof .citation-note {
+.env.proof .citation-note,
+.env.statement .footnote,
+.env.proof .footnote {
     margin-right: calc(-234px - .85rem - 1px);
     margin-left: calc(24px + .85rem + 1px)
 }
@@ -1569,7 +1580,7 @@ mark {
         </div>
       </div>
     </section>
-    <section class="env statement" id="loc-4">
+    <section class="env statement" id="theorem-5-1">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">5<span class="env-number-separator">.</span>1</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">The regret of <code>TreeSwap</code> is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [T],
@@ -1602,11 +1613,11 @@ mark {
       lr(body: sequence([(], [1], [/], [ε], [)])),
     ),
   ),
-)" role="math">\(M^{K} = d^{(1/\epsilon )}\)</span> iterations.</div>
+)" role="math">\(M^{K} = d^{\tilde{O}(1/\epsilon )}\)</span> iterations.</div>
     </section>
-    <section class="env statement">
+    <section id="remark-5-2" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">5<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
-      <div class="env-body"><a href="#loc-4">Theorem 5.1</a> only applies when <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> is a power of <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span>. Handling the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> is not a power of <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> requires a bit of care and results in a looser bound of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+      <div class="env-body"><a href="#theorem-5-1">Theorem&nbsp;5.1</a> only applies when <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> is a power of <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span>. Handling the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> is not a power of <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> requires a bit of care and results in a looser bound of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [T],
   [ ],
   [·],
@@ -1617,9 +1628,9 @@ mark {
 )" role="math">\(T \cdot (\epsilon + 3/K)\)</span>, but the main ideas are captured by the above result and its proof. [<span class="citation-wrap"><a class="citation" href="#loc-6" role="doc-biblioref">Dag+24</a></span>]</div>
     </section>
     <p><mark class="todo">can [Dag+24] be displayed as [DDFS24] instead? I think `alpha` style in LaTeX does [ABC+00] for &gt;=4 authors</mark></p>
-    <section class="env statement">
+    <section id="remark-5-3" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">5<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
-      <div class="env-body">We are mainly interested in the implications of <a href="#loc-4">Theorem 5.1</a> for its implications for swap regret in high-dimensional settings. However, it is worth noting that <a href="#loc-4">Theorem 5.1</a> achieves a new result even in the normal-form setting: its regret bound for normal form, when instantiated with multiplicative weights, is <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+      <div class="env-body">We are mainly interested in the implications of <a href="#theorem-5-1">Theorem&nbsp;5.1</a> for its implications for swap regret in high-dimensional settings. However, it is worth noting that <a href="#theorem-5-1">Theorem&nbsp;5.1</a> achieves a new result even in the normal-form setting: its regret bound for normal form, when instantiated with multiplicative weights, is <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: sequence(
     op(text: [log], limits: false),
     lr(body: sequence([(], [N], [)])),
@@ -1628,9 +1639,9 @@ mark {
     accent(base: [O], accent: &quot;\u{303}&quot;),
     lr(body: sequence([(], [1], [/], [ϵ], [)])),
   ),
-)" role="math">\(\operatorname{log}(N)^{(1/\epsilon )}\)</span>, which, for large <span class="math-katex-source" data-math-display="inline" data-typst-math="[N]" role="math">\(N\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>, is better than the bound of Blum-Mansour.</div>
+)" role="math">\(\operatorname{log}(N)^{\tilde{O}(1/\epsilon )}\)</span>, which, for large <span class="math-katex-source" data-math-display="inline" data-typst-math="[N]" role="math">\(N\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>, is better than the bound of Blum-Mansour.</div>
     </section>
-    <p>We now sketch a proof of <a href="#loc-4">Theorem 5.1</a>.</p>
+    <p>We now sketch a proof of <a href="#theorem-5-1">Theorem&nbsp;5.1</a>.</p>
     <section class="env proof">
       <p class="env-heading"><span class="env-title"><em>Proof Sketch.</em></span></p>
       <div class="env-body">
@@ -2379,6 +2390,95 @@ mark {
   window.setTimeout(markOverwideEquations, 0);
   window.setTimeout(markOverwideEquations, 80);
   window.setTimeout(markOverwideEquations, 300);
+})();
+</script>
+<script>
+(() => {
+  let version = 0;
+
+  function hashTarget(){
+    const raw = window.location.hash ? window.location.hash.slice(1) : "";
+    if (!raw) return null;
+    try {
+      return document.getElementById(decodeURIComponent(raw));
+    } catch (_) {
+      return document.getElementById(raw);
+    }
+  }
+
+  function anchorOffset(){
+    const value = window.getComputedStyle(document.documentElement).getPropertyValue("--anchor-offset");
+    return parseFloat(value) || 0;
+  }
+
+  function targetDistance(target){
+    return target.getBoundingClientRect().top - anchorOffset();
+  }
+
+  function scrollToTarget(target){
+    const top = target.getBoundingClientRect().top + window.pageYOffset - anchorOffset();
+    const y = Math.max(0, top);
+    try {
+      window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    } catch (_) {
+      window.scrollTo(0, y);
+    }
+  }
+
+  function afterLoad(){
+    if (document.readyState === "complete") return Promise.resolve();
+    return new Promise(function(resolve){
+      window.addEventListener("load", resolve, { once: true });
+    });
+  }
+
+  function afterFonts(){
+    if (document.fonts && document.fonts.ready) {
+      return document.fonts.ready.catch(function(){});
+    }
+    return Promise.resolve();
+  }
+
+  function afterStableLayout(callback){
+    let lastHeight = -1;
+    let stableFrames = 0;
+    let frames = 0;
+    function tick(){
+      const height = document.documentElement.scrollHeight;
+      if (height === lastHeight) stableFrames += 1;
+      else {
+        stableFrames = 0;
+        lastHeight = height;
+      }
+      frames += 1;
+      if (stableFrames >= 2 || frames >= 24) callback();
+      else window.requestAnimationFrame(tick);
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  function scheduleHashScroll(){
+    const target = hashTarget();
+    if (!target) return;
+    const current = ++version;
+    Promise.all([afterLoad(), afterFonts()]).then(function(){
+      afterStableLayout(function(){
+        if (current !== version) return;
+        const target = hashTarget();
+        if (!target) return;
+        scrollToTarget(target);
+        window.setTimeout(function(){
+          if (current === version) {
+            const target = hashTarget();
+            if (target && Math.abs(targetDistance(target)) > 1) scrollToTarget(target);
+          }
+        }, 160);
+      });
+    });
+  }
+
+  scheduleHashScroll();
+  window.addEventListener("hashchange", scheduleHashScroll);
 })();
 </script>
 </body>

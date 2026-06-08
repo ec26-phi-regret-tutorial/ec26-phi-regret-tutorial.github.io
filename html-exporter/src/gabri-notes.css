@@ -20,12 +20,14 @@
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
-    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --anchor-offset: 32px
 }
 
 html {
     background: var(--paper);
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--anchor-offset)
 }
 
 body {
@@ -107,8 +109,17 @@ a:hover {
     font-weight: 700
 }
 
+.notes-heading,
+.env.statement[id],
+figure[id],
+.equation[id] {
+    scroll-margin-top: var(--anchor-offset)
+}
+
 .env.statement .citation-note,
-.env.proof .citation-note {
+.env.proof .citation-note,
+.env.statement .footnote,
+.env.proof .footnote {
     margin-right: calc(-234px - .85rem - 1px);
     margin-left: calc(24px + .85rem + 1px)
 }

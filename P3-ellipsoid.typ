@@ -24,7 +24,7 @@ $ "find " mu in Delta(cX) " such that " EE_(vx tilde mu) ip(vy, G(vx)) >= 0 quad
 
 where $cX subset.eq RR^d, cY subset.eq RR^k$, and $G : cX -> RR^k$ is a function that can be evaluated efficiently. The crux in the optimization problem (@eq:EAH) lies in the fact that $mu$ resides in a high-dimensional space; a canonical case to think about is when $cX = cA_1 times dots.c times cA_n$ in a normal-form game, so that even describing a distribution $mu$ could require specifying $product_(i=1)^n |cA_i| - 1$ coordinates. We assume that $cY$, which corresponds to the set of deviations, admits a _separation oracle_; under mild geometric assumptions, it's equivalent to posit merely a _membership oracle_, which returns whether a point $vy in RR^k$ belongs to $cY$ or not. A special case is when $cY$ is a polytope described with a polynomial number of constraints, as is the case for swap regret in normal-form games---each player's set of deviations amounts to the set of stochastic matrices.
 
-The key assumption in the EAH framework #cite(<Farina24:Polynomial>) is the existence of a _good-enough-response (GER)_ oracle, which, given any $vy in cY$, returns a point $vx in cX$ such that $ip(vy, G(vx)) >= 0$.
+The key assumption in the EAH framework #citep(<Farina24:Polynomial>) is the existence of a _good-enough-response (GER)_ oracle, which, given any $vy in cY$, returns a point $vx in cX$ such that $ip(vy, G(vx)) >= 0$.
 
 The EAH algorithm enables solving (@eq:EAH) with just a separation oracle for $cY$ and a GER oracle. The basic idea is to consider an $epsilon$-approximate version of the dual of (@eq:EAH),
 
@@ -50,9 +50,9 @@ In other words, there is a convex combination of $vx^((1)), dots, vx^((T))$ that
   Assuming the existence of a separation oracle for $cY$ and a GER oracle, EAH runs in time $"poly"(d, k, log(1\/eps))$ and returns an $epsilon$-approximate solution to (@eq:EAH).
 ] <thm:eah-general>
 
-= Application to computing correlated equilibria
+= Application to computing correlated equilibria <sec:eah-equilibria>
 
-Let's now see to apply this algorithm to solve (@eq:phi-equil). As before, we assume that each $Phi_i$ contains linear functions of the form $vx_i |-> matM_i q_i (vx_i) in cX_i$ for some feature map $q_i: cX_i -> RR^(k_i)$. For these notes, we will assume that the set of valid matrices $matM_i$ form a convex, compact set $cY_i subset RR^(d_i times k_i)$; this assumption can be relaxed using a similar idea to the semi-separation oracle #cite(<Zhang25:Learning>). we will later briefly explain how to relax this assumption. Then a $Phi$-equilibrium is a distribution $mu$ such that
+Let's now see to apply this algorithm to solve (@eq:phi-equil). As before, we assume that each $Phi_i$ contains linear functions of the form $vx_i |-> matM_i q_i (vx_i) in cX_i$ for some feature map $q_i: cX_i -> RR^(k_i)$. For these notes, we will assume that the set of valid matrices $matM_i$ form a convex, compact set $cY_i subset RR^(d_i times k_i)$; this assumption can be relaxed using a similar idea to the semi-separation oracle #citep(<Zhang25:Learning>). we will later briefly explain how to relax this assumption. Then a $Phi$-equilibrium is a distribution $mu$ such that
 
 $
   sum_(i=1)^n EE_((vx_1, dots, vx_n) tilde mu) ip(matI_i - matM_i, u_i (vx_(-i)) times.o q(vx_i)) >= - epsilon quad forall i in [n], matM_i in cY_i,
@@ -74,11 +74,11 @@ What's left is to prove that (@eq:simplified) admits an efficient GER oracle. To
 
 $ EE_((vx_1, dots, vx_n) tilde mu) ip(vx_i - matM_i q(vx_i), u_i (vx_(-i))) >= - eps dot.c norm(u_i (vx_(-i)))_2, $
 
-But this is not immediately good enough. Recall that our algorithm for expected fixed points, from `@thm:efp` #todo[how to cite a theorem from a different file?], has $"poly"(1\/eps)$ runtime. Since our goal in this section is to construct algorithms with $log(1\/eps)$ runtime, we need to do better. Fortunately, there _is_ a $"poly"(d, log(1\/eps))$-time algorithm for semi-separation with expected fixed points:
+But this is not immediately good enough. Recall that our algorithm for expected fixed points, from @thm:efp, has $"poly"(1\/eps)$ runtime. Since our goal in this section is to construct algorithms with $log(1\/eps)$ runtime, we need to do better. Fortunately, there _is_ a $"poly"(d, log(1\/eps))$-time algorithm for semi-separation with expected fixed points:
 
 #theorem[#citep(<Zhang25:Learning>)][
   There is a $"poly"(d, log(1\/eps))$-time algorithm for semi-separation.
-]
+] <thm:fast-semiseparation>
 #proofsketch[
   We use EAH. Given $phi : cX -> RR^d$, consider the EAH problem with $cY$ set to the unit $ell_2$-ball, and $G(vx) = phi(vx) - vx$. Then, by @thm:eah-general, it suffices to implement a GER oracle. That is, given $vy in RR^d$, we need to find $vx$ with $ip(vy, phi(vx) - vx) >= 0$. But this is easy: we can simply take $vx in argmin_(hat(vx) in cX) ip(vy, hat(vx))$. Then either $phi(vx) in.not cX$, in which case we output $vx$ as a certificate of infeasibility of $phi$, or $phi(vx) in cX$, in which case $ip(vy, phi(vx) - vx) >= 0$ by definition of $vx$.
 ]
@@ -102,9 +102,11 @@ We conclude this chapter with several remarks about the previous theorem.
 
   The first issue is not circumventable, and is generally a barrier to efficient equilibrium computation in concave games with many players.
   The second issue is not circumventable in general, as it would imply the ability to compute fixed points of contraction maps. However, it _is_ circumventable in the special case where $u(dot.c)$ is _quadratic_ concave for each player $i$; therefore, it is possible to compute $Phi$-equilibria in quadratic games with a constant number of players. The required techniques, however, are beyond the scope of this document. We refer the interested reader to our recent preprint on this topic #citep(<Anagnostides26:Complexity>).
-3. _Non-separable sets $Phi$_. So far in this section, we have assumed that the sets $cY_i$ admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization, it is sufficient to take $cY_i$ to be a _superset_ of the valid deviations and rely on the semi-separation oracle to declare when a given matrix $matM_i in cY_i$ is invalid. Therefore, @thm:eah-eqm also generalizes to the case where $cY_i$ only admits an efficient _semi_-separation oracle, such as the sets $Phi^q$ discussed in the regret minimization section. For more details, we refer the interested reader to our paper #cite(<Zhang25:Learning>).
+3. _Non-separable sets $Phi$_. So far in this section, we have assumed that the sets $cY_i$ admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization in @sec:regret-via-semiseparation, it is sufficient to take $cY_i$ to be a _superset_ of the valid deviations and rely on the semi-separation oracle to declare when a given matrix $matM_i in cY_i$ is invalid. Therefore, @thm:eah-eqm also generalizes to the case where $cY_i$ only admits an efficient _semi_-separation oracle, such as the sets $Phi^q$ discussed there. For more details, we refer the interested reader to our paper #citep(<Zhang25:Learning>).
 
 
 
 // #colbreak()
 #lec_bibliography("../meta/refs.bib")
+
+#crossrefs("P2-phi_regret.typ")

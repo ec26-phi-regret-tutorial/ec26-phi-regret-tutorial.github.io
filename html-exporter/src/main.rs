@@ -45,6 +45,7 @@ fn run() -> Result<(), String> {
         .unwrap_or_else(|| title_from_path(&config.input));
 
     document.rewrite_heading_ids();
+    document.rewrite_statement_ids();
     let (body_html, rendered_endnotes) = postprocess_body(
         document.body_html,
         &document.bibliography,
@@ -235,9 +236,21 @@ fn use_html_notes_style(source: &str) -> String {
 #[derive(Clone, Debug)]
 struct Heading {
     level: u8,
+    raw_id: Option<String>,
     text: String,
     id: String,
     number: String,
+}
+
+#[derive(Clone, Debug)]
+struct StatementAnchor {
+    raw_id: Option<String>,
+    id: String,
+}
+
+struct CrossrefBlock {
+    href: String,
+    body_html: String,
 }
 
 struct HtmlParts {
@@ -255,10 +268,13 @@ impl HtmlParts {
         let body_html = select_first(&dom, "body")
             .map(|body| body.inner_html())
             .unwrap_or_else(|| raw_html.to_owned());
-        let meta = extract_document_meta(&dom);
-        let headings = extract_headings(&dom);
-        let bibliography = extract_bibliography(&dom);
-        let endnotes = extract_endnotes(&dom);
+        let body_html = rewrite_crossref_links_and_remove(body_html);
+        let cleaned_dom = Html::parse_document(&format!("<html><body>{body_html}</body></html>"));
+        let meta = extract_document_meta(&cleaned_dom);
+        let headings = extract_headings(&cleaned_dom);
+        let bibliography =
+            filter_bibliography_to_visible_refs(extract_bibliography(&cleaned_dom), &body_html);
+        let endnotes = extract_endnotes(&cleaned_dom);
         Self {
             meta,
             body_html,
@@ -271,6 +287,7 @@ impl HtmlParts {
 
     fn rewrite_heading_ids(&mut self) {
         let mut heading_idx = 0usize;
+        let mut link_targets = HashMap::new();
         self.body_html = re_html_heading()
             .replace_all(&self.body_html, |captures: &Captures| {
                 let whole = captures.get(0).map_or("", |m| m.as_str());
@@ -286,12 +303,44 @@ impl HtmlParts {
                     return whole.to_owned();
                 };
                 heading_idx += 1;
+                if let Some(raw_id) = &heading.raw_id {
+                    if raw_id != &heading.id {
+                        link_targets.insert(raw_id.clone(), format!("#{}", heading.id));
+                    }
+                }
                 format!(
                     "<h{level}{}>{inner}</h{level}>",
                     set_id_attr(attrs, &heading.id)
                 )
             })
             .to_string();
+        self.body_html = rewrite_href_targets(self.body_html.clone(), &link_targets);
+    }
+
+    fn rewrite_statement_ids(&mut self) {
+        let anchors = collect_statement_anchors(&self.body_html);
+        let mut statement_idx = 0usize;
+        let mut href_targets = HashMap::new();
+        self.body_html = re_html_section()
+            .replace_all(&self.body_html, |captures: &Captures| {
+                let whole = captures.get(0).map_or("", |m| m.as_str());
+                let attrs = captures.name("attrs").map_or("", |m| m.as_str());
+                if !attrs_has_class(attrs, "env") || !attrs_has_class(attrs, "statement") {
+                    return whole.to_owned();
+                }
+                let Some(anchor) = anchors.get(statement_idx) else {
+                    return whole.to_owned();
+                };
+                statement_idx += 1;
+                if let Some(raw_id) = &anchor.raw_id {
+                    if raw_id != &anchor.id {
+                        href_targets.insert(raw_id.clone(), format!("#{}", anchor.id));
+                    }
+                }
+                format!("<section{}>", set_id_attr(attrs, &anchor.id))
+            })
+            .to_string();
+        self.body_html = rewrite_href_targets(self.body_html.clone(), &href_targets);
     }
 }
 
@@ -306,6 +355,26 @@ struct BibliographyItem {
     id: String,
     key_text: String,
     entry_html: String,
+}
+
+struct CitationLabelRewrite {
+    from_label: String,
+    to_label: String,
+    to_key_text: String,
+}
+
+impl CitationLabelRewrite {
+    fn new(from_key_text: &str, to_key_text: &str) -> Self {
+        Self {
+            from_label: strip_bib_key_brackets(from_key_text).to_owned(),
+            to_label: strip_bib_key_brackets(to_key_text).to_owned(),
+            to_key_text: to_key_text.to_owned(),
+        }
+    }
+
+    fn apply(&self, label_html: &str) -> String {
+        label_html.replacen(&self.from_label, &self.to_label, 1)
+    }
 }
 
 #[derive(Clone)]
@@ -372,9 +441,12 @@ fn extract_headings(dom: &Html) -> Vec<Heading> {
             })
             .unwrap_or_default();
         let text = heading_text(&element, &number, &secno_selector);
-        let id = raw_id.unwrap_or_else(|| slugify(&format!("{number}-{text}")));
+        let id = raw_id
+            .clone()
+            .unwrap_or_else(|| slugify(&format!("{number}-{text}")));
         headings.push(Heading {
             level,
+            raw_id,
             id,
             number,
             text,
@@ -441,6 +513,31 @@ fn extract_bibliography(dom: &Html) -> Vec<BibliographyItem> {
     items
 }
 
+fn filter_bibliography_to_visible_refs(
+    bibliography: Vec<BibliographyItem>,
+    body_html: &str,
+) -> Vec<BibliographyItem> {
+    let referenced = visible_bibliography_ref_ids(body_html);
+    bibliography
+        .into_iter()
+        .filter(|item| referenced.contains(item.id.as_str()))
+        .collect()
+}
+
+fn visible_bibliography_ref_ids(body_html: &str) -> HashSet<String> {
+    let mut body = body_html.to_owned();
+    body = re_notes_meta().replace_all(&body, "").to_string();
+    body = re_hidden_bibliography().replace_all(&body, "").to_string();
+    body = re_endnotes_section().replace_all(&body, "").to_string();
+    let (body, _visible_bibliographies) = protect_visible_bibliographies(body);
+    re_doc_biblioref_link()
+        .captures_iter(&body)
+        .filter_map(|captures| captures.name("attrs"))
+        .filter_map(|attrs| extract_href(attrs.as_str()))
+        .map(str::to_owned)
+        .collect()
+}
+
 fn extract_endnotes(dom: &Html) -> Vec<Endnote> {
     let item_selector = Selector::parse("section[role=\"doc-endnotes\"] li").unwrap();
     let sup_selector = Selector::parse("sup").unwrap();
@@ -474,6 +571,175 @@ fn select_first<'a>(dom: &'a Html, selector: &str) -> Option<ElementRef<'a>> {
     dom.select(&selector).next()
 }
 
+fn rewrite_crossref_links_and_remove(body: String) -> String {
+    let (body, targets) = remove_crossrefs_and_collect_targets(&body);
+    rewrite_href_targets(body, &targets)
+}
+
+fn remove_crossrefs_and_collect_targets(body: &str) -> (String, HashMap<String, String>) {
+    let mut cleaned = String::new();
+    let mut targets = HashMap::new();
+    let mut stack: Vec<CrossrefBlock> = Vec::new();
+    let mut last = 0usize;
+
+    for captures in re_crossrefs_marker().captures_iter(body) {
+        let Some(marker) = captures.get(0) else {
+            continue;
+        };
+        let segment = &body[last..marker.start()];
+        if let Some(block) = stack.last_mut() {
+            block.body_html.push_str(segment);
+        } else {
+            cleaned.push_str(segment);
+        }
+
+        let kind = captures.name("kind").map_or("", |m| m.as_str());
+        if kind == "start" {
+            let attrs = captures.name("attrs").map_or("", |m| m.as_str());
+            stack.push(CrossrefBlock {
+                href: data_attr(attrs, "href").unwrap_or_default().to_owned(),
+                body_html: String::new(),
+            });
+        } else if let Some(block) = stack.pop() {
+            targets.extend(collect_crossref_targets(&block.body_html, &block.href));
+        } else {
+            cleaned.push_str(marker.as_str());
+        }
+        last = marker.end();
+    }
+
+    let tail = &body[last..];
+    if let Some(block) = stack.last_mut() {
+        block.body_html.push_str(tail);
+    } else {
+        cleaned.push_str(tail);
+    }
+    while let Some(block) = stack.pop() {
+        targets.extend(collect_crossref_targets(&block.body_html, &block.href));
+    }
+
+    (cleaned, targets)
+}
+
+fn collect_crossref_targets(body: &str, href: &str) -> HashMap<String, String> {
+    let id_selector = Selector::parse("[id]").unwrap();
+    let mut targets = HashMap::new();
+    let crossref_dom = Html::parse_fragment(body);
+    for element in crossref_dom.select(&id_selector) {
+        let Some(old_id) = element.value().attr("id") else {
+            continue;
+        };
+        let Some(anchor) = stable_anchor_for(&element) else {
+            continue;
+        };
+        targets.insert(old_id.to_owned(), format!("{href}#{anchor}"));
+    }
+
+    targets
+}
+
+fn collect_statement_anchors(body: &str) -> Vec<StatementAnchor> {
+    let dom = Html::parse_fragment(body);
+    let selector = Selector::parse("section.env.statement").unwrap();
+    let mut anchors = Vec::new();
+
+    for element in dom.select(&selector) {
+        let Some(anchor) = stable_statement_id(&element) else {
+            continue;
+        };
+        anchors.push(StatementAnchor {
+            raw_id: element.value().attr("id").map(str::to_owned),
+            id: anchor,
+        });
+    }
+
+    anchors
+}
+
+fn stable_anchor_for(element: &ElementRef<'_>) -> Option<String> {
+    if has_class(element, "notes-heading") {
+        return stable_heading_id(element);
+    }
+    if has_class(element, "statement") {
+        return stable_statement_id(element);
+    }
+    None
+}
+
+fn stable_heading_id(element: &ElementRef<'_>) -> Option<String> {
+    let secno_selector = Selector::parse(".secno").unwrap();
+    let number = element
+        .value()
+        .attr("data-number")
+        .map(normalize_ws)
+        .filter(|number| !number.is_empty())
+        .or_else(|| {
+            element
+                .select(&secno_selector)
+                .next()
+                .map(|secno| normalize_ws(&secno.text().collect::<Vec<_>>().join(" ")))
+        })?;
+    let text = heading_text(element, &number, &secno_selector);
+    Some(slugify(&format!("{number}-{text}")))
+}
+
+fn stable_statement_id(element: &ElementRef<'_>) -> Option<String> {
+    let kind_selector = Selector::parse(".env-kind").unwrap();
+    let number_selector = Selector::parse(".env-number").unwrap();
+    let kind = element
+        .select(&kind_selector)
+        .next()
+        .map(|kind| element_text(&kind))
+        .filter(|kind| !kind.is_empty())?;
+    let number = element
+        .select(&number_selector)
+        .next()
+        .map(|number| element_text(&number))
+        .filter(|number| !number.is_empty())?;
+    Some(slugify(&format!("{kind} {number}")))
+}
+
+fn has_class(element: &ElementRef<'_>, class_name: &str) -> bool {
+    element
+        .value()
+        .attr("class")
+        .unwrap_or_default()
+        .split_whitespace()
+        .any(|class| class == class_name)
+}
+
+fn attrs_has_class(attrs: &str, class_name: &str) -> bool {
+    re_class_attr()
+        .captures(attrs)
+        .and_then(|captures| captures.get(1))
+        .is_some_and(|classes| {
+            classes
+                .as_str()
+                .split_whitespace()
+                .any(|class| class == class_name)
+        })
+}
+
+fn element_text(element: &ElementRef<'_>) -> String {
+    normalize_ws(&element.text().collect::<Vec<_>>().join(" "))
+}
+
+fn rewrite_href_targets(body: String, targets: &HashMap<String, String>) -> String {
+    if targets.is_empty() {
+        return body;
+    }
+    re_href()
+        .replace_all(&body, |captures: &Captures| {
+            let whole = captures.get(0).map_or("", |m| m.as_str());
+            let id = captures.get(1).map_or("", |m| m.as_str());
+            targets
+                .get(id)
+                .map(|target| format!("href=\"{}\"", escape_attr(target)))
+                .unwrap_or_else(|| whole.to_owned())
+        })
+        .to_string()
+}
+
 fn postprocess_body(
     body_html: String,
     bibliography: &[BibliographyItem],
@@ -490,7 +756,13 @@ fn postprocess_body(
     let (body_without_bibliography, bibliography_blocks) = protect_visible_bibliographies(body);
     let citation_bibliography =
         citation_bibliography_from_visible_blocks(&bibliography_blocks, bibliography)?;
-    let body = rewrite_citations(body_without_bibliography, &citation_bibliography);
+    let (bibliography_blocks, citation_bibliography, citation_label_rewrites) =
+        disambiguate_bibliography_labels(bibliography_blocks, citation_bibliography);
+    let body = rewrite_citations(
+        body_without_bibliography,
+        &citation_bibliography,
+        &citation_label_rewrites,
+    );
     let body = restore_visible_bibliographies(body, bibliography_blocks);
     Ok(rewrite_footnotes(body, endnotes))
 }
@@ -506,7 +778,11 @@ fn normalize_typst_classes(mut body: String) -> String {
     body
 }
 
-fn rewrite_citations(body: String, bibliography: &[BibliographyItem]) -> String {
+fn rewrite_citations(
+    body: String,
+    bibliography: &[BibliographyItem],
+    label_rewrites: &HashMap<String, CitationLabelRewrite>,
+) -> String {
     let by_id = bibliography
         .iter()
         .map(|item| (item.id.as_str(), item))
@@ -518,6 +794,10 @@ fn rewrite_citations(body: String, bibliography: &[BibliographyItem]) -> String 
             let attrs = captures.get(1).map_or("", |m| m.as_str());
             let label = captures.get(2).map_or("", |m| m.as_str());
             let href = extract_href(attrs);
+            let label = href
+                .and_then(|href| label_rewrites.get(href))
+                .map(|rewrite| rewrite.apply(label))
+                .unwrap_or_else(|| label.to_owned());
             let attrs = add_class_to_attrs(attrs, "citation");
             let mut out = format!("<span class=\"citation-wrap\"><a {attrs}>{label}</a>");
             if let Some(item) = href.and_then(|href| by_id.get(href)) {
@@ -537,6 +817,98 @@ fn rewrite_citations(body: String, bibliography: &[BibliographyItem]) -> String 
             out
         })
         .to_string()
+}
+
+fn disambiguate_bibliography_labels(
+    blocks: Vec<String>,
+    mut bibliography: Vec<BibliographyItem>,
+) -> (
+    Vec<String>,
+    Vec<BibliographyItem>,
+    HashMap<String, CitationLabelRewrite>,
+) {
+    let mut by_key = HashMap::<String, Vec<usize>>::new();
+    for (index, item) in bibliography.iter().enumerate() {
+        if !item.key_text.is_empty() {
+            by_key.entry(item.key_text.clone()).or_default().push(index);
+        }
+    }
+
+    let mut rewrites = HashMap::new();
+    for indexes in by_key.values().filter(|indexes| indexes.len() > 1) {
+        for (position, index) in indexes.iter().copied().enumerate() {
+            let original = bibliography[index].key_text.clone();
+            let suffixed = append_suffix_to_bib_key(&original, &alphabetic_suffix(position));
+            rewrites.insert(
+                bibliography[index].id.clone(),
+                CitationLabelRewrite::new(&original, &suffixed),
+            );
+            bibliography[index].key_text = suffixed;
+        }
+    }
+
+    if rewrites.is_empty() {
+        return (blocks, bibliography, rewrites);
+    }
+
+    let blocks = blocks
+        .into_iter()
+        .map(|block| rewrite_bibliography_key_cells(block, &rewrites))
+        .collect();
+    (blocks, bibliography, rewrites)
+}
+
+fn rewrite_bibliography_key_cells(
+    block: String,
+    rewrites: &HashMap<String, CitationLabelRewrite>,
+) -> String {
+    re_bibliography_key_cell()
+        .replace_all(&block, |captures: &Captures| {
+            let Some(id) = captures.name("id").map(|m| m.as_str()) else {
+                return captures.get(0).unwrap().as_str().to_owned();
+            };
+            let Some(rewrite) = rewrites.get(id) else {
+                return captures.get(0).unwrap().as_str().to_owned();
+            };
+            format!(
+                "{}{}{}",
+                captures.name("prefix").map_or("", |m| m.as_str()),
+                escape_html(&rewrite.to_key_text),
+                captures.name("suffix").map_or("", |m| m.as_str())
+            )
+        })
+        .to_string()
+}
+
+fn append_suffix_to_bib_key(key_text: &str, suffix: &str) -> String {
+    if let Some(inner) = key_text
+        .strip_prefix('[')
+        .and_then(|text| text.strip_suffix(']'))
+    {
+        format!("[{inner}{suffix}]")
+    } else {
+        format!("{key_text}{suffix}")
+    }
+}
+
+fn strip_bib_key_brackets(key_text: &str) -> &str {
+    key_text
+        .strip_prefix('[')
+        .and_then(|text| text.strip_suffix(']'))
+        .unwrap_or(key_text)
+}
+
+fn alphabetic_suffix(mut index: usize) -> String {
+    let mut chars = Vec::new();
+    loop {
+        chars.push((b'a' + (index % 26) as u8) as char);
+        index /= 26;
+        if index == 0 {
+            break;
+        }
+        index -= 1;
+    }
+    chars.into_iter().rev().collect()
 }
 
 fn protect_visible_bibliographies(body: String) -> (String, Vec<String>) {
@@ -767,6 +1139,7 @@ fn render_document(
         html.push_str(chapter_nav_script());
     }
     html.push_str(equation_width_script());
+    html.push_str(settled_hash_scroll_script());
     html.push_str("</body>\n</html>\n");
     html
 }
@@ -1048,6 +1421,99 @@ fn equation_width_script() -> &'static str {
 "#
 }
 
+fn settled_hash_scroll_script() -> &'static str {
+    r#"<script>
+(() => {
+  let version = 0;
+
+  function hashTarget(){
+    const raw = window.location.hash ? window.location.hash.slice(1) : "";
+    if (!raw) return null;
+    try {
+      return document.getElementById(decodeURIComponent(raw));
+    } catch (_) {
+      return document.getElementById(raw);
+    }
+  }
+
+  function anchorOffset(){
+    const value = window.getComputedStyle(document.documentElement).getPropertyValue("--anchor-offset");
+    return parseFloat(value) || 0;
+  }
+
+  function targetDistance(target){
+    return target.getBoundingClientRect().top - anchorOffset();
+  }
+
+  function scrollToTarget(target){
+    const top = target.getBoundingClientRect().top + window.pageYOffset - anchorOffset();
+    const y = Math.max(0, top);
+    try {
+      window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    } catch (_) {
+      window.scrollTo(0, y);
+    }
+  }
+
+  function afterLoad(){
+    if (document.readyState === "complete") return Promise.resolve();
+    return new Promise(function(resolve){
+      window.addEventListener("load", resolve, { once: true });
+    });
+  }
+
+  function afterFonts(){
+    if (document.fonts && document.fonts.ready) {
+      return document.fonts.ready.catch(function(){});
+    }
+    return Promise.resolve();
+  }
+
+  function afterStableLayout(callback){
+    let lastHeight = -1;
+    let stableFrames = 0;
+    let frames = 0;
+    function tick(){
+      const height = document.documentElement.scrollHeight;
+      if (height === lastHeight) stableFrames += 1;
+      else {
+        stableFrames = 0;
+        lastHeight = height;
+      }
+      frames += 1;
+      if (stableFrames >= 2 || frames >= 24) callback();
+      else window.requestAnimationFrame(tick);
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  function scheduleHashScroll(){
+    const target = hashTarget();
+    if (!target) return;
+    const current = ++version;
+    Promise.all([afterLoad(), afterFonts()]).then(function(){
+      afterStableLayout(function(){
+        if (current !== version) return;
+        const target = hashTarget();
+        if (!target) return;
+        scrollToTarget(target);
+        window.setTimeout(function(){
+          if (current === version) {
+            const target = hashTarget();
+            if (target && Math.abs(targetDistance(target)) > 1) scrollToTarget(target);
+          }
+        }, 160);
+      });
+    });
+  }
+
+  scheduleHashScroll();
+  window.addEventListener("hashchange", scheduleHashScroll);
+})();
+</script>
+"#
+}
+
 fn write_output(config: &Config, html: String) -> Result<(), String> {
     if let Some(parent) = config.output.parent() {
         if !parent.as_os_str().is_empty() {
@@ -1096,6 +1562,14 @@ fn normalize_ws(input: &str) -> String {
 
 fn extract_href(attrs: &str) -> Option<&str> {
     re_href().captures(attrs)?.get(1).map(|m| m.as_str())
+}
+
+fn data_attr<'a>(attrs: &'a str, name: &str) -> Option<&'a str> {
+    let needle = format!("data-{name}=\"");
+    let start = attrs.find(&needle)? + needle.len();
+    let rest = &attrs[start..];
+    let end = rest.find('"')?;
+    Some(&rest[..end])
 }
 
 fn add_class_to_attrs(attrs: &str, class_name: &str) -> String {
@@ -1158,6 +1632,16 @@ fn re_notes_meta() -> &'static Regex {
     })
 }
 
+fn re_crossrefs_marker() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(
+            r#"(?s)<span\b(?P<attrs>[^>]*\bclass="[^"]*\bcrossrefs-(?P<kind>start|end)\b[^"]*"[^>]*)>\s*</span>"#,
+        )
+        .unwrap()
+    })
+}
+
 fn re_hidden_bibliography() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| {
@@ -1184,6 +1668,16 @@ fn re_visible_bibliography() -> &'static Regex {
 fn re_bibliography_row() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r#"(?s)<tr(?P<attrs>[^>]*)>(?P<inner>.*?)</tr>"#).unwrap())
+}
+
+fn re_bibliography_key_cell() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(
+            r#"(?s)(?P<prefix><tr\b[^>]*\bid="(?P<id>[^"]+)"[^>]*>.*?<td\b[^>]*\bclass="[^"]*\bbib-key\b[^"]*"[^>]*>).*?(?P<suffix></td>)"#,
+        )
+        .unwrap()
+    })
 }
 
 fn re_doc_biblioref_href_before_role() -> &'static Regex {
@@ -1253,6 +1747,11 @@ fn re_html_heading() -> &'static Regex {
     RE.get_or_init(|| {
         Regex::new(r#"(?s)<h(?P<level>[1-6])(?P<attrs>[^>]*)>(?P<inner>.*?)</h[1-6]>"#).unwrap()
     })
+}
+
+fn re_html_section() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| Regex::new(r#"<section(?P<attrs>[^>]*)>"#).unwrap())
 }
 
 #[cfg(test)]
@@ -1363,7 +1862,7 @@ mod tests {
             },
         ];
 
-        let body = rewrite_citations(body, &bibliography);
+        let body = rewrite_citations(body, &bibliography, &HashMap::new());
 
         assert_eq!(body.matches("class=\"citation-note\"").count(), 2);
         assert!(body.contains("<span class=\"citation-note-key\">[A]</span> Entry A"));
@@ -1389,6 +1888,40 @@ mod tests {
 
         assert!(body.contains("<span class=\"citation-note-key\">[A]</span> Visible Entry"));
         assert!(!body.contains("Hidden Entry"));
+    }
+
+    #[test]
+    fn duplicate_bibliography_labels_get_letter_suffixes() {
+        let body = r##"
+<p><a href="#loc-1" role="doc-biblioref">Zha+25</a></p>
+<p><a href="#loc-2" role="doc-biblioref">Zhang et al. [Zha+25]</a></p>
+<section class="bibliography" id="bibliography"><table class="bibliography-table">
+<tr class="bibliography-row"><td class="bib-key">[<a href="#loc-1" role="doc-biblioref">Zha+25</a>]</td><td class="bib-entry">First Entry</td></tr>
+<tr class="bibliography-row"><td class="bib-key">[<a href="#loc-2" role="doc-biblioref">Zha+25</a>]</td><td class="bib-entry">Second Entry</td></tr>
+</table></section>
+"##
+        .to_owned();
+        let bibliography = vec![
+            BibliographyItem {
+                id: "loc-1".to_owned(),
+                key_text: "[Zha+25]".to_owned(),
+                entry_html: "Hidden First".to_owned(),
+            },
+            BibliographyItem {
+                id: "loc-2".to_owned(),
+                key_text: "[Zha+25]".to_owned(),
+                entry_html: "Hidden Second".to_owned(),
+            },
+        ];
+
+        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg).unwrap();
+
+        assert!(body.contains(">Zha+25a</a>"));
+        assert!(body.contains(">Zhang et al. [Zha+25b]</a>"));
+        assert!(body.contains("<td class=\"bib-key\">[Zha+25a]</td>"));
+        assert!(body.contains("<td class=\"bib-key\">[Zha+25b]</td>"));
+        assert!(body.contains("<span class=\"citation-note-key\">[Zha+25a]</span> First Entry"));
+        assert!(body.contains("<span class=\"citation-note-key\">[Zha+25b]</span> Second Entry"));
     }
 
     #[test]
@@ -1425,6 +1958,7 @@ mod tests {
                     .to_owned(),
             headings: vec![Heading {
                 level: 2,
+                raw_id: None,
                 text: "Real subsection".to_owned(),
                 id: "4-2-1-real-subsection".to_owned(),
                 number: "4.2.1".to_owned(),

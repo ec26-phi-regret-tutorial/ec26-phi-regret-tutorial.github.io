@@ -42,8 +42,51 @@
 }
 #let sf = text.with(font: "Frutiger")
 #let swallow = it => place(hide(it))
+#let crossrefs_source(file) = {
+  read("../" + file)
+    .replace(regex("#import \"meta/"), "#import \"../meta/")
+    .replace(regex("#import \"figures/"), "#import \"../figures/")
+    .replace(regex("#show: gabri_notes\\.with"), "#show: crossref_notes.with")
+    .replace(regex("#footnote\["), "#swallow[")
+}
+#let crossrefs-active = state("crossrefs-active", false)
+#let crossrefs(file) = if sys.inputs.at("combined", default: "false") == "false" {
+  crossrefs-active.update(true)
+  swallow({
+    show footnote: it => {}
+    show footnote.entry: it => {}
+    eval(crossrefs_source(file), mode: "markup")
+  })
+}
 #let lecture-bib = state("lecture-bib", ())
 #let lecnum = counter("lecnum")
+
+#let crossref_notes(
+  body,
+  lec_num: none,
+  date: none,
+  title: none,
+  strtitle: none,
+  show_outline: false,
+  extrathanks: none,
+) = {
+  counter(heading).update(0)
+  set math.equation(numbering: "(1)")
+  show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
+  set cite(style: "alphanum.csl")
+  set math.equation(supplement: none)
+  set heading(
+    numbering: (..nums) => {
+      str(lec_num) + "." + nums.pos().map(str).join(".")
+    },
+  )
+  thmcounters.update((lecture: lec_num))
+  let footnote = it => {}
+  if str(lec_num).starts-with(regex("\d")) {
+    lecnum.update(int(lec_num))
+  }
+  body
+}
 
 #let lecture_outline = lec_num => {
   locate(loc => {
@@ -76,7 +119,9 @@
   show_outline: false,
   extrathanks: none,
 ) = {
-  lecture-bib.update(())
+  context if not crossrefs-active.get() {
+    lecture-bib.update(())
+  }
   counter(heading).update(0)
   set text(font: "New Computer Modern", size: 10.2pt)
   // set text(font: "Times New Roman", size: 10.2pt)
@@ -200,6 +245,12 @@
     },
   )
 
+  let ref-chapter-prefix = target-chapter => {
+    if target-chapter != none and str(target-chapter) != str(lec_num) {
+      [Chapter #target-chapter, ]
+    }
+  }
+
   show ref: it => {
     if (
       it.element != none
@@ -217,9 +268,29 @@
           )
     ) {
       let counters = thmcounters.at(it.element.location())
+      let target-chapter = counters.at("lecture")
+      let supplement = if it.supplement == auto {
+        it.element.supplement
+      } else {
+        it.supplement
+      }
+      let number = str(target-chapter) + "." + str(counters.at(it.element.kind, default: 0) + 1)
       link(
         it.element.location(),
-      )[#if it.supplement == auto { it.element.supplement } else { it.supplement } #counters.at("lecture").#{ counters.at(it.element.kind, default: 0) + 1 }]
+      )[#ref-chapter-prefix(target-chapter)#supplement~#number]
+    } else if (
+      it.element != none and it.element.func() == heading and it.element.at("numbering", default: none) != none
+    ) {
+      let numbering-fn = it.element.at("numbering")
+      let numbers = counter(heading).at(it.element.location())
+      let number = str(numbering(numbering-fn, ..numbers))
+      let target-chapter = number.split(".").first()
+      let supplement = if it.supplement == auto {
+        [Section]
+      } else {
+        it.supplement
+      }
+      link(it.element.location())[#ref-chapter-prefix(target-chapter)#supplement~#number]
     } else {
       it
     }
@@ -277,29 +348,103 @@
   body
 }
 
-#let citep(key) = {
-  text(fill: blue.darken(40%), {
-    set cite(style: "alphanum-intext.csl")
-    cite(key)
-  })
-  lecture-bib.update(it => {
-    if key not in it {
-      it.push(key)
-    }
-    it
-  })
+#let citation_label_collisions = (
+  "Zhang25:Learning": (base: "Zha+25", group: ("Zhang25:Learning", "Zhang25:Expected")),
+  "Zhang25:Expected": (base: "Zha+25", group: ("Zhang25:Learning", "Zhang25:Expected")),
+)
+
+#let citation_suffixes = (
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+)
+
+#let citation_key_name(key) = {
+  let raw = str(key)
+  if raw.starts-with("<") and raw.ends-with(">") {
+    raw.slice(1, -1)
+  } else {
+    raw
+  }
 }
-#let citet(key, ..supplement) = {
-  text(fill: blue.darken(40%), {
-    set cite(style: "alphanum-intext.csl")
-    cite(key, form: "prose", ..supplement)
-  })
-  lecture-bib.update(it => {
-    if key not in it {
-      it.push(key)
+
+#let citation_label(key) = context {
+  let key_name = citation_key_name(key)
+  let collision = citation_label_collisions.at(key_name, default: none)
+  if collision == none {
+    cite(key)
+  } else {
+    let cited_keys = lecture-bib.final().map(citation_key_name)
+    let group = collision.group.filter(group_key => group_key in cited_keys)
+    let suffix = if group.len() > 1 {
+      let suffix_index = 0
+      for (i, group_key) in group.enumerate() {
+        if group_key == key_name {
+          suffix_index = i
+        }
+      }
+      citation_suffixes.at(suffix_index)
+    } else {
+      ""
     }
-    it
-  })
+    [#collision.base#suffix]
+  }
+}
+
+#let citep(key) = context {
+  if crossrefs-active.get() {
+    []
+  } else {
+    lecture-bib.update(it => {
+      if key not in it {
+        it.push(key)
+      }
+      it
+    })
+    text(fill: blue.darken(40%), {
+      set cite(style: "alphanum-intext.csl")
+      citation_label(key)
+    })
+  }
+}
+#let citet(key, ..supplement) = context {
+  if crossrefs-active.get() {
+    []
+  } else {
+    lecture-bib.update(it => {
+      if key not in it {
+        it.push(key)
+      }
+      it
+    })
+    text(fill: blue.darken(40%), {
+      set cite(style: "alphanum-intext.csl")
+      cite(key, form: "prose", ..supplement)
+    })
+  }
 }
 
 #let changelog(body) = [
@@ -311,7 +456,7 @@
   #body
 ]
 
-#let lec_bibliography = (path, title: auto) => {
+#let lec_bibliography = (path, title: auto) => context if not crossrefs-active.get() {
   show cite: set text(black)
   set heading(numbering: none)
   v(3mm)
@@ -325,7 +470,7 @@
   context {
     let rows = ()
     for item in lecture-bib.get() {
-      rows.push(cite(item))
+      rows.push(citation_label(item))
       rows.push(cite(item, form: "full"))
     }
     grid(columns: 2, row-gutter: 3.8mm, column-gutter: 2.3mm, ..rows)

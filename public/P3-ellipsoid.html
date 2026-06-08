@@ -28,12 +28,14 @@
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
-    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --anchor-offset: 32px
 }
 
 html {
     background: var(--paper);
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--anchor-offset)
 }
 
 body {
@@ -115,8 +117,17 @@ a:hover {
     font-weight: 700
 }
 
+.notes-heading,
+.env.statement[id],
+figure[id],
+.equation[id] {
+    scroll-margin-top: var(--anchor-offset)
+}
+
 .env.statement .citation-note,
-.env.proof .citation-note {
+.env.proof .citation-note,
+.env.statement .footnote,
+.env.proof .footnote {
     margin-right: calc(-234px - .85rem - 1px);
     margin-left: calc(24px + .85rem + 1px)
 }
@@ -2261,7 +2272,7 @@ mark {
   [ ],
   equation(block: false, body: [𝓨]),
 )" role="math">\(y \in \mathcal{Y}\)</span>. That convex combination, which is a <em>certificate of dual infeasibility</em>, will thus be an approximate solution to (<a href="#loc-6">2</a>). The key point is that the resulting zero-sum game in (<a href="#loc-8">4</a>) is much smaller than the one we started with, and can be solved with standard techniques.</p>
-    <section class="env statement" id="loc-9">
+    <section class="env statement" id="theorem-3-1">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>1</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">Assuming the existence of a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle, EAH runs in time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
@@ -2767,7 +2778,7 @@ mark {
   [,],
 )">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} \left\langle \boldsymbol{x}_{i} - \mathbf{M}_{i} q\left(\boldsymbol{x}_{i}\right),u_{i} \left(\boldsymbol{x}_{-i}\right) \right\rangle \ge - \epsilon \cdot \left\Vert u_{i} \left(\boldsymbol{x}_{-i}\right)\right\Vert_{2},\]</span></div>
     </figure>
-    <p>But this is not immediately good enough. Recall that our algorithm for expected fixed points, from <code>@thm:efp</code> <mark class="todo">how to cite a theorem from a different file?</mark>, has <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>But this is not immediately good enough. Recall that our algorithm for expected fixed points, from <a href="P2-phi_regret.html#theorem-2-6">Chapter 2, Theorem&nbsp;2.6</a>, has <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
   lr(body: sequence([(], [1], [/], [ϵ], [)])),
 )" role="math">\(\text{poly}(1/\epsilon )\)</span> runtime. Since our goal in this section is to construct algorithms with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2789,7 +2800,7 @@ mark {
     ),
   ),
 )" role="math">\(\text{poly}(d, \operatorname{log}(1/\epsilon ))\)</span>-time algorithm for semi-separation with expected fixed points:</p>
-    <section class="env statement">
+    <section id="theorem-3-2" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>2</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
@@ -2840,7 +2851,7 @@ mark {
   [−],
   [ ],
   equation(block: false, body: [𝐱]),
-)" role="math">\(G(\boldsymbol{x}) = \phi (\boldsymbol{x}) - \boldsymbol{x}\)</span>. Then, by <a href="#loc-9">Theorem 3.1</a>, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(G(\boldsymbol{x}) = \phi (\boldsymbol{x}) - \boldsymbol{x}\)</span>. Then, by <a href="#theorem-3-1">Theorem&nbsp;3.1</a>, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐲]),
   [ ],
   [∈],
@@ -3002,7 +3013,7 @@ mark {
   [ ],
   attach(base: [μ], b: [n]),
 )" role="math">\(\mu_{1} \times \dots \times \mu_{n}\)</span> is a GER solution satisfying (<a href="#loc-10">5</a>). We therefore have:</p>
-    <section class="env statement" id="loc-11">
+    <section class="env statement" id="theorem-3-3">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>; <span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
@@ -3034,7 +3045,7 @@ mark {
     <p>We conclude this chapter with several remarks about the previous theorem.</p>
     <ol>
       <li value="1">
-        <p><em>Nested EAH.</em> The algorithm that we derive for <a href="#loc-11">Theorem 3.3</a> is a doubly-nested ellipsoid against hope algorithm: the outer EAH algorithm computes the equilibrium itself, and on every iteration, EAH is invoked for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span> to compute an expected fixed point for <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>.</p>
+        <p><em>Nested EAH.</em> The algorithm that we derive for <a href="#theorem-3-3">Theorem&nbsp;3.3</a> is a doubly-nested ellipsoid against hope algorithm: the outer EAH algorithm computes the equilibrium itself, and on every iteration, EAH is invoked for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span> to compute an expected fixed point for <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>.</p>
       </li>
       <li value="2">
         <p><em>Necessity of linearity.</em> The results presented in this document assume, and use, the fact that utilities are multilinear. The multilinearity assumption is used twice:</p>
@@ -3184,13 +3195,13 @@ mark {
         <p>The first issue is not circumventable, and is generally a barrier to efficient equilibrium computation in concave games with many players. The second issue is not circumventable in general, as it would imply the ability to compute fixed points of contraction maps. However, it <em>is</em> circumventable in the special case where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([u], lr(body: sequence([(], [·], [)])))" role="math">\(u(\cdot )\)</span> is <em>quadratic</em> concave for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>; therefore, it is possible to compute <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria in quadratic games with a constant number of players. The required techniques, however, are beyond the scope of this document. We refer the interested reader to our recent preprint on this topic <span id="loc-12">[</span><span class="citation-wrap"><a class="citation" href="#loc-16" role="doc-biblioref">Ana+26</a><span class="citation-note"><span class="citation-note-key">[Ana+26]</span> I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2026). On the Complexity of Correlated Equilibria Beyond Normal-Form Games. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2605.17665">arXiv:2605.17665</a></em>.</span></span>].</p>
       </li>
       <li value="3">
-        <p><em>Non-separable sets <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. So far in this section, we have assumed that the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization, it is sufficient to take <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> to be a <em>superset</em> of the valid deviations and rely on the semi-separation oracle to declare when a given matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+        <p><em>Non-separable sets <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. So far in this section, we have assumed that the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization in <a href="P2-phi_regret.html#2-3-efficient-regret-minimization-via-semi-separation">Chapter 2, Section&nbsp;2.3</a>, it is sufficient to take <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> to be a <em>superset</em> of the valid deviations and rely on the semi-separation oracle to declare when a given matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   [∈],
   [ ],
   attach(base: equation(block: false, body: [𝓨]), b: [i]),
-)" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span> is invalid. Therefore, <a href="#loc-11">Theorem 3.3</a> also generalizes to the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> only admits an efficient <em>semi</em>-separation oracle, such as the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> discussed in the regret minimization section. For more details, we refer the interested reader to our paper [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>].</p>
+)" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span> is invalid. Therefore, <a href="#theorem-3-3">Theorem&nbsp;3.3</a> also generalizes to the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> only admits an efficient <em>semi</em>-separation oracle, such as the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> discussed there. For more details, we refer the interested reader to our paper [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>].</p>
       </li>
     </ol>
     <section class="bibliography" id="bibliography">
@@ -3213,7 +3224,7 @@ mark {
           <td class="bib-entry">I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2026). On the Complexity of Correlated Equilibria Beyond Normal-Form Games. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2605.17665">arXiv:2605.17665</a></em>.</td>
         </tr>
       </tbody></table>
-    </section><section class="endnotes" id="endnotes">
+    </section><p></p><section class="endnotes" id="endnotes">
 <h1>Notes</h1>
 <p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body"><p>We caution that</p>
           <p>here corresponds to</p>
@@ -3296,6 +3307,95 @@ mark {
   window.setTimeout(markOverwideEquations, 0);
   window.setTimeout(markOverwideEquations, 80);
   window.setTimeout(markOverwideEquations, 300);
+})();
+</script>
+<script>
+(() => {
+  let version = 0;
+
+  function hashTarget(){
+    const raw = window.location.hash ? window.location.hash.slice(1) : "";
+    if (!raw) return null;
+    try {
+      return document.getElementById(decodeURIComponent(raw));
+    } catch (_) {
+      return document.getElementById(raw);
+    }
+  }
+
+  function anchorOffset(){
+    const value = window.getComputedStyle(document.documentElement).getPropertyValue("--anchor-offset");
+    return parseFloat(value) || 0;
+  }
+
+  function targetDistance(target){
+    return target.getBoundingClientRect().top - anchorOffset();
+  }
+
+  function scrollToTarget(target){
+    const top = target.getBoundingClientRect().top + window.pageYOffset - anchorOffset();
+    const y = Math.max(0, top);
+    try {
+      window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    } catch (_) {
+      window.scrollTo(0, y);
+    }
+  }
+
+  function afterLoad(){
+    if (document.readyState === "complete") return Promise.resolve();
+    return new Promise(function(resolve){
+      window.addEventListener("load", resolve, { once: true });
+    });
+  }
+
+  function afterFonts(){
+    if (document.fonts && document.fonts.ready) {
+      return document.fonts.ready.catch(function(){});
+    }
+    return Promise.resolve();
+  }
+
+  function afterStableLayout(callback){
+    let lastHeight = -1;
+    let stableFrames = 0;
+    let frames = 0;
+    function tick(){
+      const height = document.documentElement.scrollHeight;
+      if (height === lastHeight) stableFrames += 1;
+      else {
+        stableFrames = 0;
+        lastHeight = height;
+      }
+      frames += 1;
+      if (stableFrames >= 2 || frames >= 24) callback();
+      else window.requestAnimationFrame(tick);
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  function scheduleHashScroll(){
+    const target = hashTarget();
+    if (!target) return;
+    const current = ++version;
+    Promise.all([afterLoad(), afterFonts()]).then(function(){
+      afterStableLayout(function(){
+        if (current !== version) return;
+        const target = hashTarget();
+        if (!target) return;
+        scrollToTarget(target);
+        window.setTimeout(function(){
+          if (current === version) {
+            const target = hashTarget();
+            if (target && Math.abs(targetDistance(target)) > 1) scrollToTarget(target);
+          }
+        }, 160);
+      });
+    });
+  }
+
+  scheduleHashScroll();
+  window.addEventListener("hashchange", scheduleHashScroll);
 })();
 </script>
 </body>

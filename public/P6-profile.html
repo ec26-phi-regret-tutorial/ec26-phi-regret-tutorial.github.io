@@ -28,12 +28,14 @@
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
-    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --anchor-offset: 32px
 }
 
 html {
     background: var(--paper);
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--anchor-offset)
 }
 
 body {
@@ -115,8 +117,17 @@ a:hover {
     font-weight: 700
 }
 
+.notes-heading,
+.env.statement[id],
+figure[id],
+.equation[id] {
+    scroll-margin-top: var(--anchor-offset)
+}
+
 .env.statement .citation-note,
-.env.proof .citation-note {
+.env.proof .citation-note,
+.env.statement .footnote,
+.env.proof .footnote {
     margin-right: calc(-234px - .85rem - 1px);
     margin-left: calc(24px + .85rem + 1px)
 }
@@ -2185,7 +2196,7 @@ mark {
   [ ],
   styled(child: [U], ..),
 )" role="math">\(\boldsymbol{u}_{j} \in \mathcal{U}\)</span>.</p>
-    <section class="env statement">
+    <section id="definition-6-1" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">6<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Profile swap regret)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>The <em>profile swap regret</em> of a CSP <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
@@ -2482,7 +2493,7 @@ mark {
   […],
 )" role="math">\(\boldsymbol{y}^{(1)}, \boldsymbol{y}^{(2)}, \dots\)</span> so as to steer the learner’s future play toward more favorable outcomes. (It’s interesting to note that this steering problem can be computationally intractable&nbsp;<span id="loc-8">[</span><span class="citation-wrap"><a class="citation" href="#loc-17" role="doc-biblioref">ADD24</a><span class="citation-note"><span class="citation-note-key">[ADD24]</span> A. Assos, Y. Dagan and C. Daskalakis. (2024). Maximizing utility in multi-agent environments by anticipating the behavior of other learners. <em>Neural Information Processing Systems (NeurIPS)</em>.</span></span>].) Equivalently, even if the optimizer fully understands the learner’s algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.</p>
     <p>A beautiful connection crystallized by <span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a></span> reassures us that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.</p>
-    <section class="env statement">
+    <section id="proposition-6-2" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Proposition</strong> <strong class="env-number">6<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If a learning algorithm guarantees <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -2662,7 +2673,7 @@ mark {
 )">\[\displaystyle \text{AppLoss}^{\left(T\right)} \coloneqq \operatorname*{min}_{\boldsymbol{s} \in \mathcal{S}} \left\Vert \overline{κ}^{\left(T\right)} - \boldsymbol{s}\right\Vert_{F}.\]</span> <span class="eqno">(4)</span></div>
     </figure>
     <p>We first point out that minimizing linear swap regret reduces to this approachability instance.</p>
-    <section class="env statement">
+    <section id="lemma-6-3" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>For any time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -3010,7 +3021,7 @@ mark {
       </div>
     </section>
     <p>What’s more, the same target set also captures profile swap regret. The following lemma follows essentially by the definition of profile swap regret.</p>
-    <section class="env statement">
+    <section id="lemma-6-4" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>4</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">The profile swap distance of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
@@ -3647,7 +3658,7 @@ mark {
       </div>
     </section>
     <p>The proof of correctness crucially relies on the minimax theorem, as we formalize below.</p>
-    <section class="env statement">
+    <section id="lemma-6-5" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>5</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">BS15</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>For every utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -4323,7 +4334,7 @@ mark {
       </div>
     </section>
     <p>The invariant implies approachability by the usual Pythagorean argument.</p>
-    <section class="env statement" id="loc-10">
+    <section class="env statement" id="lemma-6-6">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">6<span class="env-number-separator">.</span>6</strong> <span class="env-extra">(Pythagorean lemma)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -4478,7 +4489,7 @@ mark {
         </figure>
       </div>
     </section>
-    <p>Applying <a href="#loc-10">Lemma 6.6</a> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Applying <a href="#lemma-6-6">Lemma&nbsp;6.6</a> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐳]),
     t: lr(body: sequence([(], [t], [)])),
@@ -4636,7 +4647,7 @@ mark {
   ),
   [.],
 )" role="math">\(B \coloneqq \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \Vert (\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u})\Vert_{F}.\)</span> We thus arrive at the following theorem.</p>
-    <section class="env statement">
+    <section id="theorem-6-7" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">6<span class="env-number-separator">.</span>7</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
         <p>For any sequence of utilities <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -5062,6 +5073,95 @@ mark {
   window.setTimeout(markOverwideEquations, 0);
   window.setTimeout(markOverwideEquations, 80);
   window.setTimeout(markOverwideEquations, 300);
+})();
+</script>
+<script>
+(() => {
+  let version = 0;
+
+  function hashTarget(){
+    const raw = window.location.hash ? window.location.hash.slice(1) : "";
+    if (!raw) return null;
+    try {
+      return document.getElementById(decodeURIComponent(raw));
+    } catch (_) {
+      return document.getElementById(raw);
+    }
+  }
+
+  function anchorOffset(){
+    const value = window.getComputedStyle(document.documentElement).getPropertyValue("--anchor-offset");
+    return parseFloat(value) || 0;
+  }
+
+  function targetDistance(target){
+    return target.getBoundingClientRect().top - anchorOffset();
+  }
+
+  function scrollToTarget(target){
+    const top = target.getBoundingClientRect().top + window.pageYOffset - anchorOffset();
+    const y = Math.max(0, top);
+    try {
+      window.scrollTo({ top: y, left: 0, behavior: "smooth" });
+    } catch (_) {
+      window.scrollTo(0, y);
+    }
+  }
+
+  function afterLoad(){
+    if (document.readyState === "complete") return Promise.resolve();
+    return new Promise(function(resolve){
+      window.addEventListener("load", resolve, { once: true });
+    });
+  }
+
+  function afterFonts(){
+    if (document.fonts && document.fonts.ready) {
+      return document.fonts.ready.catch(function(){});
+    }
+    return Promise.resolve();
+  }
+
+  function afterStableLayout(callback){
+    let lastHeight = -1;
+    let stableFrames = 0;
+    let frames = 0;
+    function tick(){
+      const height = document.documentElement.scrollHeight;
+      if (height === lastHeight) stableFrames += 1;
+      else {
+        stableFrames = 0;
+        lastHeight = height;
+      }
+      frames += 1;
+      if (stableFrames >= 2 || frames >= 24) callback();
+      else window.requestAnimationFrame(tick);
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  function scheduleHashScroll(){
+    const target = hashTarget();
+    if (!target) return;
+    const current = ++version;
+    Promise.all([afterLoad(), afterFonts()]).then(function(){
+      afterStableLayout(function(){
+        if (current !== version) return;
+        const target = hashTarget();
+        if (!target) return;
+        scrollToTarget(target);
+        window.setTimeout(function(){
+          if (current === version) {
+            const target = hashTarget();
+            if (target && Math.abs(targetDistance(target)) > 1) scrollToTarget(target);
+          }
+        }, 160);
+      });
+    });
+  }
+
+  scheduleHashScroll();
+  window.addEventListener("hashchange", scheduleHashScroll);
 })();
 </script>
 </body>
