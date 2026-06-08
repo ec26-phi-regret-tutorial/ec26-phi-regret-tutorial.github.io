@@ -34,6 +34,7 @@
 #let cY = $cal(Y)$
 
 #let eps = $epsilon$
+#let grad = $nabla$
 
 #let comment = body => text(luma(128))[~~~~ $triangle.stroked.small.r$ _ #body _]
 
