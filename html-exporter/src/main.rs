@@ -151,7 +151,7 @@ impl LocalWorld {
         let main = FileId::new(None, main_path);
 
         let mut inputs = Dict::new();
-        inputs.insert("web".into(), "true".into_value());
+        inputs.insert("html".into(), "true".into_value());
         inputs.insert("combined".into(), "false".into_value());
         inputs.insert("html-math".into(), math_mode.as_typst_input().into_value());
         let features = [Feature::Html].into_iter().collect();
