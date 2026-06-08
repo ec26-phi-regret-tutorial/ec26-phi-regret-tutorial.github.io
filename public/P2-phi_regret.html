@@ -23,12 +23,15 @@
     --block: #eeeeee;
     --accent: #325d8a;
     --accent-dark: #173f64;
+    --accent-soft: #f4f8fb;
     --brown: #8a4c20;
+    --brown-soft: #faf4ee;
     --serif: Georgia, "Times New Roman", Times, serif;
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
     --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --page-top: 32px;
     --anchor-offset: 32px
 }
 
@@ -184,7 +187,7 @@ figure[id],
     float: right;
     clear: right;
     width: 210px;
-    margin: .1rem -234px 1.2rem 24px;
+    margin: 0 -234px 1.2rem 24px;
     color: var(--muted);
     font-size: .72rem;
     line-height: 1.28;
@@ -208,6 +211,12 @@ figure[id],
 
 .chapter-citation-details {
     margin: 0
+}
+
+.chapter-citation-details.is-animating pre {
+    overflow: hidden;
+    transition: height .28s ease, opacity .2s ease, margin-top .28s ease,
+        padding-top .28s ease, padding-bottom .28s ease
 }
 
 .chapter-citation-title {
@@ -261,7 +270,7 @@ figure[id],
 
 .chapter-rail {
     position: fixed;
-    top: 32px;
+    top: var(--page-top);
     left: var(--rail-left);
     bottom: 24px;
     width: 180px;
@@ -325,9 +334,8 @@ figure[id],
 }
 
 .chapter-rail a:hover {
-    color: var(--accent-dark);
-    text-decoration: none;
-    background: #fffdf9
+    color: var(--ink);
+    text-decoration: none
 }
 
 .chapter-rail-link span {
@@ -340,7 +348,7 @@ figure[id],
 .chapter-rail-link.is-current {
     color: var(--ink);
     font-weight: 700;
-    background: #fffdf9;
+    background: var(--brown-soft);
     border-left: 6px solid var(--brown);
     margin-left: -5px
 }
@@ -373,7 +381,7 @@ figure[id],
 .chapter-section-link.is-active {
     color: var(--ink);
     font-weight: 700;
-    background: #fffdf9;
+    background: var(--accent-soft);
     border-left: 6px solid var(--accent);
     margin-left: -5px
 }
@@ -381,12 +389,13 @@ figure[id],
 .page-shell {
     max-width: 780px;
     margin: 0 auto;
-    padding: 30px 24px 64px;
+    padding: var(--page-top) 24px 64px;
     position: relative
 }
 
 .chapter-kicker {
     margin: 0 0 .25rem;
+    margin-block-start: 0;
     color: var(--brown);
     font-size: .86rem;
     font-weight: 700;
@@ -520,6 +529,10 @@ figure[id],
 
 .lecture-content p {
     margin: .72rem 0
+}
+
+.lecture-content p.chapter-kicker {
+    margin: 0 0 .25rem
 }
 
 .lecture-content ul,
@@ -1305,8 +1318,6 @@ mark {
 </nav>
 <main class="page-shell">
 <article class="lecture-content" data-lecture-number="2">
-<p class="chapter-kicker">Chapter 2</p>
-<h1 class="lecture-title">Beyond Normal Form</h1>
 <aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="pdf/P2-phi_regret.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-2,
   author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
   title = {Chapter 2: Beyond Normal Form},
@@ -1315,6 +1326,8 @@ mark {
   year = {2026},
   url = {P2-phi_regret.html}
 }</code></pre></details></aside>
+<p class="chapter-kicker">Chapter 2</p>
+<h1 class="lecture-title">Beyond Normal Form</h1>
 <nav class="toc" aria-label="Contents"><ol>
 <li class="toc-l1"><a href="#2-1-expected-fixed-points"><span class="toc-no">2.1</span><span class="toc-title">Expected fixed points</span></a></li>
 <li class="toc-l1"><a href="#2-2-semi-separation"><span class="toc-no">2.2</span><span class="toc-title">Semi-separation</span></a></li>
@@ -2176,6 +2189,83 @@ mark {
   document.addEventListener("scroll", update, { passive: true });
   window.addEventListener("resize", update);
   window.addEventListener("hashchange", update);
+})();
+</script>
+<script>
+(() => {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  for (const details of document.querySelectorAll(".chapter-citation-details")) {
+    const summary = details.querySelector("summary");
+    const panel = details.querySelector("pre");
+    if (!summary || !panel) continue;
+
+    const finish = () => {
+      details.classList.remove("is-animating");
+      panel.style.height = "";
+      panel.style.opacity = "";
+      panel.style.marginTop = "";
+      panel.style.paddingTop = "";
+      panel.style.paddingBottom = "";
+      panel.style.overflow = "";
+    };
+
+    const afterHeight = (callback) => {
+      const done = (event) => {
+        if (event.propertyName !== "height") return;
+        panel.removeEventListener("transitionend", done);
+        window.clearTimeout(fallback);
+        callback();
+      };
+      const fallback = window.setTimeout(() => {
+        panel.removeEventListener("transitionend", done);
+        callback();
+      }, 360);
+      panel.addEventListener("transitionend", done);
+    };
+
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (reduceMotion) {
+        details.open = !details.open;
+        return;
+      }
+
+      panel.getAnimations().forEach((animation) => animation.cancel());
+      details.classList.add("is-animating");
+
+      if (!details.open) {
+        details.open = true;
+        const endHeight = panel.scrollHeight;
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        panel.style.marginTop = "0px";
+        panel.style.paddingTop = "0px";
+        panel.style.paddingBottom = "0px";
+        panel.style.overflow = "hidden";
+        panel.offsetHeight;
+        panel.style.height = `${endHeight}px`;
+        panel.style.opacity = "1";
+        panel.style.marginTop = "";
+        panel.style.paddingTop = "";
+        panel.style.paddingBottom = "";
+        afterHeight(finish);
+      } else {
+        panel.style.height = `${panel.scrollHeight}px`;
+        panel.style.opacity = "1";
+        panel.style.overflow = "hidden";
+        panel.offsetHeight;
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        panel.style.marginTop = "0px";
+        panel.style.paddingTop = "0px";
+        panel.style.paddingBottom = "0px";
+        afterHeight(() => {
+          details.open = false;
+          finish();
+        });
+      }
+    });
+  }
 })();
 </script>
 <script>

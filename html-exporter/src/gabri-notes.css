@@ -15,12 +15,15 @@
     --block: #eeeeee;
     --accent: #325d8a;
     --accent-dark: #173f64;
+    --accent-soft: #f4f8fb;
     --brown: #8a4c20;
+    --brown-soft: #faf4ee;
     --serif: Georgia, "Times New Roman", Times, serif;
     --page-total: 828px;
     --rail-width: 180px;
     --rail-gutter: 2cm;
     --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)));
+    --page-top: 32px;
     --anchor-offset: 32px
 }
 
@@ -176,7 +179,7 @@ figure[id],
     float: right;
     clear: right;
     width: 210px;
-    margin: .1rem -234px 1.2rem 24px;
+    margin: 0 -234px 1.2rem 24px;
     color: var(--muted);
     font-size: .72rem;
     line-height: 1.28;
@@ -200,6 +203,12 @@ figure[id],
 
 .chapter-citation-details {
     margin: 0
+}
+
+.chapter-citation-details.is-animating pre {
+    overflow: hidden;
+    transition: height .28s ease, opacity .2s ease, margin-top .28s ease,
+        padding-top .28s ease, padding-bottom .28s ease
 }
 
 .chapter-citation-title {
@@ -253,7 +262,7 @@ figure[id],
 
 .chapter-rail {
     position: fixed;
-    top: 32px;
+    top: var(--page-top);
     left: var(--rail-left);
     bottom: 24px;
     width: 180px;
@@ -317,9 +326,8 @@ figure[id],
 }
 
 .chapter-rail a:hover {
-    color: var(--accent-dark);
-    text-decoration: none;
-    background: #fffdf9
+    color: var(--ink);
+    text-decoration: none
 }
 
 .chapter-rail-link span {
@@ -332,7 +340,7 @@ figure[id],
 .chapter-rail-link.is-current {
     color: var(--ink);
     font-weight: 700;
-    background: #fffdf9;
+    background: var(--brown-soft);
     border-left: 6px solid var(--brown);
     margin-left: -5px
 }
@@ -365,7 +373,7 @@ figure[id],
 .chapter-section-link.is-active {
     color: var(--ink);
     font-weight: 700;
-    background: #fffdf9;
+    background: var(--accent-soft);
     border-left: 6px solid var(--accent);
     margin-left: -5px
 }
@@ -373,12 +381,13 @@ figure[id],
 .page-shell {
     max-width: 780px;
     margin: 0 auto;
-    padding: 30px 24px 64px;
+    padding: var(--page-top) 24px 64px;
     position: relative
 }
 
 .chapter-kicker {
     margin: 0 0 .25rem;
+    margin-block-start: 0;
     color: var(--brown);
     font-size: .86rem;
     font-weight: 700;
@@ -512,6 +521,10 @@ figure[id],
 
 .lecture-content p {
     margin: .72rem 0
+}
+
+.lecture-content p.chapter-kicker {
+    margin: 0 0 .25rem
 }
 
 .lecture-content ul,

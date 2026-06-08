@@ -1107,6 +1107,15 @@ fn render_document(
     }
     html.push_str(">\n");
     if let (Some(export_config), Some(current)) = (export_config, current) {
+        html.push_str(&render_chapter_citation_sidenote(
+            export_config,
+            &export_config.chapters[current],
+            title,
+            &config.site_title,
+            config.pdf_href.as_deref(),
+        ));
+    }
+    if let (Some(export_config), Some(current)) = (export_config, current) {
         write!(
             html,
             "<p class=\"chapter-kicker\">Chapter {}</p>\n",
@@ -1120,15 +1129,6 @@ fn render_document(
         escape_html(title)
     )
     .unwrap();
-    if let (Some(export_config), Some(current)) = (export_config, current) {
-        html.push_str(&render_chapter_citation_sidenote(
-            export_config,
-            &export_config.chapters[current],
-            title,
-            &config.site_title,
-            config.pdf_href.as_deref(),
-        ));
-    }
     if !document.headings.is_empty() {
         html.push_str(&render_toc(&document.headings));
     }
@@ -1137,6 +1137,7 @@ fn render_document(
     html.push_str("</article>\n</main>\n");
     if current.is_some() {
         html.push_str(chapter_nav_script());
+        html.push_str(chapter_citation_script());
     }
     html.push_str(equation_width_script());
     html.push_str(settled_hash_scroll_script());
@@ -1370,6 +1371,87 @@ fn chapter_nav_script() -> &'static str {
 })();
 </script>
 "##
+}
+
+fn chapter_citation_script() -> &'static str {
+    r#"<script>
+(() => {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  for (const details of document.querySelectorAll(".chapter-citation-details")) {
+    const summary = details.querySelector("summary");
+    const panel = details.querySelector("pre");
+    if (!summary || !panel) continue;
+
+    const finish = () => {
+      details.classList.remove("is-animating");
+      panel.style.height = "";
+      panel.style.opacity = "";
+      panel.style.marginTop = "";
+      panel.style.paddingTop = "";
+      panel.style.paddingBottom = "";
+      panel.style.overflow = "";
+    };
+
+    const afterHeight = (callback) => {
+      const done = (event) => {
+        if (event.propertyName !== "height") return;
+        panel.removeEventListener("transitionend", done);
+        window.clearTimeout(fallback);
+        callback();
+      };
+      const fallback = window.setTimeout(() => {
+        panel.removeEventListener("transitionend", done);
+        callback();
+      }, 360);
+      panel.addEventListener("transitionend", done);
+    };
+
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (reduceMotion) {
+        details.open = !details.open;
+        return;
+      }
+
+      panel.getAnimations().forEach((animation) => animation.cancel());
+      details.classList.add("is-animating");
+
+      if (!details.open) {
+        details.open = true;
+        const endHeight = panel.scrollHeight;
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        panel.style.marginTop = "0px";
+        panel.style.paddingTop = "0px";
+        panel.style.paddingBottom = "0px";
+        panel.style.overflow = "hidden";
+        panel.offsetHeight;
+        panel.style.height = `${endHeight}px`;
+        panel.style.opacity = "1";
+        panel.style.marginTop = "";
+        panel.style.paddingTop = "";
+        panel.style.paddingBottom = "";
+        afterHeight(finish);
+      } else {
+        panel.style.height = `${panel.scrollHeight}px`;
+        panel.style.opacity = "1";
+        panel.style.overflow = "hidden";
+        panel.offsetHeight;
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        panel.style.marginTop = "0px";
+        panel.style.paddingTop = "0px";
+        panel.style.paddingBottom = "0px";
+        afterHeight(() => {
+          details.open = false;
+          finish();
+        });
+      }
+    });
+  }
+})();
+</script>
+"#
 }
 
 fn equation_width_script() -> &'static str {
