@@ -42,7 +42,7 @@ $ <eq:mcerr>
 
 The forecasts are $cH$-multicalibrated if $"MC-Err"^((T)) (h) = o(T)$ for every $h in cH$.
 
-As we show in @theorem:mcfromregret, multicalibration admits a black-box reduction to online learning in the style of #citet(<Gordon08:No>). In the case of multicalibration, the nonlinear primitive is _not_ fixed points, but rather _expected variational inequalities_, as defined next.#footnote[Expected variational inequalities have appeared in the literature under different names #todo[finish]]
+As we show in @theorem:mcfromregret, multicalibration admits a black-box reduction to online learning in the style of #citet(<Gordon08:No>). In the case of multicalibration, the nonlinear primitive is _not_ fixed points, but rather _expected variational inequalities_, as defined next.#footnote[Expected variational inequalities have appeared in the literature under different names, including "outgoing minimax problems" #citep(<FosterHart21:Forecast>), "accuracy certificates" #citep(<Nemirovski10:Accuracy>), or "negative correlation search" #citep(<PerdomoRecht25:Defense>).]
 
 #definition("Expected variational inequality")[
   Let $S : cU -> RR^d$ be an operator and let $epsilon > 0$. An _$epsilon$-solution_ to the expected variational inequality induced by $S$ is a distribution $D$ over $cU$ such that

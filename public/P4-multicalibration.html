@@ -1564,7 +1564,7 @@ mark {
   [ ],
   equation(block: false, body: [𝓗]),
 )" role="math">\(h \in \mathcal{H}\)</span>.</p>
-    <p>As we show in <a href="#theorem-4-2">Theorem&nbsp;4.2</a>, multicalibration admits a black-box reduction to online learning in the style of <span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. In the case of multicalibration, the nonlinear primitive is <em>not</em> fixed points, but rather <em>expected variational inequalities</em>, as defined next.<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Expected variational inequalities have appeared in the literature under different names <mark class="todo">finish</mark></span></p>
+    <p>As we show in <a href="#theorem-4-2">Theorem&nbsp;4.2</a>, multicalibration admits a black-box reduction to online learning in the style of <span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. In the case of multicalibration, the nonlinear primitive is <em>not</em> fixed points, but rather <em>expected variational inequalities</em>, as defined next.<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Expected variational inequalities have appeared in the literature under different names, including “outgoing minimax problems” <span id="loc-39">[</span><a href="#loc-14" role="doc-biblioref">FH21</a>], “accuracy certificates” <span id="loc-40">[</span><a href="#loc-15" role="doc-biblioref">NOR10</a>], or “negative correlation search” <span id="loc-41">[</span><a href="#loc-16" role="doc-biblioref">PR25</a>].</span></p>
     <section id="definition-4-1" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">4<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Expected variational inequality)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -4739,7 +4739,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(B L S \sqrt{d T})\)</span> linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-11" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [Das+25]</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</span></span>, while avoiding semi-separation altogether.</p>
+)" role="math">\(O(B L S \sqrt{d T})\)</span> linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-wrap"><a class="citation" href="#loc-17" id="loc-11" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [Das+25]</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</span></span>, while avoiding semi-separation altogether.</p>
     <h2 id="4-2-3-rkhs-deviations" class="notes-heading" data-level="2" data-number="4.2.3"><span class="secno">4.2.3</span> RKHS deviations</h2>
     <p>The same idea extends beyond finite-dimensional linear classes. Suppose that the deviation functions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
@@ -5170,13 +5170,25 @@ mark {
           <td class="bib-entry">G. Farina and J. C. Perdomo. (2026). An Efficient Black-Box Reduction from Online Learning to Multicalibration, and a New Route to <span class="bib-math">Φ</span>-Regret Minimization. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2604.19592">arXiv:2604.19592</a></em>.</td>
         </tr>
         <tr id="loc-14" class="bibliography-row">
+          <td class="bib-key">[FH21]</td>
+          <td class="bib-entry">D. P. Foster and S. Hart. (2021). Forecast Hedging and Calibration. <em>Journal of Political Economy</em>.</td>
+        </tr>
+        <tr id="loc-15" class="bibliography-row">
+          <td class="bib-key">[NOR10]</td>
+          <td class="bib-entry">A. Nemirovski, S. Onn and U. G. Rothblum. (2010). Accuracy Certificates for Computational Problems with Convex Structure. <em>Mathematics of Operations Research</em>.</td>
+        </tr>
+        <tr id="loc-16" class="bibliography-row">
+          <td class="bib-key">[PR25]</td>
+          <td class="bib-entry">J. C. Perdomo and B. Recht. (2025). In Defense of Defensive Forecasting. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2506.11848">arXiv:2506.11848</a></em>.</td>
+        </tr>
+        <tr id="loc-17" class="bibliography-row">
           <td class="bib-key">[Das+25]</td>
           <td class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</td>
         </tr>
       </tbody></table>
     </section><p><span style="white-space: pre-wrap"> </span></p><section class="endnotes" id="endnotes">
 <h1>Notes</h1>
-<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body">Expected variational inequalities have appeared in the literature under different names <mark class="todo">finish</mark></span></p>
+<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body">Expected variational inequalities have appeared in the literature under different names, including “outgoing minimax problems” <span id="loc-39">[</span><a href="#loc-14" role="doc-biblioref">FH21</a>], “accuracy certificates” <span id="loc-40">[</span><a href="#loc-15" role="doc-biblioref">NOR10</a>], or “negative correlation search” <span id="loc-41">[</span><a href="#loc-16" role="doc-biblioref">PR25</a>].</span></p>
 </section>
 </article>
 </main>
