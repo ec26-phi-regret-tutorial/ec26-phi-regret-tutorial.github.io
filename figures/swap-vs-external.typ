@@ -1,5 +1,5 @@
 #set page(width: auto, height: auto, margin: 2pt, fill: none)
-#set text(font: "New Computer Modern", size: 10.2pt)
+#set text(font: "Georgia", size: 10.2pt)
 
 #let body = table(
   columns: 10,

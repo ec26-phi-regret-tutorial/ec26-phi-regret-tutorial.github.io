@@ -7,11 +7,9 @@ The black-box reduction from $Phi$-regret to online learning due to #citet(<Gord
 
 At a high level, the moral of this section is the following, also depicted in @fig:mcroute.
 
-#align(center, box(
-  width: 99%,
-  stroke: .2mm + gray,
-  inset: 3mm,
-)[One can construct a $Phi$-regret minimizer starting from a powerful enough _multicalibrated forecaster_ of the upcoming utility, and best respond to such forecast. In turn, the task of constructing such a forecaster admits a reduction to online learning in the style of Gordon-Greenwald-Marks, with  expected variational inequalites replacing expected fixed points as the nonlinear optimization primitive.])
+#info-box[
+  One can construct a $Phi$-regret minimizer starting from a powerful enough _multicalibrated forecaster_ of the upcoming utility, and best respond to such forecast. In turn, the task of constructing such a forecaster admits a reduction to online learning in the style of Gordon-Greenwald-Marks, with expected variational inequalities replacing expected fixed points as the nonlinear optimization primitive.
+]
 
 As we will show towards the end of the chapter, this forecasting-based reduction comes with algorithmic benefits that forego the need for complicated semiseparation (#todo[Ref Chapter 3]). We note however that it is not known whether a forecasting-based approach can yield fast _offline_ algorithms for $Phi$-equilibrium computation (_cf._ #todo[Ref Chapter 2]).
 
@@ -22,11 +20,13 @@ As we will show towards the end of the chapter, this forecasting-based reduction
 
 #figure(
   caption: [The two forecasting reductions and their relation to the Gordon-Greenwald-Marks framework.],
-  fig_mcroute.body(
-    ggm: [#citet(<Gordon08:No>)],
-    mc_from_regret: [@sec:mcfromregret],
-    regret_from_mc: [@sec:regretfrommc],
-  ),
+  html-figure-asset[
+    #fig_mcroute.body(
+      ggm: [Gordon, Greenwald, Marks [GGM08]],
+      mc_from_regret: [Section 4.1],
+      regret_from_mc: [Section 4.2],
+    )
+  ],
 ) <fig:mcroute>
 
 = A Gordon-Greenwald-Marks result for multicalibration <sec:mcfromregret>
@@ -139,7 +139,7 @@ with ties broken by a fixed rule. If the forecaster outputs a distribution $D^((
 What tests should the forecaster be calibrated against? For each deviation $phi in Phi$, define
 
 $
-  h_phi(vp) := phi(sigma(vp)) - sigma(vp),
+  h_phi (vp) := phi(sigma(vp)) - sigma(vp),
   qquad quad
   cH_Phi := {h_phi : phi in Phi}.
 $ <eq:hphi>

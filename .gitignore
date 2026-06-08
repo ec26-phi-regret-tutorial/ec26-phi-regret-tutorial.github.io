@@ -1,3 +1,4 @@
-html-exporter/
+html-exporter/target/
 */.DS_Store
 .DS_Store
+combined.*

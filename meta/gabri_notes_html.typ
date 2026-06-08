@@ -3,25 +3,143 @@
 #import "linalg.typ": *
 #import "lovelace.typ": *
 // #import "@preview/lovelace:0.3.1": *
-#import "@preview/equate:0.3.3": equate
+#import "equate_html.typ": equate, share-align
 
 #import "notation.typ": *
 
-#let _arrow(from, to, ..kw) = {
-  cetz.draw.mark(to, (2 * to.at(0) - from.at(0), 2 * to.at(1) - from.at(1)), ..kw)
-}
-
-#let is_web = sys.inputs.at("web", default: "false") == "true"
 #let eps = math.epsilon.alt
 #let thmcounters = state("thmcounters", (:))
 
-#let pseudocode-list = pseudocode-list.with(
-  indentation: 1.10em,
-  line-gap: 0.80em,
-  hooks: .3mm,
-  stroke: .2mm + gray,
-  booktabs-stroke: .4mm + black,
-)
+#let _html-pseudo-is-not-empty(it) = {
+  (
+    type(it) != content
+      or not (
+        it.fields() == (:)
+          or (it.has("children") and it.children == ())
+          or (
+            it.has("children") and it.children.all(c => not _html-pseudo-is-not-empty(c))
+          )
+          or (it.has("text") and it.text.match(regex("^\\s*$")) != none)
+      )
+  )
+}
+
+#let _html-pseudo-unwrap-singleton(a) = {
+  while type(a) == array and a.len() == 1 {
+    a = a.first()
+  }
+  a
+}
+
+#let _html-pseudo-transform-list(it, numbered) = {
+  if not it.has("children") {
+    if numbered {
+      return (it,)
+    } else {
+      return (no-number(it),)
+    }
+  }
+
+  let transformed = ()
+  let non-item-child = []
+  let non-item-label = none
+  let items = ()
+
+  for child in it.children {
+    let f = child.func()
+    if f in (enum.item, list.item) {
+      items += _html-pseudo-transform-list(child.body, f == enum.item)
+    } else if (
+      child.func() == metadata
+        and child.value.at(
+          "identifier",
+          default: "",
+        )
+          == "lovelace line label"
+        and "label" in child.value
+    ) {
+      non-item-label = child.value.label
+    } else {
+      non-item-child += child
+    }
+  }
+
+  if _html-pseudo-is-not-empty(non-item-child) {
+    if numbered {
+      transformed.push(with-line-label(non-item-label, non-item-child))
+    } else {
+      transformed.push(no-number(non-item-child))
+    }
+  }
+  if items.len() > 0 {
+    transformed.push(indent(..items))
+  }
+  transformed
+}
+
+#let _html-pseudo-render-lines(children, level: 0, closing-guides: ()) = {
+  for idx in range(children.len()) {
+    let child = children.at(idx)
+    let is-last = idx == children.len() - 1
+    if type(child) == dictionary {
+      let end-guides = ()
+      if is-last {
+        end-guides = closing-guides
+        if level > 0 {
+          end-guides.push(level)
+        }
+      }
+      html.elem("div", attrs: (
+        class: "pseudo-line",
+        style: "--indent:" + str(level),
+      ))[
+        #for i in range(level) {
+          let guide = i + 1
+          let class = "pseudo-guide"
+          if guide in end-guides {
+            class += " pseudo-guide-end"
+          }
+          html.elem("span", attrs: (
+            class: class,
+            style: "--guide:" + str(guide),
+          ))[]
+        }
+        #html.elem("div", attrs: (class: "pseudo-text"))[#child.body]
+      ]
+    } else if type(child) == array {
+      let child-closing-guides = ()
+      if is-last {
+        child-closing-guides = closing-guides
+        if level > 0 {
+          child-closing-guides.push(level)
+        }
+      }
+      _html-pseudo-render-lines(
+        child,
+        level: level + 1,
+        closing-guides: child-closing-guides,
+      )
+    }
+  }
+}
+
+#let pseudocode-list(..config, body) = {
+  let named = config.named()
+  let title = named.at("title", default: none)
+  let transformed = _html-pseudo-unwrap-singleton(_html-pseudo-transform-list(body, false))
+  if type(transformed) != array {
+    transformed = (transformed,)
+  }
+
+  html.elem("section", attrs: (class: "env algorithm"))[
+    #if title != none {
+      html.elem("div", attrs: (class: "env-title"))[#title]
+    }
+    #html.elem("div", attrs: (class: "pseudocode"))[
+      #_html-pseudo-render-lines(transformed)
+    ]
+  ]
+}
 
 #let email(addr) = {
   let w = .3
@@ -41,9 +159,23 @@
   [#sym.square.filled #strong(body + ".")~~]
 }
 #let sf = text.with(font: "Frutiger")
-#let swallow = it => place(hide(it))
+#let swallow = it => html.div(hidden: true, it)
 #let lecture-bib = state("lecture-bib", ())
 #let lecnum = counter("lecnum")
+#let html-heading-tag(level) = ("h1", "h2", "h3", "h4", "h5", "h6").at(calc.min(level - 1, 5))
+#let html-text(value) = if value == none { "" } else { str(value) }
+#let html-math-mode = sys.inputs.at("html-math", default: "svg")
+#let math-data-attrs(body, display, katex: none) = {
+  let body = if body == none { [] } else { body }
+  let attrs = (
+    "data-typst-math": repr(body),
+    "data-math-display": display,
+  )
+  if katex != none {
+    attrs.insert("data-katex", katex)
+  }
+  attrs
+}
 
 #let lecture_outline = lec_num => {
   locate(loc => {
@@ -78,98 +210,51 @@
 ) = {
   lecture-bib.update(())
   counter(heading).update(0)
-  set text(font: "New Computer Modern", size: 10.2pt)
+  set text(font: "Georgia", size: 9.5pt)
   // set text(font: "Times New Roman", size: 10.2pt)
   set par(justify: true)
   set list(indent: 4.05mm)
   set enum(indent: 4.05mm)
   set math.equation(numbering: "(1)")
   show: equate.with(breakable: true, sub-numbering: false, number-mode: "label")
-  show figure.caption: body => (
-    context pad(
-      left: 2em,
-      right: 1em,
-      align(left)[
-        #h(-1em)*#body.supplement #numbering(body.numbering, ..body.counter.get())*#body.separator#body.body
-        // #repr(body.fields())
-      ],
-    )
-  )
+  show figure.caption: body => context [
+    #html.elem("span", attrs: (class: "figcaption-label"))[
+      #body.supplement #numbering(body.numbering, ..body.counter.get()).
+    ]
+    #body.body
+  ]
   set page(
-    margin: if is_web {
-      1mm
-    } else {
-      // (left: 1.25in, right: 1.25in, top: 1.3in, bottom: 1.3in)
-      (left: 1.3in, right: 1.3in, top: 1.6in, bottom: 1.6in)
-      // (left: 1.35in, right: 1.35in, top: 1.6in, bottom: 1.6in)
-    },
-    numbering: if is_web {
-      none
-    } else {
-      "1"
-    },
-    width: if is_web {
-      8.27in - 1.3in - 1.3in
-    } else {
-      8.27in
-    },
-    height: if is_web {
-      auto
-    } else {
-      11.69in
-    },
-    footer: if not is_web {
-      context box(stroke: none, inset: 0mm)[
-        #if str(lec_num).starts-with(regex("\d")) [ Chapter #lec_num #sym.bullet ] #if strtitle != none { strtitle } else { title } #if sys.inputs.at("combined", default: "false") == "false" and false [#sym.bullet EC'26 Learning and Computation of $Phi$-Equilibria] #h(1fr)~~|~ #numbering("1", ..counter(page).get())/#numbering("1", ..counter(page).final())
-      ]
-    } else { none },
+    margin: 1mm,
+    numbering: none,
+    width: 8.27in - 1.3in - 1.3in,
+    height: auto,
+    footer: none,
   )
 
-  // set page(
-  //   // margin: (left: 1.5in, right: 1.15in, top: 2in, bottom: 2in),
-  //   // margin: (left: 1.15in, right: 1.15in, top: 1.75in, bottom: 1.75in),
-  //   margin: (left: 1.25in, right: 1.25in, top: 1.3in, bottom: 1.3in),
-  //   numbering: "1",
-  //   paper: "a4",
-  //   // header: context {
-  //   //   h(-.6in)
-  //   //   if calc.rem(counter(page).get().at(0), 2) == 1 {
-  //   //     h(1fr)
-  //   //   }
-  //   //   sf[#numbering("1", ..counter(page).get())]
-  //   // },
-  // )
-  // set page(margin: 1mm, numbering: none, width: 5.8in, height: auto)
-  // set text(font: "PT Sans")
-  // set heading(numbering: "1.1  ")
   set cite(style: "alphanum.csl")
   set math.equation(supplement: none)
   show cite: set text(fill: blue.darken(40%))
   show strong: set text(font: "Frutiger", weight: "bold")
   show heading: it => {
-    // if it.level == 1 {
-    //   v(8mm)
-    //   grid(
-    //     columns: (30%, 70%),
-    //     align: top,
-    //     box(baseline: .6mm, line(length: 100%, stroke: black + 1.8mm)), line(length: 100%, stroke: black + .6mm),
-    //   )
-    // }
+    let tag = html-heading-tag(it.level)
     if it.numbering != none {
-      // v(1.5mm * (2 / it.level))
-      v(1mm)
-      [#h(-.4in)#box(width: .3in, fill: gray, height: (3 - it.level) * 1mm + .7mm)#h(.1in)#box(
-          width: .6in,
-          inset: 0mm,
-          stroke: none,
-        )[#strong(counter(heading).display())]#strong(it.body)]
-      // v(1.5mm - it.level * 1mm)
-    } else [
-      // v(2mm * (2 / it.level))
-      #h(-.4in)#box(width: .3in, fill: gray, height: 2mm)#h(.1in)#strong(it.body)
-      // v(1mm)
-    ]
-    v(0mm)
+      let number = html-text(counter(heading).display())
+      html.elem(tag, attrs: (
+        class: "notes-heading",
+        "data-level": str(it.level),
+        "data-number": number,
+      ))[
+        #html.elem("span", attrs: (class: "secno"))[#counter(heading).display()]
+        #it.body
+      ]
+    } else {
+      html.elem(tag, attrs: (
+        class: "notes-heading notes-heading-unnumbered",
+        "data-level": str(it.level),
+      ))[
+        #it.body
+      ]
+    }
   }
   show "https://doi.org/": text(10pt, `https://doi.org/`)
   show link: it => {
@@ -184,7 +269,6 @@
     ) {
       link(it.dest, text(10pt, raw(it.body.text)))
     } else {
-      // it.fields()
       it
     }
   }
@@ -239,41 +323,50 @@
     lecnum.update(int(lec_num))
   }
   [#metadata((lec_num, title)) <lecture>]
-  if sys.inputs.at("combined", default: "false") == "true" {
-    v(1cm)
-    box(stroke: (bottom: 1.5mm + gray), inset: (y: 4mm))[
-      #text(size: 16pt)[#strong[Chapter #lec_num]]#v(2mm)
-      #text(size: 18pt)[*#title*]
-    ]
-    // v(3cm)
-    v(1.9cm)
-  } else {
-    box(
-      stroke: .5pt,
-      inset: 3mm,
-      width: 100%,
-      radius: 0mm,
-    )[
-      #place(top + left)[Learning and Computation of $Phi$-Equilibria]
-      #place(top + right)[EC'26 Tutorial #date]
-      #v(12mm)
-      #align(center)[#text(size: 16pt)[#strong[
-        #if str(lec_num).starts-with(regex("\d")) [ Chapter #lec_num#v(-2mm) ] else { v(3mm) } *#title*]]]
-      #v(3mm)
-      Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang#footnote(numbering: _ => sym.star.filled)[#email("ianagnos@cs.cmu.edu, {gfarina,zhangbh}@mit.edu"). These tutorial notes have not undergone formal peer review. We are grateful for any feedback or reports of typos.]
-      #counter(footnote).update(0)
-    ]
-    v(1cm)
+  html.elem("div", attrs: (
+    class: "notes-meta",
+    hidden: "",
+    "data-lecture-number": html-text(lec_num),
+    "data-title": if strtitle != none { html-text(strtitle) } else { html-text(title) },
+  ))[]
+
+  show math.equation.where(block: false): it => {
+    html.elem(
+      "span",
+      attrs: (
+        role: "math",
+        ..math-data-attrs(it.body, "inline"),
+      ),
+      html.frame({
+        show math.equation: eq => eq
+        it
+      }),
+    )
   }
 
-  // if show_outline {
-  //   // outline(fill: repeat([~.~]))
-  //   v(3mm)
-  //   lecture_outline(lec_num)
-  //   line(length: 100%, stroke: gray)
-  //   v(1.2cm)
-  // } else {
-  // }
+  let render-caption(caption) = if caption != none {
+    html.elem("figcaption")[#caption]
+  }
+
+  // for styling, use `where` to assign classes for different types of figure
+  show figure: it => {
+    if it.kind == math.equation and it.body != none and it.body.func() == metadata {
+      html.elem("span", attrs: (class: "equation-anchor", hidden: ""))[]
+    } else if it.kind == "shared" {
+      html.elem("section", attrs: (class: "env statement"), it.body)
+    } else {
+      html.elem("figure", attrs: (class: "typst"))[
+        #html.elem("div", attrs: (class: "figure-body"))[
+          #html.frame({
+            show math.equation: eq => eq
+            it.body
+          })
+        ]
+        #render-caption(it.caption)
+      ]
+    }
+  }
+
   body
 }
 
@@ -314,22 +407,31 @@
 #let lec_bibliography = (path, title: auto) => {
   show cite: set text(black)
   set heading(numbering: none)
-  v(3mm)
-  if title != none and title != auto {
-    [= #title]
-    v(2mm)
+  let bib-title = if title != none and title != auto {
+    title
   } else if title == auto {
-    [= Bibliography for this chapter]
-    v(2mm)
+    [Bibliography for this chapter]
+  } else {
+    none
   }
-  context {
-    let rows = ()
-    for item in lecture-bib.get() {
-      rows.push(cite(item))
-      rows.push(cite(item, form: "full"))
+  html.elem("section", attrs: (class: "bibliography", id: "bibliography"))[
+    #if bib-title != none {
+      html.elem("h1", attrs: (
+        class: "notes-heading notes-heading-unnumbered",
+        "data-level": "1",
+      ))[#bib-title]
     }
-    grid(columns: 2, row-gutter: 3.8mm, column-gutter: 2.3mm, ..rows)
-  }
+    #context {
+      html.elem("table", attrs: (class: "bibliography-table"))[
+        #for item in lecture-bib.get() [
+          #html.elem("tr", attrs: (class: "bibliography-row"))[
+            #html.elem("td", attrs: (class: "bib-key"))[#cite(item)]
+            #html.elem("td", attrs: (class: "bib-entry"))[#cite(item, form: "full")]
+          ]
+        ]
+      ]
+    }
+  ]
   // [
   //   // #show cite: set text(fill: red)
   //   #cnt
@@ -353,49 +455,30 @@
   }
 )
 #let brown = rgb(149, 69, 53)
-#let comment(body, visual: none) = text(luma(50%))[
-  #sym.triangle.r #body
-  #if visual != none {
-    linebreak()
-    align(center)[#visual]
-  }
-]
-#let todo(body) = highlight(fill: red.lighten(50%), body)
+#let comment(body, visual: none) = {
+  html.elem("aside", attrs: (class: "special-comment"))[
+    #html.elem("div", attrs: (class: "special-comment-text"))[#body]
+    #if visual != none {
+      html.elem("div", attrs: (class: "special-comment-figure"))[
+        #html.frame({
+          show math.equation: eq => eq
+          visual
+        })
+      ]
+    }
+  ]
+}
+#let todo(body) = html.elem("mark", attrs: (class: "todo"), body)
 
 #let alertbox(body, kind: "highlight", title: none) = {
-  let fill = if kind == "warning" {
-    rgb("#fff3dd")
-  } else if kind == "info" {
-    rgb("#eef6fb")
-  } else {
-    rgb("#f7f1df")
-  }
-  let stroke-color = if kind == "warning" {
-    rgb("#c47a2c")
-  } else if kind == "info" {
-    rgb("#4f86a8")
-  } else {
-    luma(72%)
-  }
-
-  block(
-    breakable: true,
-    fill: fill,
-    width: 100%,
-    stroke: (
-      left: .35mm + stroke-color,
-      top: .15mm + luma(82%),
-      right: .15mm + luma(82%),
-      bottom: .15mm + luma(82%),
-    ),
-    inset: 3mm,
-    radius: .65mm,
-  )[
+  html.elem("aside", attrs: (
+    class: "callout callout-" + kind,
+    "data-callout": kind,
+  ))[
     #if title != none {
-      strong(title)
-      linebreak()
+      html.elem("p", attrs: (class: "callout-title"))[#title]
     }
-    #body
+    #html.elem("div", attrs: (class: "callout-body"))[#body]
   ]
 }
 #let info-box(body, title: none) = alertbox(body, kind: "info", title: title)
@@ -429,25 +512,31 @@
       supplement: Name,
       // breakable: true,
       {
-        set align(left)
         let counter_name = "shared" // name
         thmcounters.update(x => {
           x.insert(counter_name, x.at(counter_name, default: 0) + 1)
           x
         })
-        graybox({
-          context {
-            let counters = thmcounters.get()
-            strong(Name)
-            strong(" " + str(counters.at("lecture")))
-            strong("." + str(counters.at(counter_name)))
-          }
-          if args.pos().len() > 0 {
-            " (" + args.pos().first() + ")"
-          }
-          strong(".")
-          [ #body]
-        })
+        html.elem("p", attrs: (class: "env-heading"))[
+          #html.elem("span", attrs: (class: "env-title env-title-numbered"))[
+            #html.elem("strong", attrs: (class: "env-kind"))[#Name]
+            #context {
+              let counters = thmcounters.get()
+              html.elem("strong", attrs: (class: "env-number"))[
+                #str(counters.at("lecture"))#html.elem("span", attrs: (class: "env-number-separator"))[.]#str(
+                  counters.at(counter_name),
+                )
+              ]
+            }
+            #if args.pos().len() > 0 {
+              html.elem("span", attrs: (class: "env-extra"))[(#args.pos().first())]
+            }
+            #html.elem("strong", attrs: (class: "env-punct"))[.]
+          ]
+        ]
+        html.elem("div", attrs: (class: "env-body"))[
+          #body
+        ]
       },
     )
   }
@@ -459,23 +548,22 @@
     word => upper(word.text.first()) + lower(word.text.slice(1)),
   )
 
-  (..args, body) => block(
-    breakable: true,
-    fill: none,
-    width: 100%,
-    stroke: (left: .3mm + luma(60%), right: none),
-    radius: 0mm,
-    inset: (left: 4mm, y: 1mm),
-    {
-      if args.pos().len() > 0 [
-        _#Name #args.pos().first();._
-      ] else [
-        _#Name._
+  (..args, body) => {
+    html.elem("section", attrs: (class: "env proof"))[
+      #html.elem("p", attrs: (class: "env-heading"))[
+        #html.elem("span", attrs: (class: "env-title"))[
+          #if args.pos().len() > 0 [
+            _#Name #args.pos().first();._
+          ] else [
+            _#Name._
+          ]
+        ]
       ]
-      body
-      h(1fr) + $square$
-    },
-  )
+      #html.elem("div", attrs: (class: "env-body"))[
+        #body
+      ]
+    ]
+  }
 }
 
 #let restate = label => context {
@@ -561,22 +649,22 @@
   }
   math.mat(delim: none, ..data)
 }
-#let P = text(font: "New Computer Modern Sans 08", "P")
-#let PPAD = text(font: "New Computer Modern Sans 08", "PPAD")
-#let NP = text(font: "New Computer Modern Sans 08", "NP")
-#let coNP = text(font: "New Computer Modern Sans 08", "co-NP")
+#let P = text(font: "Georgia", "P")
+#let PPAD = text(font: "Georgia", "PPAD")
+#let NP = text(font: "Georgia", "NP")
+#let coNP = text(font: "Georgia", "co-NP")
 #let cone = math.op("cone")
 #let cK = $cal(K)$
 #let nablat = math.op($tilde(nabla)#h(-1mm)$)
-#let div(a, b, dgf: $phi$) = $#text(font: "New Computer Modern", "D") _#dgf (#a mid(||) #b)$
-#let divt(a, b) = $#text(font: "New Computer Modern", "D") _(phi_t) (#a mid(||) #b)$
+#let div(a, b, dgf: $phi$) = $#text(font: "Georgia", "D") _#dgf (#a mid(||) #b)$
+#let divt(a, b) = $#text(font: "Georgia", "D") _(phi_t) (#a mid(||) #b)$
 #let circled(body) = box(
   baseline: .6mm,
   circle(
     radius: 1.6mm,
     stroke: .15mm + luma(50%),
     inset: .3mm,
-    text(size: 7pt, font: "New Computer Modern Sans 08", body),
+    text(size: 7pt, font: "Georgia", body),
   ),
 )
 #let dom = math.op("dom")

@@ -207,6 +207,22 @@
       line-height: 1.18
     }
 
+    .side-panel .sessions-title {
+      font-size: 1rem
+    }
+
+    .details-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0
+    }
+
     .actions {
       display: flex;
       gap: .55rem;
@@ -346,27 +362,38 @@
     .schedule {
       display: grid;
       grid-template-columns: 1fr;
-      gap: .7rem;
+      gap: .65rem;
       margin: .75rem 0 0
     }
 
     .session {
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent
+      position: relative;
+      padding: .72rem .82rem .78rem;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: #fffdf9
     }
 
     .session h2 {
-      margin: 0
+      margin: 0 0 .05rem;
+      color: var(--ink);
+      font-size: .95rem;
+      line-height: 1.2
     }
 
     .session-time {
       display: block;
-      margin: .05rem 0 .45rem;
-      color: var(--brown);
+      margin: 0 0 .35rem;
+      color: var(--muted);
+      font-size: .86rem;
+      font-weight: 400
+    }
+
+    .session p {
+      margin: 0;
+      color: var(--ink);
       font-size: .9rem;
-      font-weight: 700
+      line-height: 1.42
     }
 
     .session ul {
@@ -455,6 +482,30 @@
       }
     }
 
+    @media(max-width:1239px) {
+      .details-sidenote {
+        margin-top: 1.35rem;
+        padding-top: 1.15rem;
+        padding-left: 0;
+        border-top: 1px solid var(--rule);
+        border-left: 0
+      }
+
+      .details-sidenote .details-title {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin: 0 0 .8rem;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+        color: var(--ink);
+        font-size: 1.62rem;
+        line-height: 1.18
+      }
+    }
+
     @media(max-width:760px) {
       body {
         font-size: 16.5px
@@ -469,11 +520,6 @@
 
       .lecture-title {
         font-size: 2rem
-      }
-
-      .side-panel,
-      .details-sidenote {
-        margin-top: 1.35rem
       }
 
       .event-meta dl {
@@ -564,7 +610,8 @@
                 regret, non-manipulability, and response-based approachability.</span></span></li>
         </ol>
       </section>
-      <aside class="side-panel details-sidenote" aria-label="Tutorial details">
+      <aside id="details" class="side-panel details-sidenote" aria-labelledby="details-title">
+        <h1 id="details-title" class="details-title">Tutorial Details</h1>
         <dl>
           <dt>Date</dt>
           <dd>June 15, 2026</dd>
@@ -575,17 +622,19 @@
         </dl>
         <p><strong>Prerequisites.</strong> Basic game theory and introductory online learning.</p>
         <p>No prior knowledge of \(\Phi\)-regret or \(\Phi\)-equilibria is assumed.</p>
-        <h1>Sessions</h1>
+        <h1 class="sessions-title">Sessions</h1>
         <div class="schedule">
           <section class="session">
             <h2>Session 1</h2>
             <span class="session-time">11:00&ndash;11:45am ET</span>
-            <p><strong>Foundations and the Gordon-Greenwald-Marks framework.</strong></p>
+            <p>\(\Phi\)-regret foundations, \(\Phi\)-equilibria, and the algorithmic route through ellipsoid methods,
+              semi-separation, and richer deviation classes.</p>
           </section>
           <section class="session">
             <h2>Session 2</h2>
             <span class="session-time">12:00&ndash;12:45pm ET</span>
-            <p><strong>Recent advances at the frontier of tractability.</strong></p>
+            <p>Forecasting and reductions: multicalibration as a path to \(\Phi\)-regret, TreeSwap for large action
+              spaces, and profile-swap and approachability perspectives.</p>
           </section>
         </div>
       </aside>

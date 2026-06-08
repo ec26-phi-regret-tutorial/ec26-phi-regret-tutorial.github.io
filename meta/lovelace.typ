@@ -235,7 +235,7 @@
             rowspan: 1,
             // stroke: none,
             box(width: .8em, {
-              set text(fill: luma(50%), font: "New Computer Modern Sans 08")
+              set text(fill: luma(50%), font: "Georgia")
               box(prec.body)
             }),
           )
@@ -370,4 +370,3 @@
   }
   pseudocode(..config.named(), ..transformed)
 }
-

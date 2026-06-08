@@ -2,7 +2,13 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 
 #set page(width: auto, height: auto, margin: (x: 10pt, y: 0pt), fill: none)
-#set text(font: "New Computer Modern", size: 10.2pt)
+#set text(font: "Georgia", size: 10.2pt)
+
+#let figsym = text.with(font: "STIX Two Math")
+#let fH = figsym[ℋ]
+#let fPhi = figsym[Φ]
+#let fU = figsym[𝒰]
+#let fX = figsym[𝒳]
 
 #let body(
   ggm: text(size: 9pt)[Gordon, Greenwald, Marks [GGM08]],
@@ -14,12 +20,12 @@
   node-corner-radius: .25mm,
   edge-stroke: .3mm,
   node-fill: white,
-  node((0, 0), box(width: 3cm, par(justify: false)[External regret minimizer for $cH$]), name: <EH>),
-  node((1, 0), box(width: 3.6cm, par(justify: false)[External regret minimizer for $Phi$]), name: <EP>),
-  node((0, 1), box(width: 3cm, par(justify: false)[$cH$-multicalibrated forecaster for $cU$]), name: <MC>),
+  node((0, 0), box(width: 3cm, par(justify: false)[External regret minimizer for #fH]), name: <EH>),
+  node((1, 0), box(width: 3.6cm, par(justify: false)[External regret minimizer for #fPhi]), name: <EP>),
+  node((0, 1), box(width: 3cm, par(justify: false)[#box[#fH]-multicalibrated forecaster for #fU]), name: <MC>),
   node(
     (1, 1),
-    box(width: 3.6cm, par(justify: false)[$Phi$-regret minimizer for $cX$ with utilities in $cU$]),
+    box(width: 3.6cm, par(justify: false)[#box[#fPhi]-regret minimizer for #fX with utilities in #fU]),
     name: <PHI>,
   ),
   edge(<EH>, <MC>, "-}>", label: [Expected\ VI], label-side: left),

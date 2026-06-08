@@ -1,0 +1,29 @@
+name: Export HTML
+
+on:
+  push:
+
+jobs:
+  html:
+    name: Build generated HTML
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v4
+        with:
+          typst-version: 0.14.2
+
+      - name: Cache Cargo build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: html-exporter -> target
+
+      - name: Regenerate HTML
+        run: make check-html

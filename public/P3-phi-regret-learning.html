@@ -1,80 +1,1277 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Beyond Normal Form - Learning and Computation of Phi-Equilibria</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-<style>
-@font-face{font-family:"Frutiger Notes";src:url("Frutiger_bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-:root{--paper:#fbfaf7;--ink:#171411;--muted:#6b635b;--rule:#d7d0c6;--soft:#f2efe8;--block:#eeeeee;--accent:#325d8a;--accent-dark:#173f64;--brown:#8a4c20;--serif:"New Computer Modern","NewComputerModern 10","NewComputerModern10","New Computer Modern 10","Computer Modern Serif","Latin Modern Roman",Georgia,"Times New Roman",Times,serif;--page-total:828px;--rail-width:180px;--rail-gutter:2cm;--rail-left:max(24px,calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))}
-html{background:var(--paper);scroll-behavior:smooth}
-body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--serif);font-size:18px;line-height:1.58}
-h1,h2,h3,h4,strong,b,.env-title,.algorithm-label,.chapter-kicker,.course-title,.course-event,.chapter-rail-heading,.chapter-rail-tool,.chapter-rail-link.is-current,.citation-note-key{font-family:"Frutiger Notes",var(--serif)}
-a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text-decoration:underline}.ref-link{display:inline-block;padding:0 .22em;border-radius:2px;background:#e8f1fb;color:#24527e;line-height:1.28}.ref-link:hover{background:#dcebf8;color:#173f64;text-decoration:none}.citation{color:#8a4c20}.citation:hover{color:#5f3213}.citation-wrap{position:relative}.citation-note{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:#8a4c20;font-size:.78rem;font-weight:400;line-height:1.35;text-align:left}.citation-note a{color:#8a4c20}.citation-note-key{font-weight:700}
-.site-masthead{max-width:780px;margin:0 auto;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
-.course-title{font-size:1.06rem;font-weight:700}.course-title-link{display:block!important;padding:0!important;color:var(--ink)!important}.course-title-link:hover{color:var(--accent)!important;text-decoration:none!important;background:transparent!important}.course-authors{margin-top:2px;color:var(--muted);font-size:.92rem}.top-links{display:flex;gap:14px;margin-top:10px;font-size:.9rem}
-.course-sidenote{float:right;clear:right;width:210px;margin:.1rem -234px 1rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.course-sidenote .course-title{color:var(--ink);font-size:.85rem;line-height:1.25}.course-sidenote .course-authors{font-size:.78rem}.chapter-citation-sidenote{float:right;clear:right;width:210px;margin:.1rem -234px 1.2rem 24px;color:var(--muted);font-size:.72rem;line-height:1.28;text-align:left}.chapter-citation-pdf{display:block;margin:0 0 .55rem!important;padding:0!important;color:var(--accent)!important;font-family:"Frutiger Notes",var(--serif);font-size:.72rem;font-weight:700}.chapter-citation-pdf:hover{color:var(--accent-dark)!important;background:transparent!important}.chapter-citation-details{margin:0}.chapter-citation-title{display:inline-flex;align-items:center;gap:.28rem;cursor:pointer;color:var(--brown);font-family:"Frutiger Notes",var(--serif);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-citation-title::before{content:"";width:0;height:0;border-top:.28em solid transparent;border-bottom:.28em solid transparent;border-left:.42em solid currentColor;transition:transform .16s ease}.chapter-citation-details[open] .chapter-citation-title::before{transform:rotate(90deg)}.chapter-citation-title::-webkit-details-marker{display:none}.chapter-citation-title::marker{content:""}.chapter-citation-title:hover{color:#5f3213}.chapter-citation-sidenote pre{margin:.35rem 0 0;padding:.45rem .5rem;overflow-x:auto;background:#fffdf9;border-left:2px solid var(--rule);white-space:pre-wrap}.chapter-citation-sidenote code{font-size:.72rem;line-height:1.25}
-.chapter-rail{position:fixed;top:32px;left:var(--rail-left);bottom:24px;width:180px;padding:.2rem 0 1rem;border-left:1px solid var(--rule);font-size:.84rem;line-height:1.25;overflow-y:auto;scrollbar-width:thin}.chapter-rail-course{margin:0 0 .7rem;padding:0 .3rem .75rem .75rem;border-bottom:1px solid var(--rule)}.course-event{margin:0 0 .28rem;color:var(--brown);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-rail-course .course-title{color:var(--ink);font-size:.84rem;line-height:1.25}.chapter-rail-course .course-authors{margin-top:.28rem;color:var(--muted);font-size:.76rem;line-height:1.28}.chapter-rail-tools{display:flex;gap:.55rem;margin:.55rem 0 0;padding:0}.chapter-rail-tool{display:inline!important;padding:0!important;color:var(--accent)!important;font-weight:700}.chapter-rail-heading{margin:.1rem 0 .35rem;padding:0 .3rem 0 .75rem;color:var(--ink);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-rail-section-heading{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule);color:var(--muted)}.chapter-rail a{display:block;padding:.32rem .3rem .32rem .75rem;color:var(--muted)}.chapter-rail a:hover{color:var(--accent-dark);text-decoration:none;background:#fffdf9}.chapter-rail-link span{display:inline-block;width:1.45rem;color:var(--muted);font-variant-numeric:tabular-nums}.chapter-rail-link.is-current{color:var(--ink);font-weight:700;background:#fffdf9;border-left:3px solid var(--accent);margin-left:-2px}.chapter-section-link{display:grid!important;grid-template-columns:2.55rem minmax(0,1fr);align-items:baseline;font-size:.78rem}.chapter-section-no{color:var(--muted);font-variant-numeric:tabular-nums}.chapter-section-title{min-width:0}.chapter-section-l2{padding-left:1.25rem!important}.chapter-section-l3{padding-left:1.75rem!important;font-size:.74rem}.chapter-section-link.is-active{color:var(--ink);background:#fffdf9;border-left:3px solid var(--brown);margin-left:-2px}
-.page-shell{max-width:780px;margin:0 auto;padding:30px 24px 64px;position:relative}.chapter-kicker{margin:0 0 .25rem;color:var(--brown);font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.lecture-title{display:inline-block;max-width:100%;margin:0 0 calc(1.85rem + 2cm);padding-bottom:.32rem;border-bottom:4px solid #000;font-size:2.65rem;line-height:1.06;letter-spacing:0}
-.toc{margin:0 0 2rem;padding:.85rem 1rem;background:#fffdf9;border:1px solid var(--rule);font-size:.95rem}.toc ol{margin:0;padding-left:0;list-style:none}.toc li{margin:.12rem 0}.toc a{display:grid;grid-template-columns:3rem minmax(0,1fr);align-items:baseline}.toc .toc-l1{margin-left:0}.toc .toc-l2{margin-left:1.1rem}.toc .toc-l3{margin-left:2.2rem;font-size:.92em}.toc-no{color:var(--muted);font-variant-numeric:tabular-nums;text-align:left}.toc-title{min-width:0}
-.lecture-content h1,.lecture-content h2,.lecture-content h3,.lecture-content h4{line-height:1.18;letter-spacing:0}.lecture-content h1,.lecture-content h2,.lecture-content h3{position:relative}.lecture-content h1::before,.lecture-content h2::before,.lecture-content h3::before{content:"";position:absolute;left:-1.05rem;top:.18em;bottom:.16em;width:4px;background:#bdb7ad}.lecture-content h2::before{width:3px;background:#c8c2b9}.lecture-content h3::before{width:2px;background:#d1cbc3}.lecture-content h1{margin:2.2rem 0 .8rem;padding-top:.15rem;font-size:1.75rem}.lecture-content h2{margin:2rem 0 .65rem;font-size:1.38rem}.lecture-content h3{margin:1.55rem 0 .45rem;font-size:1.12rem}.secno{color:var(--muted);font-weight:400}
-.lecture-content p{margin:.72rem 0}.lecture-content ul,.lecture-content ol{padding-left:1.35rem}.lecture-content li{margin:.25rem 0}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.92em}.raw-block{margin:1rem 0;padding:.75rem 1rem;overflow-x:auto;background:#fffdf9;border:1px solid var(--rule);font-size:.9rem;line-height:1.45}.raw-block code{font-size:1em}
-.env{margin:1.1rem 0;padding:.42rem .85rem;border:1px solid #d8d8d8;border-radius:3px}.env.statement{background:var(--block)}.env.algorithm{padding:.15rem 0 .45rem;background:transparent;border:0;border-radius:0}.env.proof{background:transparent;border:0;border-left:1.5px solid #a8a098;border-radius:0;padding:.16rem 0 .16rem .85rem}.env-title{font-weight:700}.env.algorithm .env-title{margin:0 0 .45rem;padding:.38rem 0 .42rem;border-top:1.5px solid #1f1f1f;border-bottom:1.5px solid #1f1f1f;font-size:.98em;font-weight:400;line-height:1.28}.algorithm-label{font-weight:700}.algorithm-caption{font-weight:400}.env.proof .env-title{font-family:var(--serif);font-style:italic;font-weight:400}.algorithm-subtitle{margin:.15rem 0 .55rem;color:var(--muted);font-style:italic}.pseudocode{--pseudo-indent:1.42rem;--pseudo-stroke:#252525;margin:.1rem 0 0;padding:.12rem 0 .08rem;border-bottom:1.5px solid #1f1f1f;font-size:.94em;line-height:1.36}.pseudo-line,.pseudo-math{position:relative;margin:0;padding-left:calc(var(--indent) * var(--pseudo-indent) + .18rem)}.pseudo-line{min-height:1.32em;padding-top:.11rem;padding-bottom:.11rem}.pseudo-text{display:block;max-width:100%;text-indent:-.04rem}.pseudo-text strong{font-weight:700}.pseudo-math{overflow-x:auto;padding-top:.08rem;padding-bottom:.12rem}.pseudo-math .katex-display{margin:.16rem 0}.pseudo-guide{position:absolute;top:-.12rem;bottom:-.12rem;left:calc((var(--guide) - .52) * var(--pseudo-indent));border-left:1.25px solid var(--pseudo-stroke)}.pseudo-guide-end{bottom:.58em}.pseudo-guide-end::after{content:"";position:absolute;left:-1.25px;bottom:0;width:.48rem;border-bottom:1.25px solid var(--pseudo-stroke)}
-.equation{box-sizing:border-box;position:relative;margin:1rem 0;overflow-x:auto;padding-right:3.5rem}.equation.is-overwide{clear:right}.equation .katex-display{margin:.35rem 0}.eqno{position:absolute;right:.2rem;top:50%;transform:translateY(-50%);color:var(--muted)}
-.rendered-figure{position:relative;margin:1.25rem 0;text-align:center}.rendered-figure img{display:block;max-width:100%;height:auto;margin:0 auto}.figure-placeholder{margin:1.15rem 0;padding:.8rem 1rem;background:var(--soft);border:1px dashed var(--rule);color:var(--muted)}figcaption{margin-top:.5rem;color:var(--ink);text-align:left}.special-comment{margin:1rem 0;padding:.55rem .8rem .65rem 1rem;border-left:3px solid var(--rule);background:#fffdf9;color:var(--muted);font-size:.94rem}.special-comment::before{content:"\25B8";margin-right:.35rem;color:var(--muted)}.special-comment-text{display:inline}.special-comment-figure{display:block;max-width:100%;height:auto;margin:.55rem auto 0}
-.typst-fallback,.callout{margin:1rem 0;padding:.75rem 1rem;background:var(--soft);border-left:3px solid var(--rule)}.callout{font-size:.98rem}.footnote-ref{font-size:.68em;line-height:0;vertical-align:super}.footnote-ref a{color:var(--accent);text-decoration:none}.footnote{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.footnote-num{font-size:.78em;line-height:0;vertical-align:super;margin-right:.3em;color:var(--accent)}.bibliography,.endnotes{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid var(--rule)}.bibliography{font-size:16px}.endnotes{font-size:.92rem}.bibliography h1,.endnotes h1{border-top:0;margin-top:0}.bibliography p{display:grid;grid-template-columns:5.4rem minmax(0,1fr);column-gap:.7rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.endnotes{display:none}.endnotes p{display:grid;grid-template-columns:1.75rem minmax(0,1fr);column-gap:.4rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.footnote-backref{display:inline-block;font-variant-numeric:tabular-nums;text-align:right}.footnote-backref::after{content:".";color:var(--muted)}.footnote-body{min-width:0}.bib-key{color:var(--ink);font-size:1em;font-variant-numeric:tabular-nums;text-align:left}.bib-entry{min-width:0}mark{background:#fff1a8;padding:0 .15em}.todo{background:#ffd39a;color:#4a2500;border-radius:2px}.missing-ref{color:#9b2f2f}
-@media(max-width:1220px){.citation-note,.footnote,.course-sidenote{display:none}.chapter-citation-sidenote{float:none;clear:both;width:auto;margin:.75rem 0 2rem;color:var(--muted);font-size:.78rem}.chapter-citation-sidenote pre{max-width:100%}.chapter-citation-sidenote code{font-size:.76rem}.endnotes{display:block}.footnote-ref{margin-right:.1em}}
-@media(min-width:1260px){.equation.is-overwide{width:calc(100% + 234px);overflow-x:visible}.rendered-figure figcaption{position:absolute;top:0;left:calc(100% + 24px);width:210px;margin-top:0;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}}
-@media(max-width:1259px){.equation.is-overwide{display:flex;align-items:center;gap:.5rem;overflow-x:auto;padding-right:0}.equation.is-overwide .katex-display{flex:0 0 auto}.equation.is-overwide .eqno{position:static;flex:0 0 auto;padding-left:.35rem;transform:none}}
-@media(min-width:1261px){.toc{display:none}}
-@media(max-width:1260px){.chapter-rail{display:none}}
-@media(max-width:900px){.lecture-content h1::before,.lecture-content h2::before,.lecture-content h3::before{display:none}}
-@media(max-width:640px){body{font-size:16.5px}.site-masthead,.page-shell{padding-left:17px;padding-right:17px}.lecture-title{font-size:2.12rem;line-height:1.08}}
-</style>
-<script>
-function markOverwideEquations(){
-  document.querySelectorAll(".equation").forEach(function(eq){
-    eq.classList.remove("is-overwide");
-    var math = eq.querySelector(".katex-display");
-    if (!math) return;
-    var eqno = eq.querySelector(".eqno");
-    var numberWidth = eqno ? eqno.getBoundingClientRect().width + 12 : 0;
-    var available = eq.clientWidth - numberWidth;
-    var needed = Math.max(math.scrollWidth, math.getBoundingClientRect().width);
-    if (needed > available + 2) eq.classList.add("is-overwide");
-  });
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+  <title>Beyond Normal Form</title>
+  <style>
+@font-face {
+    font-family: "Frutiger Notes";
+    src: url("Frutiger_bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap
 }
-window.markOverwideEquations = markOverwideEquations;
-window.addEventListener("resize", markOverwideEquations);
-if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(markOverwideEquations);
+
+:root {
+    --paper: #fbfaf7;
+    --ink: #171411;
+    --muted: #6b635b;
+    --rule: #d7d0c6;
+    --soft: #f2efe8;
+    --block: #eeeeee;
+    --accent: #325d8a;
+    --accent-dark: #173f64;
+    --brown: #8a4c20;
+    --serif: Georgia, "Times New Roman", Times, serif;
+    --page-total: 828px;
+    --rail-width: 180px;
+    --rail-gutter: 2cm;
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
 }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, 
-{
-  delimiters:[
-    {left:'\\[',right:'\\]',display:true},
-    {left:'\\(',right:'\\)',display:false}
-  ],
-  throwOnError:false,
-  strict:'warn'
+
+html {
+    background: var(--paper);
+    scroll-behavior: smooth
 }
-);requestAnimationFrame(window.markOverwideEquations);"></script>
+
+body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.58
+}
+
+h1,
+h2,
+h3,
+h4,
+strong,
+b,
+.env-title,
+.chapter-kicker,
+.course-title,
+.course-event,
+.chapter-rail-heading,
+.chapter-rail-tool,
+.chapter-rail-link.is-current,
+.citation-note-key {
+    font-family: "Frutiger Notes", var(--serif)
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none
+}
+
+a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline
+}
+
+.citation {
+    color: var(--brown)
+}
+
+.citation:hover {
+    color: #5f3213
+}
+
+.citation-wrap {
+    position: relative
+}
+
+.citation-note {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .2rem -234px .7rem 24px;
+    color: var(--brown);
+    font-family: var(--serif);
+    font-size: .78rem;
+    font-weight: 400;
+    line-height: 1.35;
+    text-align: left
+}
+
+.env-title .citation-note,
+.env-heading .citation-note,
+.citation-note * {
+    font-weight: 400
+}
+
+.citation-note a {
+    color: var(--brown);
+    font-family: var(--serif);
+    font-weight: 400
+}
+
+.citation-note-key {
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.env.statement .citation-note,
+.env.proof .citation-note {
+    margin-right: calc(-234px - .85rem - 1px);
+    margin-left: calc(24px + .85rem + 1px)
+}
+
+.site-masthead {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 28px 24px 16px;
+    border-bottom: 1px solid var(--rule)
+}
+
+.course-title {
+    font-size: 1.06rem;
+    font-weight: 700
+}
+
+.course-title-link {
+    display: block !important;
+    padding: 0 !important;
+    color: var(--ink) !important
+}
+
+.course-title-link:hover {
+    color: var(--accent) !important;
+    text-decoration: none !important;
+    background: transparent !important
+}
+
+.course-authors {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: .92rem
+}
+
+.top-links {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+    font-size: .9rem
+}
+
+.course-sidenote {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .1rem -234px 1rem 24px;
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.35;
+    text-align: left
+}
+
+.chapter-citation-sidenote {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .1rem -234px 1.2rem 24px;
+    color: var(--muted);
+    font-size: .72rem;
+    line-height: 1.28;
+    text-align: left
+}
+
+.chapter-citation-pdf {
+    display: block;
+    margin: 0 0 .55rem !important;
+    padding: 0 !important;
+    color: var(--accent) !important;
+    font-family: "Frutiger Notes", var(--serif);
+    font-size: .72rem;
+    font-weight: 700
+}
+
+.chapter-citation-pdf:hover {
+    color: var(--accent-dark) !important;
+    background: transparent !important
+}
+
+.chapter-citation-details {
+    margin: 0
+}
+
+.chapter-citation-title {
+    display: inline-flex;
+    align-items: center;
+    gap: .28rem;
+    cursor: pointer;
+    color: var(--brown);
+    font-family: "Frutiger Notes", var(--serif);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.chapter-citation-title::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: .28em solid transparent;
+    border-bottom: .28em solid transparent;
+    border-left: .42em solid currentColor;
+    transition: transform .16s ease
+}
+
+.chapter-citation-details[open] .chapter-citation-title::before {
+    transform: rotate(90deg)
+}
+
+.chapter-citation-title::-webkit-details-marker {
+    display: none
+}
+
+.chapter-citation-title::marker {
+    content: ""
+}
+
+.chapter-citation-sidenote pre {
+    margin: .35rem 0 0;
+    padding: .45rem .5rem;
+    overflow-x: auto;
+    background: #fffdf9;
+    border-left: 2px solid var(--rule);
+    white-space: pre-wrap
+}
+
+.chapter-citation-sidenote code {
+    font-size: .72rem;
+    line-height: 1.25
+}
+
+.chapter-rail {
+    position: fixed;
+    top: 32px;
+    left: var(--rail-left);
+    bottom: 24px;
+    width: 180px;
+    padding: .2rem 0 1rem;
+    border-left: 1px solid var(--rule);
+    font-size: .84rem;
+    line-height: 1.25;
+    overflow-y: auto;
+    scrollbar-width: thin
+}
+
+.chapter-rail-course {
+    margin: 0 0 .7rem;
+    padding: 0 .3rem .75rem .75rem;
+    border-bottom: 1px solid var(--rule)
+}
+
+.course-event {
+    margin: 0 0 .28rem;
+    color: var(--brown);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.chapter-rail-course .course-title {
+    color: var(--ink);
+    font-size: .84rem;
+    line-height: 1.25
+}
+
+.chapter-rail-course .course-authors {
+    margin-top: .28rem;
+    color: var(--muted);
+    font-size: .76rem;
+    line-height: 1.28
+}
+
+.chapter-rail-heading {
+    margin: .1rem 0 .35rem;
+    padding: 0 .3rem 0 .75rem;
+    color: var(--ink);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.chapter-rail-section-heading {
+    margin-top: .85rem;
+    padding-top: .7rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted)
+}
+
+.chapter-rail a {
+    display: block;
+    padding: .32rem .3rem .32rem .75rem;
+    color: var(--muted)
+}
+
+.chapter-rail a:hover {
+    color: var(--accent-dark);
+    text-decoration: none;
+    background: #fffdf9
+}
+
+.chapter-rail-link span {
+    display: inline-block;
+    width: 1.45rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums
+}
+
+.chapter-rail-link.is-current {
+    color: var(--ink);
+    font-weight: 700;
+    background: #fffdf9;
+    border-left: 3px solid var(--accent);
+    margin-left: -2px
+}
+
+.chapter-section-link {
+    display: grid !important;
+    grid-template-columns: 2.0rem minmax(0, 1fr);
+    align-items: baseline;
+    font-size: .78rem
+}
+
+.chapter-section-no {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.chapter-section-title {
+    min-width: 0
+}
+
+.chapter-section-l2 {
+    padding-left: 1.25rem !important
+}
+
+.chapter-section-l3 {
+    padding-left: 1.75rem !important;
+    font-size: .74rem
+}
+
+.chapter-section-link.is-active {
+    color: var(--ink);
+    background: #fffdf9;
+    border-left: 3px solid var(--brown);
+    margin-left: -2px
+}
+
+.page-shell {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 30px 24px 64px;
+    position: relative
+}
+
+.chapter-kicker {
+    margin: 0 0 .25rem;
+    color: var(--brown);
+    font-size: .86rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.lecture-title,
+.lecture-content .lecture-title {
+    display: inline-block;
+    max-width: 100%;
+    margin: 0 0 calc(1.85rem + 2cm);
+    padding-bottom: .32rem;
+    border-bottom: 4px solid #000;
+    font-size: 2.65rem;
+    line-height: 1.06;
+    letter-spacing: 0
+}
+
+.lecture-content .lecture-title::before {
+    content: none
+}
+
+.toc {
+    margin: 0 0 2rem;
+    padding: .85rem 1rem;
+    background: #fffdf9;
+    border: 1px solid var(--rule);
+    font-size: .95rem
+}
+
+.toc ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none
+}
+
+.toc li {
+    margin: .12rem 0
+}
+
+.toc a {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    align-items: baseline
+}
+
+.toc .toc-l1 {
+    margin-left: 0
+}
+
+.toc .toc-l2 {
+    margin-left: 1.1rem
+}
+
+.toc .toc-l3 {
+    margin-left: 2.2rem;
+    font-size: .92em
+}
+
+.toc-no {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    text-align: left
+}
+
+.toc-title {
+    min-width: 0
+}
+
+.lecture-content h1,
+.lecture-content h2,
+.lecture-content h3,
+.lecture-content h4 {
+    line-height: 1.18;
+    letter-spacing: 0
+}
+
+.lecture-content h1,
+.lecture-content h2,
+.lecture-content h3 {
+    position: relative
+}
+
+.lecture-content h1::before,
+.lecture-content h2::before,
+.lecture-content h3::before {
+    content: "";
+    position: absolute;
+    left: -1.05rem;
+    top: .18em;
+    bottom: .16em;
+    width: 4px;
+    background: #bdb7ad
+}
+
+.lecture-content h2::before {
+    width: 3px;
+    background: #c8c2b9
+}
+
+.lecture-content h3::before {
+    width: 2px;
+    background: #d1cbc3
+}
+
+.lecture-content h1 {
+    margin: 2.2rem 0 .8rem;
+    padding-top: .15rem;
+    font-size: 1.75rem
+}
+
+.lecture-content h2 {
+    margin: 2rem 0 .65rem;
+    font-size: 1.38rem
+}
+
+.lecture-content h3 {
+    margin: 1.55rem 0 .45rem;
+    font-size: 1.12rem
+}
+
+.lecture-content .secno {
+    color: var(--muted);
+    font-weight: 400
+}
+
+.lecture-content .secno::after {
+    content: " "
+}
+
+.lecture-content p {
+    margin: .72rem 0
+}
+
+.lecture-content ul,
+.lecture-content ol {
+    padding-left: 1.35rem
+}
+
+.lecture-content li {
+    margin: .25rem 0
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: .92em
+}
+
+.env {
+    margin: 1.1rem 0;
+    padding: .42rem .85rem;
+    border: 1px solid #d8d8d8;
+    border-radius: 3px
+}
+
+.env.statement {
+    background: var(--block)
+}
+
+.env.proof {
+    background: transparent;
+    border: 0;
+    border-left: 1.5px solid #a8a098;
+    border-radius: 0;
+    padding: .16rem 0 .16rem .85rem
+}
+
+.env-heading {
+    margin: .15rem 0 .35rem
+}
+
+.env.statement>.env-heading,
+.env.proof>.env-heading {
+    display: inline;
+    margin: 0 .25em 0 0
+}
+
+.env.statement>.env-body,
+.env.proof>.env-body {
+    display: contents
+}
+
+.env.statement>.env-body>p:first-child,
+.env.proof>.env-body>p:first-child {
+    display: inline;
+    margin: 0
+}
+
+.env.statement>.env-body>p:first-child+*,
+.env.proof>.env-body>p:first-child+* {
+    margin-top: .65rem
+}
+
+.env-title {
+    font-weight: 700
+}
+
+.env-heading .env-title {
+    display: inline;
+    white-space: normal
+}
+
+.env-heading .env-title-numbered {
+    font-size: 0
+}
+
+.env-heading .env-title-numbered>* {
+    font-size: 1.125rem
+}
+
+.env-heading .env-kind,
+.env-heading .env-number,
+.env-heading .env-extra,
+.env-heading .env-punct {
+    display: inline
+}
+
+.env-heading .env-number {
+    margin-left: .28em
+}
+
+.env-heading .env-extra {
+    margin-left: .36em
+}
+
+.env-body>:first-child {
+    margin-top: 0
+}
+
+.env-body>:last-child {
+    margin-bottom: 0
+}
+
+.env.proof .env-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400
+}
+
+.env.algorithm {
+    counter-increment: algorithm;
+    padding: .15rem 0 .45rem;
+    background: transparent;
+    border: 0;
+    border-radius: 0
+}
+
+.env.algorithm .env-title {
+    margin: 0 0 .45rem;
+    padding: .38rem 0 .42rem;
+    border-top: 1.5px solid #1f1f1f;
+    border-bottom: 1.5px solid #1f1f1f;
+    font-size: .98em;
+    font-weight: 400;
+    line-height: 1.28
+}
+
+.env.algorithm .env-title strong {
+    font-weight: 700
+}
+
+.env.algorithm .env-title::before {
+    content: "Algorithm " counter(algorithm);
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.env.algorithm .env-title>strong:first-child {
+    display: none
+}
+
+.pseudocode {
+    --pseudo-indent: 1.42rem;
+    --pseudo-stroke: #252525;
+    margin: .1rem 0 0;
+    padding: .12rem 0 .08rem;
+    border-bottom: 1.5px solid #1f1f1f;
+    font-size: .94em;
+    line-height: 1.36
+}
+
+.pseudo-line,
+.pseudo-math {
+    position: relative;
+    margin: 0;
+    padding-left: calc(var(--indent) * var(--pseudo-indent) + .18rem)
+}
+
+.pseudo-line {
+    min-height: 1.32em;
+    padding-top: .11rem;
+    padding-bottom: .11rem
+}
+
+.pseudo-text {
+    display: block;
+    max-width: 100%;
+    text-indent: -.04rem
+}
+
+.pseudo-text strong {
+    font-weight: 700
+}
+
+.pseudo-text .equation {
+    margin: .16rem 0;
+    padding-left: var(--pseudo-indent);
+    padding-right: 0;
+    overflow-x: auto
+}
+
+.pseudo-text .equation::before,
+.pseudo-text .equation::after {
+    content: "";
+    position: absolute;
+    left: calc(.48 * var(--pseudo-indent) - .18rem);
+    border-color: var(--pseudo-stroke)
+}
+
+.pseudo-text .equation::before {
+    top: -.12rem;
+    bottom: .58em;
+    border-left: 1.25px solid var(--pseudo-stroke)
+}
+
+.pseudo-text .equation::after {
+    bottom: .58em;
+    width: .48rem;
+    border-bottom: 1.25px solid var(--pseudo-stroke)
+}
+
+.pseudo-text .equation-line {
+    grid-template-columns: minmax(0, 1fr)
+}
+
+.pseudo-text .equation-math {
+    grid-column: 1
+}
+
+.pseudo-line>p {
+    display: contents;
+    margin: 0
+}
+
+.pseudo-guide {
+    position: absolute;
+    top: -.12rem;
+    bottom: -.12rem;
+    left: calc((var(--guide) - .52) * var(--pseudo-indent));
+    border-left: 1.25px solid var(--pseudo-stroke)
+}
+
+.pseudo-guide-end {
+    bottom: .58em
+}
+
+.pseudo-guide-end::after {
+    content: "";
+    position: absolute;
+    left: -1.25px;
+    bottom: 0;
+    width: .48rem;
+    border-bottom: 1.25px solid var(--pseudo-stroke)
+}
+
+.equation {
+    box-sizing: border-box;
+    position: relative;
+    margin: 1rem 0;
+    overflow-x: auto;
+    padding-right: 0;
+    text-align: center
+}
+
+.equation.is-overwide {
+    clear: right
+}
+
+.equation-line {
+    display: grid;
+    grid-template-columns: minmax(0, 3.5rem) minmax(0, 1fr) minmax(3.5rem, max-content);
+    align-items: center;
+    column-gap: .35rem;
+    width: 100%
+}
+
+.equation-line+.equation-line {
+    margin-top: .35rem
+}
+
+.equation-aligned {
+    display: grid;
+    --equation-align-gutter: .28rem;
+    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(3.5rem, max-content);
+    align-items: center;
+    column-gap: var(--equation-align-gutter);
+    row-gap: .35rem
+}
+
+.equation-aligned .equation-line {
+    display: contents
+}
+
+.equation-aligned .equation-line+.equation-line {
+    margin-top: 0
+}
+
+.equation-math {
+    grid-column: 2;
+    justify-self: center;
+    min-width: max-content;
+    line-height: 0
+}
+
+.equation-align-left {
+    grid-column: 2;
+    justify-self: end;
+    min-width: 0;
+    line-height: 0
+}
+
+.equation-align-right {
+    grid-column: 3;
+    justify-self: start;
+    min-width: max-content;
+    line-height: 0
+}
+
+.equation-align-full {
+    grid-column: 2 / 4;
+    justify-self: center;
+    min-width: max-content;
+    line-height: 0
+}
+
+.equation .eqno {
+    grid-column: 3;
+    justify-self: end;
+    color: var(--muted);
+    font-size: .95em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1
+}
+
+.equation-aligned .eqno {
+    grid-column: 4;
+    align-self: center
+}
+
+.equation .typst-frame {
+    display: inline-block;
+    max-width: none;
+    height: auto;
+    vertical-align: middle
+}
+
+span[role="math"] {
+    display: inline-block;
+    max-width: 100%;
+    line-height: 1;
+    vertical-align: -.12em
+}
+
+span[role="math"] .typst-frame {
+    display: inline-block;
+    max-width: 100%;
+    height: auto
+}
+
+.math-katex-source {
+    display: inline;
+    line-height: normal;
+    vertical-align: baseline
+}
+
+span[role="math"].math-katex-source {
+    max-width: none;
+    vertical-align: baseline
+}
+
+.math-katex-source .katex {
+    vertical-align: baseline
+}
+
+.equation .math-katex-source {
+    display: inline-block;
+    line-height: 1.15;
+    vertical-align: middle
+}
+
+.equation .katex-display {
+    margin: .25rem 0
+}
+
+.rendered-figure,
+.lecture-content figure.typst {
+    position: relative;
+    margin: 1.25rem 0;
+    text-align: center
+}
+
+.rendered-figure svg,
+.rendered-figure img,
+.lecture-content figure.typst svg,
+.lecture-content figure.typst img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto
+}
+
+figcaption {
+    margin-top: .5rem;
+    color: var(--ink);
+    text-align: left
+}
+
+figcaption .figcaption-label {
+    color: var(--ink);
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.typst-frame {
+    max-width: 100%;
+    height: auto
+}
+
+.callout {
+    margin: 1rem 0;
+    padding: .72rem .95rem .78rem;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule);
+    background: var(--soft);
+    line-height: 1.48
+}
+
+.callout-info {
+    border-left-color: #4f86a8;
+    background: #eef6fb
+}
+
+.callout-warning {
+    border-left-color: #c47a2c;
+    background: #fff3dd
+}
+
+.callout-highlight {
+    border-left-color: #b59b45;
+    background: #f7f1df
+}
+
+.callout-title {
+    margin: 0 0 .35rem;
+    color: var(--ink);
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.callout-body>*:first-child {
+    margin-top: 0
+}
+
+.callout-body>*:last-child {
+    margin-bottom: 0
+}
+
+.special-comment {
+    margin: 1rem 0;
+    padding: .55rem .8rem .65rem 1rem;
+    border-left: 3px solid var(--rule);
+    background: #fffdf9;
+    color: var(--muted);
+    font-size: .94rem
+}
+
+.special-comment::before {
+    content: "\25B8";
+    margin-right: .35rem;
+    color: var(--muted)
+}
+
+.special-comment-text {
+    display: inline
+}
+
+.special-comment-figure {
+    display: block;
+    max-width: 100%;
+    margin: .55rem auto 0;
+    text-align: center
+}
+
+.special-comment-figure .typst-frame {
+    display: inline-block;
+    max-width: 100%
+}
+
+.figure-body .typst-frame {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto
+}
+
+.footnote-ref {
+    font-size: .68em;
+    line-height: 0;
+    vertical-align: super
+}
+
+.footnote-ref a {
+    color: var(--accent);
+    text-decoration: none
+}
+
+.footnote {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .2rem -234px .7rem 24px;
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.35;
+    text-align: left
+}
+
+.footnote-num {
+    font-size: .78em;
+    line-height: 0;
+    vertical-align: super;
+    margin-right: .3em;
+    color: var(--accent)
+}
+
+.bibliography,
+.endnotes {
+    margin-top: 2.5rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--rule)
+}
+
+.bibliography {
+    font-size: 16px
+}
+
+.endnotes {
+    display: none;
+    font-size: .92rem
+}
+
+.bibliography h1,
+.endnotes h1 {
+    border-top: 0;
+    margin-top: 0
+}
+
+.bibliography ol {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.bibliography-table {
+    border-collapse: collapse;
+    width: 100%
+}
+
+.bibliography-table td {
+    padding: .34rem 0;
+    vertical-align: baseline
+}
+
+.bibliography-table .bib-key {
+    width: 5.4rem;
+    padding-right: .7rem;
+    white-space: nowrap
+}
+
+.bibliography li {
+    display: grid;
+    grid-template-columns: 5.4rem minmax(0, 1fr);
+    column-gap: .7rem;
+    align-items: baseline;
+    margin: .58rem 0;
+    padding-left: 0;
+    text-indent: 0
+}
+
+.endnotes p {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    column-gap: .4rem;
+    align-items: baseline;
+    margin: .58rem 0;
+    padding-left: 0;
+    text-indent: 0
+}
+
+.footnote-backref {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    text-align: right
+}
+
+.footnote-backref::after {
+    content: ".";
+    color: var(--muted)
+}
+
+.footnote-body,
+.bib-entry {
+    min-width: 0
+}
+
+.bibliography li> :not(.prefix) {
+    min-width: 0
+}
+
+.bib-math {
+    font-family: var(--serif)
+}
+
+.bib-key,
+.bibliography .prefix {
+    color: var(--ink);
+    font-size: 1em;
+    font-variant-numeric: tabular-nums;
+    text-align: left
+}
+
+.bib-key a,
+.bibliography .prefix a {
+    color: inherit;
+    text-decoration: none
+}
+
+mark {
+    background: #fff1a8;
+    padding: 0 .15em
+}
+
+.todo {
+    background: #ffd39a;
+    color: #4a2500;
+    border-radius: 2px
+}
+
+@media(max-width:1220px) {
+
+    .citation-note,
+    .footnote,
+    .course-sidenote {
+        display: none
+    }
+
+    .chapter-citation-sidenote {
+        float: none;
+        clear: both;
+        width: auto;
+        margin: .75rem 0 2rem;
+        color: var(--muted);
+        font-size: .78rem
+    }
+
+    .chapter-citation-sidenote pre {
+        max-width: 100%
+    }
+
+    .chapter-citation-sidenote code {
+        font-size: .76rem
+    }
+
+    .endnotes {
+        display: block
+    }
+
+    .footnote-ref {
+        margin-right: .1em
+    }
+}
+
+@media(min-width:1260px) {
+    .equation.is-overwide {
+        width: calc(100% + 234px);
+        max-width: calc(100vw - 48px);
+        overflow-x: auto;
+        overflow-y: visible
+    }
+
+    .equation.is-overwide.equation-aligned {
+        justify-content: start
+    }
+
+    .rendered-figure figcaption {
+        position: absolute;
+        top: .2rem;
+        left: calc(100% + 24px);
+        width: 210px;
+        margin-top: 0;
+        color: var(--muted);
+        font-family: var(--serif);
+        font-size: .78rem;
+        line-height: 1.35;
+        text-align: left
+    }
+
+    .env.statement .rendered-figure figcaption,
+    .env.statement figure.typst figcaption,
+    .env.proof .rendered-figure figcaption,
+    .env.proof figure.typst figcaption {
+        top: .2rem;
+        left: calc(100% + 24px + .85rem + 1px)
+    }
+}
+
+@media(max-width:1259px) {
+    .equation.is-overwide {
+        overflow-x: auto;
+        padding-right: 0
+    }
+
+    .equation.is-overwide .equation-line {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: .5rem;
+        width: max-content;
+        min-width: 100%
+    }
+
+    .equation.is-overwide .equation-math,
+    .equation.is-overwide .typst-frame {
+        flex: 0 0 auto
+    }
+
+    .equation.is-overwide .eqno {
+        flex: 0 0 auto;
+        padding-left: .35rem
+    }
+
+    .equation.is-overwide.equation-aligned {
+        width: max-content;
+        min-width: 100%
+    }
+
+    .equation.is-overwide.equation-aligned .equation-line {
+        display: contents;
+        width: auto;
+        min-width: 0
+    }
+
+    .equation.is-overwide.equation-aligned .eqno {
+        padding-left: 0
+    }
+}
+
+@media(min-width:1261px) {
+    .toc {
+        display: none
+    }
+}
+
+@media(max-width:1260px) {
+    .chapter-rail {
+        display: none
+    }
+}
+
+@media(max-width:900px) {
+
+    .lecture-content h1::before,
+    .lecture-content h2::before,
+    .lecture-content h3::before {
+        display: none
+    }
+}
+
+@media(max-width:640px) {
+    body {
+        font-size: 16.5px
+    }
+
+    .site-masthead,
+    .page-shell {
+        padding-left: 17px;
+        padding-right: 17px
+    }
+
+    .lecture-title,
+    .lecture-content .lecture-title {
+        font-size: 2.12rem;
+        line-height: 1.08
+    }
+}
+  </style>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn'});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
 </head>
 <body>
 <nav class="chapter-rail" aria-label="Chapters">
@@ -90,9 +1287,10 @@ if (document.fonts && document.fonts.ready) {
 <a class="chapter-section-link chapter-section-l1" href="#3-1-expected-fixed-points" data-section-link="3-1-expected-fixed-points"><span class="chapter-section-no">3.1</span><span class="chapter-section-title">Expected fixed points</span></a>
 </nav>
 <main class="page-shell">
-<div class="chapter-kicker">Chapter 3</div>
+<article class="lecture-content" data-lecture-number="3">
+<p class="chapter-kicker">Chapter 3</p>
 <h1 class="lecture-title">Beyond Normal Form</h1>
-<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="../P3-phi-regret-learning.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-3,
+<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="pdf/P3-phi-regret-learning.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-3,
   author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
   title = {Chapter 3: Beyond Normal Form},
   booktitle = {Learning and Computation of Phi-Equilibria},
@@ -103,41 +1301,360 @@ if (document.fonts && document.fonts.ready) {
 <nav class="toc" aria-label="Contents"><ol>
 <li class="toc-l1"><a href="#3-1-expected-fixed-points"><span class="toc-no">3.1</span><span class="toc-title">Expected fixed points</span></a></li>
 </ol></nav>
-<article class="lecture-content">
 <p><mark class="todo">my eventual intention is to merge the semi-separation chapter into this chapter. there is a lot of overlapping content -brian</mark></p>
-<p>In this section, we will show how to construct \(\Phi\)-regret minimizers for strategy sets \(\mathcal{X}\) that are more complex than the simplex. To do so, we first define the sets of deviations that we work with.</p>
-<section class="env statement" id="statement-def-low-degree"><p><span class="env-title">Definition 3.1.</span>&nbsp;&nbsp;Given a feature map \(q : \mathcal{X} \to \mathbb{R}^{k}\), the set of deviations \(\Phi^q\) is the set of all maps \(\phi: \mathcal{X} \to \mathcal{X}\) that can be expressed as the matrix-vector product \(\mathbf{K}(\phi) q(\mathbf{x})\) for some matrix \(\mathbf{K} \in \mathbb{R}^{d \times k}\) and vector \(\mathbf{c} \in \mathbb{R}^d\).</p>
-</section>
-<section class="env statement"><p><span class="env-title">Example 3.2.</span>&nbsp;&nbsp;If \(q(\mathbf{x}) = (1, \mathbf{x}) \in \mathbb{R}^{d+1}\), then \(\Phi^q\) is the set of all linear maps \(\phi : \mathcal{X} \to \mathcal{X}\). More generally, if \(q(\mathbf{x}) = \mathbf{x}^{\otimes \le \ell} \in \mathbb{R}^k\) where \(k = \binom{d}{\le \ell}\) is the set of all monomials in \(\mathbf{x}\) up to degree \(\ell\), then \(\Phi^q\) is the set of all degree-\(\ell\) polynomials in \(\mathbf{x}\).</p>
-</section>
-<p>In general, we will describe algorithms that have complexity polynomial in the dimension \(k\). Note that, in the special case of degree-\(\ell\) polynomials, these algorithms will therefore run in time polynomial in \(d^\ell\).</p>
-<p>In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic. Intuitively, both problems stem from the same root cause:</p>
-<p>1. <em>Fixed-point oracle</em>: Finding a fixed point of a continuous function \(\phi : \mathcal{X} \to \mathcal{X}\) is \(PPAD\)-complete, and therefore is unlikely to be possible efficiently. Even more generally, if \(\phi\) contains <em>discontinuous</em> maps, \(\phi\) may not even admit any approximate fixed points!</p>
-<p>2. <em>External regret minimizer for \(\Phi^q\)</em>: External regret minimization implies the ability to (approximately) perform linear optimization over \(\Phi^q\). But linear optimization over \(\Phi^q\) can be hard, in two ways: </p>
-<ol>
-<li>If \(\Phi^q\) contains nonlinear functions, then that this optimization problem is \(NP\)-hard even when \(\mathcal{X}\) is the hypercube \(\left[0, 1\right]^d\) <span class="citation-wrap"><a class="citation" href="#bib-zhang24-efficient">[Zha+24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-zhang24-efficient">[Zha+24]</a> B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient $Phi$-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. Advances in Neural Information Processing Systems.</span></span>.</li>
-</ol>
-<ol>
-<li>Even if \(\Phi^q\) is the set of linear endomorphisms, if \(\mathcal{X}\) itself is only available via an oracle (e.g., a separation oracle), then optimizing a linear function over \(\Phi^q\) can in general be hard  <span class="citation-wrap"><a class="citation" href="#bib-daskalakis25-efficient">[Das+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-daskalakis25-efficient">[Das+25]</a> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></span>. <mark class="todo">why is the citation not showing?</mark></li>
-</ol>
-<section class="env statement"><p><span class="env-title">Remark 3.3.</span>&nbsp;&nbsp;When \(\mathcal{X}\) is represented by an explicit set of linear constraints, i.e., \(\mathcal{X} = \left\{ \mathbf{x} : \mathbf{A} \mathbf{x} \le \mathbf{b} \right\}\), the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span class="citation-wrap"><a class="citation" href="#bib-zhang25-expected">[Zha+25]</a><span class="citation-note"><a class="citation-note-key" href="#bib-zhang25-expected">[Zha+25]</a> B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. International Conference on Machine Learning.</span></span>. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</p>
-</section>
-<section class="env statement"><p><span class="env-title">Remark 3.4.</span>&nbsp;&nbsp;For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation <span class="citation-wrap"><a class="citation" href="#bib-zhang23-mediator">[ZFS24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-zhang23-mediator">[ZFS24]</a> B. H. Zhang, G. Farina and T. Sandholm. (2024). Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games. International Conference on Learning Representations.</span></span>. We will not detail it here, though.</p>
-</section>
-<p>We will show how to circumvent both of the above issues. We start with the fixed point computation.</p>
-<h1 id="3-1-expected-fixed-points"><span class="secno">3.1</span> Expected fixed points</h1>
-<p>Given that computing a fixed point is generally hard (when \(\phi\) is continuous but nonlinear) or even impossible (when \(\phi\) is discontinuous), we need a different notion of fixed point. Fortunately, by examining the proof of the Gordon--Greenwald--Marks framework, it turns out that a weaker condition suffices.</p>
-<section class="env statement"><p><span class="env-title">Definition 3.5.</span>&nbsp;&nbsp;Given a function \(\phi : \mathcal{X} \to \mathcal{X}\), an \(\epsilon\)-approximate <em>expected fixed point</em> of \(\phi\) is a distribution<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</span> \(\mu \in \Delta(\mathcal{X})\) such that \(\left\lVert \mathbb{E}_{\mathbf{x} \sim \mu} \left[ \phi(\mathbf{x}) - \mathbf{x} \right]\right\rVert_1 \le \epsilon.\)</p>
-</section>
-<p>As we will see shortly, expected fixed points fix both problems with fixed point computation: an (approximate) expected fixed point always exists, and moreover, there is an efficient algorithm for computing one!</p>
-<p><mark class="todo">continue from here -brian</mark></p>
-<section class="bibliography" id="bibliography"><h1>Bibliography for this chapter</h1>
-<p id="bib-zhang24-efficient"><span class="bib-key">[Zha+24]</span><span class="bib-entry">B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient $Phi$-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. Advances in Neural Information Processing Systems.</span></p>
-<p id="bib-daskalakis25-efficient"><span class="bib-key">[Das+25]</span><span class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. Symposium on Theory of Computing (STOC).</span></p>
-<p id="bib-zhang25-expected"><span class="bib-key">[Zha+25]</span><span class="bib-entry">B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. International Conference on Machine Learning.</span></p>
-<p id="bib-zhang23-mediator"><span class="bib-key">[ZFS24]</span><span class="bib-entry">B. H. Zhang, G. Farina and T. Sandholm. (2024). Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games. International Conference on Learning Representations.</span></p>
-</section>
-<section class="endnotes" id="footnotes"><h1>Footnotes</h1>
+    <p>In this section, we will show how to construct <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizers for strategy sets <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> that are more complex than the simplex. To do so, we first define the sets of deviations that we work with.</p>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">3<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(<span id="loc-1">[</span><span class="citation-wrap"><a class="citation" href="#loc-7" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Learning and Computation of <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC1F0BE4A6BE2E3AC8BF8B959047FB7DB"></use></g></g><defs id="glyph"><symbol id="gC1F0BE4A6BE2E3AC8BF8B959047FB7DB" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Equilibria at the Frontier of Tractability”, in <em>Economics and Computation</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">Given a feature map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [q],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: [k],
+  ),
+)" role="math">\(q : \mathcal{X} \to \mathbb{R}^{k}\)</span>, the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> that can be expressed as the matrix-vector product <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  sequence(
+    equation(block: false, body: styled(child: [K], ..)),
+    lr(body: sequence([(], [φ], [)])),
+  ),
+  [ ],
+  sequence(
+    [q],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+  ),
+)" role="math">\(\mathcal{K}(\phi ) q(\mathbf{x})\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: styled(child: [K], ..)),
+  [ ],
+  [∈],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: sequence([d], [ ], [×], [ ], [k]),
+  ),
+)" role="math">\(\mathcal{K} \in \mathbb{R}^{d × k}\)</span> and vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: styled(child: [c], ..)),
+  [ ],
+  [∈],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: [d],
+  ),
+)" role="math">\(\mathbf{c} \in \mathbb{R}^{d}\)</span>.</div>
+    </section>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">3<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">If <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  sequence(
+    [q],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [(],
+      [1],
+      [,],
+      [ ],
+      equation(block: false, body: styled(child: [x], ..)),
+      [)],
+    ),
+  ),
+  [ ],
+  [∈],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: sequence([d], [+], [1]),
+  ),
+)" role="math">\(q(\mathbf{x}) = (1, \mathbf{x}) \in \mathbb{R}^{d+1}\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all linear maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span>. More generally, if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  sequence(
+    [q],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [x], ..)),
+        [)],
+      ),
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: sequence([⊗], [ ], [≤], [ ], [ℓ]),
+  ),
+  [ ],
+  [∈],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: [k],
+  ),
+)" role="math">\(q(\mathbf{x}) = \mathbf{x}^{⊗ \le ℓ} \in \mathbb{R}^{k}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [k],
+  [ ],
+  [=],
+  [ ],
+  binom(upper: [d], lower: (sequence([≤], [ ], [ℓ]),)),
+)" role="math">\(k =\)</span> is the set of all monomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span> up to degree <span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [x], ..))" role="math">\(\mathbf{x}\)</span>.</div>
+    </section>
+    <p>In general, we will describe algorithms that have complexity polynomial in the dimension <span class="math-katex-source" data-math-display="inline" data-typst-math="[k]" role="math">\(k\)</span>. Note that, in the special case of degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials, these algorithms will therefore run in time polynomial in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [d], t: [ℓ])" role="math">\(d^{ℓ}\)</span>.</p>
+    <p>In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic. Intuitively, both problems stem from the same root cause:</p>
+    <ol>
+      <li value="1">
+        <p><em>Fixed-point oracle</em>: Finding a fixed point of a continuous function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> is <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [PPAD], ..)" role="math">\(\text{PPAD}\)</span>-complete, and therefore is unlikely to be possible efficiently. Even more generally, if <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> contains <em>discontinuous</em> maps, <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> may not even admit any approximate fixed points!</p>
+      </li>
+      <li value="2">
+        <p><em>External regret minimizer for <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span></em>: External regret minimization implies the ability to (approximately) perform linear optimization over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. But linear optimization over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> can be hard, in two ways:</p>
+        <ol>
+          <li>
+            <p>If <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> contains nonlinear functions, then that this optimization problem is <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [NP], ..)" role="math">\(\text{NP}\)</span>-hard even when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is the hypercube <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: lr(body: sequence([[], [0], [,], [ ], [1], []])),
+  t: [d],
+)" role="math">\([0, 1]^{d}\)</span> <span id="loc-2">[</span><span class="citation-wrap"><a class="citation" href="#loc-8" role="doc-biblioref">Zha+24</a><span class="citation-note"><span class="citation-note-key">[Zha+24]</span> B. H. Zhang, I. Anagnostides, G. Farina, and T. Sandholm, “Efficient <span data-math-display="inline" data-typst-math="[Φ]" role="math"><svg class="typst-frame" height="6.488500000000001pt" style="overflow: visible; width: 0.722em; height: 0.683em;" viewBox="0 0 6.859 6.488500000000001" width="6.859pt" xmlns:h5="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 6.488500000000001)"><use fill="#000000" fill-rule="nonzero" x="0" y="0" xlink:href="#gC1F0BE4A6BE2E3AC8BF8B959047FB7DB"></use></g></g><defs id="glyph"><symbol id="gC1F0BE4A6BE2E3AC8BF8B959047FB7DB" overflow="visible"><path d="M 0 0m 3.8189998 1.273 c 0.6175003 0.047500014 1.1589999 0.23749995 1.6434999 0.5509999 c 0.5700002 0.3800001 0.855 0.855 0.855 1.4154999 c 0 0.56050014 -0.28499985 1.0355003 -0.855 1.4154999 c -0.48449993 0.32299995 -1.0259995 0.513 -1.6434999 0.56050014 v 0.49399996 c 0 0.12349987 0.009500027 0.19950008 0.038000107 0.24699974 c 0.047499895 0.104500294 0.31349993 0.16150045 0.8169999 0.16150045 h 0.35150003 v 0.3704996 c -0.25649977 -0.019000053 -0.79799986 -0.02850008 -1.6245 -0.02850008 c -0.83599997 0 -1.3774998 0.009500027 -1.6339998 0.02850008 v -0.3704996 h 0.35150003 c 0.5035 0 0.7789998 -0.047500134 0.82649994 -0.15200043 c 0.019000053 -0.047499657 0.02850008 -0.1329999 0.02850008 -0.25649977 v -0.49399996 c -0.60800004 -0.06650019 -1.1400001 -0.25650024 -1.6055001 -0.5700002 c -0.56049997 -0.3704996 -0.8359999 -0.8359997 -0.8359999 -1.3964999 c 0 -0.5604999 0.27549994 -1.026 0.8265 -1.4059999 c 0.46549988 -0.31349993 1.007 -0.5035 1.615 -0.56999993 v -0.49400002 c 0 -0.12349999 -0.009500027 -0.19950002 -0.02850008 -0.24699998 c -0.047500134 -0.104500026 -0.32299995 -0.1615 -0.82649994 -0.1615 h -0.35150003 v -0.3705 c 0.2565 0.019 0.79799986 0.028499998 1.6245 0.028499998 c 0.83599997 0 1.3775 -0.009499999 1.6339998 -0.028499998 v 0.3705 h -0.35150003 c -0.5035 0 -0.7695 0.047499985 -0.8169999 0.15199998 c -0.02850008 0.047500014 -0.038000107 0.13300002 -0.038000107 0.2565 Z m 0 3.6575 c 0.9879999 -0.12350035 1.4819999 -0.684 1.4819999 -1.6815002 c 0 -0.99749994 -0.49399996 -1.5579998 -1.4819999 -1.6909999 Z m -0.84549975 -0.009500027 v -3.3535 c -0.95000005 0.14249992 -1.4250001 0.6934999 -1.4250001 1.6719998 c 0 0.9785001 0.47500002 1.5390003 1.4250001 1.6815002 Z "></path></symbol></defs></svg></span>-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games”, in <em>Advances in Neural Information Processing Systems</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>].</p>
+          </li>
+          <li>
+            <p>Even if <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of linear endomorphisms, if <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> itself is only available via an oracle (<em>e.g.</em>, a separation oracle), then optimizing a linear function over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> can in general be hard <span id="loc-3">[</span><span class="citation-wrap"><a class="citation" href="#loc-9" role="doc-biblioref">Das+25</a><span class="citation-note"><span class="citation-note-key">[Das+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis, and J. Schneider, “Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2025.</span></span>]. <mark class="todo">why is the citation not showing?</mark></p>
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">When <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is represented by an explicit set of linear constraints, <em>i.e.</em>, <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [{],
+      equation(block: false, body: styled(child: [x], ..)),
+      [ ],
+      [:],
+      [ ],
+      equation(block: false, body: styled(child: [A], ..)),
+      [ ],
+      equation(block: false, body: styled(child: [x], ..)),
+      [ ],
+      [≤],
+      [ ],
+      equation(block: false, body: styled(child: [b], ..)),
+      [}],
+    ),
+  ),
+)" role="math">\(\mathcal{X} = \{\mathbf{x} : \mathcal{A} \mathbf{x} \le \mathbf{b}\}\)</span>, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span id="loc-4">[</span><span class="citation-wrap"><a class="citation" href="#loc-10" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Expected Variational Inequalities,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2025, pp. 74422–74446.</span></span>]. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</div>
+    </section>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">3<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation <span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">ZFS24</a><span class="citation-note"><span class="citation-note-key">[ZFS24]</span> B. H. Zhang, G. Farina, and T. Sandholm, “Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games,” in <em>International Conference on Learning Representations</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>]. We will not detail it here, though.</div>
+    </section>
+    <p>We will show how to circumvent both of the above issues. We start with the fixed point computation.</p>
+    <h1 id="3-1-expected-fixed-points" class="notes-heading" data-level="1" data-number="3.1"><span class="secno">3.1</span> Expected fixed points</h1>
+    <p>Given that computing a fixed point is generally hard (when <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is continuous but nonlinear) or even impossible (when <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is discontinuous), we need a different notion of fixed point. Fortunately, by examining the proof of the Gordon–Greenwald–Marks framework, it turns out that a weaker condition suffices.</p>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">3<span class="env-number-separator">.</span>5</strong> <span class="env-extra">(Expected fixed point [<span class="citation-wrap"><a class="citation" href="#loc-8" role="doc-biblioref">Zha+24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">
+        <p>Given a function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span>, an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate <em>expected fixed point</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is a distribution<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</span> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [μ],
+  [ ],
+  [∈],
+  [ ],
+  sequence(
+    [Δ],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [X], ..)),
+        [)],
+      ),
+    ),
+  ),
+)" role="math">\(\mu \in \Delta (\mathcal{X})\)</span> such that</p>
+        <figure class="equation" role="math">
+          <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
+  attach(
+    base: lr(
+      body: sequence(
+        [‖],
+        sequence(
+          attach(
+            base: op(
+              text: styled(child: equation(block: false, body: [E]), ..),
+              limits: true,
+            ),
+            b: sequence(
+              equation(block: false, body: styled(child: [x], ..)),
+              [ ],
+              [∼],
+              [ ],
+              [μ],
+            ),
+          ),
+          [ ],
+          lr(
+            body: sequence(
+              [[],
+              sequence(
+                [φ],
+                lr(
+                  body: sequence(
+                    [(],
+                    equation(block: false, body: styled(child: [x], ..)),
+                    [)],
+                  ),
+                ),
+              ),
+              [ ],
+              [−],
+              [ ],
+              equation(block: false, body: styled(child: [x], ..)),
+              []],
+            ),
+          ),
+        ),
+        [‖],
+      ),
+    ),
+    b: [1],
+  ),
+  [ ],
+  [≤],
+  [ ],
+  [ϵ],
+  [.],
+)"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
+  attach(
+    base: lr(
+      body: sequence(
+        [‖],
+        sequence(
+          attach(
+            base: op(
+              text: styled(child: equation(block: false, body: [E]), ..),
+              limits: true,
+            ),
+            b: sequence(
+              equation(block: false, body: styled(child: [x], ..)),
+              [ ],
+              [∼],
+              [ ],
+              [μ],
+            ),
+          ),
+          [ ],
+          lr(
+            body: sequence(
+              [[],
+              sequence(
+                [φ],
+                lr(
+                  body: sequence(
+                    [(],
+                    equation(block: false, body: styled(child: [x], ..)),
+                    [)],
+                  ),
+                ),
+              ),
+              [ ],
+              [−],
+              [ ],
+              equation(block: false, body: styled(child: [x], ..)),
+              []],
+            ),
+          ),
+        ),
+        [‖],
+      ),
+    ),
+    b: [1],
+  ),
+  [ ],
+  [≤],
+  [ ],
+  [ϵ],
+  [.],
+)">\[\displaystyle \left\Vert \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left[\phi \left(\mathbf{x}\right) - \mathbf{x}\right]\right\Vert_{1} \le \epsilon .\]</span></div>
+        </figure>
+      </div>
+    </section>
+    <p>As we will see shortly, expected fixed points fix both problems with fixed point computation: an (approximate) expected fixed point always exists, and moreover, there is an efficient algorithm for computing one!</p>
+    <p><mark class="todo">continue from here -brian</mark></p>
+    <section class="bibliography" id="bibliography">
+      <h1 class="notes-heading notes-heading-unnumbered" data-level="1">Bibliography for this chapter</h1>
+      <table class="bibliography-table">
+        <tbody><tr id="loc-7" class="bibliography-row">
+          <td class="bib-key">[Zha+25]</td>
+          <td class="bib-entry">B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Learning and Computation of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(<span class="bib-math">Φ</span>\)</span>-Equilibria at the Frontier of Tractability. <em>Economics and Computation</em>.</td>
+        </tr>
+        <tr id="loc-8" class="bibliography-row">
+          <td class="bib-key">[Zha+24]</td>
+          <td class="bib-entry">B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(<span class="bib-math">Φ</span>\)</span>-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. <em>Advances in Neural Information Processing Systems</em>.</td>
+        </tr>
+      </tbody></table>
+    </section><section class="endnotes" id="endnotes">
+<h1>Notes</h1>
 <p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body">Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</span></p>
 </section>
 </article>
@@ -147,9 +1664,7 @@ if (document.fonts && document.fonts.ready) {
   const links = Array.from(document.querySelectorAll("[data-section-link]"));
   if (!links.length) return;
   const byId = new Map(links.map((link) => [link.getAttribute("data-section-link"), link]));
-  const sections = Array.from(byId.keys())
-    .map((id) => document.getElementById(id))
-    .filter(Boolean);
+  const sections = Array.from(byId.keys()).map((id) => document.getElementById(id)).filter(Boolean);
   const setActive = (id) => {
     for (const link of links) {
       const active = link.getAttribute("data-section-link") === id;
@@ -173,6 +1688,51 @@ if (document.fonts && document.fonts.ready) {
   document.addEventListener("scroll", update, { passive: true });
   window.addEventListener("resize", update);
   window.addEventListener("hashchange", update);
+})();
+</script>
+<script>
+(() => {
+  function boxWidth(el){
+    if (!el) return 0;
+    var rect = el.getBoundingClientRect();
+    return Math.max(el.scrollWidth || 0, rect.width || 0);
+  }
+  function maxWidth(nodes){
+    return nodes.reduce(function(max, node){ return Math.max(max, boxWidth(node)); }, 0);
+  }
+  function equationNeededWidth(eq){
+    var style = window.getComputedStyle(eq);
+    var columnGap = parseFloat(style.columnGap) || 0;
+    var gap = 12;
+    if (eq.classList.contains("equation-aligned")) {
+      var left = maxWidth(Array.from(eq.querySelectorAll(".equation-align-left")));
+      var right = maxWidth(Array.from(eq.querySelectorAll(".equation-align-right")));
+      var full = maxWidth(Array.from(eq.querySelectorAll(".equation-align-full")));
+      var eqno = maxWidth(Array.from(eq.querySelectorAll(".eqno")));
+      var aligned = left + right + columnGap + (eqno ? eqno + columnGap : 0);
+      return Math.max(full, aligned, eq.scrollWidth || 0);
+    }
+    var rows = Array.from(eq.querySelectorAll(".equation-line"));
+    if (!rows.length) rows = Array.from(eq.querySelectorAll(".typst-frame"));
+    var rowWidth = maxWidth(rows);
+    var math = maxWidth(Array.from(eq.querySelectorAll(".equation-math, .equation-align-full, .typst-frame")));
+    var eqno = maxWidth(Array.from(eq.querySelectorAll(".eqno")));
+    return Math.max(rowWidth, math + (eqno ? eqno + gap : 0), eq.scrollWidth || 0);
+  }
+  function markOverwideEquations(){
+    document.querySelectorAll(".equation").forEach(function(eq){
+      eq.classList.remove("is-overwide");
+      var available = eq.clientWidth;
+      var needed = equationNeededWidth(eq);
+      if (needed > available + 2) eq.classList.add("is-overwide");
+    });
+  }
+  window.markOverwideEquations = markOverwideEquations;
+  window.addEventListener("resize", markOverwideEquations);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(markOverwideEquations);
+  window.setTimeout(markOverwideEquations, 0);
+  window.setTimeout(markOverwideEquations, 80);
+  window.setTimeout(markOverwideEquations, 300);
 })();
 </script>
 </body>

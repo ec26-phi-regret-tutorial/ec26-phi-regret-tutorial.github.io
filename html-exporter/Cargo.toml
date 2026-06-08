@@ -2,7 +2,13 @@
 name = "notes-html-exporter"
 version = "0.1.0"
 edition = "2021"
-description = "Export the EC'26 Typst notes to a Sum-of-Squares-inspired HTML page."
+description = "Export the EC'26 Typst notes through Typst HTML plus postprocessing."
 license = "MIT"
 
 [dependencies]
+argopt = "0.3"
+regex = "1"
+scraper = "0.25"
+typst = "0.14.2"
+typst-html = "0.14.2"
+typst-kit = { version = "0.14.2", features = ["embed-fonts"] }

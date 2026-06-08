@@ -1,80 +1,1277 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TreeSwap: Efficient Swap Regret Minimization - Learning and Computation of Phi-Equilibria</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-<style>
-@font-face{font-family:"Frutiger Notes";src:url("Frutiger_bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"New Computer Modern";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern 10";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Italic.otf") format("opentype");font-weight:400;font-style:italic;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"NewComputerModern10";src:url("NewCM10-BoldItalic.otf") format("opentype");font-weight:700;font-style:italic;font-display:swap}
-:root{--paper:#fbfaf7;--ink:#171411;--muted:#6b635b;--rule:#d7d0c6;--soft:#f2efe8;--block:#eeeeee;--accent:#325d8a;--accent-dark:#173f64;--brown:#8a4c20;--serif:"New Computer Modern","NewComputerModern 10","NewComputerModern10","New Computer Modern 10","Computer Modern Serif","Latin Modern Roman",Georgia,"Times New Roman",Times,serif;--page-total:828px;--rail-width:180px;--rail-gutter:2cm;--rail-left:max(24px,calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))}
-html{background:var(--paper);scroll-behavior:smooth}
-body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--serif);font-size:18px;line-height:1.58}
-h1,h2,h3,h4,strong,b,.env-title,.algorithm-label,.chapter-kicker,.course-title,.course-event,.chapter-rail-heading,.chapter-rail-tool,.chapter-rail-link.is-current,.citation-note-key{font-family:"Frutiger Notes",var(--serif)}
-a{color:var(--accent);text-decoration:none}a:hover{color:var(--accent-dark);text-decoration:underline}.ref-link{display:inline-block;padding:0 .22em;border-radius:2px;background:#e8f1fb;color:#24527e;line-height:1.28}.ref-link:hover{background:#dcebf8;color:#173f64;text-decoration:none}.citation{color:#8a4c20}.citation:hover{color:#5f3213}.citation-wrap{position:relative}.citation-note{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:#8a4c20;font-size:.78rem;font-weight:400;line-height:1.35;text-align:left}.citation-note a{color:#8a4c20}.citation-note-key{font-weight:700}
-.site-masthead{max-width:780px;margin:0 auto;padding:28px 24px 16px;border-bottom:1px solid var(--rule)}
-.course-title{font-size:1.06rem;font-weight:700}.course-title-link{display:block!important;padding:0!important;color:var(--ink)!important}.course-title-link:hover{color:var(--accent)!important;text-decoration:none!important;background:transparent!important}.course-authors{margin-top:2px;color:var(--muted);font-size:.92rem}.top-links{display:flex;gap:14px;margin-top:10px;font-size:.9rem}
-.course-sidenote{float:right;clear:right;width:210px;margin:.1rem -234px 1rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.course-sidenote .course-title{color:var(--ink);font-size:.85rem;line-height:1.25}.course-sidenote .course-authors{font-size:.78rem}.chapter-citation-sidenote{float:right;clear:right;width:210px;margin:.1rem -234px 1.2rem 24px;color:var(--muted);font-size:.72rem;line-height:1.28;text-align:left}.chapter-citation-pdf{display:block;margin:0 0 .55rem!important;padding:0!important;color:var(--accent)!important;font-family:"Frutiger Notes",var(--serif);font-size:.72rem;font-weight:700}.chapter-citation-pdf:hover{color:var(--accent-dark)!important;background:transparent!important}.chapter-citation-details{margin:0}.chapter-citation-title{display:inline-flex;align-items:center;gap:.28rem;cursor:pointer;color:var(--brown);font-family:"Frutiger Notes",var(--serif);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-citation-title::before{content:"";width:0;height:0;border-top:.28em solid transparent;border-bottom:.28em solid transparent;border-left:.42em solid currentColor;transition:transform .16s ease}.chapter-citation-details[open] .chapter-citation-title::before{transform:rotate(90deg)}.chapter-citation-title::-webkit-details-marker{display:none}.chapter-citation-title::marker{content:""}.chapter-citation-title:hover{color:#5f3213}.chapter-citation-sidenote pre{margin:.35rem 0 0;padding:.45rem .5rem;overflow-x:auto;background:#fffdf9;border-left:2px solid var(--rule);white-space:pre-wrap}.chapter-citation-sidenote code{font-size:.72rem;line-height:1.25}
-.chapter-rail{position:fixed;top:32px;left:var(--rail-left);bottom:24px;width:180px;padding:.2rem 0 1rem;border-left:1px solid var(--rule);font-size:.84rem;line-height:1.25;overflow-y:auto;scrollbar-width:thin}.chapter-rail-course{margin:0 0 .7rem;padding:0 .3rem .75rem .75rem;border-bottom:1px solid var(--rule)}.course-event{margin:0 0 .28rem;color:var(--brown);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-rail-course .course-title{color:var(--ink);font-size:.84rem;line-height:1.25}.chapter-rail-course .course-authors{margin-top:.28rem;color:var(--muted);font-size:.76rem;line-height:1.28}.chapter-rail-tools{display:flex;gap:.55rem;margin:.55rem 0 0;padding:0}.chapter-rail-tool{display:inline!important;padding:0!important;color:var(--accent)!important;font-weight:700}.chapter-rail-heading{margin:.1rem 0 .35rem;padding:0 .3rem 0 .75rem;color:var(--ink);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.chapter-rail-section-heading{margin-top:.85rem;padding-top:.7rem;border-top:1px solid var(--rule);color:var(--muted)}.chapter-rail a{display:block;padding:.32rem .3rem .32rem .75rem;color:var(--muted)}.chapter-rail a:hover{color:var(--accent-dark);text-decoration:none;background:#fffdf9}.chapter-rail-link span{display:inline-block;width:1.45rem;color:var(--muted);font-variant-numeric:tabular-nums}.chapter-rail-link.is-current{color:var(--ink);font-weight:700;background:#fffdf9;border-left:3px solid var(--accent);margin-left:-2px}.chapter-section-link{display:grid!important;grid-template-columns:2.55rem minmax(0,1fr);align-items:baseline;font-size:.78rem}.chapter-section-no{color:var(--muted);font-variant-numeric:tabular-nums}.chapter-section-title{min-width:0}.chapter-section-l2{padding-left:1.25rem!important}.chapter-section-l3{padding-left:1.75rem!important;font-size:.74rem}.chapter-section-link.is-active{color:var(--ink);background:#fffdf9;border-left:3px solid var(--brown);margin-left:-2px}
-.page-shell{max-width:780px;margin:0 auto;padding:30px 24px 64px;position:relative}.chapter-kicker{margin:0 0 .25rem;color:var(--brown);font-size:.86rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.lecture-title{display:inline-block;max-width:100%;margin:0 0 calc(1.85rem + 2cm);padding-bottom:.32rem;border-bottom:4px solid #000;font-size:2.65rem;line-height:1.06;letter-spacing:0}
-.toc{margin:0 0 2rem;padding:.85rem 1rem;background:#fffdf9;border:1px solid var(--rule);font-size:.95rem}.toc ol{margin:0;padding-left:0;list-style:none}.toc li{margin:.12rem 0}.toc a{display:grid;grid-template-columns:3rem minmax(0,1fr);align-items:baseline}.toc .toc-l1{margin-left:0}.toc .toc-l2{margin-left:1.1rem}.toc .toc-l3{margin-left:2.2rem;font-size:.92em}.toc-no{color:var(--muted);font-variant-numeric:tabular-nums;text-align:left}.toc-title{min-width:0}
-.lecture-content h1,.lecture-content h2,.lecture-content h3,.lecture-content h4{line-height:1.18;letter-spacing:0}.lecture-content h1,.lecture-content h2,.lecture-content h3{position:relative}.lecture-content h1::before,.lecture-content h2::before,.lecture-content h3::before{content:"";position:absolute;left:-1.05rem;top:.18em;bottom:.16em;width:4px;background:#bdb7ad}.lecture-content h2::before{width:3px;background:#c8c2b9}.lecture-content h3::before{width:2px;background:#d1cbc3}.lecture-content h1{margin:2.2rem 0 .8rem;padding-top:.15rem;font-size:1.75rem}.lecture-content h2{margin:2rem 0 .65rem;font-size:1.38rem}.lecture-content h3{margin:1.55rem 0 .45rem;font-size:1.12rem}.secno{color:var(--muted);font-weight:400}
-.lecture-content p{margin:.72rem 0}.lecture-content ul,.lecture-content ol{padding-left:1.35rem}.lecture-content li{margin:.25rem 0}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:.92em}.raw-block{margin:1rem 0;padding:.75rem 1rem;overflow-x:auto;background:#fffdf9;border:1px solid var(--rule);font-size:.9rem;line-height:1.45}.raw-block code{font-size:1em}
-.env{margin:1.1rem 0;padding:.42rem .85rem;border:1px solid #d8d8d8;border-radius:3px}.env.statement{background:var(--block)}.env.algorithm{padding:.15rem 0 .45rem;background:transparent;border:0;border-radius:0}.env.proof{background:transparent;border:0;border-left:1.5px solid #a8a098;border-radius:0;padding:.16rem 0 .16rem .85rem}.env-title{font-weight:700}.env.algorithm .env-title{margin:0 0 .45rem;padding:.38rem 0 .42rem;border-top:1.5px solid #1f1f1f;border-bottom:1.5px solid #1f1f1f;font-size:.98em;font-weight:400;line-height:1.28}.algorithm-label{font-weight:700}.algorithm-caption{font-weight:400}.env.proof .env-title{font-family:var(--serif);font-style:italic;font-weight:400}.algorithm-subtitle{margin:.15rem 0 .55rem;color:var(--muted);font-style:italic}.pseudocode{--pseudo-indent:1.42rem;--pseudo-stroke:#252525;margin:.1rem 0 0;padding:.12rem 0 .08rem;border-bottom:1.5px solid #1f1f1f;font-size:.94em;line-height:1.36}.pseudo-line,.pseudo-math{position:relative;margin:0;padding-left:calc(var(--indent) * var(--pseudo-indent) + .18rem)}.pseudo-line{min-height:1.32em;padding-top:.11rem;padding-bottom:.11rem}.pseudo-text{display:block;max-width:100%;text-indent:-.04rem}.pseudo-text strong{font-weight:700}.pseudo-math{overflow-x:auto;padding-top:.08rem;padding-bottom:.12rem}.pseudo-math .katex-display{margin:.16rem 0}.pseudo-guide{position:absolute;top:-.12rem;bottom:-.12rem;left:calc((var(--guide) - .52) * var(--pseudo-indent));border-left:1.25px solid var(--pseudo-stroke)}.pseudo-guide-end{bottom:.58em}.pseudo-guide-end::after{content:"";position:absolute;left:-1.25px;bottom:0;width:.48rem;border-bottom:1.25px solid var(--pseudo-stroke)}
-.equation{box-sizing:border-box;position:relative;margin:1rem 0;overflow-x:auto;padding-right:3.5rem}.equation.is-overwide{clear:right}.equation .katex-display{margin:.35rem 0}.eqno{position:absolute;right:.2rem;top:50%;transform:translateY(-50%);color:var(--muted)}
-.rendered-figure{position:relative;margin:1.25rem 0;text-align:center}.rendered-figure img{display:block;max-width:100%;height:auto;margin:0 auto}.figure-placeholder{margin:1.15rem 0;padding:.8rem 1rem;background:var(--soft);border:1px dashed var(--rule);color:var(--muted)}figcaption{margin-top:.5rem;color:var(--ink);text-align:left}.special-comment{margin:1rem 0;padding:.55rem .8rem .65rem 1rem;border-left:3px solid var(--rule);background:#fffdf9;color:var(--muted);font-size:.94rem}.special-comment::before{content:"\25B8";margin-right:.35rem;color:var(--muted)}.special-comment-text{display:inline}.special-comment-figure{display:block;max-width:100%;height:auto;margin:.55rem auto 0}
-.typst-fallback,.callout{margin:1rem 0;padding:.75rem 1rem;background:var(--soft);border-left:3px solid var(--rule)}.callout{font-size:.98rem}.footnote-ref{font-size:.68em;line-height:0;vertical-align:super}.footnote-ref a{color:var(--accent);text-decoration:none}.footnote{float:right;clear:right;width:210px;margin:.2rem -234px .7rem 24px;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}.footnote-num{font-size:.78em;line-height:0;vertical-align:super;margin-right:.3em;color:var(--accent)}.bibliography,.endnotes{margin-top:2.5rem;padding-top:.75rem;border-top:1px solid var(--rule)}.bibliography{font-size:16px}.endnotes{font-size:.92rem}.bibliography h1,.endnotes h1{border-top:0;margin-top:0}.bibliography p{display:grid;grid-template-columns:5.4rem minmax(0,1fr);column-gap:.7rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.endnotes{display:none}.endnotes p{display:grid;grid-template-columns:1.75rem minmax(0,1fr);column-gap:.4rem;align-items:baseline;margin:.58rem 0;padding-left:0;text-indent:0}.footnote-backref{display:inline-block;font-variant-numeric:tabular-nums;text-align:right}.footnote-backref::after{content:".";color:var(--muted)}.footnote-body{min-width:0}.bib-key{color:var(--ink);font-size:1em;font-variant-numeric:tabular-nums;text-align:left}.bib-entry{min-width:0}mark{background:#fff1a8;padding:0 .15em}.todo{background:#ffd39a;color:#4a2500;border-radius:2px}.missing-ref{color:#9b2f2f}
-@media(max-width:1220px){.citation-note,.footnote,.course-sidenote{display:none}.chapter-citation-sidenote{float:none;clear:both;width:auto;margin:.75rem 0 2rem;color:var(--muted);font-size:.78rem}.chapter-citation-sidenote pre{max-width:100%}.chapter-citation-sidenote code{font-size:.76rem}.endnotes{display:block}.footnote-ref{margin-right:.1em}}
-@media(min-width:1260px){.equation.is-overwide{width:calc(100% + 234px);overflow-x:visible}.rendered-figure figcaption{position:absolute;top:0;left:calc(100% + 24px);width:210px;margin-top:0;color:var(--muted);font-size:.78rem;line-height:1.35;text-align:left}}
-@media(max-width:1259px){.equation.is-overwide{display:flex;align-items:center;gap:.5rem;overflow-x:auto;padding-right:0}.equation.is-overwide .katex-display{flex:0 0 auto}.equation.is-overwide .eqno{position:static;flex:0 0 auto;padding-left:.35rem;transform:none}}
-@media(min-width:1261px){.toc{display:none}}
-@media(max-width:1260px){.chapter-rail{display:none}}
-@media(max-width:900px){.lecture-content h1::before,.lecture-content h2::before,.lecture-content h3::before{display:none}}
-@media(max-width:640px){body{font-size:16.5px}.site-masthead,.page-shell{padding-left:17px;padding-right:17px}.lecture-title{font-size:2.12rem;line-height:1.08}}
-</style>
-<script>
-function markOverwideEquations(){
-  document.querySelectorAll(".equation").forEach(function(eq){
-    eq.classList.remove("is-overwide");
-    var math = eq.querySelector(".katex-display");
-    if (!math) return;
-    var eqno = eq.querySelector(".eqno");
-    var numberWidth = eqno ? eqno.getBoundingClientRect().width + 12 : 0;
-    var available = eq.clientWidth - numberWidth;
-    var needed = Math.max(math.scrollWidth, math.getBoundingClientRect().width);
-    if (needed > available + 2) eq.classList.add("is-overwide");
-  });
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+  <title>TreeSwap: Efficient Swap Regret Minimization</title>
+  <style>
+@font-face {
+    font-family: "Frutiger Notes";
+    src: url("Frutiger_bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap
 }
-window.markOverwideEquations = markOverwideEquations;
-window.addEventListener("resize", markOverwideEquations);
-if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(markOverwideEquations);
+
+:root {
+    --paper: #fbfaf7;
+    --ink: #171411;
+    --muted: #6b635b;
+    --rule: #d7d0c6;
+    --soft: #f2efe8;
+    --block: #eeeeee;
+    --accent: #325d8a;
+    --accent-dark: #173f64;
+    --brown: #8a4c20;
+    --serif: Georgia, "Times New Roman", Times, serif;
+    --page-total: 828px;
+    --rail-width: 180px;
+    --rail-gutter: 2cm;
+    --rail-left: max(24px, calc((100vw - var(--page-total))/2 - var(--rail-width) - var(--rail-gutter)))
 }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, 
-{
-  delimiters:[
-    {left:'\\[',right:'\\]',display:true},
-    {left:'\\(',right:'\\)',display:false}
-  ],
-  throwOnError:false,
-  strict:'warn'
+
+html {
+    background: var(--paper);
+    scroll-behavior: smooth
 }
-);requestAnimationFrame(window.markOverwideEquations);"></script>
+
+body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.58
+}
+
+h1,
+h2,
+h3,
+h4,
+strong,
+b,
+.env-title,
+.chapter-kicker,
+.course-title,
+.course-event,
+.chapter-rail-heading,
+.chapter-rail-tool,
+.chapter-rail-link.is-current,
+.citation-note-key {
+    font-family: "Frutiger Notes", var(--serif)
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none
+}
+
+a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline
+}
+
+.citation {
+    color: var(--brown)
+}
+
+.citation:hover {
+    color: #5f3213
+}
+
+.citation-wrap {
+    position: relative
+}
+
+.citation-note {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .2rem -234px .7rem 24px;
+    color: var(--brown);
+    font-family: var(--serif);
+    font-size: .78rem;
+    font-weight: 400;
+    line-height: 1.35;
+    text-align: left
+}
+
+.env-title .citation-note,
+.env-heading .citation-note,
+.citation-note * {
+    font-weight: 400
+}
+
+.citation-note a {
+    color: var(--brown);
+    font-family: var(--serif);
+    font-weight: 400
+}
+
+.citation-note-key {
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.env.statement .citation-note,
+.env.proof .citation-note {
+    margin-right: calc(-234px - .85rem - 1px);
+    margin-left: calc(24px + .85rem + 1px)
+}
+
+.site-masthead {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 28px 24px 16px;
+    border-bottom: 1px solid var(--rule)
+}
+
+.course-title {
+    font-size: 1.06rem;
+    font-weight: 700
+}
+
+.course-title-link {
+    display: block !important;
+    padding: 0 !important;
+    color: var(--ink) !important
+}
+
+.course-title-link:hover {
+    color: var(--accent) !important;
+    text-decoration: none !important;
+    background: transparent !important
+}
+
+.course-authors {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: .92rem
+}
+
+.top-links {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+    font-size: .9rem
+}
+
+.course-sidenote {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .1rem -234px 1rem 24px;
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.35;
+    text-align: left
+}
+
+.chapter-citation-sidenote {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .1rem -234px 1.2rem 24px;
+    color: var(--muted);
+    font-size: .72rem;
+    line-height: 1.28;
+    text-align: left
+}
+
+.chapter-citation-pdf {
+    display: block;
+    margin: 0 0 .55rem !important;
+    padding: 0 !important;
+    color: var(--accent) !important;
+    font-family: "Frutiger Notes", var(--serif);
+    font-size: .72rem;
+    font-weight: 700
+}
+
+.chapter-citation-pdf:hover {
+    color: var(--accent-dark) !important;
+    background: transparent !important
+}
+
+.chapter-citation-details {
+    margin: 0
+}
+
+.chapter-citation-title {
+    display: inline-flex;
+    align-items: center;
+    gap: .28rem;
+    cursor: pointer;
+    color: var(--brown);
+    font-family: "Frutiger Notes", var(--serif);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.chapter-citation-title::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: .28em solid transparent;
+    border-bottom: .28em solid transparent;
+    border-left: .42em solid currentColor;
+    transition: transform .16s ease
+}
+
+.chapter-citation-details[open] .chapter-citation-title::before {
+    transform: rotate(90deg)
+}
+
+.chapter-citation-title::-webkit-details-marker {
+    display: none
+}
+
+.chapter-citation-title::marker {
+    content: ""
+}
+
+.chapter-citation-sidenote pre {
+    margin: .35rem 0 0;
+    padding: .45rem .5rem;
+    overflow-x: auto;
+    background: #fffdf9;
+    border-left: 2px solid var(--rule);
+    white-space: pre-wrap
+}
+
+.chapter-citation-sidenote code {
+    font-size: .72rem;
+    line-height: 1.25
+}
+
+.chapter-rail {
+    position: fixed;
+    top: 32px;
+    left: var(--rail-left);
+    bottom: 24px;
+    width: 180px;
+    padding: .2rem 0 1rem;
+    border-left: 1px solid var(--rule);
+    font-size: .84rem;
+    line-height: 1.25;
+    overflow-y: auto;
+    scrollbar-width: thin
+}
+
+.chapter-rail-course {
+    margin: 0 0 .7rem;
+    padding: 0 .3rem .75rem .75rem;
+    border-bottom: 1px solid var(--rule)
+}
+
+.course-event {
+    margin: 0 0 .28rem;
+    color: var(--brown);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.chapter-rail-course .course-title {
+    color: var(--ink);
+    font-size: .84rem;
+    line-height: 1.25
+}
+
+.chapter-rail-course .course-authors {
+    margin-top: .28rem;
+    color: var(--muted);
+    font-size: .76rem;
+    line-height: 1.28
+}
+
+.chapter-rail-heading {
+    margin: .1rem 0 .35rem;
+    padding: 0 .3rem 0 .75rem;
+    color: var(--ink);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.chapter-rail-section-heading {
+    margin-top: .85rem;
+    padding-top: .7rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted)
+}
+
+.chapter-rail a {
+    display: block;
+    padding: .32rem .3rem .32rem .75rem;
+    color: var(--muted)
+}
+
+.chapter-rail a:hover {
+    color: var(--accent-dark);
+    text-decoration: none;
+    background: #fffdf9
+}
+
+.chapter-rail-link span {
+    display: inline-block;
+    width: 1.45rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums
+}
+
+.chapter-rail-link.is-current {
+    color: var(--ink);
+    font-weight: 700;
+    background: #fffdf9;
+    border-left: 3px solid var(--accent);
+    margin-left: -2px
+}
+
+.chapter-section-link {
+    display: grid !important;
+    grid-template-columns: 2.0rem minmax(0, 1fr);
+    align-items: baseline;
+    font-size: .78rem
+}
+
+.chapter-section-no {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.chapter-section-title {
+    min-width: 0
+}
+
+.chapter-section-l2 {
+    padding-left: 1.25rem !important
+}
+
+.chapter-section-l3 {
+    padding-left: 1.75rem !important;
+    font-size: .74rem
+}
+
+.chapter-section-link.is-active {
+    color: var(--ink);
+    background: #fffdf9;
+    border-left: 3px solid var(--brown);
+    margin-left: -2px
+}
+
+.page-shell {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 30px 24px 64px;
+    position: relative
+}
+
+.chapter-kicker {
+    margin: 0 0 .25rem;
+    color: var(--brown);
+    font-size: .86rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase
+}
+
+.lecture-title,
+.lecture-content .lecture-title {
+    display: inline-block;
+    max-width: 100%;
+    margin: 0 0 calc(1.85rem + 2cm);
+    padding-bottom: .32rem;
+    border-bottom: 4px solid #000;
+    font-size: 2.65rem;
+    line-height: 1.06;
+    letter-spacing: 0
+}
+
+.lecture-content .lecture-title::before {
+    content: none
+}
+
+.toc {
+    margin: 0 0 2rem;
+    padding: .85rem 1rem;
+    background: #fffdf9;
+    border: 1px solid var(--rule);
+    font-size: .95rem
+}
+
+.toc ol {
+    margin: 0;
+    padding-left: 0;
+    list-style: none
+}
+
+.toc li {
+    margin: .12rem 0
+}
+
+.toc a {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    align-items: baseline
+}
+
+.toc .toc-l1 {
+    margin-left: 0
+}
+
+.toc .toc-l2 {
+    margin-left: 1.1rem
+}
+
+.toc .toc-l3 {
+    margin-left: 2.2rem;
+    font-size: .92em
+}
+
+.toc-no {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    text-align: left
+}
+
+.toc-title {
+    min-width: 0
+}
+
+.lecture-content h1,
+.lecture-content h2,
+.lecture-content h3,
+.lecture-content h4 {
+    line-height: 1.18;
+    letter-spacing: 0
+}
+
+.lecture-content h1,
+.lecture-content h2,
+.lecture-content h3 {
+    position: relative
+}
+
+.lecture-content h1::before,
+.lecture-content h2::before,
+.lecture-content h3::before {
+    content: "";
+    position: absolute;
+    left: -1.05rem;
+    top: .18em;
+    bottom: .16em;
+    width: 4px;
+    background: #bdb7ad
+}
+
+.lecture-content h2::before {
+    width: 3px;
+    background: #c8c2b9
+}
+
+.lecture-content h3::before {
+    width: 2px;
+    background: #d1cbc3
+}
+
+.lecture-content h1 {
+    margin: 2.2rem 0 .8rem;
+    padding-top: .15rem;
+    font-size: 1.75rem
+}
+
+.lecture-content h2 {
+    margin: 2rem 0 .65rem;
+    font-size: 1.38rem
+}
+
+.lecture-content h3 {
+    margin: 1.55rem 0 .45rem;
+    font-size: 1.12rem
+}
+
+.lecture-content .secno {
+    color: var(--muted);
+    font-weight: 400
+}
+
+.lecture-content .secno::after {
+    content: " "
+}
+
+.lecture-content p {
+    margin: .72rem 0
+}
+
+.lecture-content ul,
+.lecture-content ol {
+    padding-left: 1.35rem
+}
+
+.lecture-content li {
+    margin: .25rem 0
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: .92em
+}
+
+.env {
+    margin: 1.1rem 0;
+    padding: .42rem .85rem;
+    border: 1px solid #d8d8d8;
+    border-radius: 3px
+}
+
+.env.statement {
+    background: var(--block)
+}
+
+.env.proof {
+    background: transparent;
+    border: 0;
+    border-left: 1.5px solid #a8a098;
+    border-radius: 0;
+    padding: .16rem 0 .16rem .85rem
+}
+
+.env-heading {
+    margin: .15rem 0 .35rem
+}
+
+.env.statement>.env-heading,
+.env.proof>.env-heading {
+    display: inline;
+    margin: 0 .25em 0 0
+}
+
+.env.statement>.env-body,
+.env.proof>.env-body {
+    display: contents
+}
+
+.env.statement>.env-body>p:first-child,
+.env.proof>.env-body>p:first-child {
+    display: inline;
+    margin: 0
+}
+
+.env.statement>.env-body>p:first-child+*,
+.env.proof>.env-body>p:first-child+* {
+    margin-top: .65rem
+}
+
+.env-title {
+    font-weight: 700
+}
+
+.env-heading .env-title {
+    display: inline;
+    white-space: normal
+}
+
+.env-heading .env-title-numbered {
+    font-size: 0
+}
+
+.env-heading .env-title-numbered>* {
+    font-size: 1.125rem
+}
+
+.env-heading .env-kind,
+.env-heading .env-number,
+.env-heading .env-extra,
+.env-heading .env-punct {
+    display: inline
+}
+
+.env-heading .env-number {
+    margin-left: .28em
+}
+
+.env-heading .env-extra {
+    margin-left: .36em
+}
+
+.env-body>:first-child {
+    margin-top: 0
+}
+
+.env-body>:last-child {
+    margin-bottom: 0
+}
+
+.env.proof .env-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400
+}
+
+.env.algorithm {
+    counter-increment: algorithm;
+    padding: .15rem 0 .45rem;
+    background: transparent;
+    border: 0;
+    border-radius: 0
+}
+
+.env.algorithm .env-title {
+    margin: 0 0 .45rem;
+    padding: .38rem 0 .42rem;
+    border-top: 1.5px solid #1f1f1f;
+    border-bottom: 1.5px solid #1f1f1f;
+    font-size: .98em;
+    font-weight: 400;
+    line-height: 1.28
+}
+
+.env.algorithm .env-title strong {
+    font-weight: 700
+}
+
+.env.algorithm .env-title::before {
+    content: "Algorithm " counter(algorithm);
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.env.algorithm .env-title>strong:first-child {
+    display: none
+}
+
+.pseudocode {
+    --pseudo-indent: 1.42rem;
+    --pseudo-stroke: #252525;
+    margin: .1rem 0 0;
+    padding: .12rem 0 .08rem;
+    border-bottom: 1.5px solid #1f1f1f;
+    font-size: .94em;
+    line-height: 1.36
+}
+
+.pseudo-line,
+.pseudo-math {
+    position: relative;
+    margin: 0;
+    padding-left: calc(var(--indent) * var(--pseudo-indent) + .18rem)
+}
+
+.pseudo-line {
+    min-height: 1.32em;
+    padding-top: .11rem;
+    padding-bottom: .11rem
+}
+
+.pseudo-text {
+    display: block;
+    max-width: 100%;
+    text-indent: -.04rem
+}
+
+.pseudo-text strong {
+    font-weight: 700
+}
+
+.pseudo-text .equation {
+    margin: .16rem 0;
+    padding-left: var(--pseudo-indent);
+    padding-right: 0;
+    overflow-x: auto
+}
+
+.pseudo-text .equation::before,
+.pseudo-text .equation::after {
+    content: "";
+    position: absolute;
+    left: calc(.48 * var(--pseudo-indent) - .18rem);
+    border-color: var(--pseudo-stroke)
+}
+
+.pseudo-text .equation::before {
+    top: -.12rem;
+    bottom: .58em;
+    border-left: 1.25px solid var(--pseudo-stroke)
+}
+
+.pseudo-text .equation::after {
+    bottom: .58em;
+    width: .48rem;
+    border-bottom: 1.25px solid var(--pseudo-stroke)
+}
+
+.pseudo-text .equation-line {
+    grid-template-columns: minmax(0, 1fr)
+}
+
+.pseudo-text .equation-math {
+    grid-column: 1
+}
+
+.pseudo-line>p {
+    display: contents;
+    margin: 0
+}
+
+.pseudo-guide {
+    position: absolute;
+    top: -.12rem;
+    bottom: -.12rem;
+    left: calc((var(--guide) - .52) * var(--pseudo-indent));
+    border-left: 1.25px solid var(--pseudo-stroke)
+}
+
+.pseudo-guide-end {
+    bottom: .58em
+}
+
+.pseudo-guide-end::after {
+    content: "";
+    position: absolute;
+    left: -1.25px;
+    bottom: 0;
+    width: .48rem;
+    border-bottom: 1.25px solid var(--pseudo-stroke)
+}
+
+.equation {
+    box-sizing: border-box;
+    position: relative;
+    margin: 1rem 0;
+    overflow-x: auto;
+    padding-right: 0;
+    text-align: center
+}
+
+.equation.is-overwide {
+    clear: right
+}
+
+.equation-line {
+    display: grid;
+    grid-template-columns: minmax(0, 3.5rem) minmax(0, 1fr) minmax(3.5rem, max-content);
+    align-items: center;
+    column-gap: .35rem;
+    width: 100%
+}
+
+.equation-line+.equation-line {
+    margin-top: .35rem
+}
+
+.equation-aligned {
+    display: grid;
+    --equation-align-gutter: .28rem;
+    grid-template-columns: minmax(0, 1fr) max-content max-content minmax(3.5rem, max-content);
+    align-items: center;
+    column-gap: var(--equation-align-gutter);
+    row-gap: .35rem
+}
+
+.equation-aligned .equation-line {
+    display: contents
+}
+
+.equation-aligned .equation-line+.equation-line {
+    margin-top: 0
+}
+
+.equation-math {
+    grid-column: 2;
+    justify-self: center;
+    min-width: max-content;
+    line-height: 0
+}
+
+.equation-align-left {
+    grid-column: 2;
+    justify-self: end;
+    min-width: 0;
+    line-height: 0
+}
+
+.equation-align-right {
+    grid-column: 3;
+    justify-self: start;
+    min-width: max-content;
+    line-height: 0
+}
+
+.equation-align-full {
+    grid-column: 2 / 4;
+    justify-self: center;
+    min-width: max-content;
+    line-height: 0
+}
+
+.equation .eqno {
+    grid-column: 3;
+    justify-self: end;
+    color: var(--muted);
+    font-size: .95em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1
+}
+
+.equation-aligned .eqno {
+    grid-column: 4;
+    align-self: center
+}
+
+.equation .typst-frame {
+    display: inline-block;
+    max-width: none;
+    height: auto;
+    vertical-align: middle
+}
+
+span[role="math"] {
+    display: inline-block;
+    max-width: 100%;
+    line-height: 1;
+    vertical-align: -.12em
+}
+
+span[role="math"] .typst-frame {
+    display: inline-block;
+    max-width: 100%;
+    height: auto
+}
+
+.math-katex-source {
+    display: inline;
+    line-height: normal;
+    vertical-align: baseline
+}
+
+span[role="math"].math-katex-source {
+    max-width: none;
+    vertical-align: baseline
+}
+
+.math-katex-source .katex {
+    vertical-align: baseline
+}
+
+.equation .math-katex-source {
+    display: inline-block;
+    line-height: 1.15;
+    vertical-align: middle
+}
+
+.equation .katex-display {
+    margin: .25rem 0
+}
+
+.rendered-figure,
+.lecture-content figure.typst {
+    position: relative;
+    margin: 1.25rem 0;
+    text-align: center
+}
+
+.rendered-figure svg,
+.rendered-figure img,
+.lecture-content figure.typst svg,
+.lecture-content figure.typst img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto
+}
+
+figcaption {
+    margin-top: .5rem;
+    color: var(--ink);
+    text-align: left
+}
+
+figcaption .figcaption-label {
+    color: var(--ink);
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.typst-frame {
+    max-width: 100%;
+    height: auto
+}
+
+.callout {
+    margin: 1rem 0;
+    padding: .72rem .95rem .78rem;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rule);
+    background: var(--soft);
+    line-height: 1.48
+}
+
+.callout-info {
+    border-left-color: #4f86a8;
+    background: #eef6fb
+}
+
+.callout-warning {
+    border-left-color: #c47a2c;
+    background: #fff3dd
+}
+
+.callout-highlight {
+    border-left-color: #b59b45;
+    background: #f7f1df
+}
+
+.callout-title {
+    margin: 0 0 .35rem;
+    color: var(--ink);
+    font-family: "Frutiger Notes", var(--serif);
+    font-weight: 700
+}
+
+.callout-body>*:first-child {
+    margin-top: 0
+}
+
+.callout-body>*:last-child {
+    margin-bottom: 0
+}
+
+.special-comment {
+    margin: 1rem 0;
+    padding: .55rem .8rem .65rem 1rem;
+    border-left: 3px solid var(--rule);
+    background: #fffdf9;
+    color: var(--muted);
+    font-size: .94rem
+}
+
+.special-comment::before {
+    content: "\25B8";
+    margin-right: .35rem;
+    color: var(--muted)
+}
+
+.special-comment-text {
+    display: inline
+}
+
+.special-comment-figure {
+    display: block;
+    max-width: 100%;
+    margin: .55rem auto 0;
+    text-align: center
+}
+
+.special-comment-figure .typst-frame {
+    display: inline-block;
+    max-width: 100%
+}
+
+.figure-body .typst-frame {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto
+}
+
+.footnote-ref {
+    font-size: .68em;
+    line-height: 0;
+    vertical-align: super
+}
+
+.footnote-ref a {
+    color: var(--accent);
+    text-decoration: none
+}
+
+.footnote {
+    float: right;
+    clear: right;
+    width: 210px;
+    margin: .2rem -234px .7rem 24px;
+    color: var(--muted);
+    font-size: .78rem;
+    line-height: 1.35;
+    text-align: left
+}
+
+.footnote-num {
+    font-size: .78em;
+    line-height: 0;
+    vertical-align: super;
+    margin-right: .3em;
+    color: var(--accent)
+}
+
+.bibliography,
+.endnotes {
+    margin-top: 2.5rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--rule)
+}
+
+.bibliography {
+    font-size: 16px
+}
+
+.endnotes {
+    display: none;
+    font-size: .92rem
+}
+
+.bibliography h1,
+.endnotes h1 {
+    border-top: 0;
+    margin-top: 0
+}
+
+.bibliography ol {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.bibliography-table {
+    border-collapse: collapse;
+    width: 100%
+}
+
+.bibliography-table td {
+    padding: .34rem 0;
+    vertical-align: baseline
+}
+
+.bibliography-table .bib-key {
+    width: 5.4rem;
+    padding-right: .7rem;
+    white-space: nowrap
+}
+
+.bibliography li {
+    display: grid;
+    grid-template-columns: 5.4rem minmax(0, 1fr);
+    column-gap: .7rem;
+    align-items: baseline;
+    margin: .58rem 0;
+    padding-left: 0;
+    text-indent: 0
+}
+
+.endnotes p {
+    display: grid;
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    column-gap: .4rem;
+    align-items: baseline;
+    margin: .58rem 0;
+    padding-left: 0;
+    text-indent: 0
+}
+
+.footnote-backref {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    text-align: right
+}
+
+.footnote-backref::after {
+    content: ".";
+    color: var(--muted)
+}
+
+.footnote-body,
+.bib-entry {
+    min-width: 0
+}
+
+.bibliography li> :not(.prefix) {
+    min-width: 0
+}
+
+.bib-math {
+    font-family: var(--serif)
+}
+
+.bib-key,
+.bibliography .prefix {
+    color: var(--ink);
+    font-size: 1em;
+    font-variant-numeric: tabular-nums;
+    text-align: left
+}
+
+.bib-key a,
+.bibliography .prefix a {
+    color: inherit;
+    text-decoration: none
+}
+
+mark {
+    background: #fff1a8;
+    padding: 0 .15em
+}
+
+.todo {
+    background: #ffd39a;
+    color: #4a2500;
+    border-radius: 2px
+}
+
+@media(max-width:1220px) {
+
+    .citation-note,
+    .footnote,
+    .course-sidenote {
+        display: none
+    }
+
+    .chapter-citation-sidenote {
+        float: none;
+        clear: both;
+        width: auto;
+        margin: .75rem 0 2rem;
+        color: var(--muted);
+        font-size: .78rem
+    }
+
+    .chapter-citation-sidenote pre {
+        max-width: 100%
+    }
+
+    .chapter-citation-sidenote code {
+        font-size: .76rem
+    }
+
+    .endnotes {
+        display: block
+    }
+
+    .footnote-ref {
+        margin-right: .1em
+    }
+}
+
+@media(min-width:1260px) {
+    .equation.is-overwide {
+        width: calc(100% + 234px);
+        max-width: calc(100vw - 48px);
+        overflow-x: auto;
+        overflow-y: visible
+    }
+
+    .equation.is-overwide.equation-aligned {
+        justify-content: start
+    }
+
+    .rendered-figure figcaption {
+        position: absolute;
+        top: .2rem;
+        left: calc(100% + 24px);
+        width: 210px;
+        margin-top: 0;
+        color: var(--muted);
+        font-family: var(--serif);
+        font-size: .78rem;
+        line-height: 1.35;
+        text-align: left
+    }
+
+    .env.statement .rendered-figure figcaption,
+    .env.statement figure.typst figcaption,
+    .env.proof .rendered-figure figcaption,
+    .env.proof figure.typst figcaption {
+        top: .2rem;
+        left: calc(100% + 24px + .85rem + 1px)
+    }
+}
+
+@media(max-width:1259px) {
+    .equation.is-overwide {
+        overflow-x: auto;
+        padding-right: 0
+    }
+
+    .equation.is-overwide .equation-line {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: .5rem;
+        width: max-content;
+        min-width: 100%
+    }
+
+    .equation.is-overwide .equation-math,
+    .equation.is-overwide .typst-frame {
+        flex: 0 0 auto
+    }
+
+    .equation.is-overwide .eqno {
+        flex: 0 0 auto;
+        padding-left: .35rem
+    }
+
+    .equation.is-overwide.equation-aligned {
+        width: max-content;
+        min-width: 100%
+    }
+
+    .equation.is-overwide.equation-aligned .equation-line {
+        display: contents;
+        width: auto;
+        min-width: 0
+    }
+
+    .equation.is-overwide.equation-aligned .eqno {
+        padding-left: 0
+    }
+}
+
+@media(min-width:1261px) {
+    .toc {
+        display: none
+    }
+}
+
+@media(max-width:1260px) {
+    .chapter-rail {
+        display: none
+    }
+}
+
+@media(max-width:900px) {
+
+    .lecture-content h1::before,
+    .lecture-content h2::before,
+    .lecture-content h3::before {
+        display: none
+    }
+}
+
+@media(max-width:640px) {
+    body {
+        font-size: 16.5px
+    }
+
+    .site-masthead,
+    .page-shell {
+        padding-left: 17px;
+        padding-right: 17px
+    }
+
+    .lecture-title,
+    .lecture-content .lecture-title {
+        font-size: 2.12rem;
+        line-height: 1.08
+    }
+}
+  </style>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn'});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
 </head>
 <body>
 <nav class="chapter-rail" aria-label="Chapters">
@@ -87,12 +1284,13 @@ if (document.fonts && document.fonts.ready) {
 <a class="chapter-rail-link is-current" href="P5-treeswap.html" aria-current="page"><span>5</span>TreeSwap</a>
 <a class="chapter-rail-link" href="P6-profile.html"><span>6</span>Profile Swap</a>
 <div class="chapter-rail-heading chapter-rail-section-heading">This Chapter</div>
-<a class="chapter-section-link chapter-section-l1" href="#5-1-the-treeswap-algorithm" data-section-link="5-1-the-treeswap-algorithm"><span class="chapter-section-no">5.1</span><span class="chapter-section-title">The <code>TreeSwap</code> Algorithm</span></a>
+<a class="chapter-section-link chapter-section-l1" href="#5-1-the-treeswap-algorithm" data-section-link="5-1-the-treeswap-algorithm"><span class="chapter-section-no">5.1</span><span class="chapter-section-title">The TreeSwap Algorithm</span></a>
 </nav>
 <main class="page-shell">
-<div class="chapter-kicker">Chapter 5</div>
+<article class="lecture-content" data-lecture-number="5">
+<p class="chapter-kicker">Chapter 5</p>
 <h1 class="lecture-title">TreeSwap: Efficient Swap Regret Minimization</h1>
-<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="../P5-treeswap.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-5,
+<aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="pdf/P5-treeswap.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-5,
   author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
   title = {Chapter 5: TreeSwap: Efficient Swap Regret Minimization},
   booktitle = {Learning and Computation of Phi-Equilibria},
@@ -101,60 +1299,1021 @@ if (document.fonts && document.fonts.ready) {
   url = {P5-treeswap.html}
 }</code></pre></details></aside>
 <nav class="toc" aria-label="Contents"><ol>
-<li class="toc-l1"><a href="#5-1-the-treeswap-algorithm"><span class="toc-no">5.1</span><span class="toc-title">The <code>TreeSwap</code> Algorithm</span></a></li>
+<li class="toc-l1"><a href="#5-1-the-treeswap-algorithm"><span class="toc-no">5.1</span><span class="toc-title">The TreeSwap Algorithm</span></a></li>
 </ol></nav>
-<article class="lecture-content">
 <p><mark class="todo">my intention so far is for this chapter to come last, after even the multicalibration section -brian</mark></p>
-<p>So far, we have seen that no-regret learning, and efficient equilibrium computation, are essentially possible whenever the set of deviations \(\Phi\) is &ldquo;efficiently representable&rdquo;, in particular,  whenever <em>external</em> regret minimization is possible over \(\Phi\). What about beyond? In particular, we have not yet addressed the <em>strongest</em> possible notion of \(\Phi\)-regret, namely, the case where \(\Phi\) contains <em>all</em> functions \(\phi: \mathcal{X} \to \mathcal{X}\)&mdash;known as <em>swap regret</em>.</p>
-<p>The fact that algorithms for \(\Phi\)-regret minimization grow increasingly complex as \(\Phi\) itself grows in complexity may lead one to believe that efficient swap regret minimization is hopeless. For example, the set of all functions \(\phi : \mathcal{X} \to \mathcal{X}\) has <em>knfinite</em> dimension, so the techniques we have covered so far do not work. If \(\mathcal{X}\) is a polytope, we could run the Blum-Mansour algorithm over its vertices&mdash;this would indeed succeed, but it has the drawback that the number of vertices of \(\mathcal{X}\) is generally not polynomial in the dimension \(d\) of \(\mathcal{X}\), and hence the algorithm is not efficient. Hence, for a long time, the possibility of swap regret minimization&mdash;and correspondingly, correlated equilibrium computation beyond normal-form games&mdash;remained a major open question.</p>
-<p>The question has since essentially been fully resolved. In a simultaneous major breakthrough, <span class="citation-wrap"><a class="citation" href="#bib-peng24-fast">Peng and Rubinstein [PR24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-peng24-fast">[PR24]</a> B. Peng and A. Rubinstein. (2024). Fast Swap Regret Minimization and Applications to Approximate Correlated Equilibria. Symposium on Theory of Computing (STOC).</span></span> <mark class="todo">there's still a extra period before the []. also, is it possible to have first names/initials in the references section but not in inline citations?</mark> and <span class="citation-wrap"><a class="citation" href="#bib-dagan24-from">Dagan, Daskalakis, Fishelson and Golowich [Dag+24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-dagan24-from">[Dag+24]</a> Y. Dagan, C. Daskalakis, M. Fishelson and N. Golowich. (2024). From External to Swap Regret 2.0: An Efficient Reduction for Large Action Spaces. Symposium on Theory of Computing (STOC).</span></span>, using essentially an identical algorithm now known as <code>TreeSwap</code>, showed that, if there is a regret minimizer on \(\mathcal{X}\) that achieves <em>external</em> regret \(\epsilon\) after \(M\) rounds, then there is a regret minimizer on \(\mathcal{X}\) that achieves \(\epsilon T\) <em>swap</em> regret after \(M^{1/\epsilon}\) rounds, and therefore efficient swap regret minimization <em>ks</em> in fact possible, at least when \(\epsilon\) is a constant. They also showed nearly-matching lower bounds for normal-form games, which <span class="citation-wrap"><a class="citation" href="#bib-daskalakis24-lower">Daskalakis, Farina, Golowich, Sandholm and Zhang [Das+24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-daskalakis24-lower">[Das+24]</a> C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2024). A Lower Bound on Swap Regret in Extensive-Form Games. arXiv preprint <a href="https://arxiv.org/abs/2406.13116">arXiv:2406.13116</a>.</span></span> later extended to extensive-form games as well, thereby precluding the possibility of \(\mathrm{poly}(d, 1/\epsilon)\)-time algorithms for swap regret beyond normal-form games. In this chapter, we will go over the upper bound.</p>
-<h1 id="5-1-the-treeswap-algorithm"><span class="secno">5.1</span> The <code>TreeSwap</code> Algorithm</h1>
-<p>We now describe the <code>TreeSwap</code> algorithm, following <span class="citation-wrap"><a class="citation" href="#bib-peng24-fast">Peng and Rubinstein [PR24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-peng24-fast">[PR24]</a> B. Peng and A. Rubinstein. (2024). Fast Swap Regret Minimization and Applications to Approximate Correlated Equilibria. Symposium on Theory of Computing (STOC).</span></span> and <span class="citation-wrap"><a class="citation" href="#bib-dagan24-from">Dagan, Daskalakis, Fishelson and Golowich [Dag+24]</a></span>. Let \(\mathcal{R}\) be a no-regret algorithm on \(\mathcal{X}\) whose regret is bounded by \(\epsilon T\) after \(M\) rounds. Of course, \(\mathcal{R}\) will not necessarily have small swap regret. So, how can we hope to bound swap regret?</p>
-<p>One thing to try might be the following. Instead of having \(\mathcal{R}\) update its strategy on <em>every</em> iteration, it will be lazy, and only update its strategy every \(M\) iterations, using the average utility on those \(M\) iterations. That is, at time \(M\), it receives utility \(\frac{1}{M} \sum_{t=1}^M \mathbf{u}^{(t)}\), at time \(2M\) it receives utility \(\frac{1}{M} \sum_{t=M+1}^{2M} \mathbf{u}^{(t)}\), and so on. Then, between those \(M\) iterations, that is, while \(\mathcal{R}\) is playing the same strategy, we initialize <em>another copy of the same regret minimizer</em>, which we will call \(\mathcal{R}'\), which updates its strategy on <em>every</em> iteration.</p>
-<p>The purpose of \(\mathcal{R}'\) is to bound the value of the most profitable deviation from every single strategy that \(\mathcal{R}\) plays. Therefore, \(\mathcal{R}'\) can ensure that no strategy played by \(\mathcal{R}\) incurs large swap regret. Of course, \(\mathcal{R}'\) itself will have high swap regret... but this can be solved by introducing yet more layers!</p>
-<p>The <code>TreeSwap</code> algorithm uses \(K\) layers of regret minimizers \(\mathcal{R}_0, \dots, \mathcal{R}_{K-1}\), each responsible for ensuring that there is no profitable swap deviation for the regret minimizers in the next layer. \(\mathcal{R}_0\) updates on every iteration. Each regret minimizer \(\mathcal{R}_k\) updates \(M\) times slower than the previous regret minimizer \(\mathcal{R}_{k-1}\), and resets every \(M\) updates. Hence, this algorithm runs for \(M^K\) steps. The strategy output by <code>TreeSwap</code> is the uniform distribution (not to be confused with the average) over the strategies \((\mathbf{x}^{(t)}_0, \dots, \mathbf{x}^{(t)}_{K-1})\) output by the \(K\) regret minimizers. For simplicity of notation, we will henceforth zero-index timesteps and use the notation \(\left[n\right] = \left\{0, ..., n-1\right\}\).</p>
-<section class="env algorithm" id="algorithm-alg-treeswap"><div class="env-title"><span class="algorithm-label">Algorithm 1</span> <span class="algorithm-caption">(<code>TreeSwap</code>)</span></div>
-<div class="pseudocode">
-<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>Input:</strong> Regret minimizers \(\mathcal{R}_1, \dots, \mathcal{R}_K\)</span></div>
-<div class="pseudo-line" style="--indent:0"><span class="pseudo-text"><strong>for</strong> timesteps \(t \in \left[T\right] \coloneqq \left[M^K\right]\) <strong>do</strong></span></div>
-<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text"><strong>for</strong> layers \(k \in \left[K\right]\) <strong>do</strong></span></div>
-<div class="pseudo-line" style="--indent:2"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span><span class="pseudo-text"><strong>if</strong> \(M^{k+1} | t\) <strong>then</strong> reset \(\mathcal{R}_k\)</span></div>
-<div class="pseudo-line" style="--indent:2"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span><span class="pseudo-text"><strong>else if</strong> \(M^k | t\) <strong>then</strong> pass to \(\mathcal{R}_k\) the average of the last \(M^k\) utilities, \(\frac{1}{M^k}\sum_{\tau=t - M^k}^{t-1} \mathbf{u}^{(\tau)}\)</span></div>
-<div class="pseudo-line" style="--indent:2"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span><span class="pseudo-text">\(\mathbf{x}^{(t)}_k \leftarrow\) current strategy of \(\mathcal{R}_k\)</span></div>
-<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-text">play mixed strategy \(\mathrm{Unif}(\mathbf{x}^{(t)}_0, \dots, \mathbf{x}^{(t)}_{K-1}) \in \Delta(\mathcal{X})\)</span></div>
-<div class="pseudo-line" style="--indent:1"><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-text">receive utility \(\mathbf{u}^{(t)} \in \mathbb{R}^d\)</span></div>
-</div>
-</section>
-<section class="env statement" id="statement-theorem-treeswap"><p><span class="env-title">Theorem 5.1.</span>&nbsp;&nbsp;The regret of <code>TreeSwap</code> is bounded by \(T \cdot (\epsilon + 1/K)\). In particular, taking \(K = 1/\epsilon\) and \(M = \mathrm{poly}(d, 1/\epsilon)\) (as is achieved by any reasonable external-regret-minimizing algorithm), <code>TreeSwap</code> achieves swap regret \(\epsilon T\) after \(M^K = d^{\tilde{O}(1/\epsilon)}\) iterations.</p>
-</section>
-<section class="env statement"><p><span class="env-title">Remark 5.2.</span>&nbsp;&nbsp;<a class="ref-link" href="#statement-theorem-treeswap">Theorem 5.1</a> only applies when \(T\) is a power of \(M\). Handling the case where \(T\) is not a power of \(M\) requires a bit of care and results in a looser bound of \(T \cdot (\epsilon + 3/K)\), but the main ideas are captured by the above result and its proof. <span class="citation-wrap"><a class="citation" href="#bib-dagan24-from">[Dag+24]</a><span class="citation-note"><a class="citation-note-key" href="#bib-dagan24-from">[Dag+24]</a> Y. Dagan, C. Daskalakis, M. Fishelson and N. Golowich. (2024). From External to Swap Regret 2.0: An Efficient Reduction for Large Action Spaces. Symposium on Theory of Computing (STOC).</span></span></p>
-</section>
-<p><mark class="todo">can [Dag+24] be displayed as [DDFS24] instead? I think `alpha` style in LaTeX does [ABC+00] for &gt;=4 authors</mark></p>
-<section class="env statement"><p><span class="env-title">Remark 5.3.</span>&nbsp;&nbsp;We are mainly interested in the implications of <a class="ref-link" href="#statement-theorem-treeswap">Theorem 5.1</a> for its implications for swap regret in high-dimensional settings. However, it is worth noting that <a class="ref-link" href="#statement-theorem-treeswap">Theorem 5.1</a> achieves a new result even in the normal-form setting: its regret bound for normal form, when instantiated with multiplicative weights, is \(\log(N)^{\tilde{O}(1/\epsilon)}\), which, for large \(N\) and \(\epsilon\), is better than the bound of Blum-Mansour.</p>
-</section>
-<p>We now sketch a proof of <a class="ref-link" href="#statement-theorem-treeswap">Theorem 5.1</a>.</p>
-<section class="env proof"><p><span class="env-title">Proof sketch.</span>&nbsp;&nbsp;In this proof, timesteps are zero-indexed, and \(\left[n\right] \coloneqq \left\{0, ..., n-1\right\}\). Let \(\phi : \mathcal{X} \to \mathcal{X}\) be any function. Then the (time-averaged) regret against \(\phi\) is given by</p>
-<div class="equation">\[\begin{aligned}\frac{1}{T} \mathrm{Reg}\left(T, \phi\right) &= \frac{1}{K} \sum_{k=0}^{K-1} \mathbb{E}_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)}, \phi \left(\mathbf{x}^{\left(t\right)}_k\right)\right\rangle - \left\langle \mathbf{u}^{\left(t\right)}, \mathbf{x}^{\left(t\right)}_k\right\rangle \\
-    &= \frac{1}{K} \sum_{k=0}^{K-1} \mathbb{E}_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)}, \phi \left(\mathbf{x}^{\left(t\right)}_k\right)\right\rangle - \frac{1}{K} \sum_{k=1}^{K} \mathbb{E}_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)}, \mathbf{x}^{\left(t\right)}_{k-1}\right\rangle \\
-    &= \frac{1}{K} \sum_{k=1}^{K-1} \underbrace{\mathbb{E}_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)}, \phi \left(\mathbf{x}^{\left(t\right)}_k\right) - \mathbf{x}^{\left(t\right)}_{k-1}\right\rangle}_{\le \epsilon} + \frac{1}{K} \underbrace{\mathbb{E}_{t \in \left[T\right]}\left\langle \mathbf{u}^{\left(t\right)}, \phi \left(\mathbf{x}^{\left(t\right)}_0\right) - \mathbf{x}^{\left(t\right)}_{K-1}\right\rangle}_{\le 1} \\
-    & \le \epsilon + \frac{1}{K}\end{aligned}\]<span class="eqno">(1)</span></div>
-<p>where, in the second-to-last line, the bound on the first term comes from the regret bound of each phase between resets (of length \(M\) updates), noting that \(\phi (\mathbf{x}^{(t)}_k)\) is constant within any given phase and thus the regret against \(\phi (\mathbf{x}^{(t)}_k)\)̧ is bounded by the external regret during the phase.</p>
-</section>
-<section class="bibliography" id="bibliography"><h1>Bibliography for this chapter</h1>
-<p id="bib-peng24-fast"><span class="bib-key">[PR24]</span><span class="bib-entry">B. Peng and A. Rubinstein. (2024). Fast Swap Regret Minimization and Applications to Approximate Correlated Equilibria. Symposium on Theory of Computing (STOC).</span></p>
-<p id="bib-dagan24-from"><span class="bib-key">[Dag+24]</span><span class="bib-entry">Y. Dagan, C. Daskalakis, M. Fishelson and N. Golowich. (2024). From External to Swap Regret 2.0: An Efficient Reduction for Large Action Spaces. Symposium on Theory of Computing (STOC).</span></p>
-<p id="bib-daskalakis24-lower"><span class="bib-key">[Das+24]</span><span class="bib-entry">C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2024). A Lower Bound on Swap Regret in Extensive-Form Games. arXiv preprint <a href="https://arxiv.org/abs/2406.13116">arXiv:2406.13116</a>.</span></p>
-</section>
-</article>
+    <p>So far, we have seen that no-regret learning, and efficient equilibrium computation, are essentially possible whenever the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> is “efficiently representable”, in particular, whenever <em>external</em> regret minimization is possible over <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>. What about beyond? In particular, we have not yet addressed the <em>strongest</em> possible notion of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret, namely, the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains <em>all</em> functions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span>—known as <em>swap regret</em>.</p>
+    <p>The fact that algorithms for <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimization grow increasingly complex as <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> itself grows in complexity may lead one to believe that efficient swap regret minimization is hopeless. For example, the set of all functions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> has <em>knfinite</em> dimension, so the techniques we have covered so far do not work. If <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is a polytope, we could run the Blum-Mansour algorithm over its vertices—this would indeed succeed, but it has the drawback that the number of vertices of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> is generally not polynomial in the dimension <span class="math-katex-source" data-math-display="inline" data-typst-math="[d]" role="math">\(d\)</span> of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span>, and hence the algorithm is not efficient. Hence, for a long time, the possibility of swap regret minimization—and correspondingly, correlated equilibrium computation beyond normal-form games—remained a major open question.</p>
+    <p>The question has since essentially been fully resolved. In a simultaneous major breakthrough, <span class="citation-wrap"><a class="citation" href="#loc-5" id="loc-1" role="doc-biblioref">Peng and Rubinstein [PR24]</a><span class="citation-note"><span class="citation-note-key">[PR24]</span> B. Peng and A. Rubinstein, “Fast Swap Regret Minimization and Applications to Approximate Correlated Equilibria,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span> <mark class="todo">there's still a extra period before the []. also, is it possible to have first names/initials in the references section but not in inline citations?</mark> and <span class="citation-wrap"><a class="citation" href="#loc-6" id="loc-2" role="doc-biblioref">Dagan, Daskalakis, Fishelson and Golowich [Dag+24]</a><span class="citation-note"><span class="citation-note-key">[Dag+24]</span> Y. Dagan, C. Daskalakis, M. Fishelson, and N. Golowich, “From External to Swap Regret 2.0: An Efficient Reduction for Large Action Spaces,” in <em>Symposium on Theory of Computing (STOC)</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>, using essentially an identical algorithm now known as <code>TreeSwap</code>, showed that, if there is a regret minimizer on <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> that achieves <em>external</em> regret <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span> after <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> rounds, then there is a regret minimizer on <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> that achieves <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [T])" role="math">\(\epsilon T\)</span> <em>swap</em> regret after <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: sequence([1], [/], [ϵ]))" role="math">\(M^{1/\epsilon}\)</span> rounds, and therefore efficient swap regret minimization <em>ks</em> in fact possible, at least when <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span> is a constant. They also showed nearly-matching lower bounds for normal-form games, which <span class="citation-wrap"><a class="citation" href="#loc-7" id="loc-3" role="doc-biblioref">Daskalakis, Farina, Golowich, Sandholm and Zhang [Das+24]</a><span class="citation-note"><span class="citation-note-key">[Das+24]</span> C. Daskalakis, G. Farina, N. Golowich, T. Sandholm, and B. H. Zhang, “A Lower Bound on Swap Regret in Extensive-Form Games,” <em>arXiv preprint <a href="https://arxiv.org/abs/2406.13116">arXiv:2406.13116</a></em>, 2024.</span></span> later extended to extensive-form games as well, thereby precluding the possibility of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [poly],
+  lr(
+    body: sequence([(], [d], [,], [ ], [1], [/], [ϵ], [)]),
+  ),
+)" role="math">\(\text{poly}(d, 1/\epsilon )\)</span>-time algorithms for swap regret beyond normal-form games. In this chapter, we will go over the upper bound.</p>
+    <h1 id="5-1-the-treeswap-algorithm" class="notes-heading" data-level="1" data-number="5.1"><span class="secno">5.1</span> The <code>TreeSwap</code> Algorithm</h1>
+    <p>We now describe the <code>TreeSwap</code> algorithm, following <span class="citation-wrap"><a class="citation" href="#loc-5" role="doc-biblioref">Peng and Rubinstein [PR24]</a></span> and <span class="citation-wrap"><a class="citation" href="#loc-6" role="doc-biblioref">Dagan, Daskalakis, Fishelson and Golowich [Dag+24]</a></span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> be a no-regret algorithm on <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: styled(child: [X], ..))" role="math">\(\mathcal{X}\)</span> whose regret is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [T])" role="math">\(\epsilon T\)</span> after <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> rounds. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> will not necessarily have small swap regret. So, how can we hope to bound swap regret?</p>
+    <p>One thing to try might be the following. Instead of having <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> update its strategy on <em>every</em> iteration, it will be lazy, and only update its strategy every <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, using the average utility on those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations. That is, at time <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span>, it receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  frac(num: [1], denom: [M]),
+  [ ],
+  attach(base: [∑], t: [M], b: sequence([t], [=], [1])),
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [u], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+)" role="math">\(\frac{1}{M} \sum_{t=1}^{M} \mathbf{u}^{(t)}\)</span>, at time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [M])" role="math">\(2M\)</span> it receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  frac(num: [1], denom: [M]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([2], [M]),
+    b: sequence([t], [=], [M], [+], [1]),
+  ),
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [u], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+)" role="math">\(\frac{1}{M} \sum_{t=M+1}^{2M} \mathbf{u}^{(t)}\)</span>, and so on. Then, between those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, that is, while <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> is playing the same strategy, we initialize <em>another copy of the same regret minimizer</em>, which we will call <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span>, which updates its strategy on <em>every</em> iteration.</p>
+    <p>The purpose of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> is to bound the value of the most profitable deviation from every single strategy that <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> plays. Therefore, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> can ensure that no strategy played by <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> incurs large swap regret. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> itself will have high swap regret… but this can be solved by introducing yet more layers!</p>
+    <p>The <code>TreeSwap</code> algorithm uses <span class="math-katex-source" data-math-display="inline" data-typst-math="[K]" role="math">\(K\)</span> layers of regret minimizers <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: styled(child: [R], ..), b: [0]),
+  [,],
+  [ ],
+  […],
+  [,],
+  [ ],
+  attach(
+    base: styled(child: [R], ..),
+    b: sequence([K], [−], [1]),
+  ),
+)" role="math">\(\mathbb{R}_{0}, \dots , \mathbb{R}_{K-1}\)</span>, each responsible for ensuring that there is no profitable swap deviation for the regret minimizers in the next layer. <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [0])" role="math">\(\mathbb{R}_{0}\)</span> updates on every iteration. Each regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span> updates <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> times slower than the previous regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: styled(child: [R], ..),
+  b: sequence([k], [−], [1]),
+)" role="math">\(\mathbb{R}_{k-1}\)</span>, and resets every <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> updates. Hence, this algorithm runs for <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: [K])" role="math">\(M^{K}\)</span> steps. The strategy output by <code>TreeSwap</code> is the uniform distribution (not to be confused with the average) over the strategies <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [(],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [0],
+  ),
+  [,],
+  [ ],
+  […],
+  [,],
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: sequence([K], [−], [1]),
+  ),
+  [)],
+)" role="math">\((\mathbf{x}_{0}^{(t)}, \dots , \mathbf{x}_{K-1}^{(t)})\)</span> output by the <span class="math-katex-source" data-math-display="inline" data-typst-math="[K]" role="math">\(K\)</span> regret minimizers. For simplicity of notation, we will henceforth zero-index timesteps and use the notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  lr(body: sequence([[], [n], []])),
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [{],
+      [0],
+      [,],
+      [ ],
+      […],
+      [,],
+      [ ],
+      [n],
+      [−],
+      [1],
+      [}],
+    ),
+  ),
+)" role="math">\([n] = \{0, \dots , n-1\}\)</span>.</p>
+    <section class="env algorithm">
+      <div class="env-title"><strong>Algorithm</strong>: <code>TreeSwap</code></div>
+      <div class="pseudocode">
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><strong>Input:</strong> Regret minimizers <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: styled(child: [R], ..), b: [1]),
+  [,],
+  [ ],
+  […],
+  [,],
+  [ ],
+  attach(base: styled(child: [R], ..), b: [K]),
+)" role="math">\(\mathbb{R}_{1}, \dots , \mathbb{R}_{K}\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><strong>for</strong> timesteps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [t],
+  [ ],
+  [∈],
+  [ ],
+  lr(body: sequence([[], [T], []])),
+  [ ],
+  [≔],
+  [ ],
+  lr(
+    body: sequence([[], attach(base: [M], t: [K]), []]),
+  ),
+)" role="math">\(t \in [T] \coloneqq [M^{K}]\)</span> <strong>do</strong></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text"><strong>for</strong> layers <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [k],
+  [ ],
+  [∈],
+  [ ],
+  lr(body: sequence([[], [K], []])),
+)" role="math">\(k \in [K]\)</span> <strong>do</strong></div>
+        </div>
+        <div class="pseudo-line" style="--indent:2">
+          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span></p>
+          <div class="pseudo-text"><strong>if</strong> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: [M], t: sequence([k], [+], [1])),
+  [ ],
+  [|],
+  [ ],
+  [t],
+)" role="math">\(M^{k+1} | t\)</span> <strong>then</strong> reset <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:2">
+          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span></p>
+          <div class="pseudo-text">
+            <p><strong>else if</strong> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [M], t: [k]), [ ], [|], [ ], [t])" role="math">\(M^{k} | t\)</span> <strong>then</strong> pass to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span> the average of the last <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: [k])" role="math">\(M^{k}\)</span> utilities,</p>
+            <figure class="equation" role="math">
+              <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
+  frac(num: [1], denom: attach(base: [M], t: [k])),
+  attach(
+    base: [∑],
+    t: sequence([t], [−], [1]),
+    b: sequence(
+      [τ],
+      [=],
+      [t],
+      [ ],
+      [−],
+      [ ],
+      attach(base: [M], t: [k]),
+    ),
+  ),
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [u], ..)),
+    t: lr(body: sequence([(], [τ], [)])),
+  ),
+)"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
+  frac(num: [1], denom: attach(base: [M], t: [k])),
+  attach(
+    base: [∑],
+    t: sequence([t], [−], [1]),
+    b: sequence(
+      [τ],
+      [=],
+      [t],
+      [ ],
+      [−],
+      [ ],
+      attach(base: [M], t: [k]),
+    ),
+  ),
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [u], ..)),
+    t: lr(body: sequence([(], [τ], [)])),
+  ),
+)">\[\displaystyle \frac{1}{M^{k}}\sum_{τ=t - M^{k}}^{t-1} \mathbf{u}^{\left(τ\right)}\]</span></div>
+            </figure>
+          </div>
+        </div>
+        <div class="pseudo-line" style="--indent:2">
+          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span></p>
+          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [k],
+  ),
+  [ ],
+  [←],
+)" role="math">\(\mathbf{x}_{k}^{(t)} ←\)</span> current strategy of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text">play mixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [Unif],
+  [(],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [0],
+  ),
+  [,],
+  [ ],
+  […],
+  [,],
+  [ ],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: sequence([K], [−], [1]),
+  ),
+  [)],
+  [ ],
+  [∈],
+  [ ],
+  sequence(
+    [Δ],
+    lr(
+      body: sequence(
+        [(],
+        equation(block: false, body: styled(child: [X], ..)),
+        [)],
+      ),
+    ),
+  ),
+)" role="math">\(\text{Unif}(\mathbf{x}_{0}^{(t)}, \dots , \mathbf{x}_{K-1}^{(t)}) \in \Delta (\mathcal{X})\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
+          <div class="pseudo-text">receive utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: styled(child: [u], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  [ ],
+  [∈],
+  [ ],
+  attach(
+    base: styled(child: equation(block: false, body: [ℝ]), ..),
+    t: [d],
+  ),
+)" role="math">\(\mathbf{u}^{(t)} \in \mathbb{R}^{d}\)</span></div>
+        </div>
+      </div>
+    </section>
+    <section class="env statement" id="loc-4">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">5<span class="env-number-separator">.</span>1</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">The regret of <code>TreeSwap</code> is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [T],
+  [ ],
+  [·],
+  [ ],
+  lr(
+    body: sequence([(], [ϵ], [ ], [+], [ ], [1], [/], [K], [)]),
+  ),
+)" role="math">\(T \cdot (\epsilon + 1/K)\)</span>. In particular, taking <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([K], [ ], [=], [ ], [1], [/], [ϵ])" role="math">\(K = 1/\epsilon\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [M],
+  [ ],
+  [=],
+  [ ],
+  sequence(
+    [poly],
+    lr(
+      body: sequence([(], [d], [,], [ ], [1], [/], [ϵ], [)]),
+    ),
+  ),
+)" role="math">\(M = \text{poly}(d, 1/\epsilon )\)</span> (as is achieved by any reasonable external-regret-minimizing algorithm), <code>TreeSwap</code> achieves swap regret <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [T])" role="math">\(\epsilon T\)</span> after <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: [M], t: [K]),
+  [ ],
+  [=],
+  [ ],
+  attach(
+    base: [d],
+    t: sequence(
+      accent(base: [O], accent: &quot;\u{303}&quot;),
+      lr(body: sequence([(], [1], [/], [ε], [)])),
+    ),
+  ),
+)" role="math">\(M^{K} = d^{(1/\epsilon )}\)</span> iterations.</div>
+    </section>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">5<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body"><a href="#loc-4">Theorem 5.1</a> only applies when <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> is a power of <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span>. Handling the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> is not a power of <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> requires a bit of care and results in a looser bound of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [T],
+  [ ],
+  [·],
+  [ ],
+  lr(
+    body: sequence([(], [ϵ], [ ], [+], [ ], [3], [/], [K], [)]),
+  ),
+)" role="math">\(T \cdot (\epsilon + 3/K)\)</span>, but the main ideas are captured by the above result and its proof. [<span class="citation-wrap"><a class="citation" href="#loc-6" role="doc-biblioref">Dag+24</a></span>]</div>
+    </section>
+    <p><mark class="todo">can [Dag+24] be displayed as [DDFS24] instead? I think `alpha` style in LaTeX does [ABC+00] for &gt;=4 authors</mark></p>
+    <section class="env statement">
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">5<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
+      <div class="env-body">We are mainly interested in the implications of <a href="#loc-4">Theorem 5.1</a> for its implications for swap regret in high-dimensional settings. However, it is worth noting that <a href="#loc-4">Theorem 5.1</a> achieves a new result even in the normal-form setting: its regret bound for normal form, when instantiated with multiplicative weights, is <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: sequence(
+    op(text: [log], limits: false),
+    lr(body: sequence([(], [N], [)])),
+  ),
+  t: sequence(
+    accent(base: [O], accent: &quot;\u{303}&quot;),
+    lr(body: sequence([(], [1], [/], [ϵ], [)])),
+  ),
+)" role="math">\(\operatorname{log}(N)^{(1/\epsilon )}\)</span>, which, for large <span class="math-katex-source" data-math-display="inline" data-typst-math="[N]" role="math">\(N\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>, is better than the bound of Blum-Mansour.</div>
+    </section>
+    <p>We now sketch a proof of <a href="#loc-4">Theorem 5.1</a>.</p>
+    <section class="env proof">
+      <p class="env-heading"><span class="env-title"><em>Proof Sketch.</em></span></p>
+      <div class="env-body">
+        <p>In this proof, timesteps are zero-indexed, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  lr(body: sequence([[], [n], []])),
+  [ ],
+  [≔],
+  [ ],
+  lr(
+    body: sequence(
+      [{],
+      [0],
+      [,],
+      [ ],
+      […],
+      [,],
+      [ ],
+      [n],
+      [−],
+      [1],
+      [}],
+    ),
+  ),
+)" role="math">\([n] \coloneqq \{0, \dots , n-1\}\)</span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [:],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+  [ ],
+  [→],
+  [ ],
+  equation(block: false, body: styled(child: [X], ..)),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> be any function. Then the (time-averaged) regret against <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is given by</p>
+        <figure class="equation equation-multiline equation-aligned" role="math">
+          <div class="equation-line is-unnumbered has-alignment" data-line="1" data-math-display="block" data-typst-math="sequence(
+  frac(num: [1], denom: [T]),
+  [ ],
+  [Reg],
+  lr(body: sequence([(], [T], [,], [ ], [φ], [)])),
+  [ ],
+  align-point(),
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([K], [−], [1]),
+    b: sequence([k], [=], [0]),
+  ),
+  [ ],
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      [t],
+      [ ],
+      [∈],
+      [ ],
+      lr(body: sequence([[], [T], []])),
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      sequence(
+        [φ],
+        [ ],
+        [(],
+        attach(
+          base: equation(block: false, body: styled(child: [x], ..)),
+          t: lr(body: sequence([(], [t], [)])),
+          b: [k],
+        ),
+        [)],
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [ ],
+  [−],
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+        b: [k],
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+)"><span class="equation-align-left math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  frac(num: [1], denom: [T]),
+  [ ],
+  [Reg],
+  lr(body: sequence([(], [T], [,], [ ], [φ], [)])),
+)">\(\displaystyle \frac{1}{T} \text{Reg}\left(T, \phi \right)\)</span><span class="equation-align-right math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([K], [−], [1]),
+    b: sequence([k], [=], [0]),
+  ),
+  [ ],
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      [t],
+      [ ],
+      [∈],
+      [ ],
+      lr(body: sequence([[], [T], []])),
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      sequence(
+        [φ],
+        [ ],
+        [(],
+        attach(
+          base: equation(block: false, body: styled(child: [x], ..)),
+          t: lr(body: sequence([(], [t], [)])),
+          b: [k],
+        ),
+        [)],
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [ ],
+  [−],
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+        b: [k],
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+)">\(\displaystyle = \frac{1}{K} \sum_{k=0}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{k}^{\left(t\right)}\right) \right\rangle - \left\langle \mathbf{u}^{\left(t\right)},\mathbf{x}_{k}^{\left(t\right)} \right\rangle\)</span></div>
+          <div class="equation-line is-unnumbered has-alignment" data-line="2" data-math-display="block" data-typst-math="sequence(
+  align-point(),
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([K], [−], [1]),
+    b: sequence([k], [=], [0]),
+  ),
+  [ ],
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      [t],
+      [ ],
+      [∈],
+      [ ],
+      lr(body: sequence([[], [T], []])),
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      sequence(
+        [φ],
+        [ ],
+        [(],
+        attach(
+          base: equation(block: false, body: styled(child: [x], ..)),
+          t: lr(body: sequence([(], [t], [)])),
+          b: [k],
+        ),
+        [)],
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [ ],
+  [−],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(base: [∑], t: [K], b: sequence([k], [=], [1])),
+  [ ],
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      [t],
+      [ ],
+      [∈],
+      [ ],
+      lr(body: sequence([[], [T], []])),
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+        b: sequence([k], [−], [1]),
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+)"><span class="equation-align-left math-katex-source" data-math-display="inline" data-typst-math="[]"></span><span class="equation-align-right math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([K], [−], [1]),
+    b: sequence([k], [=], [0]),
+  ),
+  [ ],
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      [t],
+      [ ],
+      [∈],
+      [ ],
+      lr(body: sequence([[], [T], []])),
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      sequence(
+        [φ],
+        [ ],
+        [(],
+        attach(
+          base: equation(block: false, body: styled(child: [x], ..)),
+          t: lr(body: sequence([(], [t], [)])),
+          b: [k],
+        ),
+        [)],
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [ ],
+  [−],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(base: [∑], t: [K], b: sequence([k], [=], [1])),
+  [ ],
+  attach(
+    base: op(
+      text: styled(child: equation(block: false, body: [E]), ..),
+      limits: true,
+    ),
+    b: sequence(
+      [t],
+      [ ],
+      [∈],
+      [ ],
+      lr(body: sequence([[], [T], []])),
+    ),
+  ),
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      attach(
+        base: equation(block: false, body: styled(child: [u], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [,],
+      attach(
+        base: equation(block: false, body: styled(child: [x], ..)),
+        t: lr(body: sequence([(], [t], [)])),
+        b: sequence([k], [−], [1]),
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+)">\(\displaystyle = \frac{1}{K} \sum_{k=0}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{k}^{\left(t\right)}\right) \right\rangle - \frac{1}{K} \sum_{k=1}^{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\mathbf{x}_{k-1}^{\left(t\right)} \right\rangle\)</span></div>
+          <div class="equation-line is-unnumbered has-alignment" data-line="3" data-math-display="block" data-typst-math="sequence(
+  align-point(),
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([K], [−], [1]),
+    b: sequence([k], [=], [1]),
+  ),
+  [ ],
+  underbrace(
+    body: sequence(
+      attach(
+        base: op(
+          text: styled(child: equation(block: false, body: [E]), ..),
+          limits: true,
+        ),
+        b: sequence(
+          [t],
+          [ ],
+          [∈],
+          [ ],
+          lr(body: sequence([[], [T], []])),
+        ),
+      ),
+      [ ],
+      equation(
+        block: false,
+        body: lr(
+          body: sequence(
+            [⟨],
+            [ ],
+            attach(
+              base: equation(block: false, body: styled(child: [u], ..)),
+              t: lr(body: sequence([(], [t], [)])),
+            ),
+            [,],
+            sequence(
+              [φ],
+              [ ],
+              [(],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: [k],
+              ),
+              [)],
+              [ ],
+              [−],
+              [ ],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: sequence([k], [−], [1]),
+              ),
+            ),
+            [ ],
+            [⟩],
+          ),
+        ),
+      ),
+    ),
+    annotation: sequence([≤], [ ], [ϵ]),
+  ),
+  [ ],
+  [+],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  underbrace(
+    body: sequence(
+      attach(
+        base: op(
+          text: styled(child: equation(block: false, body: [E]), ..),
+          limits: true,
+        ),
+        b: sequence(
+          [t],
+          [ ],
+          [∈],
+          [ ],
+          lr(body: sequence([[], [T], []])),
+        ),
+      ),
+      equation(
+        block: false,
+        body: lr(
+          body: sequence(
+            [⟨],
+            [ ],
+            attach(
+              base: equation(block: false, body: styled(child: [u], ..)),
+              t: lr(body: sequence([(], [t], [)])),
+            ),
+            [,],
+            sequence(
+              [φ],
+              [ ],
+              [(],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: [0],
+              ),
+              [)],
+              [ ],
+              [−],
+              [ ],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: sequence([K], [−], [1]),
+              ),
+            ),
+            [ ],
+            [⟩],
+          ),
+        ),
+      ),
+    ),
+    annotation: sequence([≤], [ ], [1]),
+  ),
+)"><span class="equation-align-left math-katex-source" data-math-display="inline" data-typst-math="[]"></span><span class="equation-align-right math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [=],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  attach(
+    base: [∑],
+    t: sequence([K], [−], [1]),
+    b: sequence([k], [=], [1]),
+  ),
+  [ ],
+  underbrace(
+    body: sequence(
+      attach(
+        base: op(
+          text: styled(child: equation(block: false, body: [E]), ..),
+          limits: true,
+        ),
+        b: sequence(
+          [t],
+          [ ],
+          [∈],
+          [ ],
+          lr(body: sequence([[], [T], []])),
+        ),
+      ),
+      [ ],
+      equation(
+        block: false,
+        body: lr(
+          body: sequence(
+            [⟨],
+            [ ],
+            attach(
+              base: equation(block: false, body: styled(child: [u], ..)),
+              t: lr(body: sequence([(], [t], [)])),
+            ),
+            [,],
+            sequence(
+              [φ],
+              [ ],
+              [(],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: [k],
+              ),
+              [)],
+              [ ],
+              [−],
+              [ ],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: sequence([k], [−], [1]),
+              ),
+            ),
+            [ ],
+            [⟩],
+          ),
+        ),
+      ),
+    ),
+    annotation: sequence([≤], [ ], [ϵ]),
+  ),
+  [ ],
+  [+],
+  [ ],
+  frac(num: [1], denom: [K]),
+  [ ],
+  underbrace(
+    body: sequence(
+      attach(
+        base: op(
+          text: styled(child: equation(block: false, body: [E]), ..),
+          limits: true,
+        ),
+        b: sequence(
+          [t],
+          [ ],
+          [∈],
+          [ ],
+          lr(body: sequence([[], [T], []])),
+        ),
+      ),
+      equation(
+        block: false,
+        body: lr(
+          body: sequence(
+            [⟨],
+            [ ],
+            attach(
+              base: equation(block: false, body: styled(child: [u], ..)),
+              t: lr(body: sequence([(], [t], [)])),
+            ),
+            [,],
+            sequence(
+              [φ],
+              [ ],
+              [(],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: [0],
+              ),
+              [)],
+              [ ],
+              [−],
+              [ ],
+              attach(
+                base: equation(block: false, body: styled(child: [x], ..)),
+                t: lr(body: sequence([(], [t], [)])),
+                b: sequence([K], [−], [1]),
+              ),
+            ),
+            [ ],
+            [⟩],
+          ),
+        ),
+      ),
+    ),
+    annotation: sequence([≤], [ ], [1]),
+  ),
+)">\(\displaystyle = \frac{1}{K} \sum_{k=1}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{k}^{\left(t\right)}\right) - \mathbf{x}_{k-1}^{\left(t\right)} \right\rangle + \frac{1}{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]}\left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{0}^{\left(t\right)}\right) - \mathbf{x}_{K-1}^{\left(t\right)} \right\rangle\)</span></div>
+          <div class="equation-line is-unnumbered has-alignment" data-line="4" data-math-display="block" data-typst-math="sequence(
+  align-point(),
+  [ ],
+  [≤],
+  [ ],
+  [ϵ],
+  [ ],
+  [+],
+  [ ],
+  frac(num: [1], denom: [K]),
+)"><span class="equation-align-left math-katex-source" data-math-display="inline" data-typst-math="[]"></span><span class="equation-align-right math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [≤],
+  [ ],
+  [ϵ],
+  [ ],
+  [+],
+  [ ],
+  frac(num: [1], denom: [K]),
+)">\(\displaystyle \le \epsilon + \frac{1}{K}\)</span></div>
+        </figure>
+        <p>where, in the second-to-last line, the bound on the first term comes from the regret bound of each phase between resets (of length <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> updates), noting that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [(],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [k],
+  ),
+  [)],
+)" role="math">\(\phi (\mathbf{x}_{k}^{(t)})\)</span> is constant within any given phase and thus the regret against <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [φ],
+  [ ],
+  [(],
+  attach(
+    base: equation(block: false, body: styled(child: [x], ..)),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [k],
+  ),
+  [)],
+)" role="math">\(\phi (\mathbf{x}_{k}^{(t)})\)</span>̧ is bounded by the external regret during the phase.</p>
+      </div>
+    </section>
+    <section class="bibliography" id="bibliography">
+      <h1 class="notes-heading notes-heading-unnumbered" data-level="1">Bibliography for this chapter</h1>
+      <table class="bibliography-table">
+        <tbody><tr id="loc-5" class="bibliography-row">
+          <td class="bib-key">[PR24]</td>
+          <td class="bib-entry">B. Peng and A. Rubinstein. (2024). Fast Swap Regret Minimization and Applications to Approximate Correlated Equilibria. <em>Symposium on Theory of Computing (STOC)</em>.</td>
+        </tr>
+        <tr id="loc-6" class="bibliography-row">
+          <td class="bib-key">[Dag+24]</td>
+          <td class="bib-entry">Y. Dagan, C. Daskalakis, M. Fishelson and N. Golowich. (2024). From External to Swap Regret 2.0: An Efficient Reduction for Large Action Spaces. <em>Symposium on Theory of Computing (STOC)</em>.</td>
+        </tr>
+        <tr id="loc-7" class="bibliography-row">
+          <td class="bib-key">[Das+24]</td>
+          <td class="bib-entry">C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2024). A Lower Bound on Swap Regret in Extensive-Form Games. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2406.13116">arXiv:2406.13116</a></em>.</td>
+        </tr>
+      </tbody></table>
+    </section></article>
 </main>
 <script>
 (() => {
   const links = Array.from(document.querySelectorAll("[data-section-link]"));
   if (!links.length) return;
   const byId = new Map(links.map((link) => [link.getAttribute("data-section-link"), link]));
-  const sections = Array.from(byId.keys())
-    .map((id) => document.getElementById(id))
-    .filter(Boolean);
+  const sections = Array.from(byId.keys()).map((id) => document.getElementById(id)).filter(Boolean);
   const setActive = (id) => {
     for (const link of links) {
       const active = link.getAttribute("data-section-link") === id;
@@ -178,6 +2337,51 @@ if (document.fonts && document.fonts.ready) {
   document.addEventListener("scroll", update, { passive: true });
   window.addEventListener("resize", update);
   window.addEventListener("hashchange", update);
+})();
+</script>
+<script>
+(() => {
+  function boxWidth(el){
+    if (!el) return 0;
+    var rect = el.getBoundingClientRect();
+    return Math.max(el.scrollWidth || 0, rect.width || 0);
+  }
+  function maxWidth(nodes){
+    return nodes.reduce(function(max, node){ return Math.max(max, boxWidth(node)); }, 0);
+  }
+  function equationNeededWidth(eq){
+    var style = window.getComputedStyle(eq);
+    var columnGap = parseFloat(style.columnGap) || 0;
+    var gap = 12;
+    if (eq.classList.contains("equation-aligned")) {
+      var left = maxWidth(Array.from(eq.querySelectorAll(".equation-align-left")));
+      var right = maxWidth(Array.from(eq.querySelectorAll(".equation-align-right")));
+      var full = maxWidth(Array.from(eq.querySelectorAll(".equation-align-full")));
+      var eqno = maxWidth(Array.from(eq.querySelectorAll(".eqno")));
+      var aligned = left + right + columnGap + (eqno ? eqno + columnGap : 0);
+      return Math.max(full, aligned, eq.scrollWidth || 0);
+    }
+    var rows = Array.from(eq.querySelectorAll(".equation-line"));
+    if (!rows.length) rows = Array.from(eq.querySelectorAll(".typst-frame"));
+    var rowWidth = maxWidth(rows);
+    var math = maxWidth(Array.from(eq.querySelectorAll(".equation-math, .equation-align-full, .typst-frame")));
+    var eqno = maxWidth(Array.from(eq.querySelectorAll(".eqno")));
+    return Math.max(rowWidth, math + (eqno ? eqno + gap : 0), eq.scrollWidth || 0);
+  }
+  function markOverwideEquations(){
+    document.querySelectorAll(".equation").forEach(function(eq){
+      eq.classList.remove("is-overwide");
+      var available = eq.clientWidth;
+      var needed = equationNeededWidth(eq);
+      if (needed > available + 2) eq.classList.add("is-overwide");
+    });
+  }
+  window.markOverwideEquations = markOverwideEquations;
+  window.addEventListener("resize", markOverwideEquations);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(markOverwideEquations);
+  window.setTimeout(markOverwideEquations, 0);
+  window.setTimeout(markOverwideEquations, 80);
+  window.setTimeout(markOverwideEquations, 300);
 })();
 </script>
 </body>

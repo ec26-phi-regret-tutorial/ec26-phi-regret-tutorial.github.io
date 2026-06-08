@@ -4,7 +4,7 @@
 
 #show: gabri_notes.with(lec_num: 1, date: none, title: "Introduction")
 
-This chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we will introduce and motivate the notion of _$Phi$-regret_ and the corresponding solution concept in games---_$Phi$-equilibrium_. In the second part, we will introduce a canonical algorithmic template for minimizing _$Phi$-regret_
+This chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we will introduce and motivate the notion of _$Phi$-regret_ and the corresponding solution concept in games---_$Phi$-equilibrium_. In the second part, we will introduce a canonical algorithmic template for minimizing _$Phi$-regret_.
 
 = Online learning and regret
 
@@ -82,9 +82,10 @@ We now go over a concrete example to further elucidate these concepts.
   This game has exactly three Nash equilibria: i) (Go, Stop), ii) (Stop, Go), and iii) $((5/6, 1/6), (5/6, 1/6))$, meaning that both players play "Stop" with probability $5/6$. From these three outcomes, the first two are _not_ equitable in that they favor one player over the other. The third outcome is even worse: it leads to a crash with some positive probability.
 
   (C)CEs address these issues by unlocking new outcomes. In particular, let's consider the correlated distribution $1/2 ("Go", "Stop") + 1/2 ("Stop", "Go")$. It's easy to verify that this is a CE, and thus a CCE. Under that distribution, both players get in expectation a utility of $1/2$. Focusing CEs, there is a natural interpretation of this outcome through a _traffic light_, which provides a signal to each player. If Player 1 is recommended "Stop," it means that Player 2 will play "Go" with probability $1$, so stopping is in Player 1's interest. On the other hand, if Player 1 is recommended "Go," it means that Player 2 will play "Stop" with probability $1$, so crossing is safe for Player 1. That is, in a CE, the signal a player observes updates that player's beliefs concerning the behavior of the other players
-  #comment[
+  #comment(
+    visual: align(center)[#fig_chicken.body],
+  )[
     The game of chicken.
-    #align(center)[#fig_chicken.body]
   ]
 ]
 
