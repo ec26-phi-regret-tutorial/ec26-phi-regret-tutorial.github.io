@@ -7,11 +7,11 @@
   title: [Profile Swap Regret, Manipulability, and\ Response-Based Approachability],
 )
 
-In this chapter, we introduce the notion of _profile swap regret_, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees _non-manipulability_---in a sense that will be formalized---against a dynamic optimizer. What's more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by~#citet(<Arunachaleswaran25:Profile>), who also provided the first efficient algorithm. In what follows, we present the approach of #citet(<Anagnostides26:Swap>), which in turn relies on the response-based approachability algorithm of #citet(<Bernstein15:Approachability>).
+In this chapter, we introduce the notion of _profile swap regret_, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees _non-manipulability_---in a sense that will be formalized soon---against a dynamic optimizer. What's more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by~#citet(<Arunachaleswaran25:Profile>), who also provided the first efficient algorithm. In what follows, we present the approach of #citet(<Anagnostides26:Swap>), which in turn relies on the response-based approachability algorithm of #citet(<Bernstein15:Approachability>).
 
 = Setup
 
-We operate in the usual online linear optimization setting. The learner picks strategies from a convex and compact strategy set $cX subset RR^d$. At every round $t in [T]$, the learner first selects a strategy $vx^((t)) in cX$; the adversary selects a utility vector $vu^((t)) in cal(U) subset.eq RR^d$; then the learner receives utility $ip(vx^((t)), vu^((t)))$, and observes $vu^((t))$ as feedback. We make the standard normalization assumption $abs(ip(vx, vu)) <= 1$ for all $vx in cX, vu in cal(U).$ In what follows, for a utility vector $vu in cal(U)$, we define the best-response map $b(vu) in argmax_(vx in cX) ip(vx, vu),$ with ties broken arbitrarily.
+We operate in the usual online linear optimization setting. The learner picks strategies from a convex and compact strategy set $cX subset RR^d$. At every round $t in [T]$, the learner first selects a strategy $vx^((t)) in cX$; the adversary selects a utility vector $vu^((t)) in cal(U) subset.eq RR^d$; then the learner receives utility $ip(vx^((t)), vu^((t)))$ and observes $vu^((t))$ as feedback. We make the standard normalization assumption $abs(ip(vx, vu)) <= 1$ for all $vx in cX, vu in cal(U).$ In what follows, for a utility vector $vu in cal(U)$, we define the best-response map $b(vu) in argmax_(vx in cX) ip(vx, vu),$ with ties broken arbitrarily.
 
 
 *Linear swap regret.* We first recall the benchmark of linear swap regret. An affine map $phi: cX -> RR^d$ is an _endomorphism_ of $cX$ if $phi(cX) subset.eq cX$. We denote by $"End"(cX)$ the set of affine endomorphisms. We write each $phi in "End"(cX)$ as $phi(vx) = matM vx + va.$ The _linear swap regret_ of the learner after $T$ rounds is
@@ -26,7 +26,7 @@ $
 $
 
 
-This is a natural relaxation of (full) swap regret: instead of allowing arbitrary maps, the performance of the learner is compared against affine endomorphisms. In this case, the algorithm of #citet(<Gordon08:No>) reduces linear swap regret to external regret over the $d(d+1)$-dimensional set deviations. This implies an online algorithm with linear swap regret growing as $O(d sqrt(T))$, which is information-theoretically optimal~#citep(<Anagnostides26:Swap>). On the other hand, the algorithm of~#citet(<Gordon08:No>) is computationally inefficient~#citep(<Daskalakis25:Efficient>). This lecture will cover an approachability framework that circumvents this barrier.
+This is a natural relaxation of (full) swap regret: instead of allowing arbitrary maps, the performance of the learner is compared against affine endomorphisms. In this case, the algorithm of #citet(<Gordon08:No>) reduces linear swap regret to external regret over the $d(d+1)$-dimensional set of deviations. This implies an online algorithm with linear swap regret growing as $O(d sqrt(T))$, which is information-theoretically optimal~#citep(<Anagnostides26:Swap>). On the other hand, the algorithm of~#citet(<Gordon08:No>) is computationally inefficient~#citep(<Daskalakis25:Efficient>). This lecture will cover an approachability framework that circumvents this computational barrier.
 
 *Correlated strategy profiles.* A basic object in the approachability formulation is the _correlated strategy profile (CSP)_. Specifically, for a realized pair $(vx^((t)), vu^((t)))$, we define $kappa^((t)) := (vu^((t)) times.o vx^((t)), vu^((t))) in RR^(d times (d+1)).$ The average CSP is
 
@@ -42,7 +42,7 @@ $
   ip((matM, va) - (matI, 0), overline(kappa)^((T))).
 $ <eq:linear-swap-csp>
 
-Using this reformulation, we will shortly see how to reduce minimizing linear swap regret to a suitable approachability instance.
+Using this reformulation, we will shortly see how to reduce minimizing linear swap regret to a suitable approachability problem.
 
 = Profile swap regret and non-manipulability
 
@@ -61,7 +61,7 @@ where $lambda_j >= 0$, $sum_(j=1)^m lambda_j = 1$, $vx_j in cX$, and $vu_j in ca
   where the minimum is over all valid convex decompositions of $overline(kappa)^((T))$.
 ]
 
-The definition is admittedly somewhat cumbersome, but as we shall see it unlocks certain powerful properties. Specifically, this is a good time to discuss the notion of non-manipulability due to~#citet(<Deng19:Strategizing>).
+The definition is admittedly somewhat cumbersome, but as we shall see it unlocks certain powerful properties. This is a good time to discuss the notion of non-manipulability due to~#citet(<Deng19:Strategizing>).
 
 == Manipulability against a dynamic optimizer
 
@@ -78,15 +78,12 @@ $
   u_o (vx, vy),
 $
 
-where $"BR"(vy) := argmax_(vx in cX) u_ell (vx, vy).$ The Stackelberg value is what the optimizer can guarantee by means of a _static_ commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a _dynamic_ strategy: instead of playing a fixed strategy $vy$, the optimizer chooses a sequence $vy^((1)), vy^((2)), dots$ so as to steer the learner's future play toward more favorable outcomes.
+where $"BR"(vy) := argmax_(vx in cX) u_ell (vx, vy).$ The Stackelberg value is what the optimizer can guarantee by means of a _static_ commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a _dynamic_ strategy: instead of playing a fixed strategy $vy$, the optimizer chooses a sequence $vy^((1)), vy^((2)), dots$ so as to steer the learner's future play toward more favorable outcomes. (It's interesting to note that this steering problem can be computationally intractable~#citep(<Assos24:Maximizing>).) Equivalently, even if the optimizer fully understands the learner's algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.
 
-
-Equivalently, even if the optimizer fully understands the learner's algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.
-
-A key observation crystallized by #citet(<Arunachaleswaran25:Profile>) is that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.
+A beautiful connection crystallized by #citet(<Arunachaleswaran25:Profile>) reassures us that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.
 
 #proposition[
-  If a learning algorithm guarantees $"ProfileSwapReg"^((T)) = o(T)$, it is asymptotically non-manipulable.
+  If a learning algorithm guarantees $"ProfileSwapReg"^((T)) = o(T)$, it is non-manipulable.
 ] <prop:profile-nomanip>
 
 
@@ -134,13 +131,13 @@ What's more, the same target set also captures profile swap regret. The followin
   The profile swap distance of $overline(kappa)^((T))$ is equal to $"AppLoss"^((T))$.
 ] <lem:profile-swap-distance>
 
-The profile swap distance of a CSP $overline(kappa)^((T))$ is infimum Euclidean distance of $overline(kappa)^((T))$ from a CSP with zero profile swap regret. As a result, we conclude that minimizing the approachability loss simultaneously circumscribes both linear swap regret and profile swap regret.
+The profile swap distance of a CSP $overline(kappa)^((T))$ is the infimum Euclidean distance of $overline(kappa)^((T))$ from a CSP with zero profile swap regret. As a result, we conclude that minimizing the approachability loss simultaneously circumscribes both linear swap regret and profile swap regret.
 
 = Response-based approachability
 
-The key observation is that the induced approachability problem can be solved efficiently through the response-based framework of~#citet(<Bernstein15:Approachability>); this was observed by~#citet(<Anagnostides26:Swap>).
+The key observation now is that the induced approachability problem can be solved efficiently through the response-based approachability framework of~#citet(<Bernstein15:Approachability>). This was recently leveraged by~#citet(<Anagnostides26:Swap>).
 
-The algorithm proceeds by maintaining an accumulated displacement
+The algorithm proceeds by maintaining the accumulated displacement
 
 $ matU^((t)) := sum_(tau=1)^t (kappa^((tau)) - vs^((tau))) in RR^(d times (d+1)). $
 
@@ -203,7 +200,7 @@ The proof of correctness crucially relies on the minimax theorem, as we formaliz
     >=
     min_(vu in cal(U)) max_(vx in cX) g_t (vx, vu).
   $
-  Since $vu_*^((t))$ is minimax, and $b(vu_*^((t)))$ is a feasible strategy in $cX$,
+  Since $vu_*^((t))$ is minimax optimal and $b(vu_*^((t)))$ is a feasible strategy in $cX$,
   $
     min_(vu in cal(U)) max_(vx in cX) g_t (vx, vu)
     >=
