@@ -1331,7 +1331,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓒]),
-)" role="math">\(\mathbf{c}^{(t)} \in \mathcal{C}\)</span>. The learner outputs a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [D], t: lr(body: sequence([(], [t], [)])))" role="math">\(D^{(t)}\)</span> over forecasts <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{c}^{(t)} \in \mathcal{C}\)</span>. The learner outputs a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [D], t: lr(body: sequence([(], [t], [)])))" role="math">\(D^{(t)}\)</span> over forecasts <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐩]),
     t: lr(body: sequence([(], [t], [)])),
@@ -1344,7 +1344,7 @@ mark {
   [⊆],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
-)" role="math">\(\mathbf{p}^{(t)} \in \mathcal{U} \subseteq \mathbb{R}^{d}\)</span>, and Nature then reveals the true utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{p}^{(t)} \in \mathcal{U} \subseteq \mathbb{R}^{d}\)</span>, and Nature then reveals the true utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
@@ -1353,7 +1353,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓤]),
-)" role="math">\(\mathbf{u}^{(t)} \in \mathcal{U}\)</span>. Given test <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{u}^{(t)} \in \mathcal{U}\)</span>. Given test <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [h],
   [ ],
   [:],
@@ -1529,7 +1529,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \text{MC-Err}^{\left(T\right)} \left(h\right) \coloneqq \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)} \right\rangle \right].\]</span> <span class="eqno">(1)</span></div>
+)">\[\displaystyle \text{MC-Err}^{\left(T\right)} \left(h\right) \coloneqq \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h\left(\boldsymbol{c}^{\left(t\right)}, \boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} - \boldsymbol{p}^{\left(t\right)} \right\rangle \right].\]</span> <span class="eqno">(1)</span></div>
     </figure>
     <p>The forecasts are <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓗])" role="math">\(\mathcal{H}\)</span>-multicalibrated if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -1687,7 +1687,7 @@ mark {
   [ ],
   [𝓤],
   [.],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{p} \sim D} \left[\left\langle S\left(\mathbf{p}\right),\mathbf{u} - \mathbf{p} \right\rangle \right] \le \epsilon \quad \forall \mathbf{u} \in \mathcal{U}.\]</span> <span class="eqno">(2)</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\boldsymbol{p} \sim D} \left[\left\langle S\left(\boldsymbol{p}\right),\boldsymbol{u} - \boldsymbol{p} \right\rangle \right] \le \epsilon \quad \forall \boldsymbol{u} \in \mathcal{U}.\]</span> <span class="eqno">(2)</span></div>
         </figure>
       </div>
     </section>
@@ -1697,12 +1697,12 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓤]),
-)" role="math">\(\mathbf{u} \in \mathcal{U}\)</span> has positive correlation with the residual direction <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{u} \in \mathcal{U}\)</span> has positive correlation with the residual direction <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [S],
   lr(
     body: sequence([(], equation(block: false, body: [𝐩]), [)]),
   ),
-)" role="math">\(S(\mathbf{p})\)</span> by more than <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>. This is exactly what will make the regret analysis telescope. Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions; for our purposes, the important point is that EVIs are a standalone optimization primitive, just as fixed points were in the Gordon-Greenwald-Marks theorem from Chapter 1.</p>
+)" role="math">\(S(\boldsymbol{p})\)</span> by more than <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>. This is exactly what will make the regret analysis telescope. Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions; for our purposes, the important point is that EVIs are a standalone optimization primitive, just as fixed points were in the Gordon-Greenwald-Marks theorem from Chapter 1.</p>
     <p>Now suppose that we have an external-regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: equation(block: false, body: [𝓗]))" role="math">\(R_{\mathcal{H}}\)</span> whose decision set is the class of tests <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓗])" role="math">\(\mathcal{H}\)</span>. In each round, it chooses a test <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [h], t: lr(body: sequence([(], [t], [)]))),
   [ ],
@@ -1859,7 +1859,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle g^{\left(t\right)}\left(h\right) \coloneqq \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)} \right\rangle \right].\]</span> <span class="eqno">(3)</span></div>
+)">\[\displaystyle g^{\left(t\right)}\left(h\right) \coloneqq \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h\left(\boldsymbol{c}^{\left(t\right)}, \boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} - \boldsymbol{p}^{\left(t\right)} \right\rangle \right].\]</span> <span class="eqno">(3)</span></div>
     </figure>
     <p>The reduction is as follows.</p>
     <section class="env algorithm">
@@ -1872,7 +1872,7 @@ mark {
           <div class="pseudo-text"><strong>function</strong> <code>NextForecast</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐜]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{c}^{(t)}\)</span>):</div>
+)" role="math">\(\boldsymbol{c}^{(t)}\)</span>):</div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
@@ -1910,7 +1910,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(S^{(t)}(\mathbf{p}) \coloneqq h^{(t)}(\mathbf{c}^{(t)}, \mathbf{p})\)</span>:</p>
+)" role="math">\(S^{(t)}(\boldsymbol{p}) \coloneqq h^{(t)}(\boldsymbol{c}^{(t)}, \boldsymbol{p})\)</span>:</p>
             <figure class="equation" role="math">
               <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -2070,7 +2070,7 @@ mark {
   [∈],
   [ ],
   [𝓤],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h^{\left(t\right)}\left(\mathbf{c}^{\left(t\right)}, \mathbf{p}^{\left(t\right)}\right),\mathbf{u} - \mathbf{p}^{\left(t\right)} \right\rangle \right] \le \epsilon^{\left(t\right)} \quad \forall \mathbf{u} \in \mathcal{U}\]</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h^{\left(t\right)}\left(\boldsymbol{c}^{\left(t\right)}, \boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{u} - \boldsymbol{p}^{\left(t\right)} \right\rangle \right] \le \epsilon^{\left(t\right)} \quad \forall \boldsymbol{u} \in \mathcal{U}\]</span></div>
             </figure>
           </div>
         </div>
@@ -2082,7 +2082,7 @@ mark {
           <div class="pseudo-text"><strong>function</strong> <code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span>):</div>
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span>):</div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
@@ -2190,7 +2190,7 @@ mark {
         <p>The EVI condition is invoked at the realized utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span>, so</p>
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span>, so</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(base: [g], t: lr(body: sequence([(], [t], [)]))),
@@ -2373,7 +2373,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓒]),
-)" role="math">\(\mathbf{c} \in \mathcal{C}\)</span> and a test <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{c} \in \mathcal{C}\)</span> and a test <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [h],
   [ ],
   [∈],
@@ -2402,7 +2402,7 @@ mark {
       ),
     ),
   ),
-)" role="math">\(S(\mathbf{p}) = h(\mathbf{c}, \mathbf{p})\)</span>. To solve this EVI, run the forecaster for <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds with the same context <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(S(\boldsymbol{p}) = h(\boldsymbol{c}, \boldsymbol{p})\)</span>. To solve this EVI, run the forecaster for <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds with the same context <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐜]),
     t: lr(body: sequence([(], [t], [)])),
@@ -2411,7 +2411,7 @@ mark {
   [=],
   [ ],
   equation(block: false, body: [𝐜]),
-)" role="math">\(\mathbf{c}^{(t)} = \mathbf{c}\)</span>. After it outputs <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [D], t: lr(body: sequence([(], [t], [)])))" role="math">\(D^{(t)}\)</span>, choose Nature’s response as</p>
+)" role="math">\(\boldsymbol{c}^{(t)} = \boldsymbol{c}\)</span>. After it outputs <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [D], t: lr(body: sequence([(], [t], [)])))" role="math">\(D^{(t)}\)</span>, choose Nature’s response as</p>
     <figure class="equation" id="loc-8" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -2529,7 +2529,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \mathbf{u}^{\left(t\right)} \in \operatorname*{arg\,max}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathbf{u},\mathop{\mathbb{E}}\limits_{\mathbf{p} \sim D^{\left(t\right)}} \left[S\left(\mathbf{p}\right)\right] \right\rangle .\]</span> <span class="eqno">(4)</span></div>
+)">\[\displaystyle \boldsymbol{u}^{\left(t\right)} \in \operatorname*{arg\,max}_{\boldsymbol{u} \in \mathcal{U}} \left\langle \boldsymbol{u},\mathop{\mathbb{E}}\limits_{\boldsymbol{p} \sim D^{\left(t\right)}} \left[S\left(\boldsymbol{p}\right)\right] \right\rangle .\]</span> <span class="eqno">(4)</span></div>
     </figure>
     <p>For any fixed <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -2540,7 +2540,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓤]),
-)" role="math">\(\mathbf{u}^{⋆} \in \mathcal{U}\)</span>, the choice in (<a href="#loc-8">4</a>) gives</p>
+)" role="math">\(\boldsymbol{u}^{⋆} \in \mathcal{U}\)</span>, the choice in (<a href="#loc-8">4</a>) gives</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -2744,7 +2744,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{p} \sim D^{\left(t\right)}} \left[\left\langle S\left(\mathbf{p}\right),\mathbf{u}^{\left(t\right)} - \mathbf{p} \right\rangle \right] \ge \mathop{\mathbb{E}}\limits_{\mathbf{p} \sim D^{\left(t\right)}} \left[\left\langle S\left(\mathbf{p}\right),\mathbf{u}^{⋆} - \mathbf{p} \right\rangle \right].\]</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\boldsymbol{p} \sim D^{\left(t\right)}} \left[\left\langle S\left(\boldsymbol{p}\right),\boldsymbol{u}^{\left(t\right)} - \boldsymbol{p} \right\rangle \right] \ge \mathop{\mathbb{E}}\limits_{\boldsymbol{p} \sim D^{\left(t\right)}} \left[\left\langle S\left(\boldsymbol{p}\right),\boldsymbol{u}^{⋆} - \boldsymbol{p} \right\rangle \right].\]</span></div>
     </figure>
     <p>Averaging the distributions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [D], t: lr(body: sequence([(], [1], [)]))),
@@ -2910,7 +2910,7 @@ mark {
   [ ],
   [𝓤],
   [.],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{p} \sim D} \left[\left\langle S\left(\mathbf{p}\right),\mathbf{u}^{⋆} - \mathbf{p} \right\rangle \right] \le \frac{\text{MC-Err}^{\left(T\right)} \left(h\right)}{T} \quad \forall \mathbf{u}^{⋆} \in \mathcal{U}.\]</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\boldsymbol{p} \sim D} \left[\left\langle S\left(\boldsymbol{p}\right),\boldsymbol{u}^{⋆} - \boldsymbol{p} \right\rangle \right] \le \frac{\text{MC-Err}^{\left(T\right)} \left(h\right)}{T} \quad \forall \boldsymbol{u}^{⋆} \in \mathcal{U}.\]</span></div>
     </figure>
     <p>As <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> grows, multicalibration drives the right-hand side to <span class="math-katex-source" data-math-display="inline" data-typst-math="[0]" role="math">\(0\)</span>. So an online multicalibrated forecaster gives a black-box EVI solver.</p>
     <h1 id="4-2-from-multicalibration-to-phi-regret-minimization" class="notes-heading" data-level="1" data-number="4.2"><span class="secno">4.2</span> From Multicalibration to Phi-regret minimization</h1>
@@ -3090,7 +3090,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \Phi \text{Reg}^{\left(T\right)}\left(\phi \right) \coloneqq \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\mathbf{x}^{\left(t\right)} \sim \mu^{\left(t\right)}} \left[\left\langle \phi \left(\mathbf{x}^{\left(t\right)}\right) - \mathbf{x}^{\left(t\right)},\mathbf{u}^{\left(t\right)} \right\rangle \right].\]</span> <span class="eqno">(5)</span></div>
+)">\[\displaystyle \Phi \text{Reg}^{\left(T\right)}\left(\phi \right) \coloneqq \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\boldsymbol{x}^{\left(t\right)} \sim \mu^{\left(t\right)}} \left[\left\langle \phi \left(\boldsymbol{x}^{\left(t\right)}\right) - \boldsymbol{x}^{\left(t\right)},\boldsymbol{u}^{\left(t\right)} \right\rangle \right].\]</span> <span class="eqno">(5)</span></div>
     </figure>
     <p>The reduction asks the forecaster to predict the next utility vector. Given a forecast <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐩]),
@@ -3098,7 +3098,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓤]),
-)" role="math">\(\mathbf{p} \in \mathcal{U}\)</span>, define the deterministic best response</p>
+)" role="math">\(\boldsymbol{p} \in \mathcal{U}\)</span>, define the deterministic best response</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [σ],
@@ -3166,12 +3166,12 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \sigma \left(\mathbf{p}\right) \in \operatorname*{arg\,max}_{\mathbf{x} \in \mathcal{X}} \left\langle \mathbf{x},\mathbf{p} \right\rangle ,\]</span> <span class="eqno">(6)</span></div>
+)">\[\displaystyle \sigma \left(\boldsymbol{p}\right) \in \operatorname*{arg\,max}_{\boldsymbol{x} \in \mathcal{X}} \left\langle \boldsymbol{x},\boldsymbol{p} \right\rangle ,\]</span> <span class="eqno">(6)</span></div>
     </figure>
     <p>with ties broken by a fixed rule. If the forecaster outputs a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [D], t: lr(body: sequence([(], [t], [)])))" role="math">\(D^{(t)}\)</span> over forecasts <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐩]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{p}^{(t)}\)</span>, the decision maker plays the pushforward distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [μ], t: lr(body: sequence([(], [t], [)])))" role="math">\(\mu^{(t)}\)</span> induced by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{p}^{(t)}\)</span>, the decision maker plays the pushforward distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [μ], t: lr(body: sequence([(], [t], [)])))" role="math">\(\mu^{(t)}\)</span> induced by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [t], [)])),
@@ -3192,7 +3192,7 @@ mark {
       ),
     ),
   ),
-)" role="math">\(\mathbf{x}^{(t)} = \sigma (\mathbf{p}^{(t)})\)</span>.</p>
+)" role="math">\(\boldsymbol{x}^{(t)} = \sigma (\boldsymbol{p}^{(t)})\)</span>.</p>
     <p>What tests should the forecaster be calibrated against? For each deviation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∈], [ ], [Φ])" role="math">\(\phi \in \Phi\)</span>, define</p>
     <figure class="equation" id="loc-9" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -3311,7 +3311,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle h_{\phi} \left(\mathbf{p}\right) \coloneqq \phi \left(\sigma \left(\mathbf{p}\right)\right) - \sigma \left(\mathbf{p}\right), \quad \quad \quad \mathcal{H}_{\Phi} \coloneqq \left\{h_{\phi} : \phi \in \Phi \right\}.\]</span> <span class="eqno">(7)</span></div>
+)">\[\displaystyle h_{\phi} \left(\boldsymbol{p}\right) \coloneqq \phi \left(\sigma \left(\boldsymbol{p}\right)\right) - \sigma \left(\boldsymbol{p}\right), \quad \quad \quad \mathcal{H}_{\Phi} \coloneqq \left\{h_{\phi} : \phi \in \Phi \right\}.\]</span> <span class="eqno">(7)</span></div>
     </figure>
     <p>This definition is the whole reduction. The test <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [h], b: [φ])" role="math">\(h_{\phi}\)</span> measures the direction in utility space in which the deviation <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> would improve over the best response to the forecast.</p>
     <section class="env algorithm">
@@ -3337,7 +3337,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓤]),
-)" role="math">\(\mathbf{p}^{(t)} \in \mathcal{U}\)</span></div>
+)" role="math">\(\boldsymbol{p}^{(t)} \in \mathcal{U}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
@@ -3362,20 +3362,20 @@ mark {
       ),
     ),
   ),
-)" role="math">\(\mathbf{x}^{(t)} = \sigma (\mathbf{p}^{(t)})\)</span></div>
+)" role="math">\(\boldsymbol{x}^{(t)} = \sigma (\boldsymbol{p}^{(t)})\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span>):</div>
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span>):</div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
           <div class="pseudo-text">Feed the realized utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span> to the forecaster</div>
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span> to the forecaster</div>
         </div>
       </div>
     </section>
@@ -3462,7 +3462,7 @@ mark {
       body: sequence([(], equation(block: false, body: [𝐩]), [)]),
     ),
   ),
-)" role="math">\(\mathbf{p} \mapsto \sigma (\mathbf{p})\)</span>,</p>
+)" role="math">\(\boldsymbol{p} \mapsto \sigma (\boldsymbol{p})\)</span>,</p>
         <figure class="equation equation-multiline equation-aligned" role="math">
           <div class="equation-line is-unnumbered has-alignment" data-line="1" data-math-display="block" data-typst-math="sequence(
   [Φ],
@@ -3590,7 +3590,7 @@ mark {
       []],
     ),
   ),
-)">\(\displaystyle = \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h_{\phi} \left(\mathbf{p}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} \right\rangle \right]\)</span></div>
+)">\(\displaystyle = \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h_{\phi} \left(\boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} \right\rangle \right]\)</span></div>
           <div class="equation-line is-unnumbered has-alignment" data-line="2" data-math-display="block" data-typst-math="sequence(
   align-point(),
   [ ],
@@ -3845,7 +3845,7 @@ mark {
     ),
   ),
   [.],
-)">\(\displaystyle = \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h_{\phi} \left(\mathbf{p}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)} \right\rangle \right] + \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h_{\phi} \left(\mathbf{p}^{\left(t\right)}\right),\mathbf{p}^{\left(t\right)} \right\rangle \right].\)</span></div>
+)">\(\displaystyle = \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h_{\phi} \left(\boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} - \boldsymbol{p}^{\left(t\right)} \right\rangle \right] + \sum_{t=1}^{T} \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle h_{\phi} \left(\boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{p}^{\left(t\right)} \right\rangle \right].\)</span></div>
         </figure>
         <p>The first term is exactly <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -3991,14 +3991,14 @@ mark {
   [≤],
   [ ],
   [0],
-)">\[\displaystyle \left\langle h_{\phi} \left(\mathbf{p}\right),\mathbf{p} \right\rangle = \left\langle \phi \left(\sigma \left(\mathbf{p}\right)\right),\mathbf{p} \right\rangle - \left\langle \sigma \left(\mathbf{p}\right),\mathbf{p} \right\rangle \le 0\]</span></div>
+)">\[\displaystyle \left\langle h_{\phi} \left(\boldsymbol{p}\right),\boldsymbol{p} \right\rangle = \left\langle \phi \left(\sigma \left(\boldsymbol{p}\right)\right),\boldsymbol{p} \right\rangle - \left\langle \sigma \left(\boldsymbol{p}\right),\boldsymbol{p} \right\rangle \le 0\]</span></div>
         </figure>
         <p>by the definition of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [σ],
   lr(
     body: sequence([(], equation(block: false, body: [𝐩]), [)]),
   ),
-)" role="math">\(\sigma (\mathbf{p})\)</span> as a maximizer over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>.</p>
+)" role="math">\(\sigma (\boldsymbol{p})\)</span> as a maximizer over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>.</p>
       </div>
     </section>
     <p>The theorem is useful because the complexity of the required calibration class scales with the complexity of the deviation class. If <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains only constant deviations, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
@@ -4017,7 +4017,7 @@ mark {
     <p>The contextual version is identical. If contexts <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐜]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{c}^{(t)}\)</span> are observed before play and deviations have the form <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{c}^{(t)}\)</span> are observed before play and deviations have the form <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [ ],
   [:],
@@ -4107,7 +4107,7 @@ mark {
     body: sequence([(], equation(block: false, body: [𝐩]), [)]),
   ),
   [.],
-)">\[\displaystyle h_{\phi} \left(\mathbf{c}, \mathbf{p}\right) \coloneqq \phi \left(\mathbf{c},\sigma \left(\mathbf{p}\right)\right) - \sigma \left(\mathbf{p}\right).\]</span></div>
+)">\[\displaystyle h_{\phi} \left(\boldsymbol{c}, \boldsymbol{p}\right) \coloneqq \phi \left(\boldsymbol{c},\sigma \left(\boldsymbol{p}\right)\right) - \sigma \left(\boldsymbol{p}\right).\]</span></div>
     </figure>
     <p>Multicalibration with respect to these tests gives contextual <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret.</p>
     <h2 id="4-2-1-putting-the-two-reductions-together" class="notes-heading" data-level="2" data-number="4.2.1"><span class="secno">4.2.1</span> Putting the two reductions together</h2>
@@ -4207,7 +4207,7 @@ mark {
   equation(block: false, body: [𝐌]),
   [ ],
   equation(block: false, body: [𝐱]),
-)" role="math">\(\phi (\mathbf{x}) = \mathbf{M} \mathbf{x}\)</span> over a convex compact set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x}) = \mathbf{M} \boldsymbol{x}\)</span> over a convex compact set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝓧]),
   [ ],
   [⊆],
@@ -4284,7 +4284,7 @@ mark {
     body: sequence([(], equation(block: false, body: [𝐩]), [)]),
   ),
   [.],
-)">\[\displaystyle h_{\phi \left(\mathbf{p}\right)} = \left(\mathbf{M} - \mathbf{I}\right) \sigma \left(\mathbf{p}\right).\]</span></div>
+)">\[\displaystyle h_{\phi \left(\boldsymbol{p}\right)} = \left(\mathbf{M} - \mathbf{I}\right) \sigma \left(\boldsymbol{p}\right).\]</span></div>
     </figure>
     <p>If every valid linear endomorphism has spectral norm at most <span class="math-katex-source" data-math-display="inline" data-typst-math="[S]" role="math">\(S\)</span>, then each test above lies in a Frobenius ball of radius on the order of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   root(radicand: [d]),
@@ -4365,7 +4365,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \mathcal{H} \coloneqq \left\{\mathbf{p} \mapsto \mathbf{A} \sigma \left(\mathbf{p}\right) : \left\Vert \mathbf{A}\right\Vert_{F} \le ρ\right\},\]</span></div>
+)">\[\displaystyle \mathcal{H} \coloneqq \left\{\boldsymbol{p} \mapsto \mathbf{A} \sigma \left(\boldsymbol{p}\right) : \left\Vert \mathbf{A}\right\Vert_{F} \le ρ\right\},\]</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="[ρ]" role="math">\(ρ\)</span> is chosen large enough to contain all tests <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [h], b: [φ])" role="math">\(h_{\phi}\)</span>. This larger class is easy: external regret over a Euclidean ball is handled by projected gradient descent. Indeed, the utility sent to the matrix learner at time <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span> is linear:</p>
     <figure class="equation" role="math">
@@ -4673,7 +4673,7 @@ mark {
     b: [F],
   ),
   [.],
-)">\[\displaystyle g^{\left(t\right)}\left(\mathbf{A}\right) = \mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle \mathbf{A} \sigma \left(\mathbf{p}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)} \right\rangle \right] = \left\langle \mathbf{A},\mathop{\mathbb{E}}\limits_{\mathbf{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left(\mathbf{u}^{\left(t\right)} - \mathbf{p}^{\left(t\right)}\right) \sigma \left(\mathbf{p}^{\left(t\right)}\right)^{⊤}\right] \right\rangle_{F}.\]</span></div>
+)">\[\displaystyle g^{\left(t\right)}\left(\mathbf{A}\right) = \mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left\langle \mathbf{A} \sigma \left(\boldsymbol{p}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} - \boldsymbol{p}^{\left(t\right)} \right\rangle \right] = \left\langle \mathbf{A},\mathop{\mathbb{E}}\limits_{\boldsymbol{p}^{\left(t\right)} \sim D^{\left(t\right)}} \left[\left(\boldsymbol{u}^{\left(t\right)} - \boldsymbol{p}^{\left(t\right)}\right) \sigma \left(\boldsymbol{p}^{\left(t\right)}\right)^{⊤}\right] \right\rangle_{F}.\]</span></div>
     </figure>
     <p>Consequently, if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -4686,13 +4686,13 @@ mark {
   [≤],
   [ ],
   [B],
-)" role="math">\(\Vert \mathbf{x}\Vert_{2} \le B\)</span> for <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\Vert \boldsymbol{x}\Vert_{2} \le B\)</span> for <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐱]),
   [ ],
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x} \in \mathcal{X}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: lr(
       body: sequence([‖], equation(block: false, body: [𝐮]), [‖]),
@@ -4703,13 +4703,13 @@ mark {
   [≤],
   [ ],
   [L],
-)" role="math">\(\Vert \mathbf{u}\Vert_{2} \le L\)</span> for <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\Vert \boldsymbol{u}\Vert_{2} \le L\)</span> for <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐮]),
   [ ],
   [∈],
   [ ],
   equation(block: false, body: [𝓤]),
-)" role="math">\(\mathbf{u} \in \mathcal{U}\)</span>, the standard projected-gradient bound gives <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{u} \in \mathcal{U}\)</span>, the standard projected-gradient bound gives <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
   lr(
     body: sequence(
@@ -4828,7 +4828,7 @@ mark {
     t: sequence([d], [ ], [×], [ ], [d]),
   ),
   [.],
-)">\[\displaystyle \Gamma \left(\left(\mathbf{c}, \mathbf{x}\right),\left(\mathbf{c}', \mathbf{x}'\right)\right) \in \mathbb{R}^{d \times d}.\]</span></div>
+)">\[\displaystyle \Gamma \left(\left(\boldsymbol{c}, \boldsymbol{x}\right),\left(\boldsymbol{c}', \boldsymbol{x}'\right)\right) \in \mathbb{R}^{d \times d}.\]</span></div>
     </figure>
     <p>For the contextual reduction, the relevant tests are</p>
     <figure class="equation" role="math">
@@ -4906,14 +4906,14 @@ mark {
     body: sequence([(], equation(block: false, body: [𝐩]), [)]),
   ),
   [.],
-)">\[\displaystyle h_{\phi} \left(\mathbf{c}, \mathbf{p}\right) = \phi \left(\mathbf{c},\sigma \left(\mathbf{p}\right)\right) - \sigma \left(\mathbf{p}\right).\]</span></div>
+)">\[\displaystyle h_{\phi} \left(\boldsymbol{c}, \boldsymbol{p}\right) = \phi \left(\boldsymbol{c},\sigma \left(\boldsymbol{p}\right)\right) - \sigma \left(\boldsymbol{p}\right).\]</span></div>
     </figure>
     <p>These tests also lie in an RKHS. Indeed, the first term is represented by composing the deviation kernel with the best-response map, while the second term is represented by the linear kernel on <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [σ],
   lr(
     body: sequence([(], equation(block: false, body: [𝐩]), [)]),
   ),
-)" role="math">\(\sigma (\mathbf{p})\)</span>. The resulting kernel is</p>
+)" role="math">\(\sigma (\boldsymbol{p})\)</span>. The resulting kernel is</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(base: [Γ], tr: primes(count: 1)),
@@ -5139,7 +5139,7 @@ mark {
     t: [⊤],
   ),
   [.],
-)">\[\displaystyle \Gamma'\left(\left(\mathbf{c}, \mathbf{p}\right), \left(\mathbf{c}', \mathbf{p}'\right)\right) \coloneqq \Gamma \left(\left(\mathbf{c}, \sigma \left(\mathbf{p}\right)\right),\left(\mathbf{c}', \sigma \left(\mathbf{p}'\right)\right)\right) + \sigma \left(\mathbf{p}\right) \sigma \left(\mathbf{p}'\right)^{⊤}.\]</span> <span class="eqno">(9)</span></div>
+)">\[\displaystyle \Gamma'\left(\left(\boldsymbol{c}, \boldsymbol{p}\right), \left(\boldsymbol{c}', \boldsymbol{p}'\right)\right) \coloneqq \Gamma \left(\left(\boldsymbol{c}, \sigma \left(\boldsymbol{p}\right)\right),\left(\boldsymbol{c}', \sigma \left(\boldsymbol{p}'\right)\right)\right) + \sigma \left(\boldsymbol{p}\right) \sigma \left(\boldsymbol{p}'\right)^{⊤}.\]</span> <span class="eqno">(9)</span></div>
     </figure>
     <p>So, if we have an online learner over the RKHS ball associated with <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Γ], tr: primes(count: 1))" role="math">\(\Gamma'\)</span>, <a href="#loc-7">Theorem 4.2</a> supplies a multicalibrated forecaster, and <a href="#loc-10">Theorem 4.3</a> turns it into a no-<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret algorithm. This recovers low-degree polynomial deviations as a special case and also covers infinite-dimensional kernels, such as Gaussian kernels, where the fixed-point route does not have an obvious finite-dimensional endomorphism geometry to exploit.</p>
     <p>The moral is that forecasting separates the two hard-looking parts of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret. Best response converts forecasts to actions; multicalibration certifies that no deviation can systematically exploit the forecast errors; and EVIs provide the self-consistency condition that makes the forecaster black-box reducible to ordinary external regret.</p>

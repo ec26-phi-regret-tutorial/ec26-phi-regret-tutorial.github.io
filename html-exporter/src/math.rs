@@ -373,13 +373,41 @@ fn convert_operator(args: &[Arg]) -> String {
 fn convert_styled_child(input: &str) -> String {
     let converted = convert_expr(input);
     let stripped = strip_tex_text_wrappers(converted.trim());
-    match stripped {
-        "A" | "C" | "H" | "K" | "S" | "U" | "X" | "Y" => format!("\\mathcal{{{stripped}}}"),
-        "R" | "N" | "Q" | "B" => format!("\\mathbb{{{stripped}}}"),
-        "a" | "b" | "c" | "p" | "q" | "s" | "u" | "x" | "y" | "z" | "I" | "M" => {
-            format!("\\mathbf{{{stripped}}}")
+    if let Some(styled) = styled_symbol(stripped) {
+        return styled;
+    }
+    if let Some((base, suffix)) = styled_symbol_with_suffix(stripped) {
+        if let Some(styled) = styled_symbol(base) {
+            return format!("{styled}{suffix}");
         }
-        _ => converted,
+    }
+    converted
+}
+
+fn styled_symbol(input: &str) -> Option<String> {
+    match input {
+        "A" | "C" | "H" | "K" | "S" | "U" | "X" | "Y" => Some(format!("\\mathcal{{{input}}}")),
+        "R" | "N" | "Q" | "B" => Some(format!("\\mathbb{{{input}}}")),
+        "a" | "b" | "c" | "p" | "q" | "s" | "u" | "x" | "y" | "z" => {
+            Some(format!("\\boldsymbol{{{input}}}"))
+        }
+        "I" | "M" => Some(format!("\\mathbf{{{input}}}")),
+        _ => None,
+    }
+}
+
+fn styled_symbol_with_suffix(input: &str) -> Option<(&str, &str)> {
+    let mut chars = input.char_indices();
+    let (_, first) = chars.next()?;
+    if !first.is_ascii_alphabetic() {
+        return None;
+    }
+    let suffix_start = chars.next().map(|(idx, _)| idx)?;
+    let suffix = &input[suffix_start..];
+    if suffix.starts_with('_') || suffix.starts_with('^') || suffix.starts_with('\'') {
+        Some((&input[..suffix_start], suffix))
+    } else {
+        None
     }
 }
 
@@ -799,16 +827,16 @@ fn char_to_tex(ch: char) -> String {
         '𝐊' => "\\mathbf{K}".to_owned(),
         '𝐌' => "\\mathbf{M}".to_owned(),
         '𝐔' => "\\mathbf{U}".to_owned(),
-        '𝐚' => "\\mathbf{a}".to_owned(),
-        '𝐛' => "\\mathbf{b}".to_owned(),
-        '𝐜' => "\\mathbf{c}".to_owned(),
-        '𝐩' => "\\mathbf{p}".to_owned(),
-        '𝐪' => "\\mathbf{q}".to_owned(),
-        '𝐬' => "\\mathbf{s}".to_owned(),
-        '𝐮' => "\\mathbf{u}".to_owned(),
-        '𝐱' => "\\mathbf{x}".to_owned(),
-        '𝐲' => "\\mathbf{y}".to_owned(),
-        '𝐳' => "\\mathbf{z}".to_owned(),
+        '𝐚' => "\\boldsymbol{a}".to_owned(),
+        '𝐛' => "\\boldsymbol{b}".to_owned(),
+        '𝐜' => "\\boldsymbol{c}".to_owned(),
+        '𝐩' => "\\boldsymbol{p}".to_owned(),
+        '𝐪' => "\\boldsymbol{q}".to_owned(),
+        '𝐬' => "\\boldsymbol{s}".to_owned(),
+        '𝐮' => "\\boldsymbol{u}".to_owned(),
+        '𝐱' => "\\boldsymbol{x}".to_owned(),
+        '𝐲' => "\\boldsymbol{y}".to_owned(),
+        '𝐳' => "\\boldsymbol{z}".to_owned(),
         '≤' => tex_command("le"),
         '≥' => tex_command("ge"),
         '≠' => tex_command("ne"),
@@ -1154,7 +1182,7 @@ mod tests {
         let input = "sequence(equation(block: false, body: styled(child: [c], ..)), attach(base: [ ], t: lr(body: sequence([(], [t], [)]))), [ ], [∈], [ ], equation(block: false, body: styled(child: [C], ..)))";
         assert_eq!(
             typst_repr_to_katex(input),
-            "\\mathbf{c} ^{(t)} \\in \\mathcal{C}"
+            "\\boldsymbol{c} ^{(t)} \\in \\mathcal{C}"
         );
     }
 
@@ -1167,11 +1195,32 @@ mod tests {
     }
 
     #[test]
+    fn styled_symbols_with_subscripts_keep_their_style() {
+        assert_eq!(
+            typst_repr_to_katex("styled(child: attach(base: [X], b: [i]), ..)"),
+            "\\mathcal{X}_{i}"
+        );
+        assert_eq!(
+            typst_repr_to_katex("styled(child: attach(base: [x], b: [i]), ..)"),
+            "\\boldsymbol{x}_{i}"
+        );
+    }
+
+    #[test]
     fn unicode_math_alphabet_notation_is_unambiguous() {
         let input = "sequence([𝓢], [ ], [⊂], [ ], [𝓧], [ ], [×], [ ], [𝐱], [ ], [∈], [ ], [ℝ])";
         assert_eq!(
             typst_repr_to_katex(input),
-            "\\mathcal{S} \\subset \\mathcal{X} \\times \\mathbf{x} \\in \\mathbb{R}"
+            "\\mathcal{S} \\subset \\mathcal{X} \\times \\boldsymbol{x} \\in \\mathbb{R}"
+        );
+    }
+
+    #[test]
+    fn upright_bold_matrix_notation_stays_mathbf() {
+        let input = "sequence([𝐀], [ ], [𝐱], [ ], [≤], [ ], [𝐛])";
+        assert_eq!(
+            typst_repr_to_katex(input),
+            "\\mathbf{A} \\boldsymbol{x} \\le \\boldsymbol{b}"
         );
     }
 

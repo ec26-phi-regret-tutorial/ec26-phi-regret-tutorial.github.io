@@ -1342,7 +1342,7 @@ mark {
       body: sequence([(], equation(block: false, body: [𝐱]), [)]),
     ),
   ),
-)" role="math">\(\mathbf{M}(\phi ) q(\mathbf{x})\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathbf{M}(\phi ) q(\boldsymbol{x})\)</span> for some matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐌]),
   [ ],
   [∈],
@@ -1357,7 +1357,7 @@ mark {
   [∈],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
-)" role="math">\(\mathbf{c} \in \mathbb{R}^{d}\)</span>.</div>
+)" role="math">\(\boldsymbol{c} \in \mathbb{R}^{d}\)</span>.</div>
     </section>
     <p>We will assume without loss of generality that <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> contains the identity map.</p>
     <section class="env statement">
@@ -1389,7 +1389,7 @@ mark {
     base: equation(block: false, body: [ℝ]),
     t: sequence([d], [+], [1]),
   ),
-)" role="math">\(q(\mathbf{x}) = (1, \mathbf{x}) \in \mathbb{R}^{d+1}\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all linear maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(q(\boldsymbol{x}) = (1, \boldsymbol{x}) \in \mathbb{R}^{d+1}\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all linear maps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [ ],
   [:],
@@ -1426,13 +1426,13 @@ mark {
   [∈],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [k]),
-)" role="math">\(q(\mathbf{x}) = (1, \mathbf{x})^{⊗ ℓ} \in \mathbb{R}^{k}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(q(\boldsymbol{x}) = (1, \boldsymbol{x})^{⊗ ℓ} \in \mathbb{R}^{k}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [k],
   [ ],
   [=],
   [ ],
   binom(upper: [d], lower: (sequence([≤], [ ], [ℓ]),)),
-)" role="math">\(k =\)</span> is the set of all monomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span> up to degree <span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span>.</div>
+)" role="math">\(k =\)</span> is the set of all monomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\boldsymbol{x}\)</span> up to degree <span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span>, then <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> is the set of all degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\boldsymbol{x}\)</span>.</div>
     </section>
     <p>In general, we will describe algorithms that have complexity polynomial in the dimension <span class="math-katex-source" data-math-display="inline" data-typst-math="[k]" role="math">\(k\)</span>. Note that, in the special case of degree-<span class="math-katex-source" data-math-display="inline" data-typst-math="[ℓ]" role="math">\(ℓ\)</span> polynomials, these algorithms will therefore run in time polynomial in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [d], t: [ℓ])" role="math">\(d^{ℓ}\)</span>.</p>
     <p>In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic.</p>
@@ -1489,7 +1489,7 @@ mark {
       [}],
     ),
   ),
-)" role="math">\(\mathcal{X} = \{\mathbf{x} : \mathbf{A} \mathbf{x} \le \mathbf{b}\}\)</span>, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Expected Variational Inequalities,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2025, pp. 74422–74446.</span></span>]. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</div>
+)" role="math">\(\mathcal{X} = \{\boldsymbol{x} : \mathbf{A} \boldsymbol{x} \le \boldsymbol{b}\}\)</span>, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints <span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Zha+25</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang <em>et al.</em>, “Expected Variational Inequalities,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2025, pp. 74422–74446.</span></span>]. This is true, for instance, for <em>extensive-form games</em>. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.</div>
     </section>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">2<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
@@ -1618,7 +1618,7 @@ mark {
   [ ],
   [ϵ],
   [.],
-)">\[\displaystyle \left\Vert \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left[\phi \left(\mathbf{x}\right) - \mathbf{x}\right]\right\Vert_{2} \le \epsilon .\]</span></div>
+)">\[\displaystyle \left\Vert \mathop{\mathbb{E}}\limits_{\boldsymbol{x} \sim \mu} \left[\phi \left(\boldsymbol{x}\right) - \boldsymbol{x}\right]\right\Vert_{2} \le \epsilon .\]</span></div>
         </figure>
       </div>
     </section>
@@ -1655,7 +1655,7 @@ mark {
   [∈],
   [ ],
   styled(child: [X], ..),
-)" role="math">\(\mathbf{x}^{(1)} \in \mathcal{X}\)</span> be arbitrary, and consider the sequence of points <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}^{(1)} \in \mathcal{X}\)</span> be arbitrary, and consider the sequence of points <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [1], [)])),
@@ -1669,7 +1669,7 @@ mark {
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [K], [)])),
   ),
-)" role="math">\(\mathbf{x}^{(1)}, \dots , \mathbf{x}^{(K)}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}^{(1)}, \dots , \boldsymbol{x}^{(K)}\)</span> where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [k], [)])),
@@ -1690,7 +1690,7 @@ mark {
       ),
     ),
   ),
-)" role="math">\(\mathbf{x}^{(k)} = \phi (\mathbf{x}^{(k-1)})\)</span> for each <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([k], [ ], [>], [ ], [0])" role="math">\(k &gt; 0\)</span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> be the uniform distribution on <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+)" role="math">\(\boldsymbol{x}^{(k)} = \phi (\boldsymbol{x}^{(k-1)})\)</span> for each <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([k], [ ], [>], [ ], [0])" role="math">\(k &gt; 0\)</span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> be the uniform distribution on <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [{],
     attach(
@@ -1709,7 +1709,7 @@ mark {
     ),
     [}],
   ),
-)" role="math">\(\{\mathbf{x}^{(1)},, \dots , \mathbf{x}^{(K)}\}\)</span>. Then, by a telescoping sum, we have</p>
+)" role="math">\(\{\boldsymbol{x}^{(1)},, \dots , \boldsymbol{x}^{(K)}\}\)</span>. Then, by a telescoping sum, we have</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -1931,7 +1931,7 @@ mark {
       [)],
     ),
   ),
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left[\phi \left(\mathbf{x}\right) - \mathbf{x}\right] = \frac{1}{K} \sum_{k=1}^{K} \left(\phi \left(\mathbf{x}^{\left(k\right)}\right) - \mathbf{x}^{\left(k\right)}\right) = \frac{1}{K} \sum_{k=1}^{K} \left(\mathbf{x}^{\left(k+1\right)} - \mathbf{x}^{\left(k\right)}\right) = \frac{1}{K} \left(\mathbf{x}^{\left(K+1\right)} - \mathbf{x}^{\left(1\right)}\right)\]</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\boldsymbol{x} \sim \mu} \left[\phi \left(\boldsymbol{x}\right) - \boldsymbol{x}\right] = \frac{1}{K} \sum_{k=1}^{K} \left(\phi \left(\boldsymbol{x}^{\left(k\right)}\right) - \boldsymbol{x}^{\left(k\right)}\right) = \frac{1}{K} \sum_{k=1}^{K} \left(\boldsymbol{x}^{\left(k+1\right)} - \boldsymbol{x}^{\left(k\right)}\right) = \frac{1}{K} \left(\boldsymbol{x}^{\left(K+1\right)} - \boldsymbol{x}^{\left(1\right)}\right)\]</span></div>
         </figure>
         <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -1954,7 +1954,7 @@ mark {
       ),
     ),
   ),
-)" role="math">\(\mathbf{x}^{(K+1)} \coloneqq \phi (\mathbf{x}^{(K)})\)</span> for notational simplicity. But the right-hand side has norm at most <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}^{(K+1)} \coloneqq \phi (\boldsymbol{x}^{(K)})\)</span> for notational simplicity. But the right-hand side has norm at most <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [diam],
     lr(body: sequence([(], styled(child: [X], ..), [)])),
@@ -2010,7 +2010,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
@@ -2021,7 +2021,7 @@ mark {
   [∉],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span>.</li>
+)" role="math">\(\phi (\boldsymbol{x}) \notin \mathcal{X}\)</span>.</li>
         </ul>
       </div>
     </section>
@@ -2039,20 +2039,20 @@ mark {
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [K], [)])),
   ),
-)" role="math">\(\mathbf{x}^{(1)}, \dots , \mathbf{x}^{(K)}\)</span>, if any <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{x}^{(1)}, \dots , \boldsymbol{x}^{(K)}\)</span>, if any <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [k], [)])),
-)" role="math">\(\mathbf{x}^{(k)}\)</span> is not in <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>, we can immediately output <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{x}^{(k)}\)</span> is not in <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>, we can immediately output <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [k], [−], [1], [)])),
-)" role="math">\(\mathbf{x}^{(k-1)}\)</span>.</p>
+)" role="math">\(\boldsymbol{x}^{(k-1)}\)</span>.</p>
     <p>It is instructive to contemplate briefly the implications of this result. A point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐱]),
   [ ],
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
@@ -2063,7 +2063,7 @@ mark {
   [∉],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span> gives a separating direction <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x}) \notin \mathcal{X}\)</span> gives a separating direction <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐚]),
     t: [⊤],
@@ -2079,12 +2079,12 @@ mark {
   [≤],
   [ ],
   [b],
-)" role="math">\(\mathbf{a}^{⊤} \phi (\mathbf{x}) \le b\)</span> separating <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{a}^{⊤} \phi (\boldsymbol{x}) \le b\)</span> separating <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   lr(
     body: sequence([(], equation(block: false, body: [𝐱]), [)]),
   ),
-)" role="math">\(\phi (\mathbf{x})\)</span> from <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>; the same constraint can be used to separate <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> from <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. Determining whether a given function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x})\)</span> from <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>; the same constraint can be used to separate <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> from <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. Determining whether a given function <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [ ],
   [:],
@@ -2113,6 +2113,18 @@ mark {
         <tr id="loc-10" class="bibliography-row">
           <td class="bib-key">[Zha+24]</td>
           <td class="bib-entry">B. H. Zhang, I. Anagnostides, G. Farina and T. Sandholm. (2024). Efficient <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(<span class="bib-math">Φ</span>\)</span>-Regret Minimization with Low-Degree Swap Deviations in Extensive-Form Games. <em>Advances in Neural Information Processing Systems</em>.</td>
+        </tr>
+        <tr id="loc-11" class="bibliography-row">
+          <td class="bib-key">[Das+25]</td>
+          <td class="bib-entry">C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</td>
+        </tr>
+        <tr id="loc-12" class="bibliography-row">
+          <td class="bib-key">[Zha+25]</td>
+          <td class="bib-entry">B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. <em>International Conference on Machine Learning</em>, 74422–74446.</td>
+        </tr>
+        <tr id="loc-13" class="bibliography-row">
+          <td class="bib-key">[ZFS24]</td>
+          <td class="bib-entry">B. H. Zhang, G. Farina and T. Sandholm. (2024). Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games. <em>International Conference on Learning Representations</em>.</td>
         </tr>
       </tbody></table>
     </section><section class="endnotes" id="endnotes">

@@ -1550,7 +1550,7 @@ mark {
   [ ],
   [ε],
   [.],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\mathbf{x}_{1}, \dots , \mathbf{x}_{n}\right) \sim \mu} u_{i} \left(\mathbf{x}_{1}, \dots , \mathbf{x}_{n}\right) \ge \mathop{\mathbb{E}}\limits_{\left(\mathbf{x}_{1}, \dots , \mathbf{x}_{n}\right) \sim \mu} u_{i} \left(\phi_{i} \left(\mathbf{x}_{i}\right), \mathbf{x}_{-i}\right) - \epsilon .\]</span> <span class="eqno">(1)</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} u_{i} \left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \ge \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} u_{i} \left(\phi_{i} \left(\boldsymbol{x}_{i}\right), \boldsymbol{x}_{-i}\right) - \epsilon .\]</span> <span class="eqno">(1)</span></div>
     </figure>
     <p>From a more abstract point of view, EAH deals with optimization problems of the form<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span><p>We caution that</p>
           <p>here corresponds to</p>
@@ -1675,7 +1675,7 @@ mark {
   [ ],
   [𝓨],
   [,],
-)">\[\displaystyle \text{find } \mu \in \Delta \left(\mathcal{X}\right) \text{ such that } \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left\langle \mathbf{y},G\left(\mathbf{x}\right) \right\rangle \ge 0 \quad \forall \mathbf{y} \in \mathcal{Y},\]</span> <span class="eqno">(2)</span></div>
+)">\[\displaystyle \text{find } \mu \in \Delta \left(\mathcal{X}\right) \text{ such that } \mathop{\mathbb{E}}\limits_{\boldsymbol{x} \sim \mu} \left\langle \boldsymbol{y},G\left(\boldsymbol{x}\right) \right\rangle \ge 0 \quad \forall \boldsymbol{y} \in \mathcal{Y},\]</span> <span class="eqno">(2)</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝓧]),
@@ -1730,20 +1730,20 @@ mark {
   [∈],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [k]),
-)" role="math">\(\mathbf{y} \in \mathbb{R}^{k}\)</span> belongs to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> or not. A special case is when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> is a polytope described with a polynomial number of constraints, as is the case for swap regret in normal-form games—each player’s set of deviations amounts to the set of stochastic matrices.</p>
+)" role="math">\(\boldsymbol{y} \in \mathbb{R}^{k}\)</span> belongs to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> or not. A special case is when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> is a polytope described with a polynomial number of constraints, as is the case for swap regret in normal-form games—each player’s set of deviations amounts to the set of stochastic matrices.</p>
     <p>The key assumption in the EAH framework [<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>] is the existence of a <em>good-enough-response (GER)</em> oracle, which, given any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐲]),
   [ ],
   [∈],
   [ ],
   equation(block: false, body: [𝓨]),
-)" role="math">\(\mathbf{y} \in \mathcal{Y}\)</span>, returns a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{y} \in \mathcal{Y}\)</span>, returns a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐱]),
   [ ],
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\mathbf{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x} \in \mathcal{X}\)</span> such that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
     body: lr(
@@ -1767,7 +1767,7 @@ mark {
   [≥],
   [ ],
   [0],
-)" role="math">\(\left\langle \mathbf{y},G(\mathbf{x}) \right\rangle \ge 0\)</span>.</p>
+)" role="math">\(\left\langle \boldsymbol{y},G(\boldsymbol{x}) \right\rangle \ge 0\)</span>.</p>
     <p>The EAH algorithm enables solving (<a href="#loc-6">2</a>) with just a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle. The basic idea is to consider an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate version of the dual of (<a href="#loc-6">2</a>),</p>
     <figure class="equation" id="loc-7" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -1858,7 +1858,7 @@ mark {
   [ ],
   [𝓧],
   [.],
-)">\[\displaystyle \text{find } \mathbf{y} \in \mathcal{Y} \text{ such that } \left\langle \mathbf{y},G\left(\mathbf{x}\right) \right\rangle \le - \epsilon \quad \forall \mathbf{x} \in \mathcal{X}.\]</span> <span class="eqno">(3)</span></div>
+)">\[\displaystyle \text{find } \boldsymbol{y} \in \mathcal{Y} \text{ such that } \left\langle \boldsymbol{y},G\left(\boldsymbol{x}\right) \right\rangle \le - \epsilon \quad \forall \boldsymbol{x} \in \mathcal{X}.\]</span> <span class="eqno">(3)</span></div>
     </figure>
     <p>On account of the fact that a GER oracle exists, (<a href="#loc-7">3</a>) is guaranteed to be infeasible. Even so, EAH proceeds by executing the ellipsoid algorithm on that infeasible program—this is where the apt name “ellipsoid against hope” comes from. In every step <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span> of the algorithm, we have a candidate <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -1869,7 +1869,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓨]),
-)" role="math">\(\mathbf{y}^{(t)} \in \mathcal{Y}\)</span> and use the GER oracle to produce a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{y}^{(t)} \in \mathcal{Y}\)</span> and use the GER oracle to produce a point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [x], t: lr(body: sequence([(], [t], [)]))),
   [ ],
   [∈],
@@ -1878,7 +1878,7 @@ mark {
 )" role="math">\(x^{(t)} \in \mathcal{X}\)</span> that refutes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐲]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{y}^{(t)}\)</span>; in fact, an entire halfspace in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [ℝ]), t: [k])" role="math">\(\mathbb{R}^{k}\)</span>. This goes on until the volume of the ellipsoid has shrank to a small enough amount. It then follows that</p>
+)" role="math">\(\boldsymbol{y}^{(t)}\)</span>; in fact, an entire halfspace in <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [ℝ]), t: [k])" role="math">\(\mathbb{R}^{k}\)</span>. This goes on until the volume of the ellipsoid has shrank to a small enough amount. It then follows that</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [∀],
@@ -1978,7 +1978,7 @@ mark {
   [ ],
   [ε],
   [.],
-)">\[\displaystyle \forall \mathbf{y} \in \mathcal{Y} \exists t \in \left[T\right] \text{ such that } \left\langle \mathbf{y},G\left(\mathbf{x}^{\left(t\right)}\right) \right\rangle &gt; - \epsilon .\]</span></div>
+)">\[\displaystyle \forall \boldsymbol{y} \in \mathcal{Y} \exists t \in \left[T\right] \text{ such that } \left\langle \boldsymbol{y},G\left(\boldsymbol{x}^{\left(t\right)}\right) \right\rangle &gt; - \epsilon .\]</span></div>
     </figure>
     <p>Thus,</p>
     <figure class="equation" role="math">
@@ -2106,7 +2106,7 @@ mark {
   [ ],
   [ε],
   [.],
-)">\[\displaystyle \operatorname*{min}_{\mathbf{y} \in \mathcal{Y}} \operatorname*{max}_{\mu \in \Delta \left(\left[T\right]\right)} \sum_{t=1}^{T} \mu^{\left(t\right)} \left\langle \mathbf{y},G\left(\mathbf{x}^{\left(t\right)}\right) \right\rangle &gt; - \epsilon .\]</span></div>
+)">\[\displaystyle \operatorname*{min}_{\boldsymbol{y} \in \mathcal{Y}} \operatorname*{max}_{\mu \in \Delta \left(\left[T\right]\right)} \sum_{t=1}^{T} \mu^{\left(t\right)} \left\langle \boldsymbol{y},G\left(\boldsymbol{x}^{\left(t\right)}\right) \right\rangle &gt; - \epsilon .\]</span></div>
     </figure>
     <p>By the minimax theorem, we conclude that</p>
     <figure class="equation" id="loc-8" role="math">
@@ -2234,7 +2234,7 @@ mark {
   [ ],
   [ε],
   [.],
-)">\[\displaystyle \operatorname*{max}_{\mu \in \Delta \left(\left[T\right]\right)} \operatorname*{min}_{\mathbf{y} \in \mathcal{Y}} \sum_{t=1}^{T} \mu^{\left(t\right)} \left\langle \mathbf{y},G\left(\mathbf{x}^{\left(t\right)}\right) \right\rangle &gt; - \epsilon .\]</span> <span class="eqno">(4)</span></div>
+)">\[\displaystyle \operatorname*{max}_{\mu \in \Delta \left(\left[T\right]\right)} \operatorname*{min}_{\boldsymbol{y} \in \mathcal{Y}} \sum_{t=1}^{T} \mu^{\left(t\right)} \left\langle \boldsymbol{y},G\left(\boldsymbol{x}^{\left(t\right)}\right) \right\rangle &gt; - \epsilon .\]</span> <span class="eqno">(4)</span></div>
     </figure>
     <p>In other words, there is a convex combination of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
@@ -2250,7 +2250,7 @@ mark {
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [T], [)])),
   ),
-)" role="math">\(\mathbf{x}^{(1)}, \dots , \mathbf{x}^{(T)}\)</span> that refutes any possible <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}^{(1)}, \dots , \boldsymbol{x}^{(T)}\)</span> that refutes any possible <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [y],
   [ ],
   [∈],
@@ -2300,7 +2300,7 @@ mark {
   [∈],
   [ ],
   attach(base: equation(block: false, body: [𝓧]), b: [i]),
-)" role="math">\(\mathbf{x}_{i} \mapsto \mathbf{M}_{i} q_{i} (\mathbf{x}_{i}) \in \mathcal{X}_{i}\)</span> for some feature map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}_{i} \mapsto \mathbf{M}_{i} q_{i} (\boldsymbol{x}_{i}) \in \mathcal{X}_{i}\)</span> for some feature map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [q], b: [i]),
   [:],
   [ ],
@@ -2521,7 +2521,7 @@ mark {
   [ ],
   attach(base: equation(block: false, body: [𝓨]), b: [i]),
   [,],
-)">\[\displaystyle \sum_{i=1}^{n} \mathop{\mathbb{E}}\limits_{\left(\mathbf{x}_{1}, \dots , \mathbf{x}_{n}\right) \sim \mu} \left\langle \mathbf{I}_{i} - \mathbf{M}_{i},u_{i} \left(\mathbf{x}_{-i}\right) ⊗ q\left(\mathbf{x}_{i}\right) \right\rangle \ge - \epsilon \quad \forall i \in \left[n\right], \mathbf{M}_{i} \in \mathcal{Y}_{i},\]</span> <span class="eqno">(5)</span></div>
+)">\[\displaystyle \sum_{i=1}^{n} \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} \left\langle \mathbf{I}_{i} - \mathbf{M}_{i},u_{i} \left(\boldsymbol{x}_{-i}\right) ⊗ q\left(\boldsymbol{x}_{i}\right) \right\rangle \ge - \epsilon \quad \forall i \in \left[n\right], \mathbf{M}_{i} \in \mathcal{Y}_{i},\]</span> <span class="eqno">(5)</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐈]), b: [i])" role="math">\(\mathbf{I}_{i}\)</span> is the matrix for which <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: [φ],
@@ -2761,7 +2761,7 @@ mark {
     b: [2],
   ),
   [,],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\mathbf{x}_{1}, \dots , \mathbf{x}_{n}\right) \sim \mu} \left\langle \mathbf{x}_{i} - \mathbf{M}_{i} q\left(\mathbf{x}_{i}\right),u_{i} \left(\mathbf{x}_{-i}\right) \right\rangle \ge - \epsilon \cdot \left\Vert u_{i} \left(\mathbf{x}_{-i}\right)\right\Vert_{2},\]</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} \left\langle \boldsymbol{x}_{i} - \mathbf{M}_{i} q\left(\boldsymbol{x}_{i}\right),u_{i} \left(\boldsymbol{x}_{-i}\right) \right\rangle \ge - \epsilon \cdot \left\Vert u_{i} \left(\boldsymbol{x}_{-i}\right)\right\Vert_{2},\]</span></div>
     </figure>
     <p>But this is not immediately good enough. Recall that our algorithm for expected fixed points, from <code>@thm:efp</code> <mark class="todo">how to cite a theorem from a different file?</mark>, has <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
@@ -2836,13 +2836,13 @@ mark {
   [−],
   [ ],
   equation(block: false, body: [𝐱]),
-)" role="math">\(G(\mathbf{x}) = \phi (\mathbf{x}) - \mathbf{x}\)</span>. Then, by <a href="#loc-9">Theorem 3.1</a>, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(G(\boldsymbol{x}) = \phi (\boldsymbol{x}) - \boldsymbol{x}\)</span>. Then, by <a href="#loc-9">Theorem 3.1</a>, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐲]),
   [ ],
   [∈],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
-)" role="math">\(\mathbf{y} \in \mathbb{R}^{d}\)</span>, we need to find <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{y} \in \mathbb{R}^{d}\)</span>, we need to find <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\boldsymbol{x}\)</span> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
     body: lr(
@@ -2872,7 +2872,7 @@ mark {
   [≥],
   [ ],
   [0],
-)" role="math">\(\left\langle \mathbf{y},\phi (\mathbf{x}) - \mathbf{x} \right\rangle \ge 0\)</span>. But this is easy: we can simply take <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\left\langle \boldsymbol{y},\phi (\boldsymbol{x}) - \boldsymbol{x} \right\rangle \ge 0\)</span>. But this is easy: we can simply take <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐱]),
   [ ],
   [∈],
@@ -2918,7 +2918,7 @@ mark {
       ),
     ),
   ),
-)" role="math">\(\mathbf{x} \in \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{min}}\limits_{\in \mathcal{X}} \left\langle \mathbf{y}, \right\rangle\)</span>. Then either <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x} \in \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{min}}\limits_{\in \mathcal{X}} \left\langle \boldsymbol{y}, \right\rangle\)</span>. Then either <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
@@ -2929,7 +2929,7 @@ mark {
   [∉],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\phi (\mathbf{x}) \notin \mathcal{X}\)</span>, in which case we output <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span> as a certificate of infeasibility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>, or <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x}) \notin \mathcal{X}\)</span>, in which case we output <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\boldsymbol{x}\)</span> as a certificate of infeasibility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>, or <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
@@ -2940,7 +2940,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\phi (\mathbf{x}) \in \mathcal{X}\)</span>, in which case <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x}) \in \mathcal{X}\)</span>, in which case <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
     body: lr(
@@ -2970,7 +2970,7 @@ mark {
   [≥],
   [ ],
   [0],
-)" role="math">\(\left\langle \mathbf{y},\phi (\mathbf{x}) - \mathbf{x} \right\rangle \ge 0\)</span> by definition of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\mathbf{x}\)</span>.</div>
+)" role="math">\(\left\langle \boldsymbol{y},\phi (\boldsymbol{x}) - \boldsymbol{x} \right\rangle \ge 0\)</span> by definition of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐱])" role="math">\(\boldsymbol{x}\)</span>.</div>
     </section>
     <p>Finally, if <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [μ], b: [i]),
@@ -2999,7 +2999,7 @@ mark {
   attach(base: [μ], b: [n]),
 )" role="math">\(\mu_{1} \times \dots \times \mu_{n}\)</span> is a GER solution satisfying (<a href="#loc-10">5</a>). We therefore have:</p>
     <section class="env statement" id="loc-11">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>], [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>] <mark class="todo">is it possible to do <code>#cite[one, two]</code>, like in latex?</mark>)</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>; <span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
@@ -3068,7 +3068,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(u(\cdot , \mathbf{x}_{-i})\)</span>, then we would need the condition</p>
+)" role="math">\(u(\cdot , \boldsymbol{x}_{-i})\)</span>, then we would need the condition</p>
             <figure class="equation" role="math">
               <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -3172,7 +3172,7 @@ mark {
   [ ],
   [−],
   [ϵ],
-)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\mathbf{x} \sim \mu} \left\langle ∇ u\left(\mathbf{x}\right),\phi \left(\mathbf{x}\right) - \mathbf{x} \right\rangle \ge -\epsilon\]</span></div>
+)">\[\displaystyle \mathop{\mathbb{E}}\limits_{\boldsymbol{x} \sim \mu} \left\langle ∇ u\left(\boldsymbol{x}\right),\phi \left(\boldsymbol{x}\right) - \boldsymbol{x} \right\rangle \ge -\epsilon\]</span></div>
             </figure>
             <p>for every convex function <span class="math-katex-source" data-math-display="inline" data-typst-math="[u]" role="math">\(u\)</span>. Expected fixed points do not guarantee this.</p>
           </li>

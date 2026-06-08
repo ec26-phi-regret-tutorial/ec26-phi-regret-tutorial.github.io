@@ -27,16 +27,16 @@ In these settings, we run into two fundamental issues when trying directly to ge
 
   #set enum(numbering: "a.")
 
-  + If $Phi^q$ contains nonlinear functions, then that this optimization problem is $NP$-hard even when $cX$ is the hypercube $[0, 1]^d$ #cite(<Zhang24:Efficient>).
+  + If $Phi^q$ contains nonlinear functions, then that this optimization problem is $NP$-hard even when $cX$ is the hypercube $[0, 1]^d$ #citep(<Zhang24:Efficient>).
 
-  + Even if $Phi^q$ is the set of linear endomorphisms, if $cX$ itself is only available via an oracle (e.g., a separation oracle), then optimizing a linear function over $Phi^q$ can in general be hard  #cite(<Daskalakis25:Efficient>). #todo("why is the citation not showing?")
+  + Even if $Phi^q$ is the set of linear endomorphisms, if $cX$ itself is only available via an oracle (e.g., a separation oracle), then optimizing a linear function over $Phi^q$ can in general be hard  #citep(<Daskalakis25:Efficient>). #todo("why is the citation not showing?")
 
 #remark[
-  When $cX$ is represented by an explicit set of linear constraints, i.e., $cX = { vx : matA vx <= vb }$, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints #cite(<Zhang25:Expected>). This is true, for instance, for _extensive-form games_. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.
+  When $cX$ is represented by an explicit set of linear constraints, i.e., $cX = { vx : matA vx <= vb }$, the set of linear endomorphisms can also be expressed as an explicit set of linear constraints #citep(<Zhang25:Expected>). This is true, for instance, for _extensive-form games_. Thus, in this particular case, linear regret minimization can be accomplished without all the machinery of this section.
 ]
 
 #remark[
-  For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation #cite(<Zhang23:Mediator>). We will not detail it here, though.
+  For extensive-form games in particular, the set of linear endomorphisms has a clean game-theoretic interpretation #citep(<Zhang23:Mediator>). We will not detail it here, though.
 ]
 
 We will show how to circumvent both of the above issues. We start with the fixed point computation.
@@ -54,7 +54,7 @@ As we will see shortly, expected fixed points fix both problems with fixed point
 #theorem[Expected fixed point computation][
   There is an algorithm with runtime $"poly"(d, 1\/eps)$ that, given query access to $phi : cal(X) -> cal(X)$ and oracle access to $cal(X)$, outputs an $eps$-approximate expected fixed point of $phi$.
 ] <thm:efp>
-The existence of this algorithm proves, as a corollary, that $eps$-approximate expected fixed points always exist for every $eps > 0$. Although we will not need it here, it also turns out to be true that _exact_ expected fixed points also always exist (even when $phi$ is discontinuous) #cite(<Zhang25:Learning>). The "either-or" nature of the above theorem will become useful shortly.
+The existence of this algorithm proves, as a corollary, that $eps$-approximate expected fixed points always exist for every $eps > 0$. Although we will not need it here, it also turns out to be true that _exact_ expected fixed points also always exist (even when $phi$ is discontinuous) #citep(<Zhang25:Learning>). The "either-or" nature of the above theorem will become useful shortly.
 
 #proof[
   Let $vx^((1)) in cal(X)$ be arbitrary, and consider the sequence of points $vx^((1)), ..., vx^((K))$ where $vx^((k)) = phi(vx^((k-1)))$ for each $k > 0$. Let $mu$ be the uniform distribution on ${vx^((1)),, ..., vx^((K))}$. Then, by a telescoping sum, we have

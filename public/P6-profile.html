@@ -1332,7 +1332,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\mathbf{x}^{(t)} \in \mathcal{X}\)</span>; the adversary selects a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}^{(t)} \in \mathcal{X}\)</span>; the adversary selects a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
@@ -1345,7 +1345,7 @@ mark {
   [⊆],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
-)" role="math">\(\mathbf{u}^{(t)} \in \mathcal{U} \subseteq \mathbb{R}^{d}\)</span>; then the learner receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
+)" role="math">\(\boldsymbol{u}^{(t)} \in \mathcal{U} \subseteq \mathbb{R}^{d}\)</span>; then the learner receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
   block: false,
   body: lr(
     body: sequence(
@@ -1364,10 +1364,10 @@ mark {
       [⟩],
     ),
   ),
-)" role="math">\(\left\langle \mathbf{x}^{(t)},\mathbf{u}^{(t)} \right\rangle\)</span> and observes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\left\langle \boldsymbol{x}^{(t)},\boldsymbol{u}^{(t)} \right\rangle\)</span> and observes <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span> as feedback. We make the standard normalization assumption <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span> as feedback. We make the standard normalization assumption <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   lr(
     body: sequence(
       [|],
@@ -1392,7 +1392,7 @@ mark {
   [≤],
   [ ],
   [1],
-)" role="math">\(|\left\langle \mathbf{x},\mathbf{u} \right\rangle | \le 1\)</span> for all <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(|\left\langle \boldsymbol{x},\boldsymbol{u} \right\rangle | \le 1\)</span> for all <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐱]),
   [ ],
   [∈],
@@ -1406,13 +1406,13 @@ mark {
   [ ],
   styled(child: [U], ..),
   [.],
-)" role="math">\(\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}.\)</span> In what follows, for a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}.\)</span> In what follows, for a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐮]),
   [ ],
   [∈],
   [ ],
   styled(child: [U], ..),
-)" role="math">\(\mathbf{u} \in \mathcal{U}\)</span>, we define the best-response map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{u} \in \mathcal{U}\)</span>, we define the best-response map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [b],
     lr(
@@ -1458,7 +1458,7 @@ mark {
     ),
   ),
   [,],
-)" role="math">\(b(\mathbf{u}) \in \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{max}}\limits_{\mathbf{x} \in \mathcal{X}} \left\langle \mathbf{x},\mathbf{u} \right\rangle ,\)</span> with ties broken arbitrarily.</p>
+)" role="math">\(b(\boldsymbol{u}) \in \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{max}}\limits_{\boldsymbol{x} \in \mathcal{X}} \left\langle \boldsymbol{x},\boldsymbol{u} \right\rangle ,\)</span> with ties broken arbitrarily.</p>
     <p><strong>Linear swap regret.</strong> We first recall the benchmark of linear swap regret. An affine map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [:],
@@ -1513,7 +1513,7 @@ mark {
   [ ],
   equation(block: false, body: [𝐚]),
   [.],
-)" role="math">\(\phi (\mathbf{x}) = \mathbf{M} \mathbf{x} + \mathbf{a}.\)</span> The <em>linear swap regret</em> of the learner after <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds is</p>
+)" role="math">\(\phi (\boldsymbol{x}) = \mathbf{M} \boldsymbol{x} + \boldsymbol{a}.\)</span> The <em>linear swap regret</em> of the learner after <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds is</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -1665,7 +1665,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \coloneqq \operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \sum_{t=1}^{T} \left\langle \phi \left(\mathbf{x}^{\left(t\right)}\right),\mathbf{u}^{\left(t\right)} \right\rangle - \sum_{t=1}^{T} \left\langle \mathbf{x}^{\left(t\right)},\mathbf{u}^{\left(t\right)} \right\rangle .\]</span></div>
+)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \coloneqq \operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \sum_{t=1}^{T} \left\langle \phi \left(\boldsymbol{x}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} \right\rangle - \sum_{t=1}^{T} \left\langle \boldsymbol{x}^{\left(t\right)},\boldsymbol{u}^{\left(t\right)} \right\rangle .\]</span></div>
     </figure>
     <p>This is a natural relaxation of (full) swap regret: instead of allowing arbitrary maps, the performance of the learner is compared against affine endomorphisms. In this case, the algorithm of <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-4" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald, and C. Marks, “No-regret learning in convex games,” in <em>International Conference on Machine Learning</em>,<span style="white-space: pre-wrap">  </span>2008.</span></span> reduces linear swap regret to external regret over the <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([d], lr(body: sequence([(], [d], [+], [1], [)])))" role="math">\(d(d+1)\)</span>-dimensional set of deviations. This implies an online algorithm with linear swap regret growing as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
@@ -1688,7 +1688,7 @@ mark {
     ),
     [)],
   ),
-)" role="math">\((\mathbf{x}^{(t)}, \mathbf{u}^{(t)})\)</span>, we define <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\((\boldsymbol{x}^{(t)}, \boldsymbol{u}^{(t)})\)</span>, we define <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [κ], t: lr(body: sequence([(], [t], [)]))),
   [ ],
   [≔],
@@ -1730,7 +1730,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(κ^{(t)} \coloneqq (\mathbf{u}^{(t)} ⊗ \mathbf{x}^{(t)}, \mathbf{u}^{(t)}) \in \mathbb{R}^{d \times (d+1)}.\)</span> The average CSP is</p>
+)" role="math">\(κ^{(t)} \coloneqq (\boldsymbol{u}^{(t)} ⊗ \boldsymbol{x}^{(t)}, \boldsymbol{u}^{(t)}) \in \mathbb{R}^{d \times (d+1)}.\)</span> The average CSP is</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -1777,7 +1777,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(κ = (\mathbf{K}, \mathbf{q})\)</span> and an affine map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(κ = (\mathbf{K}, \boldsymbol{q})\)</span> and an affine map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
@@ -1792,7 +1792,7 @@ mark {
   [+],
   [ ],
   equation(block: false, body: [𝐚]),
-)" role="math">\(\phi (\mathbf{x})=\mathbf{M} \mathbf{x} + \mathbf{a}\)</span>, we use the shorthand notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x})=\mathbf{M} \boldsymbol{x} + \boldsymbol{a}\)</span>, we use the shorthand notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(
     block: false,
     body: lr(
@@ -1851,7 +1851,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(\left\langle (\mathbf{M}, \mathbf{a}),κ \right\rangle \coloneqq \left\langle \mathbf{M},\mathbf{K} \right\rangle + \left\langle \mathbf{a},\mathbf{q} \right\rangle .\)</span> With this notation at hand, linear swap regret can be rewritten as</p>
+)" role="math">\(\left\langle (\mathbf{M}, \boldsymbol{a}),κ \right\rangle \coloneqq \left\langle \mathbf{M},\mathbf{K} \right\rangle + \left\langle \boldsymbol{a},\boldsymbol{q} \right\rangle .\)</span> With this notation at hand, linear swap regret can be rewritten as</p>
     <figure class="equation" id="loc-6" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -2003,7 +2003,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} = T \operatorname*{max}_{\phi =\left(\mathbf{M},\mathbf{a}\right) \in \text{End}\left(\mathcal{X}\right)} \left\langle \left(\mathbf{M}, \mathbf{a}\right) - \left(\mathbf{I}, 0\right),\overline{κ}^{\left(T\right)} \right\rangle .\]</span> <span class="eqno">(2)</span></div>
+)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} = T \operatorname*{max}_{\phi =\left(\mathbf{M},\boldsymbol{a}\right) \in \text{End}\left(\mathcal{X}\right)} \left\langle \left(\mathbf{M}, \boldsymbol{a}\right) - \left(\mathbf{I}, 0\right),\overline{κ}^{\left(T\right)} \right\rangle .\]</span> <span class="eqno">(2)</span></div>
     </figure>
     <p>Using this reformulation, we will shortly see how to reduce minimizing linear swap regret to a suitable approachability problem.</p>
     <h1 id="6-2-profile-swap-regret-and-non-manipulability" class="notes-heading" data-level="1" data-number="6.2"><span class="secno">6.2</span> Profile swap regret and non-manipulability</h1>
@@ -2062,7 +2062,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(R(\mathbf{x}, \mathbf{u}) \coloneqq \operatorname*{max}_{\mathbf{x}^{∗} \in \mathcal{X}} \left\langle \mathbf{x}^{∗} - \mathbf{x},\mathbf{u} \right\rangle .\)</span> Equivalently, we can write <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(R(\boldsymbol{x}, \boldsymbol{u}) \coloneqq \operatorname*{max}_{\boldsymbol{x}^{∗} \in \mathcal{X}} \left\langle \boldsymbol{x}^{∗} - \boldsymbol{x},\boldsymbol{u} \right\rangle .\)</span> Equivalently, we can write <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [R],
     lr(
@@ -2105,7 +2105,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(R(\mathbf{x}, \mathbf{u}) = \left\langle b(\mathbf{u}) - \mathbf{x},\mathbf{u} \right\rangle .\)</span> A valid decomposition of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(R(\boldsymbol{x}, \boldsymbol{u}) = \left\langle b(\boldsymbol{u}) - \boldsymbol{x},\boldsymbol{u} \right\rangle .\)</span> A valid decomposition of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
 )" role="math">\(\overline{κ}^{(T)}\)</span> can be written as</p>
@@ -2158,7 +2158,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \overline{κ}^{\left(T\right)} = \sum_{j=1}^{m} \lambda_{j} \left(\mathbf{u}_{j} ⊗ \mathbf{x}_{j}\right),\]</span></div>
+)">\[\displaystyle \overline{κ}^{\left(T\right)} = \sum_{j=1}^{m} \lambda_{j} \left(\boldsymbol{u}_{j} ⊗ \boldsymbol{x}_{j}\right),\]</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [λ], b: [j]), [ ], [≥], [ ], [0])" role="math">\(\lambda_{j} \ge 0\)</span>, <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [∑], t: [m], b: sequence([j], [=], [1])),
@@ -2174,13 +2174,13 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\mathbf{x}_{j} \in \mathcal{X}\)</span>, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{x}_{j} \in \mathcal{X}\)</span>, and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: equation(block: false, body: [𝐮]), b: [j]),
   [ ],
   [∈],
   [ ],
   styled(child: [U], ..),
-)" role="math">\(\mathbf{u}_{j} \in \mathcal{U}\)</span>.</p>
+)" role="math">\(\boldsymbol{u}_{j} \in \mathcal{U}\)</span>.</p>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">6<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Profile swap regret)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -2301,7 +2301,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \text{ProfileSwapReg}^{\left(T\right)}\left(\overline{κ}^{\left(T\right)}\right) \coloneqq T \operatorname*{min}_{\left(\lambda_{j}, \mathbf{x}_{j}, \mathbf{u}_{j}\right)_{j}} \sum_{j} \lambda_{j} R\left(\mathbf{x}_{j}, \mathbf{u}_{j}\right),\]</span> <span class="eqno">(3)</span></div>
+)">\[\displaystyle \text{ProfileSwapReg}^{\left(T\right)}\left(\overline{κ}^{\left(T\right)}\right) \coloneqq T \operatorname*{min}_{\left(\lambda_{j}, \boldsymbol{x}_{j}, \boldsymbol{u}_{j}\right)_{j}} \sum_{j} \lambda_{j} R\left(\boldsymbol{x}_{j}, \boldsymbol{u}_{j}\right),\]</span> <span class="eqno">(3)</span></div>
         </figure>
         <p>where the minimum is over all valid convex decompositions of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
@@ -2318,7 +2318,7 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓨]),
-)" role="math">\(\mathbf{y} \in \mathcal{Y}\)</span>, while the learner best-responds to that strategy (with ties broken in favor of the optimizer):</p>
+)" role="math">\(\boldsymbol{y} \in \mathcal{Y}\)</span>, while the learner best-responds to that strategy (with ties broken in favor of the optimizer):</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [Stack],
@@ -2416,7 +2416,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \text{Stack}\left(u_{o}\right) \coloneqq \operatorname*{max}_{\mathbf{y} \in \mathcal{Y}} \operatorname*{max}_{\mathbf{x} \in \text{BR}\left(\mathbf{y}\right)} u_{o} \left(\mathbf{x}, \mathbf{y}\right),\]</span></div>
+)">\[\displaystyle \text{Stack}\left(u_{o}\right) \coloneqq \operatorname*{max}_{\boldsymbol{y} \in \mathcal{Y}} \operatorname*{max}_{\boldsymbol{x} \in \text{BR}\left(\boldsymbol{y}\right)} u_{o} \left(\boldsymbol{x}, \boldsymbol{y}\right),\]</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
@@ -2462,7 +2462,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(\text{BR}(\mathbf{y}) \coloneqq \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{max}}\limits_{\mathbf{x} \in \mathcal{X}} u_{ℓ} (\mathbf{x}, \mathbf{y}).\)</span> The Stackelberg value is what the optimizer can guarantee by means of a <em>static</em> commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a <em>dynamic</em> strategy: instead of playing a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐲])" role="math">\(\mathbf{y}\)</span>, the optimizer chooses a sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\text{BR}(\boldsymbol{y}) \coloneqq \mathop{\operatorname{arg}\hspace{2.83pt}\operatorname*{max}}\limits_{\boldsymbol{x} \in \mathcal{X}} u_{ℓ} (\boldsymbol{x}, \boldsymbol{y}).\)</span> The Stackelberg value is what the optimizer can guarantee by means of a <em>static</em> commitment. Informally speaking, a learning algorithm is said to be manipulable if the optimizer can do strictly better than its Stackelberg value by using a <em>dynamic</em> strategy: instead of playing a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐲])" role="math">\(\boldsymbol{y}\)</span>, the optimizer chooses a sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐲]),
     t: lr(body: sequence([(], [1], [)])),
@@ -2476,7 +2476,7 @@ mark {
   [,],
   [ ],
   […],
-)" role="math">\(\mathbf{y}^{(1)}, \mathbf{y}^{(2)}, \dots\)</span> so as to steer the learner’s future play toward more favorable outcomes. (It’s interesting to note that this steering problem can be computationally intractable&nbsp;<span id="loc-8">[</span><span class="citation-wrap"><a class="citation" href="#loc-17" role="doc-biblioref">ADD24</a><span class="citation-note"><span class="citation-note-key">[ADD24]</span> A. Assos, Y. Dagan, and C. Daskalakis, “Maximizing utility in multi-agent environments by anticipating the behavior of other learners,” in <em>Neural Information Processing Systems (NeurIPS)</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>].) Equivalently, even if the optimizer fully understands the learner’s algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.</p>
+)" role="math">\(\boldsymbol{y}^{(1)}, \boldsymbol{y}^{(2)}, \dots\)</span> so as to steer the learner’s future play toward more favorable outcomes. (It’s interesting to note that this steering problem can be computationally intractable&nbsp;<span id="loc-8">[</span><span class="citation-wrap"><a class="citation" href="#loc-17" role="doc-biblioref">ADD24</a><span class="citation-note"><span class="citation-note-key">[ADD24]</span> A. Assos, Y. Dagan, and C. Daskalakis, “Maximizing utility in multi-agent environments by anticipating the behavior of other learners,” in <em>Neural Information Processing Systems (NeurIPS)</em>,<span style="white-space: pre-wrap">  </span>2024.</span></span>].) Equivalently, even if the optimizer fully understands the learner’s algorithm and chooses its strategies dynamically to influence future play, it cannot asymptotically obtain more than what it could already obtain by committing to a fixed strategy.</p>
     <p>A beautiful connection crystallized by <span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan [Aru+25]</a></span> reassures us that a learning algorithm that has vanishing profile swap regret cannot be manipulated by a dynamic optimizer.</p>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Proposition</strong> <strong class="env-number">6<span class="env-number-separator">.</span>2</strong> <strong class="env-punct">.</strong></span></p>
@@ -2534,7 +2534,7 @@ mark {
       [}],
     ),
   ),
-)" role="math">\(\mathcal{K} \coloneqq \operatorname{conv} \{(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}) : \mathbf{u} \in \mathcal{U}, \mathbf{x} \in \mathcal{X}\}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathcal{K} \coloneqq \operatorname{conv} \{(\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u}) : \boldsymbol{u} \in \mathcal{U}, \boldsymbol{x} \in \mathcal{X}\}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   styled(child: [S], ..),
   [ ],
   [≔],
@@ -2575,7 +2575,7 @@ mark {
     ),
   ),
   [.],
-)" role="math">\(\mathcal{S} \coloneqq \operatorname{conv} \{(\mathbf{u} ⊗ b(\mathbf{u}), \mathbf{u}) : \mathbf{u} \in \mathcal{U}\}.\)</span> We measure approachability loss by</p>
+)" role="math">\(\mathcal{S} \coloneqq \operatorname{conv} \{(\boldsymbol{u} ⊗ b(\boldsymbol{u}), \boldsymbol{u}) : \boldsymbol{u} \in \mathcal{U}\}.\)</span> We measure approachability loss by</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -2655,7 +2655,7 @@ mark {
     b: [F],
   ),
   [.],
-)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \coloneqq \operatorname*{min}_{\mathbf{s} \in \mathcal{S}} \left\Vert \overline{κ}^{\left(T\right)} - \mathbf{s}\right\Vert_{F}.\]</span> <span class="eqno">(4)</span></div>
+)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \coloneqq \operatorname*{min}_{\boldsymbol{s} \in \mathcal{S}} \left\Vert \overline{κ}^{\left(T\right)} - \boldsymbol{s}\right\Vert_{F}.\]</span> <span class="eqno">(4)</span></div>
     </figure>
     <p>We first point out that minimizing linear swap regret reduces to this approachability instance.</p>
     <section class="env statement">
@@ -2762,10 +2762,10 @@ mark {
   [∈],
   [ ],
   styled(child: [S], ..),
-)" role="math">\(\mathbf{s} \in \mathcal{S}\)</span> be closest to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{s} \in \mathcal{S}\)</span> be closest to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
-)" role="math">\(\overline{κ}^{(T)}\)</span>. Since <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐬])" role="math">\(\mathbf{s}\)</span> is, by definition, a convex combination of points of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+)" role="math">\(\overline{κ}^{(T)}\)</span>. Since <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐬])" role="math">\(\boldsymbol{s}\)</span> is, by definition, a convex combination of points of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
     equation(block: false, body: [𝐮]),
@@ -2783,12 +2783,12 @@ mark {
     equation(block: false, body: [𝐮]),
     [)],
   ),
-)" role="math">\((\mathbf{u} ⊗ b(\mathbf{u}), \mathbf{u})\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\((\boldsymbol{u} ⊗ b(\boldsymbol{u}), \boldsymbol{u})\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [b],
   lr(
     body: sequence([(], equation(block: false, body: [𝐮]), [)]),
   ),
-)" role="math">\(b(\mathbf{u})\)</span> maximizes <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
+)" role="math">\(b(\boldsymbol{u})\)</span> maximizes <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(
   block: false,
   body: lr(
     body: sequence(
@@ -2801,7 +2801,7 @@ mark {
       [⟩],
     ),
   ),
-)" role="math">\(\left\langle \cdot ,\mathbf{u} \right\rangle\)</span> over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, every endomorphism <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\left\langle \cdot ,\boldsymbol{u} \right\rangle\)</span> over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, every endomorphism <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [ ],
   [∈],
@@ -2878,7 +2878,7 @@ mark {
   [ ],
   [0],
   [.],
-)">\[\displaystyle \left\langle \phi - \left(\mathbf{I}, 0\right),\mathbf{s} \right\rangle \le 0.\]</span></div>
+)">\[\displaystyle \left\langle \phi - \left(\mathbf{I}, 0\right),\boldsymbol{s} \right\rangle \le 0.\]</span></div>
         </figure>
         <p>Therefore, using (<a href="#loc-6">2</a>),</p>
         <figure class="equation" role="math">
@@ -3000,7 +3000,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \le T \operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \left\langle \phi -\left(\mathbf{I},0\right),\overline{κ}^{\left(T\right)} - \mathbf{s} \right\rangle .\]</span></div>
+)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \le T \operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \left\langle \phi -\left(\mathbf{I},0\right),\overline{κ}^{\left(T\right)} - \boldsymbol{s} \right\rangle .\]</span></div>
         </figure>
         <p>The claim now follows from Cauchy-Schwarz.</p>
       </div>
@@ -3103,7 +3103,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \mathbf{U}^{\left(t\right)} \coloneqq \sum_{τ=1}^{t} \left(κ^{\left(τ\right)} - \mathbf{s}^{\left(τ\right)}\right) \in \mathbb{R}^{d \times \left(d+1\right)}.\]</span></div>
+)">\[\displaystyle \mathbf{U}^{\left(t\right)} \coloneqq \sum_{τ=1}^{t} \left(κ^{\left(τ\right)} - \boldsymbol{s}^{\left(τ\right)}\right) \in \mathbb{R}^{d \times \left(d+1\right)}.\]</span></div>
     </figure>
     <p>At every round <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span>, it solves the bilinear zero-sum game</p>
     <figure class="equation" role="math">
@@ -3209,7 +3209,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathbf{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle .\]</span> <span class="eqno">(6)</span></div>
+)">\[\displaystyle \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} \operatorname*{min}_{\boldsymbol{u} \in \mathcal{U}} \left\langle \mathbf{U}^{\left(t-1\right)},\left(\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u}\right) \right\rangle .\]</span> <span class="eqno">(6)</span></div>
     </figure>
     <p>Let <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
@@ -3227,7 +3227,7 @@ mark {
     ),
     [)],
   ),
-)" role="math">\((\mathbf{x}^{(t)}, \mathbf{u}_{∗}^{(t)})\)</span> be a pair of minimax strategies for this game. The algorithm then sets</p>
+)" role="math">\((\boldsymbol{x}^{(t)}, \boldsymbol{u}_{∗}^{(t)})\)</span> be a pair of minimax strategies for this game. The algorithm then sets</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -3325,15 +3325,15 @@ mark {
   [ ],
   styled(child: [S], ..),
   [.],
-)">\[\displaystyle \mathbf{s}^{\left(t\right)} \coloneqq \left(\mathbf{u}_{∗}^{\left(t\right)} ⊗ b\left(\mathbf{u}_{∗}^{\left(t\right)}\right), \mathbf{u}_{∗}^{\left(t\right)}\right) \in \mathcal{S}.\]</span></div>
+)">\[\displaystyle \boldsymbol{s}^{\left(t\right)} \coloneqq \left(\boldsymbol{u}_{∗}^{\left(t\right)} ⊗ b\left(\boldsymbol{u}_{∗}^{\left(t\right)}\right), \boldsymbol{u}_{∗}^{\left(t\right)}\right) \in \mathcal{S}.\]</span></div>
     </figure>
     <p>Finally, it plays the strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{x}^{(t)}\)</span>, whereupon it observes the utility <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{x}^{(t)}\)</span>, whereupon it observes the utility <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span>, forms the induced <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [κ], t: lr(body: sequence([(], [t], [)])))" role="math">\(κ^{(t)}\)</span>, and updates the cumulative displacement <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span>, forms the induced <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [κ], t: lr(body: sequence([(], [t], [)])))" role="math">\(κ^{(t)}\)</span>, and updates the cumulative displacement <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐔]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{U}^{(t)}\)</span>.</p>
@@ -3418,7 +3418,7 @@ mark {
     ),
     [)],
   ),
-)" role="math">\((\mathbf{x}^{(t)}, \mathbf{u}_{∗}^{(t)})\)</span> for</p>
+)" role="math">\((\boldsymbol{x}^{(t)}, \boldsymbol{u}_{∗}^{(t)})\)</span> for</p>
             <figure class="equation" role="math">
               <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -3520,7 +3520,7 @@ mark {
       [⟩],
     ),
   ),
-)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \left\langle \mathbf{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle\]</span></div>
+)">\[\displaystyle \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} \operatorname*{min}_{\boldsymbol{u} \in \mathcal{U}} \left\langle \mathbf{U}^{\left(t-1\right)},\left(\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u}\right) \right\rangle\]</span></div>
             </figure>
           </div>
         </div>
@@ -3569,17 +3569,17 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(\mathbf{s}^{(t)} \coloneqq (\mathbf{u}_{∗}^{(t)} ⊗ b(\mathbf{u}_{∗}^{(t)}), \mathbf{u}_{∗}^{(t)})\)</span></div>
+)" role="math">\(\boldsymbol{s}^{(t)} \coloneqq (\boldsymbol{u}_{∗}^{(t)} ⊗ b(\boldsymbol{u}_{∗}^{(t)}), \boldsymbol{u}_{∗}^{(t)})\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
           <div class="pseudo-text">Play <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{x}^{(t)}\)</span> and observe <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{x}^{(t)}\)</span> and observe <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{u}^{(t)}\)</span></div>
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
@@ -3611,7 +3611,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(κ^{(t)} \coloneqq (\mathbf{u}^{(t)} ⊗ \mathbf{x}^{(t)}, \mathbf{u}^{(t)})\)</span></div>
+)" role="math">\(κ^{(t)} \coloneqq (\boldsymbol{u}^{(t)} ⊗ \boldsymbol{x}^{(t)}, \boldsymbol{u}^{(t)})\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
@@ -3638,7 +3638,7 @@ mark {
     base: equation(block: false, body: [𝐬]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\mathbf{U}^{(t)} \coloneqq \mathbf{U}^{(t-1)} + κ^{(t)} - \mathbf{s}^{(t)}\)</span></div>
+)" role="math">\(\mathbf{U}^{(t)} \coloneqq \mathbf{U}^{(t-1)} + κ^{(t)} - \boldsymbol{s}^{(t)}\)</span></div>
         </div>
       </div>
     </section>
@@ -3655,7 +3655,7 @@ mark {
   [∈],
   [ ],
   styled(child: [U], ..),
-)" role="math">\(\mathbf{u}^{(t)} \in \mathcal{U}\)</span>, we have</p>
+)" role="math">\(\boldsymbol{u}^{(t)} \in \mathcal{U}\)</span>, we have</p>
         <figure class="equation" id="loc-9" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   lr(
@@ -3715,7 +3715,7 @@ mark {
   [ ],
   [0],
   [.],
-)">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} - \mathbf{s}^{\left(t\right)} \right\rangle \ge 0.\]</span> <span class="eqno">(7)</span></div>
+)">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} - \boldsymbol{s}^{\left(t\right)} \right\rangle \ge 0.\]</span> <span class="eqno">(7)</span></div>
         </figure>
       </div>
     </section>
@@ -3812,7 +3812,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle g_{t} \left(\mathbf{x}, \mathbf{u}\right) \coloneqq \left\langle \mathbf{U}^{\left(t-1\right)},\left(\mathbf{u} ⊗ \mathbf{x}, \mathbf{u}\right) \right\rangle .\]</span></div>
+)">\[\displaystyle g_{t} \left(\boldsymbol{x}, \boldsymbol{u}\right) \coloneqq \left\langle \mathbf{U}^{\left(t-1\right)},\left(\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u}\right) \right\rangle .\]</span></div>
         </figure>
         <p>By the minimax theorem,</p>
         <figure class="equation" role="math">
@@ -3962,7 +3962,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} g_{t} \left(\mathbf{x}, \mathbf{u}\right) = \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} g_{t} \left(\mathbf{x}, \mathbf{u}\right).\]</span></div>
+)">\[\displaystyle \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} \operatorname*{min}_{\boldsymbol{u} \in \mathcal{U}} g_{t} \left(\boldsymbol{x}, \boldsymbol{u}\right) = \operatorname*{min}_{\boldsymbol{u} \in \mathcal{U}} \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} g_{t} \left(\boldsymbol{x}, \boldsymbol{u}\right).\]</span></div>
         </figure>
         <p>Thus,</p>
         <figure class="equation" role="math">
@@ -4080,13 +4080,13 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle g_{t} \left(\mathbf{x}^{\left(t\right)}, \mathbf{u}^{\left(t\right)}\right) \ge \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} g_{t} \left(\mathbf{x}, \mathbf{u}\right).\]</span></div>
+)">\[\displaystyle g_{t} \left(\boldsymbol{x}^{\left(t\right)}, \boldsymbol{u}^{\left(t\right)}\right) \ge \operatorname*{min}_{\boldsymbol{u} \in \mathcal{U}} \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} g_{t} \left(\boldsymbol{x}, \boldsymbol{u}\right).\]</span></div>
         </figure>
         <p>Since <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐮]),
   t: lr(body: sequence([(], [t], [)])),
   b: [∗],
-)" role="math">\(\mathbf{u}_{∗}^{(t)}\)</span> is minimax optimal and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{u}_{∗}^{(t)}\)</span> is minimax optimal and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [b],
   lr(
     body: sequence(
@@ -4099,7 +4099,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(b(\mathbf{u}_{∗}^{(t)})\)</span> is a feasible strategy in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>,</p>
+)" role="math">\(b(\boldsymbol{u}_{∗}^{(t)})\)</span> is a feasible strategy in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>,</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -4237,7 +4237,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \operatorname*{min}_{\mathbf{u} \in \mathcal{U}} \operatorname*{max}_{\mathbf{x} \in \mathcal{X}} g_{t} \left(\mathbf{x}, \mathbf{u}\right) \ge g_{t} \left(b\left(\mathbf{u}_{∗}^{\left(t\right)}\right), \mathbf{u}_{∗}^{\left(t\right)}\right).\]</span></div>
+)">\[\displaystyle \operatorname*{min}_{\boldsymbol{u} \in \mathcal{U}} \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} g_{t} \left(\boldsymbol{x}, \boldsymbol{u}\right) \ge g_{t} \left(b\left(\boldsymbol{u}_{∗}^{\left(t\right)}\right), \boldsymbol{u}_{∗}^{\left(t\right)}\right).\]</span></div>
         </figure>
         <p>Combining the two inequalities gives</p>
         <figure class="equation" role="math">
@@ -4313,7 +4313,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} \right\rangle \ge \left\langle \mathbf{U}^{\left(t-1\right)},\mathbf{s}^{\left(t\right)} \right\rangle ,\]</span></div>
+)">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} \right\rangle \ge \left\langle \mathbf{U}^{\left(t-1\right)},\boldsymbol{s}^{\left(t\right)} \right\rangle ,\]</span></div>
         </figure>
         <p>which is exactly (<a href="#loc-9">7</a>).</p>
       </div>
@@ -4336,7 +4336,7 @@ mark {
     base: equation(block: false, body: [𝐳]),
     t: lr(body: sequence([(], [T], [)])),
   ),
-)" role="math">\(\mathbf{z}^{(1)}, \dots , \mathbf{z}^{(T)}\)</span> be vectors with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\boldsymbol{z}^{(1)}, \dots , \boldsymbol{z}^{(T)}\)</span> be vectors with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: lr(
       body: sequence(
@@ -4354,7 +4354,7 @@ mark {
   [≤],
   [ ],
   [B],
-)" role="math">\(\Vert \mathbf{z}^{(t)}\Vert_{2} \le B\)</span> for all <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span>. If</p>
+)" role="math">\(\Vert \boldsymbol{z}^{(t)}\Vert_{2} \le B\)</span> for all <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span>. If</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   lr(
@@ -4416,7 +4416,7 @@ mark {
   [≤],
   [ ],
   [0],
-)">\[\displaystyle \left\langle \sum_{τ=1}^{t-1} \mathbf{z}^{\left(τ\right)},\mathbf{z}^{\left(t\right)} \right\rangle \le 0\]</span></div>
+)">\[\displaystyle \left\langle \sum_{τ=1}^{t-1} \boldsymbol{z}^{\left(τ\right)},\boldsymbol{z}^{\left(t\right)} \right\rangle \le 0\]</span></div>
         </figure>
         <p>for every <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span>, then</p>
         <figure class="equation" role="math">
@@ -4470,7 +4470,7 @@ mark {
   [ ],
   root(radicand: [T]),
   [.],
-)">\[\displaystyle \left\Vert \sum_{t=1}^{T} \mathbf{z}^{\left(t\right)}\right\Vert_{2} \le B \sqrt[]{T}.\]</span></div>
+)">\[\displaystyle \left\Vert \sum_{t=1}^{T} \boldsymbol{z}^{\left(t\right)}\right\Vert_{2} \le B \sqrt[]{T}.\]</span></div>
         </figure>
       </div>
     </section>
@@ -4490,7 +4490,7 @@ mark {
   [−],
   [ ],
   attach(base: [κ], t: lr(body: sequence([(], [t], [)]))),
-)" role="math">\(\mathbf{z}^{(t)} = \mathbf{s}^{(t)} - κ^{(t)}\)</span> gives</p>
+)" role="math">\(\boldsymbol{z}^{(t)} = \boldsymbol{s}^{(t)} - κ^{(t)}\)</span> gives</p>
     <figure class="equation" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -4582,7 +4582,7 @@ mark {
     denom: root(radicand: [T]),
   ),
   [,],
-)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \le \left\Vert \frac{1}{T} \sum_{t=1}^{T} \left(κ^{\left(t\right)} - \mathbf{s}^{\left(t\right)}\right)\right\Vert_{F} \le \frac{2 B}{\sqrt[]{T}},\]</span> <span class="eqno">(8)</span></div>
+)">\[\displaystyle \text{AppLoss}^{\left(T\right)} \le \left\Vert \frac{1}{T} \sum_{t=1}^{T} \left(κ^{\left(t\right)} - \boldsymbol{s}^{\left(t\right)}\right)\right\Vert_{F} \le \frac{2 B}{\sqrt[]{T}},\]</span> <span class="eqno">(8)</span></div>
     </figure>
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [B],
@@ -4631,7 +4631,7 @@ mark {
     b: [F],
   ),
   [.],
-)" role="math">\(B \coloneqq \operatorname*{max}_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \Vert (\mathbf{u} ⊗ \mathbf{x}, \mathbf{u})\Vert_{F}.\)</span> We thus arrive at the following theorem.</p>
+)" role="math">\(B \coloneqq \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \Vert (\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u})\Vert_{F}.\)</span> We thus arrive at the following theorem.</p>
     <section class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">6<span class="env-number-separator">.</span>7</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-12" role="doc-biblioref">Ana+26</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -4653,7 +4653,7 @@ mark {
   [∈],
   [ ],
   styled(child: [U], ..),
-)" role="math">\(\mathbf{u}^{(1)}, \dots , \mathbf{u}^{(T)} \in \mathcal{U}\)</span>, the response-based approachability algorithm guarantees</p>
+)" role="math">\(\boldsymbol{u}^{(1)}, \dots , \boldsymbol{u}^{(T)} \in \mathcal{U}\)</span>, the response-based approachability algorithm guarantees</p>
         <figure class="equation" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -4827,7 +4827,7 @@ mark {
     ),
   ),
   [,],
-)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \le 4 \sqrt[]{T} \left(\operatorname*{max}_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \left\Vert \mathbf{u}\right\Vert_{2} \sqrt[]{\left\Vert \mathbf{x}\right\Vert_{2}^{2} + 1}\right) \left(\operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \left\Vert \phi \right\Vert_{F}\right),\]</span> <span class="eqno">(9)</span></div>
+)">\[\displaystyle \text{LinearSwapReg}^{\left(T\right)} \le 4 \sqrt[]{T} \left(\operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \left\Vert \boldsymbol{u}\right\Vert_{2} \sqrt[]{\left\Vert \boldsymbol{x}\right\Vert_{2}^{2} + 1}\right) \left(\operatorname*{max}_{\phi \in \text{End}\left(\mathcal{X}\right)} \left\Vert \phi \right\Vert_{F}\right),\]</span> <span class="eqno">(9)</span></div>
         </figure>
         <p>and</p>
         <figure class="equation" role="math">
@@ -4945,7 +4945,7 @@ mark {
     ),
   ),
   [.],
-)">\[\displaystyle \text{ProfileSwapDist}^{\left(T\right)} \le \frac{2}{\sqrt[]{T}} \left(\operatorname*{max}_{\mathbf{x} \in \mathcal{X}, \mathbf{u} \in \mathcal{U}} \left\Vert \mathbf{u}\right\Vert_{2} \sqrt[]{\left\Vert \mathbf{x}\right\Vert_{2}^{2} + 1}\right).\]</span> <span class="eqno">(10)</span></div>
+)">\[\displaystyle \text{ProfileSwapDist}^{\left(T\right)} \le \frac{2}{\sqrt[]{T}} \left(\operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}} \left\Vert \boldsymbol{u}\right\Vert_{2} \sqrt[]{\left\Vert \boldsymbol{x}\right\Vert_{2}^{2} + 1}\right).\]</span> <span class="eqno">(10)</span></div>
         </figure>
       </div>
     </section>

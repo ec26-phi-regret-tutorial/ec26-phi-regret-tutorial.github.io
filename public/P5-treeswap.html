@@ -1340,7 +1340,7 @@ mark {
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\frac{1}{M} \sum_{t=1}^{M} \mathbf{u}^{(t)}\)</span>, at time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [M])" role="math">\(2M\)</span> it receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\frac{1}{M} \sum_{t=1}^{M} \boldsymbol{u}^{(t)}\)</span>, at time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [M])" role="math">\(2M\)</span> it receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   frac(num: [1], denom: [M]),
   [ ],
   attach(
@@ -1353,7 +1353,7 @@ mark {
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\frac{1}{M} \sum_{t=M+1}^{2M} \mathbf{u}^{(t)}\)</span>, and so on. Then, between those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, that is, while <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> is playing the same strategy, we initialize <em>another copy of the same regret minimizer</em>, which we will call <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span>, which updates its strategy on <em>every</em> iteration.</p>
+)" role="math">\(\frac{1}{M} \sum_{t=M+1}^{2M} \boldsymbol{u}^{(t)}\)</span>, and so on. Then, between those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, that is, while <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> is playing the same strategy, we initialize <em>another copy of the same regret minimizer</em>, which we will call <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span>, which updates its strategy on <em>every</em> iteration.</p>
     <p>The purpose of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> is to bound the value of the most profitable deviation from every single strategy that <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> plays. Therefore, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> can ensure that no strategy played by <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> incurs large swap regret. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> itself will have high swap regret… but this can be solved by introducing yet more layers!</p>
     <p>The <code>TreeSwap</code> algorithm uses <span class="math-katex-source" data-math-display="inline" data-typst-math="[K]" role="math">\(K\)</span> layers of regret minimizers <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: styled(child: [R], ..), b: [0]),
@@ -1387,7 +1387,7 @@ mark {
     b: sequence([K], [−], [1]),
   ),
   [)],
-)" role="math">\((\mathbf{x}_{0}^{(t)}, \dots , \mathbf{x}_{K-1}^{(t)})\)</span> output by the <span class="math-katex-source" data-math-display="inline" data-typst-math="[K]" role="math">\(K\)</span> regret minimizers. For simplicity of notation, we will henceforth zero-index timesteps and use the notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\((\boldsymbol{x}_{0}^{(t)}, \dots , \boldsymbol{x}_{K-1}^{(t)})\)</span> output by the <span class="math-katex-source" data-math-display="inline" data-typst-math="[K]" role="math">\(K\)</span> regret minimizers. For simplicity of notation, we will henceforth zero-index timesteps and use the notation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   lr(body: sequence([[], [n], []])),
   [ ],
   [=],
@@ -1502,7 +1502,7 @@ mark {
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [τ], [)])),
   ),
-)">\[\displaystyle \frac{1}{M^{k}}\sum_{τ=t - M^{k}}^{t-1} \mathbf{u}^{\left(τ\right)}\]</span></div>
+)">\[\displaystyle \frac{1}{M^{k}}\sum_{τ=t - M^{k}}^{t-1} \boldsymbol{u}^{\left(τ\right)}\]</span></div>
             </figure>
           </div>
         </div>
@@ -1516,7 +1516,7 @@ mark {
   ),
   [ ],
   [←],
-)" role="math">\(\mathbf{x}_{k}^{(t)} ←\)</span> current strategy of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span></div>
+)" role="math">\(\boldsymbol{x}_{k}^{(t)} ←\)</span> current strategy of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide" style="--guide:1"></span></p>
@@ -1548,7 +1548,7 @@ mark {
       body: sequence([(], equation(block: false, body: [𝓧]), [)]),
     ),
   ),
-)" role="math">\(\text{Unif}(\mathbf{x}_{0}^{(t)}, \dots , \mathbf{x}_{K-1}^{(t)}) \in \Delta (\mathcal{X})\)</span></div>
+)" role="math">\(\text{Unif}(\boldsymbol{x}_{0}^{(t)}, \dots , \boldsymbol{x}_{K-1}^{(t)}) \in \Delta (\mathcal{X})\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
@@ -1561,7 +1561,7 @@ mark {
   [∈],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
-)" role="math">\(\mathbf{u}^{(t)} \in \mathbb{R}^{d}\)</span></div>
+)" role="math">\(\boldsymbol{u}^{(t)} \in \mathbb{R}^{d}\)</span></div>
         </div>
       </div>
     </section>
@@ -1813,7 +1813,7 @@ mark {
       [⟩],
     ),
   ),
-)">\(\displaystyle = \frac{1}{K} \sum_{k=0}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{k}^{\left(t\right)}\right) \right\rangle - \left\langle \mathbf{u}^{\left(t\right)},\mathbf{x}_{k}^{\left(t\right)} \right\rangle\)</span></div>
+)">\(\displaystyle = \frac{1}{K} \sum_{k=0}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{k}^{\left(t\right)}\right) \right\rangle - \left\langle \boldsymbol{u}^{\left(t\right)},\boldsymbol{x}_{k}^{\left(t\right)} \right\rangle\)</span></div>
           <div class="equation-line is-unnumbered has-alignment" data-line="2" data-math-display="block" data-typst-math="sequence(
   align-point(),
   [=],
@@ -1991,7 +1991,7 @@ mark {
       [⟩],
     ),
   ),
-)">\(\displaystyle = \frac{1}{K} \sum_{k=0}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{k}^{\left(t\right)}\right) \right\rangle - \frac{1}{K} \sum_{k=1}^{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\mathbf{x}_{k-1}^{\left(t\right)} \right\rangle\)</span></div>
+)">\(\displaystyle = \frac{1}{K} \sum_{k=0}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{k}^{\left(t\right)}\right) \right\rangle - \frac{1}{K} \sum_{k=1}^{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \boldsymbol{u}^{\left(t\right)},\boldsymbol{x}_{k-1}^{\left(t\right)} \right\rangle\)</span></div>
           <div class="equation-line is-unnumbered has-alignment" data-line="3" data-math-display="block" data-typst-math="sequence(
   align-point(),
   [=],
@@ -2239,7 +2239,7 @@ mark {
     ),
     annotation: sequence([≤], [ ], [1]),
   ),
-)">\(\displaystyle = \frac{1}{K} \sum_{k=1}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{k}^{\left(t\right)}\right) - \mathbf{x}_{k-1}^{\left(t\right)} \right\rangle + \frac{1}{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]}\left\langle \mathbf{u}^{\left(t\right)},\phi \left(\mathbf{x}_{0}^{\left(t\right)}\right) - \mathbf{x}_{K-1}^{\left(t\right)} \right\rangle\)</span></div>
+)">\(\displaystyle = \frac{1}{K} \sum_{k=1}^{K-1} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]} \left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{k}^{\left(t\right)}\right) - \boldsymbol{x}_{k-1}^{\left(t\right)} \right\rangle + \frac{1}{K} \mathop{\mathbb{E}}\limits_{t \in \left[T\right]}\left\langle \boldsymbol{u}^{\left(t\right)},\phi \left(\boldsymbol{x}_{0}^{\left(t\right)}\right) - \boldsymbol{x}_{K-1}^{\left(t\right)} \right\rangle\)</span></div>
           <div class="equation-line is-unnumbered has-alignment" data-line="4" data-math-display="block" data-typst-math="sequence(
   align-point(),
   [ ],
@@ -2270,7 +2270,7 @@ mark {
     b: [k],
   ),
   [)],
-)" role="math">\(\phi (\mathbf{x}_{k}^{(t)})\)</span> is constant within any given phase and thus the regret against <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi (\boldsymbol{x}_{k}^{(t)})\)</span> is constant within any given phase and thus the regret against <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],
   [ ],
   [(],
@@ -2280,7 +2280,7 @@ mark {
     b: [k],
   ),
   [)],
-)" role="math">\(\phi (\mathbf{x}_{k}^{(t)})\)</span>̧ is bounded by the external regret during the phase.</p>
+)" role="math">\(\phi (\boldsymbol{x}_{k}^{(t)})\)</span>̧ is bounded by the external regret during the phase.</p>
       </div>
     </section>
     <section class="bibliography" id="bibliography">
