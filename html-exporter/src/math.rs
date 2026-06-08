@@ -64,7 +64,19 @@ pub fn normalize_bibliography_math(input: &str) -> String {
             )
         })
         .to_string();
-    replace_tex_macros(&with_math_spans)
+    collapse_bibliography_katex_math(&replace_tex_macros(&with_math_spans))
+}
+
+fn collapse_bibliography_katex_math(input: &str) -> String {
+    let without_inline_delimiters = re_bib_math_inline_delimiters()
+        .replace_all(input, r#"<span class="bib-math">$body</span>"#)
+        .to_string();
+    re_bib_math_katex_wrapper()
+        .replace_all(
+            &without_inline_delimiters,
+            r#"<span class="bib-math">$body</span>"#,
+        )
+        .to_string()
 }
 
 fn render_katex_sources(input: String) -> String {
@@ -1057,6 +1069,24 @@ fn re_tex_math_span() -> &'static Regex {
     RE.get_or_init(|| Regex::new(r#"\$([^$<>]+)\$"#).unwrap())
 }
 
+fn re_bib_math_inline_delimiters() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(r#"(?s)\\[\(\[]\s*<span class="bib-math">(?P<body>.*?)</span>\s*\\[\)\]]"#)
+            .unwrap()
+    })
+}
+
+fn re_bib_math_katex_wrapper() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(
+            r#"(?s)<span\b[^>]*\bclass="[^"]*\bmath-katex-source\b[^"]*"[^>]*>\s*<span class="bib-math">(?P<body>.*?)</span>\s*</span>"#,
+        )
+        .unwrap()
+    })
+}
+
 fn re_class_attr() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r#"\sclass="([^"]*)""#).unwrap())
@@ -1259,6 +1289,19 @@ mod tests {
         assert!(out.contains(r#"\(x\le y\)"#));
         assert!(out.contains("math-katex-source"));
         assert!(!out.contains("<svg>"));
+    }
+
+    #[test]
+    fn bibliography_math_drops_katex_source_delimiters() {
+        let input = r#"Learning and Computation of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-Equilibria"#;
+        let out = normalize_bibliography_math(input);
+
+        assert_eq!(
+            out,
+            r#"Learning and Computation of <span class="bib-math">Φ</span>-Equilibria"#
+        );
+        assert!(!out.contains(r#"\("#), "{out}");
+        assert!(!out.contains("math-katex-source"), "{out}");
     }
 
     #[test]

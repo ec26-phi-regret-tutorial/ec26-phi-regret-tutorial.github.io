@@ -50,7 +50,7 @@ fn run() -> Result<(), String> {
         &document.bibliography,
         &document.endnotes,
         config.math_mode,
-    );
+    )?;
     document.body_html = body_html;
     document.rendered_endnotes = rendered_endnotes;
 
@@ -479,7 +479,7 @@ fn postprocess_body(
     bibliography: &[BibliographyItem],
     endnotes: &[Endnote],
     math_mode: MathMode,
-) -> (String, Vec<RenderedEndnote>) {
+) -> Result<(String, Vec<RenderedEndnote>), String> {
     let mut body = body_html;
     body = re_notes_meta().replace_all(&body, "").to_string();
     body = re_hidden_bibliography().replace_all(&body, "").to_string();
@@ -488,9 +488,11 @@ fn postprocess_body(
     body = normalize_typst_classes(body);
     body = math::postprocess_html_math(body, math_mode);
     let (body_without_bibliography, bibliography_blocks) = protect_visible_bibliographies(body);
-    let body = rewrite_citations(body_without_bibliography, bibliography);
+    let citation_bibliography =
+        citation_bibliography_from_visible_blocks(&bibliography_blocks, bibliography)?;
+    let body = rewrite_citations(body_without_bibliography, &citation_bibliography);
     let body = restore_visible_bibliographies(body, bibliography_blocks);
-    rewrite_footnotes(body, endnotes)
+    Ok(rewrite_footnotes(body, endnotes))
 }
 
 fn normalize_typst_classes(mut body: String) -> String {
@@ -555,6 +557,65 @@ fn restore_visible_bibliographies(mut body: String, blocks: Vec<String>) -> Stri
         body = body.replace(&format!("<!--NOTES_HTML_BIBLIOGRAPHY_{index}-->"), &block);
     }
     body
+}
+
+fn citation_bibliography_from_visible_blocks(
+    blocks: &[String],
+    fallback: &[BibliographyItem],
+) -> Result<Vec<BibliographyItem>, String> {
+    let items = extract_visible_bibliography_items(blocks);
+    let seen = items
+        .iter()
+        .map(|item| item.id.as_str())
+        .collect::<HashSet<_>>();
+    let missing = fallback
+        .iter()
+        .filter(|item| !seen.contains(item.id.as_str()))
+        .map(|item| format!("{} {}", item.key_text, item.id).trim().to_owned())
+        .collect::<Vec<_>>();
+    if !missing.is_empty() {
+        return Err(format!(
+            "visible lec_bibliography is missing row(s) for cited item(s): {}",
+            missing.join(", ")
+        ));
+    }
+    Ok(items)
+}
+
+fn extract_visible_bibliography_items(blocks: &[String]) -> Vec<BibliographyItem> {
+    let row_selector = Selector::parse("tr.bibliography-row").unwrap();
+    let key_selector = Selector::parse(".bib-key").unwrap();
+    let entry_selector = Selector::parse(".bib-entry").unwrap();
+    let mut items = Vec::new();
+
+    for block in blocks {
+        let dom = Html::parse_fragment(block);
+        for row in dom.select(&row_selector) {
+            let Some(id) = row
+                .value()
+                .attr("id")
+                .map(str::trim)
+                .filter(|id| !id.is_empty())
+            else {
+                continue;
+            };
+            let key_text = row
+                .select(&key_selector)
+                .next()
+                .map(|key| normalize_ws(&key.text().collect::<Vec<_>>().join(" ")))
+                .unwrap_or_default();
+            let Some(entry) = row.select(&entry_selector).next() else {
+                continue;
+            };
+            items.push(BibliographyItem {
+                id: id.to_owned(),
+                key_text,
+                entry_html: entry.inner_html().trim().to_owned(),
+            });
+        }
+    }
+
+    items
 }
 
 fn clean_visible_bibliography(block: &str) -> String {
@@ -1266,7 +1327,7 @@ mod tests {
             entry_html: "Entry".to_owned(),
         }];
 
-        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg);
+        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg).unwrap();
 
         assert!(!body.contains("hidden"));
         assert!(!body.contains("notes-meta"));
@@ -1305,9 +1366,54 @@ mod tests {
         let body = rewrite_citations(body, &bibliography);
 
         assert_eq!(body.matches("class=\"citation-note\"").count(), 2);
+        assert!(body.contains("<span class=\"citation-note-key\">[A]</span> Entry A"));
         assert!(body.contains(">A again</a></span>"));
         assert_eq!(body.matches("Entry A").count(), 1);
         assert_eq!(body.matches("Entry B").count(), 1);
+    }
+
+    #[test]
+    fn citation_notes_prefer_visible_bibliography_entries() {
+        let body = r##"
+<p><a href="#loc-1" role="doc-biblioref">A</a></p>
+<section class="bibliography"><table class="bibliography-table"><tr class="bibliography-row"><td class="bib-key">[<a href="#loc-1" role="doc-biblioref">A</a>]</td><td class="bib-entry">Visible Entry</td></tr></table></section>
+"##
+        .to_owned();
+        let bibliography = vec![BibliographyItem {
+            id: "loc-1".to_owned(),
+            key_text: "[A]".to_owned(),
+            entry_html: "Hidden Entry".to_owned(),
+        }];
+
+        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg).unwrap();
+
+        assert!(body.contains("<span class=\"citation-note-key\">[A]</span> Visible Entry"));
+        assert!(!body.contains("Hidden Entry"));
+    }
+
+    #[test]
+    fn missing_visible_bibliography_row_is_an_error() {
+        let body = r##"
+<p><a href="#loc-1" role="doc-biblioref">A</a></p>
+<section class="bibliography"><table class="bibliography-table"></table></section>
+"##
+        .to_owned();
+        let bibliography = vec![BibliographyItem {
+            id: "loc-1".to_owned(),
+            key_text: "[A]".to_owned(),
+            entry_html: "Hidden Entry".to_owned(),
+        }];
+
+        let err = match postprocess_body(body, &bibliography, &[], MathMode::Svg) {
+            Ok(_) => panic!("postprocess_body unexpectedly succeeded"),
+            Err(err) => err,
+        };
+
+        assert!(
+            err.contains("visible lec_bibliography is missing row"),
+            "{err}"
+        );
+        assert!(err.contains("[A] loc-1"), "{err}");
     }
 
     #[test]
