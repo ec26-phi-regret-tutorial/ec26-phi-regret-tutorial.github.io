@@ -1368,7 +1368,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
   [ ],
   [⊆],
   [ ],
@@ -1432,14 +1432,14 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
   [.],
 )" role="math">\(\boldsymbol{x} \in \mathcal{X}, \boldsymbol{u} \in \mathcal{U}.\)</span> In what follows, for a utility vector <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐮]),
   [ ],
   [∈],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
 )" role="math">\(\boldsymbol{u} \in \mathcal{U}\)</span>, we define the best-response map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [b],
@@ -2207,7 +2207,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
 )" role="math">\(\boldsymbol{u}_{j} \in \mathcal{U}\)</span>.</p>
     <section id="definition-6-1" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">6<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Profile swap regret)</span> <strong class="env-punct">.</strong></span></p>
@@ -2339,7 +2339,7 @@ mark {
     </section>
     <p>The definition is admittedly somewhat cumbersome, but as we shall see it unlocks certain powerful properties. This is a good time to discuss the notion of non-manipulability due to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-16" id="loc-7" role="doc-biblioref">Deng, Schneider and Sivan [DSS19]</a><span class="citation-note"><span class="citation-note-key">[DSS19]</span> Y. Deng, J. Schneider and B. Sivan. (2019). Strategizing against no-regret learners. <em>Neural information processing systems (NeurIPS)</em>.</span></span>.</p>
     <h2 id="6-2-1-manipulability-against-a-dynamic-optimizer" class="notes-heading" data-level="2" data-number="6.2.1"><span class="secno">6.2.1</span> Manipulability against a dynamic optimizer</h2>
-    <p>We consider a two-player game between a <em>learner</em> and an <em>optimizer</em>. The learner follows some learning algorithm, whereas the optimizer may choose its actions strategically over time after observing how the learner updates. We let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [ℓ])" role="math">\(u_{ℓ}\)</span> be the learner’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span> its strategy set. Similarly, we let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [o])" role="math">\(u_{o}\)</span> be the optimizer’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [Y], ..)" role="math">\(\mathcal{Y}\)</span> its strategy set.</p>
+    <p>We consider a two-player game between a <em>learner</em> and an <em>optimizer</em>. The learner follows some learning algorithm, whereas the optimizer may choose its actions strategically over time after observing how the learner updates. We let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [ℓ])" role="math">\(u_{ℓ}\)</span> be the learner’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> its strategy set. Similarly, we let <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [u], b: [o])" role="math">\(u_{o}\)</span> be the optimizer’s utility function and <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> its strategy set.</p>
     <p>The key relevant benchmark in this setting is the optimizer’s <em>Stackelberg value</em>, which is the best utility the optimizer can guarantee by committing to a fixed strategy <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐲]),
   [ ],
@@ -2521,7 +2521,7 @@ mark {
     </section>
     <h1 id="6-3-reducing-to-an-approachability-problem" class="notes-heading" data-level="1" data-number="6.3"><span class="secno">6.3</span> Reducing to an approachability problem</h1>
     <p>Having introduced and motivated the notion of profile swap regret, we now reduce it to an approachability instance. We define <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  styled(child: [K], ..),
+  equation(block: false, body: [𝓚]),
   [ ],
   [≔],
   [ ],
@@ -2551,7 +2551,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
       [,],
       [ ],
       equation(block: false, body: [𝐱]),
@@ -2563,7 +2563,7 @@ mark {
     ),
   ),
 )" role="math">\(\mathcal{K} \coloneqq \operatorname{conv} \{(\boldsymbol{u} ⊗ \boldsymbol{x}, \boldsymbol{u}) : \boldsymbol{u} \in \mathcal{U}, \boldsymbol{x} \in \mathcal{X}\}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  styled(child: [S], ..),
+  equation(block: false, body: [𝓢]),
   [ ],
   [≔],
   [ ],
@@ -2598,7 +2598,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
       [}],
     ),
   ),
@@ -2620,7 +2620,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [S], ..),
+      equation(block: false, body: [𝓢]),
     ),
   ),
   [ ],
@@ -2659,7 +2659,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [S], ..),
+      equation(block: false, body: [𝓢]),
     ),
   ),
   [ ],
@@ -2789,7 +2789,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [S], ..),
+  equation(block: false, body: [𝓢]),
 )" role="math">\(\boldsymbol{s} \in \mathcal{S}\)</span> be closest to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: overline(body: [κ]),
   t: lr(body: sequence([(], [T], [)])),
@@ -3154,7 +3154,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3205,7 +3205,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3303,7 +3303,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [S], ..),
+  [𝓢],
   [.],
 )"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -3351,7 +3351,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [S], ..),
+  [𝓢],
   [.],
 )">\[\displaystyle \boldsymbol{s}^{\left(t\right)} \coloneqq \left(\boldsymbol{u}_{∗}^{\left(t\right)} ⊗ b\left(\boldsymbol{u}_{∗}^{\left(t\right)}\right), \boldsymbol{u}_{∗}^{\left(t\right)}\right) \in \mathcal{S}.\]</span></div>
     </figure>
@@ -3365,7 +3365,7 @@ mark {
   base: equation(block: false, body: [𝐔]),
   t: lr(body: sequence([(], [t], [)])),
 )" role="math">\(\mathbf{U}^{(t)}\)</span>.</p>
-    <p>This response-based approachability algorithm is summarized below. All steps can be efficiently implemented through oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>.</p>
+    <p>This response-based approachability algorithm is summarized below. All steps can be efficiently implemented through oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>.</p>
     <section class="env algorithm">
       <div class="env-title"><strong>Algorithm</strong> [<span class="citation-wrap"><a class="citation" href="#loc-13" role="doc-biblioref">BS15</a></span>]: Response-based approachability</div>
       <div class="pseudocode">
@@ -3374,13 +3374,13 @@ mark {
   equation(block: false, body: [𝓧]),
   [,],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
 )" role="math">\(\mathcal{X}, \mathcal{U}\)</span>, best-response map <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [b],
   [ ],
   [:],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
   [ ],
   [→],
   [ ],
@@ -3467,7 +3467,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3517,7 +3517,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3682,7 +3682,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
 )" role="math">\(\boldsymbol{u}^{(t)} \in \mathcal{U}\)</span>, we have</p>
         <figure class="equation" id="loc-9" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -3863,7 +3863,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3889,7 +3889,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3936,7 +3936,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -3962,7 +3962,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -4023,7 +4023,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -4080,7 +4080,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -4137,7 +4137,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -4205,7 +4205,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -4631,7 +4631,7 @@ mark {
       [ ],
       [∈],
       [ ],
-      styled(child: [U], ..),
+      equation(block: false, body: [𝓤]),
     ),
   ),
   [ ],
@@ -4680,7 +4680,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [U], ..),
+  equation(block: false, body: [𝓤]),
 )" role="math">\(\boldsymbol{u}^{(1)}, \dots , \boldsymbol{u}^{(T)} \in \mathcal{U}\)</span>, the response-based approachability algorithm guarantees</p>
         <figure class="equation" role="math">
           <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -4712,7 +4712,7 @@ mark {
           [ ],
           [∈],
           [ ],
-          styled(child: [U], ..),
+          equation(block: false, body: [𝓤]),
         ),
       ),
       [ ],
@@ -4798,7 +4798,7 @@ mark {
           [ ],
           [∈],
           [ ],
-          styled(child: [U], ..),
+          equation(block: false, body: [𝓤]),
         ),
       ),
       [ ],
@@ -4886,7 +4886,7 @@ mark {
           [ ],
           [∈],
           [ ],
-          styled(child: [U], ..),
+          equation(block: false, body: [𝓤]),
         ),
       ),
       [ ],
@@ -4943,7 +4943,7 @@ mark {
           [ ],
           [∈],
           [ ],
-          styled(child: [U], ..),
+          equation(block: false, body: [𝓤]),
         ),
       ),
       [ ],

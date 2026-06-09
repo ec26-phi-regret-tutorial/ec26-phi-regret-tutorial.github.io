@@ -20,7 +20,7 @@ The second term in the right-hand side of (@eq-regret) is the cumulative utility
 
 We will often need to analyze what happens when multiple no-regret players repeatedly interact in a game. To do so, we begin by introducing the canonical normal-form representation of games. While any finite game can be cast in normal form, that representation is often inefficient. This will motivate introducing more compact game representations, as we shall do in the sequel.
 
-Formally, we have a set of $n$ players. In a normal-form game, each player $i in [n]$ has a finite set of available actions $cA_i$; we will use the shorthand notation $m_i := |cA_i|$ for the number of actions. Every player $i in [n]$ has a _utility function_ $u_i$ mapping a joint action profile $(a_1, ..., a_n) in cA_1 times dots.c times cA_n$ to a real value $u_i (a_1, ..., a_n)$. Players can randomize by specifying a probability distribution over their available actions, so that the strategy set of each player is the probability simplex $cal(X_i) = Delta(cA_i)$. Under a joint strategy $(x_1, ..., x_n) in Delta(cA_1) times dots.c times Delta(cA_n)$, the _expected utility_ of player $i in [n]$ reads
+Formally, we have a set of $n$ players. In a normal-form game, each player $i in [n]$ has a finite set of available actions $cA_i$; we will use the shorthand notation $m_i := |cA_i|$ for the number of actions. Every player $i in [n]$ has a _utility function_ $u_i$ mapping a joint action profile $(a_1, ..., a_n) in cA_1 times dots.c times cA_n$ to a real value $u_i (a_1, ..., a_n)$. Players can randomize by specifying a probability distribution over their available actions, so that the strategy set of each player is the probability simplex $cal(X)_i = Delta(cA_i)$. Under a joint strategy $(x_1, ..., x_n) in Delta(cA_1) times dots.c times Delta(cA_n)$, the _expected utility_ of player $i in [n]$ reads
 
 $
   u_i (vx_1, ..., vx_n) &:= EE_((a_1, ..., a_n) tilde (vx_1, ..., vx_n)) [ u_i (a_1, ..., a_n) ] \
@@ -49,7 +49,7 @@ $
   mu' = mat(1/6, 1/6; 1/3, 1/3).
 $
 
-Both are distributions over $cA_1 times cal(cA)_2 = {"1", "2"} times {"1", "2"}$, but only $mu'$ is a product distribution. Indeed, if Player 1---the row player---plays $(1/3, 2/3)$ and Player 2 plays $(1/2, 1/2)$, the induced distribution over the $4$ outcomes matches $mu'$. In contrast, no pair of strategies gives rise to $mu$.
+Both are distributions over $cA_1 times cA_2 = {"1", "2"} times {"1", "2"}$, but only $mu'$ is a product distribution. Indeed, if Player 1---the row player---plays $(1/3, 2/3)$ and Player 2 plays $(1/2, 1/2)$, the induced distribution over the $4$ outcomes matches $mu'$. In contrast, no pair of strategies gives rise to $mu$.
 
 A Nash equilibrium is always a CCE; a Nash equilibrium is basically an _uncorrelated_ (coarse) correlated equilibrium. But the set of CCEs can unlock new outcomes. Before we examine a concrete example, we also introduce the stronger notion of a _correlated equilibrium_, famously put forward by #citet(<Aumann74:Subjectivity>).
 

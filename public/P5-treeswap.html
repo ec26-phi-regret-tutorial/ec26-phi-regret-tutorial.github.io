@@ -1357,8 +1357,8 @@ mark {
   ),
 )" role="math">\(\text{poly}(d, 1/\epsilon )\)</span>-time algorithms for swap regret beyond normal-form games. In this chapter, we will go over the upper bound.</p>
     <h1 id="5-1-the-treeswap-algorithm" class="notes-heading" data-level="1" data-number="5.1"><span class="secno">5.1</span> The <code>TreeSwap</code> Algorithm</h1>
-    <p>We now describe the <code>TreeSwap</code> algorithm, following <span class="citation-wrap"><a class="citation" href="#loc-5" role="doc-biblioref">Peng and Rubinstein [PR24]</a></span> and <span class="citation-wrap"><a class="citation" href="#loc-6" role="doc-biblioref">Dagan, Daskalakis, Fishelson and Golowich [Dag+24]</a></span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> be a no-regret algorithm on <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> whose regret is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [T])" role="math">\(\epsilon T\)</span> after <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> rounds. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> will not necessarily have small swap regret. So, how can we hope to bound swap regret?</p>
-    <p>One thing to try might be the following. Instead of having <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> update its strategy on <em>every</em> iteration, it will be lazy, and only update its strategy every <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, using the average utility on those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations. That is, at time <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span>, it receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>We now describe the <code>TreeSwap</code> algorithm, following <span class="citation-wrap"><a class="citation" href="#loc-5" role="doc-biblioref">Peng and Rubinstein [PR24]</a></span> and <span class="citation-wrap"><a class="citation" href="#loc-6" role="doc-biblioref">Dagan, Daskalakis, Fishelson and Golowich [Dag+24]</a></span>. Let <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓡])" role="math">\(\mathcal{R}\)</span> be a no-regret algorithm on <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> whose regret is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [T])" role="math">\(\epsilon T\)</span> after <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> rounds. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓡])" role="math">\(\mathcal{R}\)</span> will not necessarily have small swap regret. So, how can we hope to bound swap regret?</p>
+    <p>One thing to try might be the following. Instead of having <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓡])" role="math">\(\mathcal{R}\)</span> update its strategy on <em>every</em> iteration, it will be lazy, and only update its strategy every <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, using the average utility on those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations. That is, at time <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span>, it receives utility <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   frac(num: [1], denom: [M]),
   [ ],
   attach(base: [∑], t: [M], b: sequence([t], [=], [1])),
@@ -1380,23 +1380,35 @@ mark {
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\frac{1}{M} \sum_{t=M+1}^{2M} \boldsymbol{u}^{(t)}\)</span>, and so on. Then, between those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, that is, while <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> is playing the same strategy, we initialize <em>another copy of the same regret minimizer</em>, which we will call <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span>, which updates its strategy on <em>every</em> iteration.</p>
-    <p>The purpose of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> is to bound the value of the most profitable deviation from every single strategy that <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> plays. Therefore, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> can ensure that no strategy played by <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [R], ..)" role="math">\(\mathbb{R}\)</span> incurs large swap regret. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), tr: primes(count: 1))" role="math">\(\mathbb{R}'\)</span> itself will have high swap regret… but this can be solved by introducing yet more layers!</p>
+)" role="math">\(\frac{1}{M} \sum_{t=M+1}^{2M} \boldsymbol{u}^{(t)}\)</span>, and so on. Then, between those <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> iterations, that is, while <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓡])" role="math">\(\mathcal{R}\)</span> is playing the same strategy, we initialize <em>another copy of the same regret minimizer</em>, which we will call <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝓡]),
+  tr: primes(count: 1),
+)" role="math">\(\mathcal{R}'\)</span>, which updates its strategy on <em>every</em> iteration.</p>
+    <p>The purpose of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝓡]),
+  tr: primes(count: 1),
+)" role="math">\(\mathcal{R}'\)</span> is to bound the value of the most profitable deviation from every single strategy that <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓡])" role="math">\(\mathcal{R}\)</span> plays. Therefore, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝓡]),
+  tr: primes(count: 1),
+)" role="math">\(\mathcal{R}'\)</span> can ensure that no strategy played by <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓡])" role="math">\(\mathcal{R}\)</span> incurs large swap regret. Of course, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝓡]),
+  tr: primes(count: 1),
+)" role="math">\(\mathcal{R}'\)</span> itself will have high swap regret… but this can be solved by introducing yet more layers!</p>
     <p>The <code>TreeSwap</code> algorithm uses <span class="math-katex-source" data-math-display="inline" data-typst-math="[K]" role="math">\(K\)</span> layers of regret minimizers <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(base: styled(child: [R], ..), b: [0]),
+  attach(base: equation(block: false, body: [𝓡]), b: [0]),
   [,],
   [ ],
   […],
   [,],
   [ ],
   attach(
-    base: styled(child: [R], ..),
+    base: equation(block: false, body: [𝓡]),
     b: sequence([K], [−], [1]),
   ),
-)" role="math">\(\mathbb{R}_{0}, \dots , \mathbb{R}_{K-1}\)</span>, each responsible for ensuring that there is no profitable swap deviation for the regret minimizers in the next layer. <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [0])" role="math">\(\mathbb{R}_{0}\)</span> updates on every iteration. Each regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span> updates <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> times slower than the previous regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: styled(child: [R], ..),
+)" role="math">\(\mathcal{R}_{0}, \dots , \mathcal{R}_{K-1}\)</span>, each responsible for ensuring that there is no profitable swap deviation for the regret minimizers in the next layer. <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓡]), b: [0])" role="math">\(\mathcal{R}_{0}\)</span> updates on every iteration. Each regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓡]), b: [k])" role="math">\(\mathcal{R}_{k}\)</span> updates <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> times slower than the previous regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝓡]),
   b: sequence([k], [−], [1]),
-)" role="math">\(\mathbb{R}_{k-1}\)</span>, and resets every <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> updates. Hence, this algorithm runs for <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: [K])" role="math">\(M^{K}\)</span> steps. The strategy output by <code>TreeSwap</code> is the uniform distribution (not to be confused with the average) over the strategies <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathcal{R}_{k-1}\)</span>, and resets every <span class="math-katex-source" data-math-display="inline" data-typst-math="[M]" role="math">\(M\)</span> updates. Hence, this algorithm runs for <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: [K])" role="math">\(M^{K}\)</span> steps. The strategy output by <code>TreeSwap</code> is the uniform distribution (not to be confused with the average) over the strategies <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [(],
   attach(
     base: equation(block: false, body: [𝐱]),
@@ -1440,14 +1452,14 @@ mark {
       <div class="pseudocode">
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><strong>Input:</strong> Regret minimizers <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(base: styled(child: [R], ..), b: [1]),
+  attach(base: equation(block: false, body: [𝓡]), b: [1]),
   [,],
   [ ],
   […],
   [,],
   [ ],
-  attach(base: styled(child: [R], ..), b: [K]),
-)" role="math">\(\mathbb{R}_{1}, \dots , \mathbb{R}_{K}\)</span></div>
+  attach(base: equation(block: false, body: [𝓡]), b: [K]),
+)" role="math">\(\mathcal{R}_{1}, \dots , \mathcal{R}_{K}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:0">
           <div class="pseudo-text"><strong>for</strong> timesteps <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -1482,12 +1494,12 @@ mark {
   [|],
   [ ],
   [t],
-)" role="math">\(M^{k+1} | t\)</span> <strong>then</strong> reset <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span></div>
+)" role="math">\(M^{k+1} | t\)</span> <strong>then</strong> reset <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓡]), b: [k])" role="math">\(\mathcal{R}_{k}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:2">
           <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span></p>
           <div class="pseudo-text">
-            <p><strong>else if</strong> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [M], t: [k]), [ ], [|], [ ], [t])" role="math">\(M^{k} | t\)</span> <strong>then</strong> pass to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span> the average of the last <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: [k])" role="math">\(M^{k}\)</span> utilities,</p>
+            <p><strong>else if</strong> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [M], t: [k]), [ ], [|], [ ], [t])" role="math">\(M^{k} | t\)</span> <strong>then</strong> pass to <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓡]), b: [k])" role="math">\(\mathcal{R}_{k}\)</span> the average of the last <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [M], t: [k])" role="math">\(M^{k}\)</span> utilities,</p>
             <figure class="equation" role="math">
               <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   frac(num: [1], denom: attach(base: [M], t: [k])),
@@ -1543,7 +1555,7 @@ mark {
   ),
   [ ],
   [←],
-)" role="math">\(\boldsymbol{x}_{k}^{(t)} ←\)</span> current strategy of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: styled(child: [R], ..), b: [k])" role="math">\(\mathbb{R}_{k}\)</span></div>
+)" role="math">\(\boldsymbol{x}_{k}^{(t)} ←\)</span> current strategy of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓡]), b: [k])" role="math">\(\mathcal{R}_{k}\)</span></div>
         </div>
         <div class="pseudo-line" style="--indent:1">
           <p><span class="pseudo-guide" style="--guide:1"></span></p>

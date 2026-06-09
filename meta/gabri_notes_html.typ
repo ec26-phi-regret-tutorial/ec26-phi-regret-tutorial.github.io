@@ -723,6 +723,43 @@
 // `styled(child: ..., ..)`, which loses the original style command. Use
 // Unicode math alphabet symbols in the shared notation macros so the KaTeX
 // postprocessor receives an unambiguous representation.
+#let _html-cal-symbol(body) = {
+  let symbol = (
+    "[A]": $𝓐$,
+    "[B]": $𝓑$,
+    "[C]": $𝓒$,
+    "[D]": $𝓓$,
+    "[E]": $𝓔$,
+    "[F]": $𝓕$,
+    "[G]": $𝓖$,
+    "[H]": $𝓗$,
+    "[I]": $𝓘$,
+    "[J]": $𝓙$,
+    "[K]": $𝓚$,
+    "[L]": $𝓛$,
+    "[M]": $𝓜$,
+    "[N]": $𝓝$,
+    "[O]": $𝓞$,
+    "[P]": $𝓟$,
+    "[Q]": $𝓠$,
+    "[R]": $𝓡$,
+    "[S]": $𝓢$,
+    "[T]": $𝓣$,
+    "[U]": $𝓤$,
+    "[V]": $𝓥$,
+    "[W]": $𝓦$,
+    "[X]": $𝓧$,
+    "[Y]": $𝓨$,
+    "[Z]": $𝓩$,
+  ).at(repr(body), default: none)
+  if symbol != none {
+    symbol
+  } else {
+    math.cal(body)
+  }
+}
+#let cal = _html-cal-symbol
+
 #let BB = $𝔹$
 #let CC = $ℂ$
 #let NN = $ℕ$

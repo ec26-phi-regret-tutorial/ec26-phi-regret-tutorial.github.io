@@ -1663,12 +1663,12 @@ mark {
   [ ],
   [:],
   [ ],
-  styled(child: [X], ..),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
-  styled(child: [X], ..),
-)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> and oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>, outputs an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate expected fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>.</div>
+  equation(block: false, body: [𝓧]),
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span> and oracle access to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, outputs an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate expected fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>.</div>
     </section>
     <p>The existence of this algorithm proves, as a corollary, that <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate expected fixed points always exist for every <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ϵ], [ ], [>], [ ], [0])" role="math">\(\epsilon &gt; 0\)</span>. Although we will not need it here, it also turns out to be true that <em>exact</em> expected fixed points also always exist (even when <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is discontinuous) [<span class="citation-wrap"><a class="citation" href="#loc-9" role="doc-biblioref">Zha+25a</a></span>]. The “either-or” nature of the above theorem will become useful shortly.</p>
     <section class="env proof">
@@ -1682,7 +1682,7 @@ mark {
   [ ],
   [∈],
   [ ],
-  styled(child: [X], ..),
+  equation(block: false, body: [𝓧]),
 )" role="math">\(\boldsymbol{x}^{(1)} \in \mathcal{X}\)</span> be arbitrary, and consider the sequence of points <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐱]),
@@ -1984,7 +1984,9 @@ mark {
 )" role="math">\(\boldsymbol{x}^{(K+1)} \coloneqq \phi (\boldsymbol{x}^{(K)})\)</span> for notational simplicity. But the right-hand side has norm at most <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [diam],
-    lr(body: sequence([(], styled(child: [X], ..), [)])),
+    lr(
+      body: sequence([(], equation(block: false, body: [𝓧]), [)]),
+    ),
   ),
   [/],
   [K],
@@ -1995,7 +1997,9 @@ mark {
   [ ],
   sequence(
     [diam],
-    lr(body: sequence([(], styled(child: [X], ..), [)])),
+    lr(
+      body: sequence([(], equation(block: false, body: [𝓧]), [)]),
+    ),
   ),
   [/],
   [ϵ],
@@ -2069,7 +2073,7 @@ mark {
 )" role="math">\(\boldsymbol{x}^{(1)}, \dots , \boldsymbol{x}^{(K)}\)</span>, if any <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [k], [)])),
-)" role="math">\(\boldsymbol{x}^{(k)}\)</span> is not in <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span>, we can immediately output <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+)" role="math">\(\boldsymbol{x}^{(k)}\)</span> is not in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, we can immediately output <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐱]),
   t: lr(body: sequence([(], [k], [−], [1], [)])),
 )" role="math">\(\boldsymbol{x}^{(k-1)}\)</span>.</p>
@@ -2116,12 +2120,12 @@ mark {
   [ ],
   [:],
   [ ],
-  styled(child: [X], ..),
+  equation(block: false, body: [𝓧]),
   [ ],
   [→],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
-)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> actually has image in <span class="math-katex-source" data-math-display="inline" data-typst-math="styled(child: [X], ..)" role="math">\(\mathcal{X}\)</span> is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point <em>or</em> a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∉], [ ], attach(base: [Φ], t: [q]))" role="math">\(\phi \notin \Phi^{q}\)</span>.</p>
+)" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> actually has image in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point <em>or</em> a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∉], [ ], attach(base: [Φ], t: [q]))" role="math">\(\phi \notin \Phi^{q}\)</span>.</p>
     <h1 id="2-3-efficient-regret-minimization-via-semi-separation" class="notes-heading" data-level="1" data-number="2.3"><span class="secno">2.3</span> Efficient regret minimization via semi-separation</h1>
     <p>We now briefly sketch how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> expressible in the form given by <a href="#definition-2-1">Definition&nbsp;2.1</a>.</p>
     <p>At a high level, the algorithm relies on an online algorithm called <em>Shell gradient descent</em>, developed by&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-11" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [Das+25]</a></span>. This is just projected gradient descent, but with the twist that the underlying constraint set is <em>changing from round to round</em>. As long as the constraint set at each round contains the constraint set of interest, this approach is sound. Shell gradient descent hinges on a projection oracle, which crucially uses the semi-separation oracle developed above.</p>

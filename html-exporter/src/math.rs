@@ -412,21 +412,22 @@ fn convert_primes(args: &[Arg]) -> String {
 }
 
 fn convert_operator(args: &[Arg], context: ConvertContext) -> String {
-    let text = named_arg(args, "text")
-        .or_else(|| positional_arg(args, 0))
-        .map(|value| convert_expr_with_context(value, context))
-        .unwrap_or_default();
+    let raw_text = named_arg(args, "text").or_else(|| positional_arg(args, 0));
     let limits = named_arg(args, "limits")
         .map(|value| value.trim() == "true")
         .unwrap_or(false);
-    let stripped = strip_tex_text_wrappers(text.trim());
-    if stripped == "E" {
-        if limits {
+    if raw_text.map(is_expectation_operator_repr).unwrap_or(false) {
+        return if limits {
             "\\mathop{\\mathbb{E}}\\limits".to_owned()
         } else {
             "\\mathbb{E}".to_owned()
-        }
-    } else if stripped
+        };
+    }
+    let text = raw_text
+        .map(|value| convert_expr_with_context(value, context))
+        .unwrap_or_default();
+    let stripped = strip_tex_text_wrappers(text.trim());
+    if stripped
         .chars()
         .all(|ch| ch.is_ascii_alphabetic() || ch == '-')
     {
@@ -443,44 +444,64 @@ fn convert_operator(args: &[Arg], context: ConvertContext) -> String {
     }
 }
 
-fn convert_styled_child(input: &str, context: ConvertContext) -> String {
-    let converted = convert_expr_with_context(input, context);
-    let stripped = strip_tex_text_wrappers(converted.trim());
-    if let Some(styled) = styled_symbol(stripped) {
-        return styled;
+fn is_expectation_operator_repr(input: &str) -> bool {
+    let input = input.trim();
+    if matches!(bracket_literal(input), Some("E" | "𝔼")) {
+        return true;
     }
-    if let Some((base, suffix)) = styled_symbol_with_suffix(stripped) {
-        if let Some(styled) = styled_symbol(base) {
-            return format!("{styled}{suffix}");
+    if let Some((name, inner)) = call_parts(input) {
+        if matches!(name, "equation" | "styled") {
+            let args = parse_args(inner);
+            let child = named_arg(&args, "body")
+                .or_else(|| named_arg(&args, "child"))
+                .or_else(|| positional_arg(&args, 0));
+            if let Some(child) = child {
+                return is_expectation_operator_repr(child);
+            }
         }
     }
+    false
+}
+
+fn convert_styled_child(input: &str, context: ConvertContext) -> String {
+    if let Some(fragment) = ambiguous_styled_fragment(input) {
+        panic!(
+            "ambiguous Typst styled math `{}` in `styled(child: {}, ..)`; emit an explicit Unicode math alphabet symbol from gabri_notes_html.typ instead",
+            fragment,
+            input.trim()
+        );
+    }
+    let converted = convert_expr_with_context(input, context);
     converted
 }
 
-fn styled_symbol(input: &str) -> Option<String> {
-    match input {
-        "A" | "C" | "H" | "K" | "S" | "U" | "X" | "Y" => Some(format!("\\mathcal{{{input}}}")),
-        "R" | "N" | "Q" | "B" => Some(format!("\\mathbb{{{input}}}")),
-        "a" | "b" | "c" | "p" | "q" | "s" | "u" | "x" | "y" | "z" => {
-            Some(format!("\\boldsymbol{{{input}}}"))
+fn ambiguous_styled_fragment(input: &str) -> Option<String> {
+    let input = input.trim();
+    if let Some(literal) = bracket_literal(input) {
+        if literal.chars().count() == 1 && literal.chars().all(|ch| ch.is_ascii_alphabetic()) {
+            return Some(literal.to_owned());
         }
-        "I" | "M" => Some(format!("\\mathbf{{{input}}}")),
-        _ => None,
-    }
-}
-
-fn styled_symbol_with_suffix(input: &str) -> Option<(&str, &str)> {
-    let mut chars = input.char_indices();
-    let (_, first) = chars.next()?;
-    if !first.is_ascii_alphabetic() {
         return None;
     }
-    let suffix_start = chars.next().map(|(idx, _)| idx)?;
-    let suffix = &input[suffix_start..];
-    if suffix.starts_with('_') || suffix.starts_with('^') || suffix.starts_with('\'') {
-        Some((&input[..suffix_start], suffix))
-    } else {
-        None
+    let Some((name, inner)) = call_parts(input) else {
+        return None;
+    };
+    let args = parse_args(inner);
+    match name {
+        "equation" => named_arg(&args, "body")
+            .or_else(|| positional_arg(&args, 0))
+            .and_then(ambiguous_styled_fragment),
+        "attach" => named_arg(&args, "base")
+            .or_else(|| positional_arg(&args, 0))
+            .and_then(ambiguous_styled_fragment),
+        "sequence" => args
+            .iter()
+            .filter(|arg| arg.name.is_none())
+            .find_map(|arg| ambiguous_styled_fragment(&arg.value)),
+        _ => args
+            .iter()
+            .filter(|arg| matches!(arg.name.as_deref(), Some("body" | "child" | "text") | None))
+            .find_map(|arg| ambiguous_styled_fragment(&arg.value)),
     }
 }
 
@@ -907,6 +928,15 @@ fn escape_tex_text(input: &str) -> String {
 }
 
 fn char_to_tex(ch: char) -> String {
+    if let Some(letter) = unicode_math_letter(ch, '𝓐', '𝓩', 'A') {
+        return format!("\\mathcal{{{letter}}}");
+    }
+    if let Some(letter) = unicode_math_letter(ch, '𝐀', '𝐙', 'A') {
+        return format!("\\mathbf{{{letter}}}");
+    }
+    if let Some(letter) = unicode_math_letter(ch, '𝐚', '𝐳', 'a') {
+        return format!("\\boldsymbol{{{letter}}}");
+    }
     match ch {
         'Φ' => tex_command("Phi"),
         'φ' => tex_command("phi"),
@@ -929,29 +959,6 @@ fn char_to_tex(ch: char) -> String {
         'ℚ' => "\\mathbb{Q}".to_owned(),
         'ℂ' => "\\mathbb{C}".to_owned(),
         '𝔼' => "\\mathbb{E}".to_owned(),
-        '𝓐' => "\\mathcal{A}".to_owned(),
-        '𝓒' => "\\mathcal{C}".to_owned(),
-        '𝓗' => "\\mathcal{H}".to_owned(),
-        '𝓚' => "\\mathcal{K}".to_owned(),
-        '𝓢' => "\\mathcal{S}".to_owned(),
-        '𝓤' => "\\mathcal{U}".to_owned(),
-        '𝓧' => "\\mathcal{X}".to_owned(),
-        '𝓨' => "\\mathcal{Y}".to_owned(),
-        '𝐀' => "\\mathbf{A}".to_owned(),
-        '𝐈' => "\\mathbf{I}".to_owned(),
-        '𝐊' => "\\mathbf{K}".to_owned(),
-        '𝐌' => "\\mathbf{M}".to_owned(),
-        '𝐔' => "\\mathbf{U}".to_owned(),
-        '𝐚' => "\\boldsymbol{a}".to_owned(),
-        '𝐛' => "\\boldsymbol{b}".to_owned(),
-        '𝐜' => "\\boldsymbol{c}".to_owned(),
-        '𝐩' => "\\boldsymbol{p}".to_owned(),
-        '𝐪' => "\\boldsymbol{q}".to_owned(),
-        '𝐬' => "\\boldsymbol{s}".to_owned(),
-        '𝐮' => "\\boldsymbol{u}".to_owned(),
-        '𝐱' => "\\boldsymbol{x}".to_owned(),
-        '𝐲' => "\\boldsymbol{y}".to_owned(),
-        '𝐳' => "\\boldsymbol{z}".to_owned(),
         '≤' => tex_command("le"),
         '≥' => tex_command("ge"),
         '≠' => tex_command("ne"),
@@ -986,6 +993,16 @@ fn char_to_tex(ch: char) -> String {
 
 fn tex_command(name: &str) -> String {
     format!("\\{name} ")
+}
+
+fn unicode_math_letter(ch: char, start: char, end: char, ascii_start: char) -> Option<char> {
+    let code = ch as u32;
+    let start = start as u32;
+    let end = end as u32;
+    if !(start..=end).contains(&code) {
+        return None;
+    }
+    char::from_u32((ascii_start as u32) + code - start)
 }
 
 fn strip_tex_text_wrappers(input: &str) -> &str {
@@ -1235,7 +1252,7 @@ mod tests {
 
     #[test]
     fn split_argmax_operator_uses_single_limits_operator() {
-        let input = "sequence(op(text: [arg], limits: false), [ ], attach(base: op(text: [max], limits: true), b: sequence([x], [ ], [∈], [ ], equation(block: false, body: styled(child: [X], ..)))))";
+        let input = "sequence(op(text: [arg], limits: false), [ ], attach(base: op(text: [max], limits: true), b: sequence([x], [ ], [∈], [ ], equation(block: false, body: [𝓧]))))";
         assert_eq!(
             typst_repr_to_katex(input),
             "\\operatorname*{arg\\,max}_{x \\in \\mathcal{X}}"
@@ -1333,7 +1350,7 @@ mod tests {
 
     #[test]
     fn converts_typst_split_superscript_repr() {
-        let input = "sequence(equation(block: false, body: styled(child: [c], ..)), attach(base: [ ], t: lr(body: sequence([(], [t], [)]))), [ ], [∈], [ ], equation(block: false, body: styled(child: [C], ..)))";
+        let input = "sequence(equation(block: false, body: [𝐜]), attach(base: [ ], t: lr(body: sequence([(], [t], [)]))), [ ], [∈], [ ], equation(block: false, body: [𝓒]))";
         assert_eq!(
             typst_repr_to_katex(input),
             "\\boldsymbol{c} ^{(t)} \\in \\mathcal{C}"
@@ -1341,22 +1358,51 @@ mod tests {
     }
 
     #[test]
-    fn direct_calligraphic_s_fallback_is_preserved() {
+    fn ambiguous_ascii_styled_letters_panic() {
+        for byte in b'A'..=b'Z' {
+            let letter = byte as char;
+            let result = std::panic::catch_unwind(|| {
+                typst_repr_to_katex(&format!("styled(child: [{letter}], ..)"))
+            });
+            assert!(result.is_err(), "styled `{letter}` should be ambiguous");
+        }
+        for byte in b'a'..=b'z' {
+            let letter = byte as char;
+            let result = std::panic::catch_unwind(|| {
+                typst_repr_to_katex(&format!("styled(child: [{letter}], ..)"))
+            });
+            assert!(result.is_err(), "styled `{letter}` should be ambiguous");
+        }
+        assert_eq!(typst_repr_to_katex("styled(child: [NP], ..)"), "\\text{NP}");
         assert_eq!(
-            typst_repr_to_katex("styled(child: [S], ..)"),
-            "\\mathcal{S}"
+            typst_repr_to_katex("styled(child: [PPAD], ..)"),
+            "\\text{PPAD}"
         );
     }
 
     #[test]
-    fn styled_symbols_with_subscripts_keep_their_style() {
+    fn ambiguous_ascii_styled_attachments_panic() {
+        for input in [
+            "styled(child: attach(base: [X], b: [i]), ..)",
+            "styled(child: attach(base: [R], b: [k]), ..)",
+            "styled(child: attach(base: [x], b: [i]), ..)",
+        ] {
+            let result = std::panic::catch_unwind(|| typst_repr_to_katex(input));
+            assert!(result.is_err(), "{input} should be ambiguous");
+        }
+    }
+
+    #[test]
+    fn redundant_styling_around_unambiguous_symbols_is_preserved() {
         assert_eq!(
-            typst_repr_to_katex("styled(child: attach(base: [X], b: [i]), ..)"),
+            typst_repr_to_katex(
+                "styled(child: attach(base: equation(block: false, body: [𝓧]), b: [i]), ..)"
+            ),
             "\\mathcal{X}_{i}"
         );
         assert_eq!(
-            typst_repr_to_katex("styled(child: attach(base: [x], b: [i]), ..)"),
-            "\\boldsymbol{x}_{i}"
+            typst_repr_to_katex("styled(child: equation(block: false, body: [𝓡]), ..)"),
+            "\\mathcal{R}"
         );
     }
 
@@ -1386,10 +1432,11 @@ mod tests {
 
     #[test]
     fn unicode_math_alphabet_notation_is_unambiguous() {
-        let input = "sequence([𝓢], [ ], [⊂], [ ], [𝓧], [ ], [×], [ ], [𝐱], [ ], [∈], [ ], [ℝ])";
+        let input =
+            "sequence([𝓢], [ ], [𝓧], [ ], [𝓝], [ ], [𝓡], [ ], [𝐀], [ ], [𝐱], [ ], [ℝ], [ ], [ℕ])";
         assert_eq!(
             typst_repr_to_katex(input),
-            "\\mathcal{S} \\subset \\mathcal{X} \\times \\boldsymbol{x} \\in \\mathbb{R}"
+            "\\mathcal{S} \\mathcal{X} \\mathcal{N} \\mathcal{R} \\mathbf{A} \\boldsymbol{x} \\mathbb{R} \\mathbb{N}"
         );
     }
 

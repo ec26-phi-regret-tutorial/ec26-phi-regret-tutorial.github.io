@@ -10,7 +10,7 @@ The techniques we have covered so far based on regret minimization lead to a run
 
 We will now introduce _ellipsoid against hope_ (EAH), a polynomial-time algorithm for computing $Phi$-equilibria even in games with many players and complex strategy sets. It was first introduced by #citet(<Papadimitriou08:Computing>). In what follows, we mostly follow the generalized version of the algorithm due to #citet(<Farina24:Polynomial>) and #citet(<Zhang25:Learning>). To be clear, this algorithm works in the centralized model, and it's not compatible with the framework of online learning, although as we shall see similarities do exist between the two approaches.
 
-Our goal is to compute an _$epsilon$-$Phi$-equilibrium_ of a multilinear game, that is, a correlated distribution $mu in Delta(cX_1 times dots.c times cal(cX)_n)$ such that for any player $i in [n]$ and deviation function $phi_i in Phi_i$ mapping $cX_i -> cX_i$,
+Our goal is to compute an _$epsilon$-$Phi$-equilibrium_ of a multilinear game, that is, a correlated distribution $mu in Delta(cX_1 times dots.c times cX_n)$ such that for any player $i in [n]$ and deviation function $phi_i in Phi_i$ mapping $cX_i -> cX_i$,
 
 $
   EE_((vx_1, dots, vx_n) tilde mu) u_i (vx_1, dots, vx_n) >= EE_((vx_1, dots, vx_n) tilde mu) u_i (phi_i (vx_i), vx_(-i)) - epsilon.
