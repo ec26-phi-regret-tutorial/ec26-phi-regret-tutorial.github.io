@@ -237,7 +237,9 @@ fn use_html_notes_style(source: &str) -> String {
 struct Heading {
     level: u8,
     raw_id: Option<String>,
+    #[allow(dead_code)]
     text: String,
+    title_html: String,
     id: String,
     number: String,
 }
@@ -440,7 +442,8 @@ fn extract_headings(dom: &Html) -> Vec<Heading> {
                     .map(|secno| normalize_ws(&secno.text().collect::<Vec<_>>().join(" ")))
             })
             .unwrap_or_default();
-        let text = heading_text(&element, &number, &secno_selector);
+        let title_html = heading_title_html(&element);
+        let text = heading_text_from_html(&title_html);
         let id = raw_id
             .clone()
             .unwrap_or_else(|| slugify(&format!("{number}-{text}")));
@@ -450,26 +453,23 @@ fn extract_headings(dom: &Html) -> Vec<Heading> {
             id,
             number,
             text,
+            title_html,
         });
     }
 
     headings
 }
 
-fn heading_text(element: &ElementRef, number: &str, secno_selector: &Selector) -> String {
-    let full = normalize_ws(&element.text().collect::<Vec<_>>().join(" "));
-    let secno = element
-        .select(secno_selector)
-        .next()
-        .map(|secno| normalize_ws(&secno.text().collect::<Vec<_>>().join(" ")))
-        .filter(|secno| !secno.is_empty())
-        .unwrap_or_else(|| number.to_owned());
-    let text = full
-        .strip_prefix(&secno)
-        .map(str::trim)
-        .filter(|text| !text.is_empty())
-        .unwrap_or(&full);
-    text.to_owned()
+fn heading_title_html(element: &ElementRef) -> String {
+    re_heading_secno_span()
+        .replace(&element.inner_html(), "")
+        .trim()
+        .to_owned()
+}
+
+fn heading_text_from_html(html: &str) -> String {
+    let fragment = Html::parse_fragment(&html);
+    normalize_ws(&fragment.root_element().text().collect::<Vec<_>>().join(" "))
 }
 
 fn non_empty_attr(element: &ElementRef, name: &str) -> Option<String> {
@@ -679,7 +679,7 @@ fn stable_heading_id(element: &ElementRef<'_>) -> Option<String> {
                 .next()
                 .map(|secno| normalize_ws(&secno.text().collect::<Vec<_>>().join(" ")))
         })?;
-    let text = heading_text(element, &number, &secno_selector);
+    let text = heading_text_from_html(&heading_title_html(element));
     Some(slugify(&format!("{number}-{text}")))
 }
 
@@ -1130,7 +1130,7 @@ fn render_document(
     )
     .unwrap();
     if !document.headings.is_empty() {
-        html.push_str(&render_toc(&document.headings));
+        html.push_str(&render_toc(&document.headings, config.math_mode));
     }
     html.push_str(&document.body_html);
     html.push_str(&render_endnotes(&document.rendered_endnotes));
@@ -1293,7 +1293,7 @@ fn render_chapter_rail(
                 escape_attr(&heading.id),
                 escape_attr(&heading.id),
                 escape_html(&heading.number),
-                escape_html(&heading.text)
+                render_heading_title(heading, config.math_mode)
             )
             .unwrap();
         }
@@ -1302,7 +1302,7 @@ fn render_chapter_rail(
     out
 }
 
-fn render_toc(headings: &[Heading]) -> String {
+fn render_toc(headings: &[Heading], math_mode: MathMode) -> String {
     let mut out = String::from("<nav class=\"toc\" aria-label=\"Contents\"><ol>\n");
     for heading in headings {
         write!(
@@ -1311,12 +1311,16 @@ fn render_toc(headings: &[Heading]) -> String {
             heading.level,
             escape_attr(&heading.id),
             escape_html(&heading.number),
-            escape_html(&heading.text)
+            render_heading_title(heading, math_mode)
         )
         .unwrap();
     }
     out.push_str("</ol></nav>\n");
     out
+}
+
+fn render_heading_title(heading: &Heading, math_mode: MathMode) -> String {
+    math::postprocess_html_math(heading.title_html.clone(), math_mode)
 }
 
 fn render_endnotes(notes: &[RenderedEndnote]) -> String {
@@ -1831,6 +1835,14 @@ fn re_html_heading() -> &'static Regex {
     })
 }
 
+fn re_heading_secno_span() -> &'static Regex {
+    static RE: OnceLock<Regex> = OnceLock::new();
+    RE.get_or_init(|| {
+        Regex::new(r#"(?s)^\s*<span\b[^>]*\bclass="[^"]*\bsecno\b[^"]*"[^>]*>.*?</span>\s*"#)
+            .unwrap()
+    })
+}
+
 fn re_html_section() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r#"<section(?P<attrs>[^>]*)>"#).unwrap())
@@ -1889,6 +1901,25 @@ mod tests {
         assert_eq!(parts.headings[1].id, "4-1-1-real-subsection");
         assert_eq!(parts.headings[1].number, "4.1.1");
         assert_eq!(parts.headings[1].text, "Real subsection");
+    }
+
+    #[test]
+    fn heading_math_is_preserved_in_rendered_toc() {
+        let raw = r#"
+<!doctype html>
+<html><body>
+<h1 id="sec-gordon" class="notes-heading" data-level="1" data-number="1.3"><span class="secno">1.3</span> A framework for minimizing <span class="math" data-math-display="inline" data-typst-math="[Φ]" role="math"><svg></svg></span>-regret</h1>
+</body></html>
+"#;
+
+        let parts = HtmlParts::parse(raw);
+        let toc = render_toc(&parts.headings, MathMode::Katex);
+
+        assert!(toc.contains("A framework for minimizing"));
+        assert!(toc.contains("math-katex-source"));
+        assert!(toc.contains(r"\(\Phi\)"));
+        assert!(toc.contains("-regret"));
+        assert!(!toc.contains("<svg>"));
     }
 
     #[test]
@@ -2042,6 +2073,7 @@ mod tests {
                 level: 2,
                 raw_id: None,
                 text: "Real subsection".to_owned(),
+                title_html: "Real subsection".to_owned(),
                 id: "4-2-1-real-subsection".to_owned(),
                 number: "4.2.1".to_owned(),
             }],

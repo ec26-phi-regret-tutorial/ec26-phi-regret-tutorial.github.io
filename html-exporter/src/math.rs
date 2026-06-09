@@ -41,7 +41,7 @@ pub fn katex_script_assets(mode: MathMode) -> &'static str {
         MathMode::Svg => "",
         MathMode::Katex => {
             r#"  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn'});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn',macros:{'\\nicefrac':'{\\,^{#1}\\!/\\!_{#2}}'}});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
 "#
         }
     }
@@ -120,7 +120,31 @@ pub fn typst_repr_to_katex(input: &str) -> String {
     normalize_operator_phrases(&normalize_tex_spaces(&convert_expr(input.trim())))
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+struct ConvertContext {
+    compact_fractions: bool,
+}
+
+impl ConvertContext {
+    fn default() -> Self {
+        Self {
+            compact_fractions: false,
+        }
+    }
+
+    fn with_compact_fractions(self) -> Self {
+        Self {
+            compact_fractions: true,
+            ..self
+        }
+    }
+}
+
 fn convert_expr(input: &str) -> String {
+    convert_expr_with_context(input, ConvertContext::default())
+}
+
+fn convert_expr_with_context(input: &str, context: ConvertContext) -> String {
     let input = input.trim();
     if input.is_empty() || input == ".." || input == "none" {
         return String::new();
@@ -132,7 +156,7 @@ fn convert_expr(input: &str) -> String {
         return text_literal_to_tex(quoted);
     }
     if let Some((name, inner)) = call_parts(input) {
-        return convert_call(name, inner);
+        return convert_call(name, inner, context);
     }
     literal_to_tex(input)
 }
@@ -146,69 +170,74 @@ fn prepare_display_tex(input: &str) -> String {
     }
 }
 
-fn convert_call(name: &str, inner: &str) -> String {
+fn convert_call(name: &str, inner: &str, context: ConvertContext) -> String {
     let args = parse_args(inner);
     match name {
         "sequence" => args
             .iter()
             .filter(|arg| arg.name.is_none())
-            .map(|arg| convert_expr(&arg.value))
+            .map(|arg| convert_expr_with_context(&arg.value, context))
             .collect::<String>(),
         "equation" => named_arg(&args, "body")
-            .map(convert_expr)
+            .map(|value| convert_expr_with_context(value, context))
             .unwrap_or_default(),
         "styled" => named_arg(&args, "child")
-            .map(convert_styled_child)
+            .map(|value| convert_styled_child(value, context))
             .unwrap_or_default(),
         "lr" => named_arg(&args, "body")
-            .map(convert_expr)
+            .map(|value| convert_expr_with_context(value, context))
             .unwrap_or_default(),
-        "attach" => convert_attach(&args),
-        "op" => convert_operator(&args),
-        "mat" => convert_matrix(&args),
-        "cases" => convert_cases(&args),
+        "attach" => convert_attach(&args, context),
+        "op" => convert_operator(&args, context),
+        "mat" => convert_matrix(&args, context),
+        "cases" => convert_cases(&args, context),
         "primes" => convert_primes(&args),
         "frac" => {
             let num = named_arg(&args, "num")
                 .or_else(|| positional_arg(&args, 0))
-                .map(convert_arg_expr)
+                .map(|value| convert_arg_expr(value, context))
                 .unwrap_or_default();
             let denom = named_arg(&args, "denom")
                 .or_else(|| named_arg(&args, "den"))
                 .or_else(|| positional_arg(&args, 1))
-                .map(convert_arg_expr)
+                .map(|value| convert_arg_expr(value, context))
                 .unwrap_or_default();
-            format!("\\frac{{{}}}{{{}}}", num.trim(), denom.trim())
+            let command = if context.compact_fractions {
+                "\\nicefrac"
+            } else {
+                "\\frac"
+            };
+            format!("{command}{{{}}}{{{}}}", num.trim(), denom.trim())
         }
         "binom" => {
             let upper = named_arg(&args, "upper")
                 .or_else(|| named_arg(&args, "top"))
                 .or_else(|| positional_arg(&args, 0))
-                .map(convert_arg_expr)
+                .map(|value| convert_arg_expr(value, context))
                 .unwrap_or_default();
             let lower = named_arg(&args, "lower")
                 .or_else(|| named_arg(&args, "bottom"))
                 .or_else(|| positional_arg(&args, 1))
-                .map(convert_arg_expr)
+                .map(|value| convert_arg_expr(value, context))
                 .unwrap_or_default();
             format!("\\binom{{{}}}{{{}}}", upper.trim(), lower.trim())
         }
         "sqrt" => {
             let body = named_arg(&args, "body")
                 .or_else(|| positional_arg(&args, 0))
-                .map(convert_expr)
+                .map(|value| convert_expr_with_context(value, context))
                 .unwrap_or_default();
             format!("\\sqrt{{{}}}", body.trim())
         }
         "root" => {
             let index = named_arg(&args, "index")
                 .or_else(|| positional_arg(&args, 0))
-                .map(convert_expr)
+                .map(|value| convert_expr_with_context(value, context))
                 .unwrap_or_default();
             let body = named_arg(&args, "radicand")
                 .or_else(|| named_arg(&args, "body"))
                 .or_else(|| positional_arg(&args, 1))
-                .map(convert_expr)
+                .map(|value| convert_expr_with_context(value, context))
                 .unwrap_or_default();
             let index = index.trim();
             let body = body.trim();
@@ -218,15 +247,15 @@ fn convert_call(name: &str, inner: &str) -> String {
                 format!("\\sqrt[{index}]{{{body}}}")
             }
         }
-        "vec" => accent_command("vec", &args),
-        "hat" => accent_command("hat", &args),
-        "tilde" => accent_command("tilde", &args),
-        "dot" => accent_command("dot", &args),
-        "overline" => accent_command("overline", &args),
-        "underline" => accent_command("underline", &args),
-        "accent" => accent_mark_command(&args),
-        "underbrace" => brace_annotation_command("underbrace", &args),
-        "overbrace" => brace_annotation_command("overbrace", &args),
+        "vec" => accent_command("vec", &args, context),
+        "hat" => accent_command("hat", &args, context),
+        "tilde" => accent_command("tilde", &args, context),
+        "dot" => accent_command("dot", &args, context),
+        "overline" => accent_command("overline", &args, context),
+        "underline" => accent_command("underline", &args, context),
+        "accent" => accent_mark_command(&args, context),
+        "underbrace" => brace_annotation_command("underbrace", &args, context),
+        "overbrace" => brace_annotation_command("overbrace", &args, context),
         "h" => convert_horizontal_space(&args),
         "linebreak" => "\\\\".to_owned(),
         "align-point" => "&".to_owned(),
@@ -234,7 +263,7 @@ fn convert_call(name: &str, inner: &str) -> String {
             .iter()
             .find_map(|arg| {
                 if matches!(arg.name.as_deref(), Some("body" | "child" | "text")) {
-                    Some(convert_expr(&arg.value))
+                    Some(convert_expr_with_context(&arg.value, context))
                 } else {
                     None
                 }
@@ -243,22 +272,22 @@ fn convert_call(name: &str, inner: &str) -> String {
     }
 }
 
-fn convert_arg_expr(input: &str) -> String {
+fn convert_arg_expr(input: &str, context: ConvertContext) -> String {
     let items = tuple_items(input);
     if items.len() == 1 {
-        convert_expr(items[0])
+        convert_expr_with_context(items[0], context)
     } else {
-        convert_expr(input)
+        convert_expr_with_context(input, context)
     }
 }
 
-fn convert_attach(args: &[Arg]) -> String {
+fn convert_attach(args: &[Arg], context: ConvertContext) -> String {
     let base = named_arg(args, "base")
-        .map(convert_expr)
+        .map(|value| convert_expr_with_context(value, context))
         .unwrap_or_default();
-    let sub = named_arg(args, "b").map(convert_expr);
-    let sup = named_arg(args, "t").map(convert_expr);
-    let top_right = named_arg(args, "tr").map(convert_expr);
+    let sub = named_arg(args, "b").map(|value| convert_expr_with_context(value, context));
+    let sup = named_arg(args, "t").map(|value| convert_expr_with_context(value, context));
+    let top_right = named_arg(args, "tr").map(|value| convert_expr_with_context(value, context));
     let has_attached_script = sub.as_deref().is_some_and(|value| !value.trim().is_empty())
         || sup.as_deref().is_some_and(|value| !value.trim().is_empty())
         || named_arg(args, "tr").is_some();
@@ -296,7 +325,7 @@ fn simplify_script(input: &str) -> &str {
         .unwrap_or(input)
 }
 
-fn convert_matrix(args: &[Arg]) -> String {
+fn convert_matrix(args: &[Arg], context: ConvertContext) -> String {
     let rows = named_arg(args, "rows")
         .map(parse_matrix_rows)
         .unwrap_or_default();
@@ -312,11 +341,12 @@ fn convert_matrix(args: &[Arg]) -> String {
         Some("‖") | Some("double-bar") => "Vmatrix",
         _ => "pmatrix",
     };
+    let cell_context = context.with_compact_fractions();
     let body = rows
         .into_iter()
         .map(|row| {
             row.into_iter()
-                .map(|cell| convert_expr(cell.trim()))
+                .map(|cell| convert_expr_with_context(cell.trim(), cell_context))
                 .collect::<Vec<_>>()
                 .join(" & ")
         })
@@ -325,7 +355,7 @@ fn convert_matrix(args: &[Arg]) -> String {
     format!("\\begin{{{environment}}}{body}\\end{{{environment}}}")
 }
 
-fn convert_cases(args: &[Arg]) -> String {
+fn convert_cases(args: &[Arg], context: ConvertContext) -> String {
     let rows = named_arg(args, "children")
         .map(tuple_items)
         .unwrap_or_default();
@@ -335,7 +365,7 @@ fn convert_cases(args: &[Arg]) -> String {
 
     let body = rows
         .into_iter()
-        .map(convert_case_row)
+        .map(|row| convert_case_row(row, context))
         .filter(|row| !row.trim().is_empty())
         .collect::<Vec<_>>()
         .join(r" \\ ");
@@ -346,8 +376,8 @@ fn convert_cases(args: &[Arg]) -> String {
     }
 }
 
-fn convert_case_row(input: &str) -> String {
-    let converted = convert_expr(input);
+fn convert_case_row(input: &str, context: ConvertContext) -> String {
+    let converted = convert_expr_with_context(input, context);
     if let Some(idx) = converted.find('&') {
         let left = converted[..idx].trim();
         let right = normalize_case_condition_spacing(converted[idx + '&'.len_utf8()..].trim());
@@ -381,10 +411,10 @@ fn convert_primes(args: &[Arg]) -> String {
     "'".repeat(count)
 }
 
-fn convert_operator(args: &[Arg]) -> String {
+fn convert_operator(args: &[Arg], context: ConvertContext) -> String {
     let text = named_arg(args, "text")
         .or_else(|| positional_arg(args, 0))
-        .map(convert_expr)
+        .map(|value| convert_expr_with_context(value, context))
         .unwrap_or_default();
     let limits = named_arg(args, "limits")
         .map(|value| value.trim() == "true")
@@ -413,8 +443,8 @@ fn convert_operator(args: &[Arg]) -> String {
     }
 }
 
-fn convert_styled_child(input: &str) -> String {
-    let converted = convert_expr(input);
+fn convert_styled_child(input: &str, context: ConvertContext) -> String {
+    let converted = convert_expr_with_context(input, context);
     let stripped = strip_tex_text_wrappers(converted.trim());
     if let Some(styled) = styled_symbol(stripped) {
         return styled;
@@ -454,20 +484,20 @@ fn styled_symbol_with_suffix(input: &str) -> Option<(&str, &str)> {
     }
 }
 
-fn accent_command(name: &str, args: &[Arg]) -> String {
+fn accent_command(name: &str, args: &[Arg], context: ConvertContext) -> String {
     let body = named_arg(args, "body")
         .or_else(|| named_arg(args, "base"))
         .or_else(|| positional_arg(args, 0))
-        .map(convert_expr)
+        .map(|value| convert_expr_with_context(value, context))
         .unwrap_or_default();
     format!("\\{name}{{{}}}", body.trim())
 }
 
-fn accent_mark_command(args: &[Arg]) -> String {
+fn accent_mark_command(args: &[Arg], context: ConvertContext) -> String {
     let body = named_arg(args, "base")
         .or_else(|| named_arg(args, "body"))
         .or_else(|| positional_arg(args, 0))
-        .map(convert_expr)
+        .map(|value| convert_expr_with_context(value, context))
         .unwrap_or_default();
     let command = named_arg(args, "accent")
         .and_then(quoted_literal)
@@ -486,15 +516,15 @@ fn accent_mark_to_command(accent: &str) -> Option<&'static str> {
     }
 }
 
-fn brace_annotation_command(name: &str, args: &[Arg]) -> String {
+fn brace_annotation_command(name: &str, args: &[Arg], context: ConvertContext) -> String {
     let body = named_arg(args, "body")
         .or_else(|| positional_arg(args, 0))
-        .map(convert_expr)
+        .map(|value| convert_expr_with_context(value, context))
         .unwrap_or_default();
     let annotation = named_arg(args, "annotation")
         .or_else(|| named_arg(args, "label"))
         .or_else(|| positional_arg(args, 1))
-        .map(convert_expr)
+        .map(|value| convert_expr_with_context(value, context))
         .unwrap_or_default();
     let body = body.trim();
     let annotation = annotation.trim();
@@ -1218,7 +1248,28 @@ mod tests {
             "mat(rows: ((frac(num: [1], denom: [2]), [0]), ([0], frac(num: [1], denom: [2]))))";
         assert_eq!(
             typst_repr_to_katex(input),
-            r"\begin{pmatrix}\frac{1}{2} & 0 \\ 0 & \frac{1}{2}\end{pmatrix}"
+            r"\begin{pmatrix}\nicefrac{1}{2} & 0 \\ 0 & \nicefrac{1}{2}\end{pmatrix}"
+        );
+    }
+
+    #[test]
+    fn fractions_outside_matrices_remain_full_size() {
+        let input = "frac(num: [1], denom: [2])";
+        assert_eq!(typst_repr_to_katex(input), r"\frac{1}{2}");
+    }
+
+    #[test]
+    fn katex_assets_define_nicefrac_macro() {
+        let assets = katex_script_assets(MathMode::Katex);
+        assert!(assets.contains(r"'\\nicefrac':'{\\,^{#1}\\!/\\!_{#2}}'"));
+    }
+
+    #[test]
+    fn nested_matrix_fractions_use_nicefrac() {
+        let input = "mat(rows: ((attach(base: [x], b: frac(num: [1], denom: [2])),),))";
+        assert_eq!(
+            typst_repr_to_katex(input),
+            r"\begin{pmatrix}x_{\nicefrac{1}{2}}\end{pmatrix}"
         );
     }
 

@@ -8,6 +8,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
   <style>
     @font-face {
+      font-family: "Frutiger";
+      src: url("Frutiger.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap
+    }
+
+    @font-face {
       font-family: "Frutiger Notes";
       src: url("Frutiger_bold.ttf") format("truetype");
       font-weight: 700;
@@ -432,7 +440,13 @@
 
     .organizer strong {
       display: block;
-      color: var(--ink)
+      color: var(--ink);
+      font-size: 1.04rem
+    }
+
+    .organizer>span>span:not(.organizer-links) {
+      font-family: "Frutiger", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 400
     }
 
     .organizer span {
@@ -568,18 +582,15 @@
             <p class="organizer"><img class="organizer-photo" src="organizers/ioannis-anagnostides.png" width="48"
                 height="48" alt="" loading="lazy" decoding="async"><span><strong>Ioannis
                   Anagnostides</strong><span>Carnegie Mellon University</span><span class="organizer-links"><a
-                    class="email" href="mailto:ianagnos@cs.cmu.edu">email</a><a
                     href="https://www.andrew.cmu.edu/user/ianagnos/">webpage</a></span></span></p>
             <p class="organizer"><img class="organizer-photo" src="organizers/gabriele-farina.jpg" width="48"
                 height="48" alt="" loading="lazy" decoding="async"><span><strong>Gabriele
                   Farina</strong><span>Massachusetts Institute of Technology</span>
-                <span class="organizer-links"><a class="email" href="mailto:gfarina@mit.edu">email</a><a
-                    href="https://www.mit.edu/~gfarina/">webpage</a></span></span>
+                <span class="organizer-links"><a href="https://www.mit.edu/~gfarina/">webpage</a></span></span>
             </p>
             <p class="organizer"><img class="organizer-photo" src="organizers/brian-hu-zhang.png" width="48" height="48"
                 alt="" loading="lazy" decoding="async"><span><strong>Brian Hu Zhang</strong><span>Massachusetts
-                  Institute of Technology</span><span class="organizer-links"><a class="email"
-                    href="mailto:zhangbh@csail.mit.edu">email</a><a
+                  Institute of Technology</span><span class="organizer-links"><a
                     href="https://brianhzhang.github.io">webpage</a></span></span></p>
           </div>
         </section>

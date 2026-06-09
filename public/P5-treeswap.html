@@ -1299,7 +1299,7 @@ mark {
 
   </style>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn'});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:'warn',macros:{'\\nicefrac':'{\\,^{#1}\\!/\\!_{#2}}'}});requestAnimationFrame(window.markOverwideEquations || function(){});"></script>
 </head>
 <body>
 <nav class="chapter-rail" aria-label="Chapters">
@@ -1312,7 +1312,7 @@ mark {
 <a class="chapter-rail-link is-current" href="P5-treeswap.html" aria-current="page"><span>5</span>TreeSwap</a>
 <a class="chapter-rail-link" href="P6-profile.html"><span>6</span>Profile Swap</a>
 <div class="chapter-rail-heading chapter-rail-section-heading">This Chapter</div>
-<a class="chapter-section-link chapter-section-l1" href="#5-1-the-treeswap-algorithm" data-section-link="5-1-the-treeswap-algorithm"><span class="chapter-section-no">5.1</span><span class="chapter-section-title">The TreeSwap Algorithm</span></a>
+<a class="chapter-section-link chapter-section-l1" href="#5-1-the-treeswap-algorithm" data-section-link="5-1-the-treeswap-algorithm"><span class="chapter-section-no">5.1</span><span class="chapter-section-title">The <code>TreeSwap</code> Algorithm</span></a>
 </nav>
 <main class="page-shell">
 <article class="lecture-content" data-lecture-number="5">
@@ -1327,7 +1327,7 @@ mark {
 <p class="chapter-kicker">Chapter 5</p>
 <h1 class="lecture-title">TreeSwap: Efficient Swap Regret Minimization</h1>
 <nav class="toc" aria-label="Contents"><ol>
-<li class="toc-l1"><a href="#5-1-the-treeswap-algorithm"><span class="toc-no">5.1</span><span class="toc-title">The TreeSwap Algorithm</span></a></li>
+<li class="toc-l1"><a href="#5-1-the-treeswap-algorithm"><span class="toc-no">5.1</span><span class="toc-title">The <code>TreeSwap</code> Algorithm</span></a></li>
 </ol></nav>
 <p><mark class="todo">my intention so far is for this chapter to come last, after even the multicalibration section -brian</mark></p>
     <p>So far, we have seen that no-regret learning, and efficient equilibrium computation, are essentially possible whenever the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> is “efficiently representable”, in particular, whenever <em>external</em> regret minimization is possible over <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>. What about beyond? In particular, we have not yet addressed the <em>strongest</em> possible notion of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret, namely, the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains <em>all</em> functions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
