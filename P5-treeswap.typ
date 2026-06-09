@@ -3,13 +3,11 @@
 
 #show "TreeSwap": `TreeSwap`
 
-#todo("my intention so far is for this chapter to come last, after even the multicalibration section -brian")
-
 So far, we have seen that no-regret learning, and efficient equilibrium computation, are essentially possible whenever the set of deviations $Phi$ is "efficiently representable", in particular,  whenever _external_ regret minimization is possible over $Phi$. What about beyond? In particular, we have not yet addressed the _strongest_ possible notion of $Phi$-regret, namely, the case where $Phi$ contains _all_ functions $phi: cX -> cX$---known as _swap regret_.
 
 The fact that algorithms for $Phi$-regret minimization grow increasingly complex as $Phi$ itself grows in complexity may lead one to believe that efficient swap regret minimization is hopeless. For example, the set of all functions $phi : cX -> cX$ has _knfinite_ dimension, so the techniques we have covered so far do not work. If $cX$ is a polytope, we could run the Blum-Mansour algorithm over its vertices---this would indeed succeed, but it has the drawback that the number of vertices of $cX$ is generally not polynomial in the dimension $d$ of $cX$, and hence the algorithm is not efficient. Hence, for a long time, the possibility of swap regret minimization---and correspondingly, correlated equilibrium computation beyond normal-form games---remained a major open question.
 
-The question has since essentially been fully resolved. In a simultaneous major breakthrough, #citet(<Peng24:Fast>) #todo("there's still a extra period before the []. also, is it possible to have first names/initials in the references section but not in inline citations?") and #citet(<Dagan24:From>), using essentially an identical algorithm now known as TreeSwap, showed that, if there is a regret minimizer on $cX$ that achieves _external_ regret $eps$ after $M$ rounds, then there is a regret minimizer on $cX$ that achieves $eps T$ _swap_ regret after $M^(1\/eps)$ rounds, and therefore efficient swap regret minimization _ks_ in fact possible, at least when $eps$ is a constant. They also showed nearly-matching lower bounds for normal-form games, which #citet(<Daskalakis24:Lower>) later extended to extensive-form games as well, thereby precluding the possibility of $"poly"(d, 1\/eps)$-time algorithms for swap regret beyond normal-form games. In this chapter, we will go over the upper bound.
+The question has since essentially been fully resolved. In a simultaneous major breakthrough, #citet(<Peng24:Fast>) and #citet(<Dagan24:From>), using essentially an identical algorithm now known as TreeSwap, showed that, if there is a regret minimizer on $cX$ that achieves _external_ regret $eps$ after $M$ rounds, then there is a regret minimizer on $cX$ that achieves $eps T$ _swap_ regret after $M^(1\/eps)$ rounds, and therefore efficient swap regret minimization _ks_ in fact possible, at least when $eps$ is a constant. They also showed nearly-matching lower bounds for normal-form games, which #citet(<Daskalakis24:Lower>) later extended to extensive-form games as well, thereby precluding the possibility of $"poly"(d, 1\/eps)$-time algorithms for swap regret beyond normal-form games. In this chapter, we will go over the upper bound.
 
 = The TreeSwap Algorithm
 
@@ -39,10 +37,8 @@ The TreeSwap algorithm uses $K$ layers of regret minimizers $cal(R)_0, dots, cal
 ] <theorem:treeswap>
 
 #remark[
-  @theorem:treeswap only applies when $T$ is a power of $M$. Handling the case where $T$ is not a power of $M$ requires a bit of care and results in a looser bound of $T dot.c (eps + 3\/K)$, but the main ideas are captured by the above result and its proof. #cite(<Dagan24:From>)
+  @theorem:treeswap only applies when $T$ is a power of $M$. Handling the case where $T$ is not a power of $M$ requires a bit of care and results in a looser bound of $T dot.c (eps + 3\/K)$, but the main ideas are captured by the above result and its proof. #citep(<Dagan24:From>)
 ]
-
-#todo("can [Dag+24] be displayed as [DDFS24] instead? I think `alpha` style in LaTeX does [ABC+00] for >=4 authors")
 
 #remark[
   We are mainly interested in the implications of @theorem:treeswap for its implications for swap regret in high-dimensional settings. However, it is worth noting that @theorem:treeswap achieves a new result even in the normal-form setting: its regret bound for normal form, when instantiated with multiplicative weights, is $log(N)^(tilde(O)(1\/eps))$, which, for large $N$ and $eps$, is better than the bound of Blum-Mansour.

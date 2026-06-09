@@ -5,7 +5,6 @@
 #show "TreeSwap": `TreeSwap`
 
 
-
 In this section, we will show how to construct $Phi$-regret minimizers for strategy sets $cX$ that are more complex than the simplex. To do so, we first define the sets of deviations that we work with.
 
 #definition[#citep(<Zhang25:Learning>)][
@@ -19,7 +18,7 @@ We will assume without loss of generality that $Phi^q$ contains the identity map
 ]
 In general, we will describe algorithms that have complexity polynomial in the dimension $k$. Note that, in the special case of degree-$ell$ polynomials, these algorithms will therefore run in time polynomial in $d^ell$.
 
-In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic.
+In these settings, we run into two fundamental issues when trying directly to generalize the GGM construction. Recall that the GGM construction requires two ingredients. We will describe why both ingredients are problematic. 
 
 1. _Fixed-point oracle_: Finding a fixed point of a continuous function $phi : cX -> cX$ is $PPAD$-complete, and therefore is unlikely to be possible efficiently. Even more generally, if $phi$ contains _discontinuous_ maps, $phi$ may not even admit any approximate fixed points!
 
@@ -60,13 +59,13 @@ The existence of this algorithm proves, as a corollary, that $eps$-approximate e
   Let $vx^((1)) in cal(X)$ be arbitrary, and consider the sequence of points $vx^((1)), ..., vx^((K))$ where $vx^((k)) = phi(vx^((k-1)))$ for each $k > 0$. Let $mu$ be the uniform distribution on ${vx^((1)), ..., vx^((K))}$. Then, by a telescoping sum, we have
   $
     EE_(vx ~ mu) [ phi(vx) - vx ] = 1/K sum_(k=1)^K (phi(vx^((k))) - vx^((k)) ) = 1/K sum_(k=1)^K (vx^((k+1)) - vx^((k)) ) = 1/K (vx^((K+1)) - vx^((1)))
-  $
+  $ 
   where $vx^((K+1)) := phi(vx^((K)))$ for notational simplicity. But the right-hand side has norm at most $"diam"(cal(X))\/K$, so setting $K = "diam"(cal(X))\/eps$ completes the proof.
 ]
 
 = Semi-separation
 
-@thm:efp also, conveniently, solves the second problem. The key observation, as it turns out, is that it is not actually necessary to be able to efficiently optimize/separate over $Phi^q$. In fact, it is sufficient to be able to perform the following task, which we call _semi-separation_.
+@thm:efp also, conveniently, solves the second problem. The key observation, as it turns out, is that it is not actually necessary to be able to efficiently optimize/separate over $Phi^q$. In fact, it is sufficient to be able to perform the following task, which we call _semi-separation_. 
 
 #definition("Semi-separation")[
   In the _semi-separation_ problem we are given a function $phi : cX -> RR^d$ and we have to compute _either_
@@ -76,13 +75,13 @@ The existence of this algorithm proves, as a corollary, that $eps$-approximate e
 
 The proof of @thm:efp also gives a solution to the semi-separation problem: indeed, while constructing the sequence $vx^((1)), ..., vx^((K))$, if any $vx^((k))$ is not in $cal(X)$, we can immediately output $vx^((k-1))$.
 
-It is instructive to contemplate briefly the implications of this result. A point $vx in cX$ such that $phi(vx) in.not cX$ gives a separating direction $va^top phi(vx) <= b$ separating $phi(vx)$ from $cX$; the same constraint can be used to separate $phi$ from $Phi^q$. Determining whether a given function $phi : cal(X) -> RR^d$ actually has image in $cal(X)$ is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point _or_ a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when $phi in.not Phi^q$.
+It is instructive to contemplate briefly the implications of this result. A point $vx in cX$ such that $phi(vx) in.not cX$ gives a separating direction $va^top phi(vx) <= b$ separating $phi(vx)$ from $cX$; the same constraint can be used to separate $phi$ from $Phi^q$. Determining whether a given function $phi : cal(X) -> RR^d$ actually has image in $cal(X)$ is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point _or_ a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when $phi in.not Phi^q$. 
 
 = Efficient regret minimization via semi-separation <sec:regret-via-semiseparation>
 
 // We now show how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree. #todo("actually do this")
 
-We now briefly sketch how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree.
+We now briefly sketch how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree. 
 
 At a high level, the algorithm relies on an online algorithm called _Shell gradient descent_, developed by~#citet(<Daskalakis25:Efficient>). This is just projected gradient descent, but with the twist that the underlying constraint set is _changing from round to round_. As long as the constraint set at each round contains the constraint set of interest, this approach is sound. Shell gradient descent hinges on a projection oracle, which crucially uses the semi-separation oracle developed above.
 

@@ -84,7 +84,9 @@ But this is not immediately good enough. Recall that our algorithm for expected 
 ]
 Finally, if $mu_i in Delta(cX_i)$ is an expected fixed point of $phi_i$ for every $i$, then the product distribution $mu_1 times dots.c times mu_n$ is a GER solution satisfying (@eq:simplified). We therefore have:
 
-#theorem[#citep(<Farina24:Polynomial>) #citep(<Zhang25:Learning>)][
+#theorem[#citep(<Farina24:Polynomial>) #citep(
+    <Zhang25:Learning>,
+  )][
   If for each player $i in [n]$ in a multilinear game the set of deviations $Phi_i$ admits a separation oracle, there is an algorithm polynomial in $log(1\/epsilon)$, $n$, $d_1, ..., d_n$, and $k_1, ..., k_n$ that outputs an $epsilon$-$Phi$-equilibrium.
 ] <thm:eah-eqm>
 
