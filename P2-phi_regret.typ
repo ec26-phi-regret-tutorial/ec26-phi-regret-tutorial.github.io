@@ -80,7 +80,12 @@ It is instructive to contemplate briefly the implications of this result. A poin
 
 = Efficient regret minimization via semi-separation <sec:regret-via-semiseparation>
 
-We now show how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree. #todo("actually do this")
+// We now show how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree. #todo("actually do this")
+
+We now briefly sketch how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions $Phi^q$ expressible in the form given by @def:low-degree.
+
+At a high level, the algorithm relies on an online algorithm called _Shell gradient descent_, developed by~#citet(<Daskalakis25:Efficient>). This is just projected gradient descent, but with the twist that the underlying constraint set is _changing from round to round_. As long as the constraint set at each round contains the constraint set of interest, this approach is sound. Shell gradient descent hinges on a projection oracle, which crucially uses the semi-separation oracle developed above.
+
 
 
 #import "figures/phi-fixed-point.typ": body as phi_fixed_point
