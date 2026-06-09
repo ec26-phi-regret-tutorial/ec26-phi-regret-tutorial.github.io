@@ -7,7 +7,7 @@
   title: [Profile Swap Regret, Manipulability, and\ Response-Based Approachability],
 )
 
-In this chapter, we introduce the notion of _profile swap regret_, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees _non-manipulability_---in a sense that will be formalized soon---against a dynamic optimizer. What's more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by~#citet(<Arunachaleswaran25:Profile>), who also provided the first efficient algorithm. In what follows, we present the approach of #citet(<Anagnostides26:Swap>), which in turn relies on the response-based approachability algorithm of #citet(<Bernstein15:Approachability>).
+In this chapter, we introduce the notion of _profile swap regret_, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees _non-manipulability_---in a sense that will be formalized soon---against a dynamic optimizer. What's more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by~#citet(<Arunachaleswaran25:Profile>), who also provided the first efficient algorithm. In what follows, we present the approach of #citet(<Anagnostides26:Swap>), which in turn relies on the response-based approachability algorithm of #citet(<Bernstein15:Approachability>).#footnote[We point the interested reader to https://sites.google.com/view/strategic-learning-ec25 for an adjacent workshop at EC '25. ]
 
 = Setup
 
