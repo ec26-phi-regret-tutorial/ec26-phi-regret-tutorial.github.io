@@ -4,21 +4,21 @@
 
 #show: gabri_notes.with(lec_num: 1, date: none, title: "Introduction")
 
-This chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we will introduce and motivate the notion of _$Phi$-regret_ and the corresponding solution concept in games---_$Phi$-equilibrium_. In the second part, we will introduce a canonical algorithmic template for minimizing _$Phi$-regret_.
+This introductory chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we begin by introducing and motivating the notion of _$Phi$-regret_ and its associated solution concept in games---_$Phi$-equilibrium_. In the second part, we will introduce the canonical algorithmic template for minimizing _$Phi$-regret_ due to~#citet(<Gordon08:No>).
 
 = Online learning and regret
 
-We consider a _learner_ who is to make a sequence of decisions over $T$ rounds. The learner interacts repeatedly with an _environment_. In each round $t in [T]$, the learner specifies a mixed strategy $vx^((t)) in cX$, where $cX$ is a convex and compact set. (A canonical case arises when $cX$ is a probability simplex over a finite set of actions, but our focus here is on the general setting.) The environment then selects a _utility vector_ $vu^((t))$, so that the utility obtained by the learner at that round is $ip(vx^((t)), vu^((t)))$. In the full-feedback setting, which is the focus of these notes, $vu^((t))$ is revealed to the learner after the end of the round. An online algorithm produces a sequence of strategies based on the feedback observed up to that point.
+We consider a _learner_ who makes a sequence of decisions over $T$ rounds. The learner interacts repeatedly with an _environment_. In each round $t in [T]$, the learner specifies a mixed strategy $vx^((t)) in cX$, where $cX$ is a convex and compact set. (A canonical case arises when $cX$ is a probability simplex over a finite set of actions, but our focus here is on the general setting.) The environment then selects a _utility vector_ $vu^((t))$, so that the utility obtained by the learner at that round is $ip(vx^((t)), vu^((t)))$. In the full-feedback setting, which is the focus of these notes, $vu^((t))$ is revealed to the learner after the end of the round. An online algorithm produces a sequence of strategies based on the feedback observed up to that point.
 
-What's a sensible way of measuring the performance of the learner in this online environment? There are different notions of _hindsight rationality_. Perhaps the most common performance benchmark is _regret_, defined as
+What's a sensible way of measuring the performance of the learner in this online environment? There are different notions of _hindsight rationality_. Perhaps the most common performance benchmark is _external regret_, defined as
 
 $ "Reg"^((T)) := max_(vx in cX) { sum_(t=1)^T ip(vx, vu^((t))) } - sum_(t=1)^T ip(vx^((t)), vu^((t))). $ <eq-regret>
 
-The second term in the right-hand side of (@eq-regret) is the cumulative utility obtained by the learner through the $T$ rounds, whereas the first term is the optimal utility that could have been obtained in hindsight _through a fixed strategy_. We will soon introduce more powerful notions of regret.
+The second term in the right-hand side of (@eq-regret) is the cumulative utility obtained by the learner through the $T$ rounds, whereas the first term is the optimal utility that could have been obtained in hindsight _through a fixed strategy_. We will soon introduce more powerful notions of hindsight rationality beyond external regret.
 
 = Games and solution concepts
 
-We begin by introducing the canonical normal-form representation of games. While any finite game can be cast in normal form, that representation is often inefficient. This will motivate introducing more compact game representations.
+We will often need to analyze what happens when multiple no-regret players repeatedly interact in a game. To do so, we begin by introducing the canonical normal-form representation of games. While any finite game can be cast in normal form, that representation is often inefficient. This will motivate introducing more compact game representations, as we shall do in the sequel.
 
 Formally, we have a set of $n$ players. In a normal-form game, each player $i in [n]$ has a finite set of available actions $cA_i$; we will use the shorthand notation $m_i := |cA_i|$ for the number of actions. Every player $i in [n]$ has a _utility function_ $u_i$ mapping a joint action profile $(a_1, ..., a_n) in cA_1 times dots.c times cA_n$ to a real value $u_i (a_1, ..., a_n)$. Players can randomize by specifying a probability distribution over their available actions, so that the strategy set of each player is the probability simplex $cal(X_i) = Delta(cA_i)$. Under a joint strategy $(x_1, ..., x_n) in Delta(cA_1) times dots.c times Delta(cA_n)$, the _expected utility_ of player $i in [n]$ reads
 
@@ -77,16 +77,12 @@ Both correlated and coarse correlated equilibria can be interpreted through the 
 We now go over a concrete example to further elucidate these concepts.
 
 #example[
-  We consider the "game of chicken." This is a $2 times 2$ game---played between two drivers who are rapidly approaching an intersection from different streets---whose utilities are tabulated below. Each player can either play "Stop" or "Go." If both players elect to "Go" a crash ensues---a bad outcome for both players. If a player chooses to "Stop" it gets no utility from the game, whereas if it proceeds while the other player chooses to "Stop" it gets a utility of $1$ for safely crossing the intersection.
+  We consider the "game of chicken." This is a $2 times 2$ game---played between two drivers who are rapidly approaching an intersection from different streets---whose utilities are tabulated in @fig:chicken. Each player can either play "Stop" or "Go." If both players elect to "Go" a crash ensues---a bad outcome for both players. If a player chooses to "Stop" it gets no utility from the game, whereas if it proceeds while the other player chooses to "Stop" it gets a utility of $1$ for safely crossing the intersection.
 
   This game has exactly three Nash equilibria: i) (Go, Stop), ii) (Stop, Go), and iii) $((5/6, 1/6), (5/6, 1/6))$, meaning that both players play "Stop" with probability $5/6$. From these three outcomes, the first two are _not_ equitable in that they favor one player over the other. The third outcome is even worse: it leads to a crash with some positive probability.
 
   (C)CEs address these issues by unlocking new outcomes. In particular, let's consider the correlated distribution $1/2 ("Go", "Stop") + 1/2 ("Stop", "Go")$. It's easy to verify that this is a CE, and thus a CCE. Under that distribution, both players get in expectation a utility of $1/2$. Focusing CEs, there is a natural interpretation of this outcome through a _traffic light_, which provides a signal to each player. If Player 1 is recommended "Stop," it means that Player 2 will play "Go" with probability $1$, so stopping is in Player 1's interest. On the other hand, if Player 1 is recommended "Go," it means that Player 2 will play "Stop" with probability $1$, so crossing is safe for Player 1. That is, in a CE, the signal a player observes updates that player's beliefs concerning the behavior of the other players
-  #comment(
-    visual: align(center)[#fig_chicken.body],
-  )[
-    The game of chicken.
-  ]
+  #figure(align(center)[#fig_chicken.body], caption: [The game of chicken.]) <fig:chicken>
 ]
 
 #example[
@@ -113,7 +109,7 @@ We now go over a concrete example to further elucidate these concepts.
 
 == Computational properties
 
-We have seen that CCEs and CEs produce new outcomes that are not attainable under independent randomization. Moreover, correlated equilibrium concepts have better computational properties than Nash equilibria. Specifically, a key property is that the set of (C)CEs is convex and can be described through a linear program.
+We have seen that CCEs and CEs give rise to new outcomes that are not attainable under independent randomization. Moreover, correlated equilibrium concepts have better computational properties than Nash equilibria. Specifically, a key property is that the set of (C)CEs is convex and can be described through a linear program.
 
 #proposition[
   There is a linear program with $product_(i=1)^n |cA_i|$ variables and $sum_(i=1)^n |cA_i| (|cA_i| - 1)$ constraints whose solution is an exact correlated equilibrium of the game. <prop:LP>
@@ -133,7 +129,7 @@ $
   Phi"Reg"^((T)) := max_(phi in Phi) { sum_(t=1)^T ip(phi(vx^((t))), vu^((t))) } - sum_(t=1)^T ip(vx^((t)), vu^((t))) .
 $ <eq-Phiregret>
 
-We covered a moment ago the special case where $Phi$ comprises only _constant deviations_: $Phi_{"const"} = { phi : exists vx' in cX " such that " phi(vx) = vx' }$; this is indeed the most standard definition of regret in online learning, typically referred to as _external_ regret. The key point about (@eq-Phiregret) is that the richer the set of deviations $Phi$, the stronger the induced notion of hindsight rationality. The other end of the spectrum where $Phi$ consists of all possible deviations $cX -> cX$ gives rise to _swap regret_. The next example shows that an algorithm can experience large swap regret even when its external regret is small.
+We covered a moment ago the special case where $Phi$ comprises only _constant deviations_: $Phi_("const") = { phi : exists vx' in cX " such that " phi(vx) = vx' }$; this is indeed the most standard definition of regret in online learning, referred to as _external_ regret. The key point about (@eq-Phiregret) is that the richer the set of deviations $Phi$, the stronger the induced notion of hindsight rationality. The other end of the spectrum where $Phi$ consists of all possible deviations $cX -> cX$ gives rise to _swap regret_. The next example shows that an algorithm can experience large swap regret even when its external regret is small.
 
 #example[
   Let's say the learner picks a distribution over three actions, "1," "2," and "3." Suppose further that the sequence of utilities and selected actions follow the pattern shown in @fig:swap-vs-external, where we can assume $T = 0 mod 3$. In this example, the learner obtains overall a utility of $T/3$. In fact, this matches the optimal strategy in hindsight. So, the external regret of the learner is $0$ in this example. At the same time, consider the swap deviation
@@ -146,7 +142,7 @@ We covered a moment ago the special case where $Phi$ comprises only _constant de
   ) <fig:swap-vs-external>
 ]
 
-This example shows that external regret---and the associated solution concept of a CCE---is weak benchmark. In fact, a CCE can be supported on strictly dominated actions~#citep(<Viossat13:Noregret>)! This motivates considering tighter equilibrium concepts revolving around the notion of $Phi$-regret.
+This example shows that external regret---and the associated solution concept of a CCE---is a weak benchmark. In fact, a CCE can be supported on strictly dominated actions~#citep(<Viossat13:Noregret>)! This motivates considering tighter equilibrium concepts revolving around the notion of $Phi$-regret.
 
 Now, the techniques we have covered so far for minimizing external regret will not be enough to minimize swap regret. For example, multiplicative weights update (MWU) can have linear swap regret #citep(<Cesa-Bianchi06:Prediction>). As a result, we will need new algorithmic ideas to go beyond external regret and coarse correlated equilibria.
 
@@ -186,7 +182,7 @@ Having connected $Phi$-regret with $Phi$-equilibria, we now introduce the elegan
 1. A _fixed-point oracle_: for any deviation $phi in Phi$, it outputs a fixed point $vx = phi(vx)$. <item:fp>
 2. An online algorithm $R_(Phi)$ minimizing _external regret_ with respect to _the set $Phi$_. <item:phireg>
 
-Regarding the fixed-point oracle, we will assume that $Phi$ consists of continuous functions mapping $cX$ to $cX$, so that the _existence_ of a fixed point is guaranteed by Brouwer's fixed-point theorem; whether such a fixed point can be computed efficiently is a different story. (As we shall see in the sequel, computing approximate fixed points of general functions is known to be equivalent to finding Nash equilibria #citep(<Daskalakis08:Complexity>), which defeats the purpose.) For now, we can assume that $Phi$ is structured enough so that it admits an efficient fixed-point oracle; for example, this is the case when $Phi$ contains only linear deviations. A final point is that it will be enough if one has instead an _approximate_ fixed-point oracle, in that $norm(vx - phi(vx)) <= epsilon$.
+Regarding the fixed-point oracle, we will assume that $Phi$ consists of continuous functions mapping $cX$ to $cX$, so that the _existence_ of a fixed point is guaranteed by Brouwer's fixed-point theorem; whether such a fixed point can be computed efficiently is a different story. (As we shall see in the sequel, computing approximate fixed points of general functions is known to be equivalent to finding Nash equilibria #citep(<Daskalakis08:Complexity>), which defeats our purpose.) For now, we can assume that $Phi$ is structured enough so that it admits an efficient fixed-point oracle; for example, this is the case when $Phi$ contains only linear deviations. A final point is that it will be enough if one has instead an _approximate_ fixed-point oracle, in that $norm(vx - phi(vx)) <= epsilon$.
 
 Assuming access to a fixed-point oracle, the reduction of #citet(<Gordon08:No>) reduces $Phi$-regret to external regret, but with an important catch: the algorithm minimizing external regret needs to _operate over the set of deviations $Phi$_. This is a significantly more complex set than the one we started with, and will be the critical step in establishing efficient $Phi$-regret minimizers.
 
