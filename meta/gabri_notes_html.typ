@@ -5,6 +5,7 @@
 // #import "@preview/lovelace:0.3.1": *
 #import "equate_html.typ": equate, share-align
 
+#import "citations.typ": *
 #import "notation.typ": *
 
 #let eps = math.epsilon.alt
@@ -412,36 +413,73 @@
   body
 }
 
-#let citep(key) = context {
+#let citation_register(key) = {
+  lecture-bib.update(it => {
+    if key not in it {
+      it.push(key)
+    }
+    it
+  })
+}
+
+#let citation-noted = state("citation-noted", ())
+
+#let citation_note(key) = context {
+  let key_name = citation_key_name(key)
+  let noted = citation-noted.get()
+  if key_name in noted {
+    []
+  } else {
+    citation-noted.update(it => {
+      it.push(key_name)
+      it
+    })
+    html.elem("span", attrs: (class: "citation-note"))[
+      #html.elem("span", attrs: (class: "citation-note-key"))[
+        #citation_bracket(key, cited_keys: lecture-bib.final())
+      ]
+      #cite(key, form: "full")
+    ]
+  }
+}
+
+#let citation_link(key, body) = {
+  html.elem("span", attrs: (class: "citation-wrap"))[
+    #html.elem("a", attrs: (
+      class: "citation",
+      href: "#" + citation_html_id(key),
+      role: "doc-biblioref",
+    ))[#body]
+    #citation_note(key)
+  ]
+}
+
+#let citep(..keys) = context {
   if crossrefs-active.get() {
     []
   } else {
-    text(fill: blue.darken(40%), {
-      set cite(style: "alphanum-intext.csl")
-      cite(key)
-    })
-    lecture-bib.update(it => {
-      if key not in it {
-        it.push(key)
+    for key in keys.pos() {
+      citation_register(key)
+    }
+    [\[]
+    for (i, key) in keys.pos().enumerate() {
+      if i > 0 {
+        [; ]
       }
-      it
-    })
+      citation_link(key, text(fill: blue.darken(40%), citation_label_text(key, cited_keys: lecture-bib.final())))
+    }
+    [\]]
   }
 }
+
 #let citet(key, ..supplement) = context {
   if crossrefs-active.get() {
     []
   } else {
-    text(fill: blue.darken(40%), {
-      set cite(style: "alphanum-intext.csl")
-      cite(key, form: "prose", ..supplement)
-    })
-    lecture-bib.update(it => {
-      if key not in it {
-        it.push(key)
-      }
-      it
-    })
+    citation_register(key)
+    citation_link(key, text(fill: blue.darken(40%))[
+      #citation_author_text(key) #citation_bracket(key, cited_keys: lecture-bib.final(), ..supplement)
+    ])
   }
 }
 
@@ -474,8 +512,13 @@
     #context {
       html.elem("table", attrs: (class: "bibliography-table"))[
         #for item in lecture-bib.get() [
-          #html.elem("tr", attrs: (class: "bibliography-row"))[
-            #html.elem("td", attrs: (class: "bib-key"))[#cite(item)]
+          #html.elem("tr", attrs: (
+            class: "bibliography-row",
+            id: citation_html_id(item),
+          ))[
+            #html.elem("td", attrs: (class: "bib-key"))[
+              #citation_bracket(item, cited_keys: lecture-bib.final())
+            ]
             #html.elem("td", attrs: (class: "bib-entry"))[#cite(item, form: "full")]
           ]
         ]

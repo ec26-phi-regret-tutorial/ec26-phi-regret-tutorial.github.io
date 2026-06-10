@@ -63,7 +63,7 @@ The existence of this algorithm proves, as a corollary, that $eps$-approximate e
   where $vx^((K+1)) := phi(vx^((K)))$ for notational simplicity. But the right-hand side has norm at most $"diam"(cal(X))\/K$, so setting $K = "diam"(cal(X))\/eps$ completes the proof.
 ]
 
-= Semi-separation
+= Semi-separation <sec:semiseparation>
 
 @thm:efp also, conveniently, solves the second problem. The key observation, as it turns out, is that it is not actually necessary to be able to efficiently optimize/separate over $Phi^q$. In fact, it is sufficient to be able to perform the following task, which we call _semi-separation_.
 

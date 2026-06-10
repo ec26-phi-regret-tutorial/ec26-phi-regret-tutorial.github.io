@@ -42,25 +42,27 @@ $ <eq:mcerr>
 
 The forecasts are $cH$-multicalibrated if $"MC-Err"^((T)) (h) = o(T)$ for every $h in cH$.
 
-As we show in @theorem:mcfromregret, multicalibration admits a black-box reduction to online learning in the style of #citet(<Gordon08:No>). In the case of multicalibration, the nonlinear primitive is _not_ fixed points, but rather _expected variational inequalities_, as defined next.#footnote[Expected variational inequalities have appeared in the literature under different names, including "outgoing minimax problems" #citep(<FosterHart21:Forecast>), "accuracy certificates" #citep(<Nemirovski10:Accuracy>), or "negative correlation search" #citep(<PerdomoRecht25:Defense>).]
+As we show in @theorem:mcfromregret, multicalibration admits a black-box reduction to online learning in the style of #citet(<Gordon08:No>). However, in the case of multicalibration the nonlinear primitive is _not_ fixed points, but rather _expected variational inequalities_, as defined next.#footnote[Expected variational inequalities have appeared in the literature under different names, including "outgoing minimax problems" #citep(<FosterHart21:Forecast>), "accuracy certificates" #citep(<Nemirovski10:Accuracy>), or "negative correlation search" #citep(<PerdomoRecht25:Defense>).]
 
 #definition("Expected variational inequality")[
   Let $S : cU -> RR^d$ be an operator and let $epsilon > 0$. An _$epsilon$-solution_ to the expected variational inequality induced by $S$ is a distribution $D$ over $cU$ such that
   $ EE_(vp tilde D) [ ip(S(vp), vu - vp) ] <= epsilon quad forall vu in cU. $ <eq:evi>
 ]
 
-One way to parse (@eq:evi) is as a randomized self-consistency condition. The distribution $D$ may place mass on several forecasts; nevertheless, after averaging over that randomness, no possible utility vector $vu in cU$ has positive correlation with the residual direction $S(vp)$ by more than $epsilon$. This is exactly what will make the regret analysis telescope. Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions; for our purposes, the important point is that EVIs are a standalone optimization primitive, just as fixed points were in @theorem:Gordon.
+// One way to parse (@eq:evi) is as a randomized self-consistency condition. The distribution $D$ may place mass on several forecasts; nevertheless, after averaging over that randomness, no possible utility vector $vu in cU$ has positive correlation with the residual direction $S(vp)$ by more than $epsilon$.
+Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions #citep(<Zhang25:Expected>).
 
-Now suppose that we have an external-regret minimizer $R_cH$ whose decision set is the class of tests $cH$. In each round, it chooses a test $h^((t)) in cH$; after the utility vector is revealed, it receives the linear utility
+Armed with the EVI primitive, we can reduct multicalibration to an external-regret minimizer $R_cH$ whose decision set is the class of tests $cH$ as follows.
+// . In each round, it chooses a test $h^((t)) in cH$; after the utility vector is revealed, it receives the linear utility
 
-$
-  g^((t))(h) :=
-  EE_(vp^((t)) tilde D^((t))) [
-    ip(h(vc^((t)), vp^((t))), vu^((t)) - vp^((t)))
-  ].
-$ <eq:testutility>
+// $
+//   g^((t))(h) :=
+//   EE_(vp^((t)) tilde D^((t))) [
+//     ip(h(vc^((t)), vp^((t))), vu^((t)) - vp^((t)))
+//   ].
+// $ <eq:testutility>
 
-The reduction is as follows.
+// The reduction is as follows.
 
 #pseudocode-list(
   booktabs: true,
@@ -77,7 +79,14 @@ The reduction is as follows.
       $
     - *return* $D^((t))$
   - *function* `ObserveUtility`($vu^((t))$):
-    - Feed the linear utility $g^((t))$ in (@eq:testutility) to $R_cH$
+    - Feed to $R_cH$ the linear utility
+      $
+        g^((t))(h) :=
+        EE_(vp^((t)) tilde D^((t))) [
+          ip(h(vc^((t)), vp^((t))), vu^((t)) - vp^((t)))
+        ]
+        .
+      $
 ]
 
 #theorem[#citep(<FarinaPerdomo26:Efficient>)][
@@ -117,11 +126,11 @@ $
   quad forall vu^star in cU.
 $
 
-As $T$ grows, multicalibration drives the right-hand side to $0$. So an online multicalibrated forecaster gives a black-box EVI solver.
+As $T$ grows, the multicalibration condition drives the right-hand side to $0$. So an online multicalibrated forecaster gives a black-box EVI solver.
 
 = From Multicalibration to Phi-regret minimization <sec:regretfrommc>
 
-We now turn the arrow around and use forecasting to make decisions. Let $cX subset.eq RR^d$ be a compact convex action set, and let $cU subset.eq RR^d$ be a compact convex set of possible utility vectors. A deviation class is a family $Phi subset.eq {phi : cX -> cX}$. If the learner outputs distributions $mu^((t))$ over $cX$, its $Phi$-regret against a deviation $phi in Phi$ is
+We now use forecasting to construct a $Phi$-regret minimizer. Let $cX subset.eq RR^d$ be a compact convex action set, $cU subset.eq RR^d$ be a compact convex set of possible utility vectors, and $Phi subset.eq {phi : cX -> cX}$ be a family of deviations. Recall that if the learner outputs distributions $mu^((t))$ over $cX$, its $Phi$-regret against a deviation $phi in Phi$ is
 
 $
   Phi"Reg"^((T))(phi) :=
@@ -130,21 +139,20 @@ $
   ].
 $ <eq:phiregp4>
 
-The reduction asks the forecaster to predict the next utility vector. Given a forecast $vp in cU$, define the deterministic best response
+The idea of the reduction asks the forecaster to predict the next utility vector. Given a forecast $vp in cU$, define the deterministic best response
 
 $ sigma(vp) in arg max_(vx in cX) ip(vx, vp), $ <eq:bestresponse>
 
 with ties broken by a fixed rule. If the forecaster outputs a distribution $D^((t))$ over forecasts $vp^((t))$, the decision maker plays the pushforward distribution $mu^((t))$ induced by $vx^((t)) = sigma(vp^((t)))$.
 
 What tests should the forecaster be calibrated against? For each deviation $phi in Phi$, define
-
 $
   h_phi (vp) := phi(sigma(vp)) - sigma(vp),
   qquad quad
   cH_Phi := {h_phi : phi in Phi}.
 $ <eq:hphi>
 
-This definition is the whole reduction. The test $h_phi$ measures the direction in utility space in which the deviation $phi$ would improve over the best response to the forecast.
+As it turns out, multicalibration with respect to the test class $cH_Phi$ suffices to control $Phi$-regret.
 
 #pseudocode-list(
   booktabs: true,
@@ -185,13 +193,13 @@ This definition is the whole reduction. The test $h_phi$ measures the direction 
   by the definition of $sigma(vp)$ as a maximizer over $cX$.
 ]
 
-The theorem is useful because the complexity of the required calibration class scales with the complexity of the deviation class. If $Phi$ contains only constant deviations, then $cH_Phi$ is a class of constant best-response gaps and we recover external regret. If $Phi$ grows toward all maps $cX -> cX$, then $cH_Phi$ becomes a strong calibration class and the result approaches the classical connection between calibration and swap regret.
+Quite intuitively, the complexity of the required calibration class scales with the complexity of the deviation class. We can think of @theorem:phifrommc as a generalization of the classical connection between $ell_1$-calibration and swap regret #citep(<foster1997calibrated>).
 
-The contextual version is identical. If contexts $vc^((t))$ are observed before play and deviations have the form $phi : cC times cX -> cX$, then we define
+#remark[We can equally easily define a contextual version of the result. If contexts $vc^((t))$ are observed before play and deviations have the form $phi : cC times cX -> cX$, then we define
 
-$ h_phi (vc, vp) := phi(vc, sigma(vp)) - sigma(vp). $
+  $ h_phi (vc, vp) := phi(vc, sigma(vp)) - sigma(vp). $
 
-Multicalibration with respect to these tests gives contextual $Phi$-regret.
+  Multicalibration with respect to these tests gives a notion of _contextual_ $Phi$-regret.]
 
 == Putting the two reductions together
 
@@ -203,26 +211,26 @@ $
   <= "Reg"_cH^((T))\(h_phi\) + "EVI"^((T)).
 $ <eq:combinedroute>
 
-Thus the burden of $Phi$-regret minimization shifts to two primitives:
+Thus, the burden of $Phi$-regret minimization shifts to two primitives:
 
 + no-regret learning over the induced test class $cH_Phi$; and
 + solving EVIs over the forecast domain $cU$.
 
-The key distinction from the Gordon-Greenwald-Marks path is that we do _not_ need to optimize over valid deviations directly. We only need a regret minimizer over tests that contain the maps $h_phi$. This extra flexibility is what makes the approach especially clean for large structured deviation classes.
+The key distinction from the Gordon-Greenwald-Marks path is that we do _not_ need to optimize over valid deviations directly. We only need a regret minimizer over tests that contain the maps $h_phi$. This extra flexibility is useful when characterizing the deviation class would otherwise require complex machinery, such the semiseparation construction of #citet(<Daskalakis25:Efficient>) mentioned in @sec:semiseparation.
 
 == Linear deviations
 
-As an illustration, consider linear deviations $phi(vx) = matM vx$ over a convex compact set $cX subset.eq RR^d$. The classical GGM approach asks us to understand the geometry of all matrices $matM$ satisfying $matM cX subset.eq cX$, and then compute fixed points of the matrices selected by the regret minimizer. That geometry can be difficult.
+As an illustration, consider linear deviations $phi(vx) = matM vx$ over a convex compact set $cX subset.eq RR^d$. The classical GGM approach asks us to understand the geometry of all matrices $matM$ satisfying $matM cX subset.eq cX$, and then compute fixed points of the matrices selected by the regret minimizer. That geometry of the endomorphisms can be difficult #citep(<Daskalakis25:Efficient>).
 
 The multicalibration route permits a relaxation. From (@eq:hphi),
 
-$ h_phi(vp) = (matM - matI) sigma(vp). $
+$ h_phi (vp) = (matM - matI) sigma(vp). $
 
-If every valid linear endomorphism has spectral norm at most $S$, then each test above lies in a Frobenius ball of radius on the order of $sqrt(d)(S + 1)$. Instead of learning over valid endomorphisms, we can learn over the larger class
+If every valid linear endomorphism has spectral norm at most $S$, then each test above lies in a Frobenius ball of radius on the order of $sqrt(d)(S + 1)$. Hence, instead of learning over valid endomorphisms, we can learn over the larger class
 
 $ cH := { vp |-> matA sigma(vp) : norm(matA)_F <= rho }, $
 
-where $rho$ is chosen large enough to contain all tests $h_phi$. This larger class is easy: external regret over a Euclidean ball is handled by projected gradient descent. Indeed, the utility sent to the matrix learner at time $t$ is linear:
+where $rho$ is chosen large enough to contain all tests $h_phi$. This larger class is easy: external regret over a Euclidean ball can be easily handled by projected online gradient descent. Indeed, recall that the utility sent to the matrix learner at time $t$ is linear:
 
 $
   g^((t))(matA)
@@ -260,8 +268,6 @@ $
 $ <eq:rkhskernel>
 
 So, if we have an online learner over the RKHS ball associated with $Gamma'$, @theorem:mcfromregret supplies a multicalibrated forecaster, and @theorem:phifrommc turns it into a no-$Phi$-regret algorithm. This recovers low-degree polynomial deviations as a special case and also covers infinite-dimensional kernels, such as Gaussian kernels, where the fixed-point route does not have an obvious finite-dimensional endomorphism geometry to exploit.
-
-The moral is that forecasting separates the two hard-looking parts of $Phi$-regret. Best response converts forecasts to actions; multicalibration certifies that no deviation can systematically exploit the forecast errors; and EVIs provide the self-consistency condition that makes the forecaster black-box reducible to ordinary external regret.
 
 #lec_bibliography("meta/refs.bib")
 

@@ -7,7 +7,7 @@ use math::MathMode;
 use options::Config;
 use regex::{Captures, Regex};
 use scraper::{ElementRef, Html, Selector};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::env;
 use std::fmt::Write as _;
 use std::fs;
@@ -46,12 +46,8 @@ fn run() -> Result<(), String> {
 
     document.rewrite_heading_ids();
     document.rewrite_statement_ids();
-    let (body_html, rendered_endnotes) = postprocess_body(
-        document.body_html,
-        &document.bibliography,
-        &document.endnotes,
-        config.math_mode,
-    )?;
+    let (body_html, rendered_endnotes) =
+        postprocess_body(document.body_html, &document.endnotes, config.math_mode)?;
     document.body_html = body_html;
     document.rendered_endnotes = rendered_endnotes;
 
@@ -259,7 +255,6 @@ struct HtmlParts {
     meta: DocumentMeta,
     body_html: String,
     headings: Vec<Heading>,
-    bibliography: Vec<BibliographyItem>,
     endnotes: Vec<Endnote>,
     rendered_endnotes: Vec<RenderedEndnote>,
 }
@@ -274,14 +269,11 @@ impl HtmlParts {
         let cleaned_dom = Html::parse_document(&format!("<html><body>{body_html}</body></html>"));
         let meta = extract_document_meta(&cleaned_dom);
         let headings = extract_headings(&cleaned_dom);
-        let bibliography =
-            filter_bibliography_to_visible_refs(extract_bibliography(&cleaned_dom), &body_html);
         let endnotes = extract_endnotes(&cleaned_dom);
         Self {
             meta,
             body_html,
             headings,
-            bibliography,
             endnotes,
             rendered_endnotes: Vec::new(),
         }
@@ -350,33 +342,6 @@ impl HtmlParts {
 struct DocumentMeta {
     lecture_number: Option<String>,
     title: Option<String>,
-}
-
-#[derive(Clone)]
-struct BibliographyItem {
-    id: String,
-    key_text: String,
-    entry_html: String,
-}
-
-struct CitationLabelRewrite {
-    from_label: String,
-    to_label: String,
-    to_key_text: String,
-}
-
-impl CitationLabelRewrite {
-    fn new(from_key_text: &str, to_key_text: &str) -> Self {
-        Self {
-            from_label: strip_bib_key_brackets(from_key_text).to_owned(),
-            to_label: strip_bib_key_brackets(to_key_text).to_owned(),
-            to_key_text: to_key_text.to_owned(),
-        }
-    }
-
-    fn apply(&self, label_html: &str) -> String {
-        label_html.replacen(&self.from_label, &self.to_label, 1)
-    }
 }
 
 #[derive(Clone)]
@@ -483,59 +448,6 @@ fn non_empty_attr(element: &ElementRef, name: &str) -> Option<String> {
 
 fn current_chapter(config: &Config, chapters: &ExportConfig) -> Option<usize> {
     chapters.current_index_for_input(&config.input)
-}
-
-fn extract_bibliography(dom: &Html) -> Vec<BibliographyItem> {
-    let item_selector = Selector::parse("section[role=\"doc-bibliography\"] li").unwrap();
-    let prefix_selector = Selector::parse("span.prefix").unwrap();
-    let mut items = Vec::new();
-
-    for item in dom.select(&item_selector) {
-        let Some(id) = item.value().attr("id") else {
-            continue;
-        };
-        let key_text = item
-            .select(&prefix_selector)
-            .next()
-            .map(|prefix| normalize_ws(&prefix.text().collect::<Vec<_>>().join(" ")))
-            .unwrap_or_default();
-        let entry_html = re_bib_prefix()
-            .replace(&item.inner_html(), "")
-            .trim()
-            .to_owned();
-        items.push(BibliographyItem {
-            id: id.to_owned(),
-            key_text,
-            entry_html: math::normalize_bibliography_math(&entry_html),
-        });
-    }
-
-    items
-}
-
-fn filter_bibliography_to_visible_refs(
-    bibliography: Vec<BibliographyItem>,
-    body_html: &str,
-) -> Vec<BibliographyItem> {
-    let referenced = visible_bibliography_ref_ids(body_html);
-    bibliography
-        .into_iter()
-        .filter(|item| referenced.contains(item.id.as_str()))
-        .collect()
-}
-
-fn visible_bibliography_ref_ids(body_html: &str) -> HashSet<String> {
-    let mut body = body_html.to_owned();
-    body = re_notes_meta().replace_all(&body, "").to_string();
-    body = re_hidden_bibliography().replace_all(&body, "").to_string();
-    body = re_endnotes_section().replace_all(&body, "").to_string();
-    let (body, _visible_bibliographies) = protect_visible_bibliographies(body);
-    re_doc_biblioref_link()
-        .captures_iter(&body)
-        .filter_map(|captures| captures.name("attrs"))
-        .filter_map(|attrs| extract_href(attrs.as_str()))
-        .map(str::to_owned)
-        .collect()
 }
 
 fn extract_endnotes(dom: &Html) -> Vec<Endnote> {
@@ -742,7 +654,6 @@ fn rewrite_href_targets(body: String, targets: &HashMap<String, String>) -> Stri
 
 fn postprocess_body(
     body_html: String,
-    bibliography: &[BibliographyItem],
     endnotes: &[Endnote],
     math_mode: MathMode,
 ) -> Result<(String, Vec<RenderedEndnote>), String> {
@@ -753,17 +664,9 @@ fn postprocess_body(
     body = re_empty_hidden_div().replace_all(&body, "").to_string();
     body = normalize_typst_classes(body);
     body = math::postprocess_html_math(body, math_mode);
-    let (body_without_bibliography, bibliography_blocks) = protect_visible_bibliographies(body);
-    let citation_bibliography =
-        citation_bibliography_from_visible_blocks(&bibliography_blocks, bibliography)?;
-    let (bibliography_blocks, citation_bibliography, citation_label_rewrites) =
-        disambiguate_bibliography_labels(bibliography_blocks, citation_bibliography);
-    let body = rewrite_citations(
-        body_without_bibliography,
-        &citation_bibliography,
-        &citation_label_rewrites,
-    );
+    let (body, bibliography_blocks) = protect_visible_bibliographies(body);
     let body = restore_visible_bibliographies(body, bibliography_blocks);
+    let body = unwrap_generated_biblioref_links(body);
     Ok(rewrite_footnotes(body, endnotes))
 }
 
@@ -776,139 +679,6 @@ fn normalize_typst_classes(mut body: String) -> String {
         .replace_all(&body, "${prefix}rendered-figure typst${suffix}")
         .to_string();
     body
-}
-
-fn rewrite_citations(
-    body: String,
-    bibliography: &[BibliographyItem],
-    label_rewrites: &HashMap<String, CitationLabelRewrite>,
-) -> String {
-    let by_id = bibliography
-        .iter()
-        .map(|item| (item.id.as_str(), item))
-        .collect::<HashMap<_, _>>();
-    let mut noted = HashSet::new();
-
-    re_biblioref()
-        .replace_all(&body, |captures: &Captures| {
-            let attrs = captures.get(1).map_or("", |m| m.as_str());
-            let label = captures.get(2).map_or("", |m| m.as_str());
-            let href = extract_href(attrs);
-            let label = href
-                .and_then(|href| label_rewrites.get(href))
-                .map(|rewrite| rewrite.apply(label))
-                .unwrap_or_else(|| label.to_owned());
-            let attrs = add_class_to_attrs(attrs, "citation");
-            let mut out = format!("<span class=\"citation-wrap\"><a {attrs}>{label}</a>");
-            if let Some(item) = href.and_then(|href| by_id.get(href)) {
-                if !noted.insert(item.id.as_str()) {
-                    out.push_str("</span>");
-                    return out;
-                }
-                write!(
-                    out,
-                    "<span class=\"citation-note\"><span class=\"citation-note-key\">{}</span> {}</span>",
-                    escape_html(&item.key_text),
-                    item.entry_html
-                )
-                .unwrap();
-            }
-            out.push_str("</span>");
-            out
-        })
-        .to_string()
-}
-
-fn disambiguate_bibliography_labels(
-    blocks: Vec<String>,
-    mut bibliography: Vec<BibliographyItem>,
-) -> (
-    Vec<String>,
-    Vec<BibliographyItem>,
-    HashMap<String, CitationLabelRewrite>,
-) {
-    let mut by_key = HashMap::<String, Vec<usize>>::new();
-    for (index, item) in bibliography.iter().enumerate() {
-        if !item.key_text.is_empty() {
-            by_key.entry(item.key_text.clone()).or_default().push(index);
-        }
-    }
-
-    let mut rewrites = HashMap::new();
-    for indexes in by_key.values().filter(|indexes| indexes.len() > 1) {
-        for (position, index) in indexes.iter().copied().enumerate() {
-            let original = bibliography[index].key_text.clone();
-            let suffixed = append_suffix_to_bib_key(&original, &alphabetic_suffix(position));
-            rewrites.insert(
-                bibliography[index].id.clone(),
-                CitationLabelRewrite::new(&original, &suffixed),
-            );
-            bibliography[index].key_text = suffixed;
-        }
-    }
-
-    if rewrites.is_empty() {
-        return (blocks, bibliography, rewrites);
-    }
-
-    let blocks = blocks
-        .into_iter()
-        .map(|block| rewrite_bibliography_key_cells(block, &rewrites))
-        .collect();
-    (blocks, bibliography, rewrites)
-}
-
-fn rewrite_bibliography_key_cells(
-    block: String,
-    rewrites: &HashMap<String, CitationLabelRewrite>,
-) -> String {
-    re_bibliography_key_cell()
-        .replace_all(&block, |captures: &Captures| {
-            let Some(id) = captures.name("id").map(|m| m.as_str()) else {
-                return captures.get(0).unwrap().as_str().to_owned();
-            };
-            let Some(rewrite) = rewrites.get(id) else {
-                return captures.get(0).unwrap().as_str().to_owned();
-            };
-            format!(
-                "{}{}{}",
-                captures.name("prefix").map_or("", |m| m.as_str()),
-                escape_html(&rewrite.to_key_text),
-                captures.name("suffix").map_or("", |m| m.as_str())
-            )
-        })
-        .to_string()
-}
-
-fn append_suffix_to_bib_key(key_text: &str, suffix: &str) -> String {
-    if let Some(inner) = key_text
-        .strip_prefix('[')
-        .and_then(|text| text.strip_suffix(']'))
-    {
-        format!("[{inner}{suffix}]")
-    } else {
-        format!("{key_text}{suffix}")
-    }
-}
-
-fn strip_bib_key_brackets(key_text: &str) -> &str {
-    key_text
-        .strip_prefix('[')
-        .and_then(|text| text.strip_suffix(']'))
-        .unwrap_or(key_text)
-}
-
-fn alphabetic_suffix(mut index: usize) -> String {
-    let mut chars = Vec::new();
-    loop {
-        chars.push((b'a' + (index % 26) as u8) as char);
-        index /= 26;
-        if index == 0 {
-            break;
-        }
-        index -= 1;
-    }
-    chars.into_iter().rev().collect()
 }
 
 fn protect_visible_bibliographies(body: String) -> (String, Vec<String>) {
@@ -931,103 +701,22 @@ fn restore_visible_bibliographies(mut body: String, blocks: Vec<String>) -> Stri
     body
 }
 
-fn citation_bibliography_from_visible_blocks(
-    blocks: &[String],
-    fallback: &[BibliographyItem],
-) -> Result<Vec<BibliographyItem>, String> {
-    let items = extract_visible_bibliography_items(blocks);
-    let seen = items
-        .iter()
-        .map(|item| item.id.as_str())
-        .collect::<HashSet<_>>();
-    let missing = fallback
-        .iter()
-        .filter(|item| !seen.contains(item.id.as_str()))
-        .map(|item| format!("{} {}", item.key_text, item.id).trim().to_owned())
-        .collect::<Vec<_>>();
-    if !missing.is_empty() {
-        return Err(format!(
-            "visible lec_bibliography is missing row(s) for cited item(s): {}",
-            missing.join(", ")
-        ));
-    }
-    Ok(items)
-}
-
-fn extract_visible_bibliography_items(blocks: &[String]) -> Vec<BibliographyItem> {
-    let row_selector = Selector::parse("tr.bibliography-row").unwrap();
-    let key_selector = Selector::parse(".bib-key").unwrap();
-    let entry_selector = Selector::parse(".bib-entry").unwrap();
-    let mut items = Vec::new();
-
-    for block in blocks {
-        let dom = Html::parse_fragment(block);
-        for row in dom.select(&row_selector) {
-            let Some(id) = row
-                .value()
-                .attr("id")
-                .map(str::trim)
-                .filter(|id| !id.is_empty())
-            else {
-                continue;
-            };
-            let key_text = row
-                .select(&key_selector)
-                .next()
-                .map(|key| normalize_ws(&key.text().collect::<Vec<_>>().join(" ")))
-                .unwrap_or_default();
-            let Some(entry) = row.select(&entry_selector).next() else {
-                continue;
-            };
-            items.push(BibliographyItem {
-                id: id.to_owned(),
-                key_text,
-                entry_html: entry.inner_html().trim().to_owned(),
-            });
-        }
-    }
-
-    items
-}
-
 fn clean_visible_bibliography(block: &str) -> String {
-    let block = re_bibliography_row()
-        .replace_all(block, |captures: &Captures| {
-            let whole = captures.get(0).map_or("", |m| m.as_str());
-            let attrs = captures.name("attrs").map_or("", |m| m.as_str());
-            let inner = captures.name("inner").map_or("", |m| m.as_str());
-            let Some(id) = doc_biblioref_target(inner) else {
-                return whole.to_owned();
-            };
-            if attrs.contains(" id=") || attrs.contains(" id='") {
-                whole.to_owned()
-            } else {
-                format!("<tr id=\"{}\"{}>{}</tr>", escape_attr(id), attrs, inner)
-            }
-        })
-        .to_string();
-
-    let block = re_doc_biblioref_link()
-        .replace_all(&block, |captures: &Captures| {
-            let whole = captures.get(0).map_or("", |m| m.as_str());
-            let attrs = captures.name("attrs").map_or("", |m| m.as_str());
-            if attrs.contains(r#"role="doc-biblioref""#) {
-                captures.name("inner").map_or("", |m| m.as_str()).to_owned()
-            } else {
-                whole.to_owned()
-            }
-        })
-        .to_string();
-
-    math::normalize_bibliography_math(&block)
+    math::normalize_bibliography_math(block)
 }
 
-fn doc_biblioref_target(html: &str) -> Option<&str> {
-    re_doc_biblioref_href_before_role()
-        .captures(html)
-        .or_else(|| re_doc_biblioref_href_after_role().captures(html))
-        .and_then(|captures| captures.name("id"))
-        .map(|m| m.as_str())
+fn unwrap_generated_biblioref_links(body: String) -> String {
+    re_doc_biblioref_link()
+        .replace_all(&body, |captures: &Captures| {
+            let whole = captures.get(0).map_or("", |m| m.as_str());
+            let attrs = captures.name("attrs").map_or("", |m| m.as_str());
+            if attrs.contains("citation") {
+                whole.to_owned()
+            } else {
+                captures.name("inner").map_or("", |m| m.as_str()).to_owned()
+            }
+        })
+        .to_string()
 }
 
 fn rewrite_footnotes(body: String, endnotes: &[Endnote]) -> (String, Vec<RenderedEndnote>) {
@@ -1658,22 +1347,6 @@ fn data_attr<'a>(attrs: &'a str, name: &str) -> Option<&'a str> {
     Some(&rest[..end])
 }
 
-fn add_class_to_attrs(attrs: &str, class_name: &str) -> String {
-    if re_class_attr().is_match(attrs) {
-        re_class_attr()
-            .replace(attrs, |captures: &Captures| {
-                format!(
-                    "class=\"{} {}\"",
-                    captures.get(1).map_or("", |m| m.as_str()),
-                    class_name
-                )
-            })
-            .to_string()
-    } else {
-        format!("class=\"{}\" {}", class_name, attrs.trim())
-    }
-}
-
 fn set_id_attr(attrs: &str, id: &str) -> String {
     if re_id_attr().is_match(attrs) {
         re_id_attr()
@@ -1698,11 +1371,6 @@ fn escape_html(input: &str) -> String {
 
 fn escape_attr(input: &str) -> String {
     escape_html(input).replace('\'', "&#39;")
-}
-
-fn re_bib_prefix() -> &'static Regex {
-    static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r#"(?s)^\s*<span class="prefix">.*?</span>\s*"#).unwrap())
 }
 
 fn re_endnote_backlink() -> &'static Regex {
@@ -1751,35 +1419,6 @@ fn re_visible_bibliography() -> &'static Regex {
     })
 }
 
-fn re_bibliography_row() -> &'static Regex {
-    static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| Regex::new(r#"(?s)<tr(?P<attrs>[^>]*)>(?P<inner>.*?)</tr>"#).unwrap())
-}
-
-fn re_bibliography_key_cell() -> &'static Regex {
-    static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| {
-        Regex::new(
-            r#"(?s)(?P<prefix><tr\b[^>]*\bid="(?P<id>[^"]+)"[^>]*>.*?<td\b[^>]*\bclass="[^"]*\bbib-key\b[^"]*"[^>]*>).*?(?P<suffix></td>)"#,
-        )
-        .unwrap()
-    })
-}
-
-fn re_doc_biblioref_href_before_role() -> &'static Regex {
-    static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| {
-        Regex::new(r##"<a\b[^>]*\bhref="#(?P<id>[^"]+)"[^>]*\brole="doc-biblioref""##).unwrap()
-    })
-}
-
-fn re_doc_biblioref_href_after_role() -> &'static Regex {
-    static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| {
-        Regex::new(r##"<a\b[^>]*\brole="doc-biblioref"[^>]*\bhref="#(?P<id>[^"]+)""##).unwrap()
-    })
-}
-
 fn re_doc_biblioref_link() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| Regex::new(r#"(?s)<a\b(?P<attrs>[^>]*)>(?P<inner>.*?)</a>"#).unwrap())
@@ -1796,13 +1435,6 @@ fn re_typst_figure_class() -> &'static Regex {
     static RE: OnceLock<Regex> = OnceLock::new();
     RE.get_or_init(|| {
         Regex::new(r#"(?P<prefix><figure\b[^>]*\bclass=")typst(?P<suffix>"[^>]*>)"#).unwrap()
-    })
-}
-
-fn re_biblioref() -> &'static Regex {
-    static RE: OnceLock<Regex> = OnceLock::new();
-    RE.get_or_init(|| {
-        Regex::new(r#"(?s)<a\s+([^>]*\brole="doc-biblioref"[^>]*)>(.*?)</a>"#).unwrap()
     })
 }
 
@@ -1927,139 +1559,23 @@ mod tests {
         let body = r##"
 <p>Body</p>
 <div class="notes-meta" hidden="" data-lecture-number="4" data-title="Phi-Regret"></div>
-<section class="bibliography" id="bibliography"><table class="bibliography-table"><tr class="bibliography-row"><td class="bib-key">[<a class="citation" href="#loc-1" role="doc-biblioref">A</a>]</td><td class="bib-entry"><a class="citation" href="#loc-1" role="doc-biblioref">Entry</a></td></tr></table></section>
+<section class="bibliography" id="bibliography"><table class="bibliography-table"><tr id="bib-a" class="bibliography-row"><td class="bib-key">[A]</td><td class="bib-entry">Entry</td></tr></table></section>
 <div hidden=""><section role="doc-bibliography"><ol><li id="loc-1"><span class="prefix">[A]</span> Entry</li></ol></section></div>
 <section role="doc-endnotes"><ol><li id="fn-1"><sup>1</sup> Note</li></ol></section>
 "##
         .to_owned();
 
-        let bibliography = vec![BibliographyItem {
-            id: "loc-1".to_owned(),
-            key_text: "[A]".to_owned(),
-            entry_html: "Entry".to_owned(),
-        }];
-
-        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg).unwrap();
+        let (body, _) = postprocess_body(body, &[], MathMode::Svg).unwrap();
 
         assert!(!body.contains("hidden"));
         assert!(!body.contains("notes-meta"));
         assert!(body.contains("id=\"bibliography\""));
         assert!(body.contains("bibliography-table"));
-        assert!(body.contains("<tr id=\"loc-1\" class=\"bibliography-row\">"));
+        assert!(body.contains("<tr id=\"bib-a\" class=\"bibliography-row\">"));
         assert!(body.contains("<td class=\"bib-key\">[A]</td>"));
         assert!(body.contains("<td class=\"bib-entry\">Entry</td>"));
-        assert!(!body.contains("citation-note"));
-        assert!(!body.contains("role=\"doc-biblioref\""));
         assert!(!body.contains("role=\"doc-bibliography\""));
         assert!(!body.contains("doc-endnotes"));
-    }
-
-    #[test]
-    fn repeated_citations_only_get_one_side_note() {
-        let body = r##"
-<p><a href="#loc-1" role="doc-biblioref">A</a></p>
-<p><a href="#loc-1" role="doc-biblioref">A again</a></p>
-<p><a href="#loc-2" role="doc-biblioref">B</a></p>
-"##
-        .to_owned();
-        let bibliography = vec![
-            BibliographyItem {
-                id: "loc-1".to_owned(),
-                key_text: "[A]".to_owned(),
-                entry_html: "Entry A".to_owned(),
-            },
-            BibliographyItem {
-                id: "loc-2".to_owned(),
-                key_text: "[B]".to_owned(),
-                entry_html: "Entry B".to_owned(),
-            },
-        ];
-
-        let body = rewrite_citations(body, &bibliography, &HashMap::new());
-
-        assert_eq!(body.matches("class=\"citation-note\"").count(), 2);
-        assert!(body.contains("<span class=\"citation-note-key\">[A]</span> Entry A"));
-        assert!(body.contains(">A again</a></span>"));
-        assert_eq!(body.matches("Entry A").count(), 1);
-        assert_eq!(body.matches("Entry B").count(), 1);
-    }
-
-    #[test]
-    fn citation_notes_prefer_visible_bibliography_entries() {
-        let body = r##"
-<p><a href="#loc-1" role="doc-biblioref">A</a></p>
-<section class="bibliography"><table class="bibliography-table"><tr class="bibliography-row"><td class="bib-key">[<a href="#loc-1" role="doc-biblioref">A</a>]</td><td class="bib-entry">Visible Entry</td></tr></table></section>
-"##
-        .to_owned();
-        let bibliography = vec![BibliographyItem {
-            id: "loc-1".to_owned(),
-            key_text: "[A]".to_owned(),
-            entry_html: "Hidden Entry".to_owned(),
-        }];
-
-        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg).unwrap();
-
-        assert!(body.contains("<span class=\"citation-note-key\">[A]</span> Visible Entry"));
-        assert!(!body.contains("Hidden Entry"));
-    }
-
-    #[test]
-    fn duplicate_bibliography_labels_get_letter_suffixes() {
-        let body = r##"
-<p><a href="#loc-1" role="doc-biblioref">Zha+25</a></p>
-<p><a href="#loc-2" role="doc-biblioref">Zhang et al. [Zha+25]</a></p>
-<section class="bibliography" id="bibliography"><table class="bibliography-table">
-<tr class="bibliography-row"><td class="bib-key">[<a href="#loc-1" role="doc-biblioref">Zha+25</a>]</td><td class="bib-entry">First Entry</td></tr>
-<tr class="bibliography-row"><td class="bib-key">[<a href="#loc-2" role="doc-biblioref">Zha+25</a>]</td><td class="bib-entry">Second Entry</td></tr>
-</table></section>
-"##
-        .to_owned();
-        let bibliography = vec![
-            BibliographyItem {
-                id: "loc-1".to_owned(),
-                key_text: "[Zha+25]".to_owned(),
-                entry_html: "Hidden First".to_owned(),
-            },
-            BibliographyItem {
-                id: "loc-2".to_owned(),
-                key_text: "[Zha+25]".to_owned(),
-                entry_html: "Hidden Second".to_owned(),
-            },
-        ];
-
-        let (body, _) = postprocess_body(body, &bibliography, &[], MathMode::Svg).unwrap();
-
-        assert!(body.contains(">Zha+25a</a>"));
-        assert!(body.contains(">Zhang et al. [Zha+25b]</a>"));
-        assert!(body.contains("<td class=\"bib-key\">[Zha+25a]</td>"));
-        assert!(body.contains("<td class=\"bib-key\">[Zha+25b]</td>"));
-        assert!(body.contains("<span class=\"citation-note-key\">[Zha+25a]</span> First Entry"));
-        assert!(body.contains("<span class=\"citation-note-key\">[Zha+25b]</span> Second Entry"));
-    }
-
-    #[test]
-    fn missing_visible_bibliography_row_is_an_error() {
-        let body = r##"
-<p><a href="#loc-1" role="doc-biblioref">A</a></p>
-<section class="bibliography"><table class="bibliography-table"></table></section>
-"##
-        .to_owned();
-        let bibliography = vec![BibliographyItem {
-            id: "loc-1".to_owned(),
-            key_text: "[A]".to_owned(),
-            entry_html: "Hidden Entry".to_owned(),
-        }];
-
-        let err = match postprocess_body(body, &bibliography, &[], MathMode::Svg) {
-            Ok(_) => panic!("postprocess_body unexpectedly succeeded"),
-            Err(err) => err,
-        };
-
-        assert!(
-            err.contains("visible lec_bibliography is missing row"),
-            "{err}"
-        );
-        assert!(err.contains("[A] loc-1"), "{err}");
     }
 
     #[test]
@@ -2077,7 +1593,6 @@ mod tests {
                 id: "4-2-1-real-subsection".to_owned(),
                 number: "4.2.1".to_owned(),
             }],
-            bibliography: Vec::new(),
             endnotes: Vec::new(),
             rendered_endnotes: Vec::new(),
         };

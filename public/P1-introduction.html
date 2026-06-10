@@ -1356,7 +1356,7 @@ mark {
 <li class="toc-l1"><a href="#1-3-a-framework-for-minimizing-regret"><span class="toc-no">1.3</span><span class="toc-title">A framework for minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</span></a></li>
 <li class="toc-l2"><a href="#1-3-1-the-algorithm-of-blum-and-mansour"><span class="toc-no">1.3.1</span><span class="toc-title">The algorithm of Blum and Mansour</span></a></li>
 </ol></nav>
-<p>This introductory chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we begin by introducing and motivating the notion of <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</em> and its associated solution concept in games—<em><span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium</em>. In the second part, we will introduce the canonical algorithmic template for minimizing <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</em> due to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-19" id="loc-1" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a><span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</span></span>.</p>
+<p>This introductory chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we begin by introducing and motivating the notion of <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</em> and its associated solution concept in games—<em><span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium</em>. In the second part, we will introduce the canonical algorithmic template for minimizing <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</em> due to&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a> <span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</span></span>.</p>
     <h1 id="1-1-online-learning-and-regret" class="notes-heading" data-level="1" data-number="1.1"><span class="secno">1.1</span> Online learning and regret</h1>
     <p>We consider a <em>learner</em> who makes a sequence of decisions over <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds. The learner interacts repeatedly with an <em>environment</em>. In each round <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [t],
@@ -1531,7 +1531,7 @@ mark {
   [.],
 )">\[\displaystyle \text{Reg}^{\left(T\right)} \coloneqq \operatorname*{max}_{\boldsymbol{x} \in \mathcal{X}} \left\{\sum_{t=1}^{T} \left\langle \boldsymbol{x},\boldsymbol{u}^{\left(t\right)} \right\rangle \right\} - \sum_{t=1}^{T} \left\langle \boldsymbol{x}^{\left(t\right)},\boldsymbol{u}^{\left(t\right)} \right\rangle .\]</span> <span class="eqno">(1)</span></div>
     </figure>
-    <p>The second term in the right-hand side of (<a href="#eq-regret">1</a>) is the cumulative utility obtained by the learner through the <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds, whereas the first term is the optimal utility that could have been obtained in hindsight <em>through a fixed strategy</em>. We will soon introduce more powerful notions of hindsight rationality beyond external regret.</p>
+    <p>The second term in the right-hand side of (1) is the cumulative utility obtained by the learner through the <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> rounds, whereas the first term is the optimal utility that could have been obtained in hindsight <em>through a fixed strategy</em>. We will soon introduce more powerful notions of hindsight rationality beyond external regret.</p>
     <h1 id="1-2-games-and-solution-concepts" class="notes-heading" data-level="1" data-number="1.2"><span class="secno">1.2</span> Games and solution concepts</h1>
     <p>We will often need to analyze what happens when multiple no-regret players repeatedly interact in a game. To do so, we begin by introducing the canonical normal-form representation of games. While any finite game can be cast in normal form, that representation is often inefficient. This will motivate introducing more compact game representations, as we shall do in the sequel.</p>
     <p>Formally, we have a set of <span class="math-katex-source" data-math-display="inline" data-typst-math="[n]" role="math">\(n\)</span> players. In a normal-form game, each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -1986,12 +1986,12 @@ mark {
     </figure>
     <p>Each player is trying to maximize its expected utility.</p>
     <h2 id="1-2-1-correlated-and-coarse-correlated-equilibria" class="notes-heading" data-level="2" data-number="1.2.1"><span class="secno">1.2.1</span> Correlated and coarse correlated equilibria</h2>
-    <p>A major criticism of the Nash equilibrium is that, even though one always exists—as guaranteed by the famous theorem of John Nash&nbsp;<span id="loc-2">[</span><span class="citation-wrap"><a class="citation" href="#loc-20" role="doc-biblioref">Nas50</a><span class="citation-note"><span class="citation-note-key">[Nas50]</span> J. Nash. (1950). Equilibrium points in N-person games. <em>Proceedings of the National Academy of Sciences</em>, 36, 48–49.</span></span>]—it is computationally intractable to find one <span id="loc-3">[</span><span class="citation-wrap"><a class="citation" href="#loc-21" role="doc-biblioref">DGP08</a><span class="citation-note"><span class="citation-note-key">[DGP08]</span> C. Daskalakis, P. Goldberg and C. Papadimitriou. (2008). The Complexity of Computing a Nash Equilibrium. <em>SIAM Journal on Computing</em>.</span></span>]—let alone a welfare-optimal one <span id="loc-4">[</span><span class="citation-wrap"><a class="citation" href="#loc-22" role="doc-biblioref">GZ89</a><span class="citation-note"><span class="citation-note-key">[GZ89]</span> I. Gilboa and E. Zemel. (1989). Nash and Correlated Equilibria: Some Complexity Considerations. <em>Games and Economic Behavior</em>, 1, 80–93.</span></span>]. As result, we shouldn’t expect simple, computationally bounded learning algorithms to converge to Nash equilibria; this raises the question: what are no-regret dynamics converging to in general-sum games?</p>
-    <p>It turns out that no-regret learning is inherently tied to <em>coarse correlated equilibria</em> <span id="loc-5">[</span><span class="citation-wrap"><a class="citation" href="#loc-23" role="doc-biblioref">MV78</a><span class="citation-note"><span class="citation-note-key">[MV78]</span> H. Moulin and J.-P. Vial. (1978). Strategically zero-sum games: The class of games whose completely mixed equilibria cannot be improved upon. <em>International Journal of Game Theory</em>, 7, 201–221.</span></span>]. Let’s begin by recalling the basic definition and start building some intuition about this solution concept; for now, we restrict our attention to normal-form games.</p>
+    <p>A major criticism of the Nash equilibrium is that, even though one always exists—as guaranteed by the famous theorem of John Nash&nbsp;[<span class="citation-wrap"><a class="citation" href="#bib-Nash50-Equilibrium" role="doc-biblioref">Nas50</a> <span class="citation-note"><span class="citation-note-key">[Nas50]</span> J. Nash. (1950). Equilibrium points in N-person games. <em>Proceedings of the National Academy of Sciences</em>, 36, 48–49.</span></span>]—it is computationally intractable to find one [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis08-Complexity" role="doc-biblioref">DGP08</a> <span class="citation-note"><span class="citation-note-key">[DGP08]</span> C. Daskalakis, P. Goldberg and C. Papadimitriou. (2008). The Complexity of Computing a Nash Equilibrium. <em>SIAM Journal on Computing</em>.</span></span>]—let alone a welfare-optimal one [<span class="citation-wrap"><a class="citation" href="#bib-Gilboa89-Nash" role="doc-biblioref">GZ89</a> <span class="citation-note"><span class="citation-note-key">[GZ89]</span> I. Gilboa and E. Zemel. (1989). Nash and Correlated Equilibria: Some Complexity Considerations. <em>Games and Economic Behavior</em>, 1, 80–93.</span></span>]. As result, we shouldn’t expect simple, computationally bounded learning algorithms to converge to Nash equilibria; this raises the question: what are no-regret dynamics converging to in general-sum games?</p>
+    <p>It turns out that no-regret learning is inherently tied to <em>coarse correlated equilibria</em> [<span class="citation-wrap"><a class="citation" href="#bib-Moulin78-Strategically" role="doc-biblioref">MV78</a> <span class="citation-note"><span class="citation-note-key">[MV78]</span> H. Moulin and J.-P. Vial. (1978). Strategically zero-sum games: The class of games whose completely mixed equilibria cannot be improved upon. <em>International Journal of Game Theory</em>, 7, 201–221.</span></span>]. Let’s begin by recalling the basic definition and start building some intuition about this solution concept; for now, we restrict our attention to normal-form games.</p>
     <section id="definition-1-1" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Coarse correlated equilibrium)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
-        <p>A correlated distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+        <p>A correlateddistribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [μ],
   [ ],
   [∈],
@@ -2241,7 +2241,7 @@ mark {
         </figure>
       </div>
     </section>
-    <p>This definition mirrors Nash equilibria, but with a critical difference: the underlying distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> can be <em>correlated</em>; by contrast, in a Nash equilibrium <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> has to be a <em>product distribution</em>, reflecting the fact that players randomize independently. To explain this, let’s consider the following two distributions with respect to some <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> bimatrix game (meaning that each of the two players has two available actions).</p>
+    <p>This definition mirrors Nash equilibria, but with a critical difference: the underlying distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> can be <em>correlated</em>; by contrast, in a Nash equilibrium <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> has to be a <em>product distribution</em>, reflecting the fact that players randomize independently. To explain this, let’s consider the following two distributions with respect to some <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> bimatrix game (meaning that each of the two players has two available actions):</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [μ],
@@ -2342,7 +2342,7 @@ mark {
     [)],
   ),
 )" role="math">\((\frac{1}{2}, \frac{1}{2})\)</span>, the induced distribution over the <span class="math-katex-source" data-math-display="inline" data-typst-math="[4]" role="math">\(4\)</span> outcomes matches <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [μ], tr: primes(count: 1))" role="math">\(\mu'\)</span>. In contrast, no pair of strategies gives rise to <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span>.</p>
-    <p>A Nash equilibrium is always a CCE; a Nash equilibrium is basically an <em>uncorrelated</em> (coarse) correlated equilibrium. But the set of CCEs can unlock new outcomes. Before we examine a concrete example, we also introduce the stronger notion of a <em>correlated equilibrium</em>, famously put forward by <span class="citation-wrap"><a class="citation" href="#loc-24" id="loc-6" role="doc-biblioref">Aumann [Aum74]</a><span class="citation-note"><span class="citation-note-key">[Aum74]</span> R. Aumann. (1974). Subjectivity and Correlation in Randomized Strategies. <em>Journal of Mathematical Economics</em>, 1, 67–96.</span></span>.</p>
+    <p>A Nash equilibrium is always a CCE; a Nash equilibrium is basically an <em>uncorrelated</em> (coarse) correlated equilibrium. But the set of CCEs can unlock new outcomes. Before we examine a concrete example, we also introduce the stronger notion of a <em>correlated equilibrium</em>, famously put forward by <span class="citation-wrap"><a class="citation" href="#bib-Aumann74-Subjectivity" role="doc-biblioref">Aumann [Aum74]</a> <span class="citation-note"><span class="citation-note-key">[Aum74]</span> R. Aumann. (1974). Subjectivity and Correlation in Randomized Strategies. <em>Journal of Mathematical Economics</em>, 1, 67–96.</span></span>.</p>
     <section id="definition-1-2" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">1<span class="env-number-separator">.</span>2</strong> <span class="env-extra">(Correlated equilibrium)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -2616,7 +2616,7 @@ mark {
     <section id="example-1-3" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>3</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
-        <p>We consider the “game of chicken.” This is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> game—played between two drivers who are rapidly approaching an intersection from different streets—whose utilities are tabulated in <a href="#loc-7">Table&nbsp;1</a>. Each player can either play “Stop” or “Go.” If both players elect to “Go” a crash ensues—a bad outcome for both players. If a player chooses to “Stop” it gets no utility from the game, whereas if it proceeds while the other player chooses to “Stop” it gets a utility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[1]" role="math">\(1\)</span> for safely crossing the intersection.</p>
+        <p>We consider the “game of chicken.” This is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([2], [ ], [×], [ ], [2])" role="math">\(2 \times 2\)</span> game—played between two drivers who are rapidly approaching an intersection from different streets—whose utilities are tabulated in Table&nbsp;1. Each player can either play “Stop” or “Go.” If both players elect to “Go” a crash ensues—a bad outcome for both players. If a player chooses to “Stop” it gets no utility from the game, whereas if it proceeds while the other player chooses to “Stop” it gets a utility of <span class="math-katex-source" data-math-display="inline" data-typst-math="[1]" role="math">\(1\)</span> for safely crossing the intersection.</p>
         <p>This game has exactly three Nash equilibria: i) (Go, Stop), ii) (Stop, Go), and iii) <span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
   body: sequence(
     [(],
@@ -3032,7 +3032,7 @@ mark {
       [}],
     ),
   ),
-)" role="math">\(\Phi_{\text{const}} = \{\phi : \exists \boldsymbol{x}' \in \mathcal{X} \text{ such that } \phi (\boldsymbol{x}) = \boldsymbol{x}'\}\)</span>; this is indeed the most standard definition of regret in online learning, referred to as <em>external</em> regret. The key point about (<a href="#eq-Phiregret">5</a>) is that the richer the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>, the stronger the induced notion of hindsight rationality. The other end of the spectrum where <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of all possible deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\Phi_{\text{const}} = \{\phi : \exists \boldsymbol{x}' \in \mathcal{X} \text{ such that } \phi (\boldsymbol{x}) = \boldsymbol{x}'\}\)</span>; this is indeed the most standard definition of regret in online learning, referred to as <em>external</em> regret. The key point about (5) is that the richer the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>, the stronger the induced notion of hindsight rationality. The other end of the spectrum where <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of all possible deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝓧]),
   [ ],
   [→],
@@ -3042,7 +3042,7 @@ mark {
     <section id="example-1-6" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Example</strong> <strong class="env-number">1<span class="env-number-separator">.</span>6</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
-        <p>Let’s say the learner picks a distribution over three actions, “1,” “2,” and “3.” Suppose further that the sequence of utilities and selected actions follow the pattern shown in <a href="#loc-8">Table&nbsp;2</a>, where we can assume <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+        <p>Let’s say the learner picks a distribution over three actions, “1,” “2,” and “3.” Suppose further that the sequence of utilities and selected actions follow the pattern shown in Table&nbsp;2, where we can assume <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [T],
   [ ],
   [=],
@@ -3167,8 +3167,8 @@ mark {
         </figure>
       </div>
     </section>
-    <p>This example shows that external regret—and the associated solution concept of a CCE—is a weak benchmark. In fact, a CCE can be supported on strictly dominated actions&nbsp;<span id="loc-9">[</span><span class="citation-wrap"><a class="citation" href="#loc-25" role="doc-biblioref">VZ13</a><span class="citation-note"><span class="citation-note-key">[VZ13]</span> Y. Viossat and A. Zapechelnyuk. (2013). No-regret dynamics and fictitious play. <em>Journal of Economic Theory</em>, 148, 825–842.</span></span>]! This motivates considering tighter equilibrium concepts revolving around the notion of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret.</p>
-    <p>Now, the techniques we have covered so far for minimizing external regret will not be enough to minimize swap regret. For example, multiplicative weights update (MWU) can have linear swap regret <span id="loc-10">[</span><span class="citation-wrap"><a class="citation" href="#loc-26" role="doc-biblioref">CL06</a><span class="citation-note"><span class="citation-note-key">[CL06]</span> N. Cesa-Bianchi and G. Lugosi. (2006). Prediction, learning, and games. Cambridge university press.</span></span>]. As a result, we will need new algorithmic ideas to go beyond external regret and coarse correlated equilibria.</p>
+    <p>This example shows that external regret—and the associated solution concept of a CCE—is a weak benchmark. In fact, a CCE can be supported on strictly dominated actions&nbsp;[<span class="citation-wrap"><a class="citation" href="#bib-Viossat13-Noregret" role="doc-biblioref">VZ13</a> <span class="citation-note"><span class="citation-note-key">[VZ13]</span> Y. Viossat and A. Zapechelnyuk. (2013). No-regret dynamics and fictitious play. <em>Journal of Economic Theory</em>, 148, 825–842.</span></span>]! This motivates considering tighter equilibrium concepts revolving around the notion of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret.</p>
+    <p>Now, the techniques we have covered so far for minimizing external regret will not be enough to minimize swap regret. For example, multiplicative weights update (MWU) can have linear swap regret [<span class="citation-wrap"><a class="citation" href="#bib-Cesa-Bianchi06-Prediction" role="doc-biblioref">CL06</a> <span class="citation-note"><span class="citation-note-key">[CL06]</span> N. Cesa-Bianchi and G. Lugosi. (2006). Prediction, learning, and games. Cambridge university press.</span></span>]. As a result, we will need new algorithmic ideas to go beyond external regret and coarse correlated equilibria.</p>
     <p>Before we proceed, we formalize the connection between minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret and correlated equilibrium concepts. We now extend our scope to general <em>multilinear games</em>. Here, each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
@@ -3620,7 +3620,7 @@ mark {
     ),
     [)],
   ),
-)" role="math">\((\boldsymbol{x}_{1}^{(t)}, \dots , \boldsymbol{x}_{n}^{(t)})\)</span>; <span class="math-katex-source" data-math-display="inline" data-typst-math="[⊗]" role="math">\(⊗\)</span> denotes the tensor product. The distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> produced by <a href="#theorem-1-8">Theorem&nbsp;1.8</a> is a <em>mixture</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> product distributions. Correlation arises by playing multiple iterations of the game. As a special case, <a href="#theorem-1-8">Theorem&nbsp;1.8</a> implies that players minimizing swap regret converge—in terms of the average correlated distribution of play—to correlated equilibria, whereas external regret is associated with <em>coarse</em> correlated equilibria.</p>
+)" role="math">\((\boldsymbol{x}_{1}^{(t)}, \dots , \boldsymbol{x}_{n}^{(t)})\)</span>; <span class="math-katex-source" data-math-display="inline" data-typst-math="[⊗]" role="math">\(⊗\)</span> denotes the tensor product. The distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> produced by Theorem&nbsp;1.8 is a <em>mixture</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[T]" role="math">\(T\)</span> product distributions. Correlation arises by playing multiple iterations of the game. As a special case, Theorem&nbsp;1.8 implies that players minimizing swap regret converge—in terms of the average correlated distribution of play—to correlated equilibria, whereas external regret is associated with <em>coarse</em> correlated equilibria.</p>
     <section class="env proof">
       <p class="env-heading"><span class="env-title"><em>Proof.</em></span></p>
       <div class="env-body">
@@ -3971,7 +3971,7 @@ mark {
     t: lr(body: sequence([(], [t], [)])),
     b: [i],
   ),
-)" role="math">\(\mu = \frac{1}{T} \sum_{t=1}^{T} ⨂_{i=1}^{n} \boldsymbol{x}_{i}^{(t)}\)</span>. Continuing from (<a href="#loc-12">6</a>),</p>
+)" role="math">\(\mu = \frac{1}{T} \sum_{t=1}^{T} ⨂_{i=1}^{n} \boldsymbol{x}_{i}^{(t)}\)</span>. Continuing from (6),</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   frac(num: [1], denom: [T]),
@@ -4204,8 +4204,8 @@ mark {
       </div>
     </section>
     <h1 id="1-3-a-framework-for-minimizing-regret" class="notes-heading" data-level="1" data-number="1.3"><span class="secno">1.3</span> A framework for minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret</h1>
-    <p>Having connected <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret with <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria, we now introduce the elegant framework of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> to minimize <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret in the online learning setting; by virtue of <a href="#theorem-1-8">Theorem&nbsp;1.8</a>, one can then compute a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium by having each player employ such algorithms.</p>
-    <p><strong>Reducing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to external regret.</strong> The key idea in the construction of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is that one can reduce minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to minimizing external regret. The framework of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> provides a general template based on two basic subroutines.</p>
+    <p>Having connected <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret with <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria, we now introduce the elegant framework of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> to minimize <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret in the online learning setting; by virtue of Theorem&nbsp;1.8, one can then compute a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium by having each player employ such algorithms.</p>
+    <p><strong>Reducing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to external regret.</strong> The key idea in the construction of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is that one can reduce minimizing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to minimizing external regret. The framework of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> provides a general template based on two basic subroutines.</p>
     <ol>
       <li value="1">A <em>fixed-point oracle</em>: for any deviation <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∈], [ ], [Φ])" role="math">\(\phi \in \Phi\)</span>, it outputs a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐱]),
@@ -4221,7 +4221,7 @@ mark {
 )" role="math">\(\boldsymbol{x} = \phi (\boldsymbol{x})\)</span>.</li>
       <li value="2">An online algorithm <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> minimizing <em>external regret</em> with respect to <em>the set <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>.</li>
     </ol>
-    <p>Regarding the fixed-point oracle, we will assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of continuous functions mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, so that the <em>existence</em> of a fixed point is guaranteed by Brouwer’s fixed-point theorem; whether such a fixed point can be computed efficiently is a different story. (As we shall see in the sequel, computing approximate fixed points of general functions is known to be equivalent to finding Nash equilibria [<span class="citation-wrap"><a class="citation" href="#loc-21" role="doc-biblioref">DGP08</a></span>], which defeats our purpose.) For now, we can assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> is structured enough so that it admits an efficient fixed-point oracle; for example, this is the case when <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains only linear deviations. A final point is that it will be enough if one has instead an <em>approximate</em> fixed-point oracle, in that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Regarding the fixed-point oracle, we will assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> consists of continuous functions mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>, so that the <em>existence</em> of a fixed point is guaranteed by Brouwer’s fixed-point theorem; whether such a fixed point can be computed efficiently is a different story. (As we shall see in the sequel, computing approximate fixed points of general functions is known to be equivalent to finding Nash equilibria [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis08-Complexity" role="doc-biblioref">DGP08</a></span>], which defeats our purpose.) For now, we can assume that <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> is structured enough so that it admits an efficient fixed-point oracle; for example, this is the case when <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> contains only linear deviations. A final point is that it will be enough if one has instead an <em>approximate</em> fixed-point oracle, in that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   lr(
     body: sequence(
       [‖],
@@ -4245,8 +4245,8 @@ mark {
   [ ],
   [ε],
 )" role="math">\(\Vert \boldsymbol{x} - \phi (\boldsymbol{x})\Vert \le \epsilon\)</span>.</p>
-    <p>Assuming access to a fixed-point oracle, the reduction of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> reduces <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to external regret, but with an important catch: the algorithm minimizing external regret needs to <em>operate over the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. This is a significantly more complex set than the one we started with, and will be the critical step in establishing efficient <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizers.</p>
-    <p>Assuming access to these oracles, the algorithm of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> produces a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="[R]" role="math">\(R\)</span> as follows.</p>
+    <p>Assuming access to a fixed-point oracle, the reduction of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> reduces <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to external regret, but with an important catch: the algorithm minimizing external regret needs to <em>operate over the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. This is a significantly more complex set than the one we started with, and will be the critical step in establishing efficient <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizers.</p>
+    <p>Assuming access to these oracles, the algorithm of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> produces a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="[R]" role="math">\(R\)</span> as follows.</p>
     <ul>
       <li>In every time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [t],
@@ -4310,8 +4310,119 @@ mark {
   ),
 )" role="math">\(u_{\Phi}^{(t)}: \phi \mapsto \left\langle \phi (\boldsymbol{x}^{(t)}),\boldsymbol{u}^{(t)} \right\rangle\)</span>.</li>
     </ul>
+    <section class="env algorithm">
+      <div class="env-title"><strong>Algorithm</strong> [<span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">GGM08</a></span>]: <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizer</div>
+      <div class="pseudocode">
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><strong>Input:</strong> An external regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> for the set <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><strong>function</strong> <code>NextStrategy</code>():</div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(base: [φ], t: lr(body: sequence([(], [t], [)]))),
+  [ ],
+  [≔],
+  [ ],
+  attach(base: [R], b: [Φ]),
+  [.],
+)" role="math">\(\phi^{(t)} \coloneqq R_{\Phi}.\)</span><code>NextStrategy</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(body: sequence([(], [)]))" role="math">\(()\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
+          <div class="pseudo-text"><strong>return</strong> a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: [𝐱]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  [ ],
+  [=],
+  [ ],
+  attach(base: [φ], t: lr(body: sequence([(], [t], [)]))),
+  lr(
+    body: sequence(
+      [(],
+      attach(
+        base: equation(block: false, body: [𝐱]),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [)],
+    ),
+  ),
+)" role="math">\(\boldsymbol{x}^{(t)} = \phi^{(t)}(\boldsymbol{x}^{(t)})\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><strong>function</strong> <code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+  base: equation(block: false, body: [𝐮]),
+  t: lr(body: sequence([(], [t], [)])),
+)" role="math">\(\boldsymbol{u}^{(t)}\)</span>):</div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: [u],
+    t: lr(body: sequence([(], [t], [)])),
+    b: [Φ],
+  ),
+  [ ],
+  [:],
+  [ ],
+  [φ],
+  [ ],
+  [↦],
+  [ ],
+  equation(
+    block: false,
+    body: lr(
+      body: sequence(
+        [⟨],
+        [ ],
+        sequence(
+          [φ],
+          lr(
+            body: sequence(
+              [(],
+              attach(
+                base: equation(block: false, body: [𝐱]),
+                t: lr(body: sequence([(], [t], [)])),
+              ),
+              [)],
+            ),
+          ),
+        ),
+        [,],
+        attach(
+          base: equation(block: false, body: [𝐮]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
+        [ ],
+        [⟩],
+      ),
+    ),
+  ),
+)" role="math">\(u_{\Phi}^{(t)} : \phi \mapsto \left\langle \phi (\boldsymbol{x}^{(t)}),\boldsymbol{u}^{(t)} \right\rangle\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
+          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [R], b: [Φ]), [.])" role="math">\(R_{\Phi}.\)</span><code>ObserveUtility</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+  body: sequence(
+    [(],
+    attach(
+      base: [u],
+      t: lr(body: sequence([(], [t], [)])),
+      b: [Φ],
+    ),
+    [)],
+  ),
+)" role="math">\((u_{\Phi}^{(t)})\)</span></div>
+        </div>
+      </div>
+    </section>
     <section class="env statement" id="theorem-1-9">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>9</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">GGM08</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>9</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">GGM08</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Reg], t: lr(body: sequence([(], [T], [)])))" role="math">\(\text{Reg}^{(T)}\)</span> is the external regret of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> and <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Φ],
   attach(base: [Reg], t: lr(body: sequence([(], [T], [)]))),
@@ -4648,7 +4759,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(\boldsymbol{x}^{(t)} = \phi^{(t)} (\boldsymbol{x}^{(t)})\)</span>. Continuing from (<a href="#loc-14">8</a>),</p>
+)" role="math">\(\boldsymbol{x}^{(t)} = \phi^{(t)} (\boldsymbol{x}^{(t)})\)</span>. Continuing from (8),</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [Φ],
@@ -4748,119 +4859,8 @@ mark {
         </figure>
       </div>
     </section>
-    <section class="env algorithm">
-      <div class="env-title"><strong>Algorithm</strong> [<span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">GGM08</a></span>]: <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizer</div>
-      <div class="pseudocode">
-        <div class="pseudo-line" style="--indent:0">
-          <div class="pseudo-text"><strong>Input:</strong> An external regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span> for the set <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:0">
-          <div class="pseudo-text"><strong>function</strong> <code>NextStrategy</code>():</div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide" style="--guide:1"></span></p>
-          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(base: [φ], t: lr(body: sequence([(], [t], [)]))),
-  [ ],
-  [≔],
-  [ ],
-  attach(base: [R], b: [Φ]),
-  [.],
-)" role="math">\(\phi^{(t)} \coloneqq R_{\Phi}.\)</span><code>NextStrategy</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(body: sequence([(], [)]))" role="math">\(()\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
-          <div class="pseudo-text"><strong>return</strong> a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: [𝐱]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-  [ ],
-  [=],
-  [ ],
-  attach(base: [φ], t: lr(body: sequence([(], [t], [)]))),
-  lr(
-    body: sequence(
-      [(],
-      attach(
-        base: equation(block: false, body: [𝐱]),
-        t: lr(body: sequence([(], [t], [)])),
-      ),
-      [)],
-    ),
-  ),
-)" role="math">\(\boldsymbol{x}^{(t)} = \phi^{(t)}(\boldsymbol{x}^{(t)})\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:0">
-          <div class="pseudo-text"><strong>function</strong> <code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
-  base: equation(block: false, body: [𝐮]),
-  t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\boldsymbol{u}^{(t)}\)</span>):</div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide" style="--guide:1"></span></p>
-          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: [u],
-    t: lr(body: sequence([(], [t], [)])),
-    b: [Φ],
-  ),
-  [ ],
-  [:],
-  [ ],
-  [φ],
-  [ ],
-  [↦],
-  [ ],
-  equation(
-    block: false,
-    body: lr(
-      body: sequence(
-        [⟨],
-        [ ],
-        sequence(
-          [φ],
-          lr(
-            body: sequence(
-              [(],
-              attach(
-                base: equation(block: false, body: [𝐱]),
-                t: lr(body: sequence([(], [t], [)])),
-              ),
-              [)],
-            ),
-          ),
-        ),
-        [,],
-        attach(
-          base: equation(block: false, body: [𝐮]),
-          t: lr(body: sequence([(], [t], [)])),
-        ),
-        [ ],
-        [⟩],
-      ),
-    ),
-  ),
-)" role="math">\(u_{\Phi}^{(t)} : \phi \mapsto \left\langle \phi (\boldsymbol{x}^{(t)}),\boldsymbol{u}^{(t)} \right\rangle\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
-          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [R], b: [Φ]), [.])" role="math">\(R_{\Phi}.\)</span><code>ObserveUtility</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
-  body: sequence(
-    [(],
-    attach(
-      base: [u],
-      t: lr(body: sequence([(], [t], [)])),
-      b: [Φ],
-    ),
-    [)],
-  ),
-)" role="math">\((u_{\Phi}^{(t)})\)</span></div>
-        </div>
-      </div>
-    </section>
     <h2 id="1-3-1-the-algorithm-of-blum-and-mansour" class="notes-heading" data-level="2" data-number="1.3.1"><span class="secno">1.3.1</span> The algorithm of Blum and Mansour</h2>
-    <p>Finally, we will see how to make use of the previous framework to minimize swap regret when the underlying strategy set is the probability simplex—corresponding to normal-form games. The resulting algorithm was first developed by <span class="citation-wrap"><a class="citation" href="#loc-27" id="loc-15" role="doc-biblioref">Blum and Mansour [BM07]</a><span class="citation-note"><span class="citation-note-key">[BM07]</span> A. Blum and Y. Mansour. (2007). From External to Internal Regret. <em>Journal of Machine Learning Research</em>, 8, 1307–1324.</span></span> (we also refer to a closely related algorithm due to&nbsp;<span class="citation-wrap"><a class="citation" href="#loc-28" id="loc-16" role="doc-biblioref">Stoltz and Lugosi [SL05]</a><span class="citation-note"><span class="citation-note-key">[SL05]</span> G. Stoltz and G. Lugosi. (2005). Internal regret in on-line portfolio selection. <em>Machine Learning</em>, 59, 125–159.</span></span>). As alluded to above, the key to applying the framework of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is to understand the structure of the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>. In this special case, it is enough to consider only <em>linear functions</em> mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Finally, we will see how to make use of the previous framework to minimize swap regret when the underlying strategy set is the probability simplex—corresponding to normal-form games. The resulting algorithm was first developed by <span class="citation-wrap"><a class="citation" href="#bib-Blum07-From" role="doc-biblioref">Blum and Mansour [BM07]</a> <span class="citation-note"><span class="citation-note-key">[BM07]</span> A. Blum and Y. Mansour. (2007). From External to Internal Regret. <em>Journal of Machine Learning Research</em>, 8, 1307–1324.</span></span> (we also refer to a closely related algorithm due to&nbsp;<span class="citation-wrap"><a class="citation" href="#bib-Stoltz05-Internal" role="doc-biblioref">Stoltz and Lugosi [SL05]</a> <span class="citation-note"><span class="citation-note-key">[SL05]</span> G. Stoltz and G. Lugosi. (2005). Internal regret in on-line portfolio selection. <em>Machine Learning</em>, 59, 125–159.</span></span>). As alluded to above, the key to applying the framework of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span> is to understand the structure of the set of deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>. In this special case, it is enough to consider only <em>linear functions</em> mapping <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [Δ],
   lr(
     body: sequence([(], equation(block: false, body: [𝓐]), [)]),
@@ -4922,7 +4922,7 @@ mark {
     body: sequence([(], equation(block: false, body: [𝓐]), [)]),
   ),
 )" role="math">\(\Delta (\mathcal{A})\)</span>, it follows that every column of <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝐌])" role="math">\(\mathbf{M}\)</span> is a probability distribution.</p>
-    <p>Armed with the characterization of <a href="#lemma-1-10">Lemma&nbsp;1.10</a>, we now see how to implement the two oracles required in the framework of <span class="citation-wrap"><a class="citation" href="#loc-19" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. First, a stochastic matrix induces a Markov chain over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓐])" role="math">\(\mathcal{A}\)</span>. Any <em>stationary distribution</em> of that Markov chain is a fixed point, and can be computed efficiently as it boils down to solving a linear system. (More broadly, when the underlying set <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a polytope and <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> comprises linear deviations, computing a fixed point amounts to solving a linear program, which can be done in polynomial time.)</p>
+    <p>Armed with the characterization of Lemma&nbsp;1.10, we now see how to implement the two oracles required in the framework of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. First, a stochastic matrix induces a Markov chain over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓐])" role="math">\(\mathcal{A}\)</span>. Any <em>stationary distribution</em> of that Markov chain is a fixed point, and can be computed efficiently as it boils down to solving a linear system. (More broadly, when the underlying set <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a polytope and <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span> comprises linear deviations, computing a fixed point amounts to solving a linear program, which can be done in polynomial time.)</p>
     <p>The next step is to minimize regret with respect to the set of stochastic matrices. By definition, the set of stochastic matrices is a product of simplices—one probability distribution for each column:</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
@@ -5071,7 +5071,171 @@ mark {
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Lemma</strong> <strong class="env-number">1<span class="env-number-separator">.</span>11</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is an efficient no-regret algorithm for minimizing external regret over the set of stochastic matrices.</div>
     </section>
-    <p>The overall construction is given below. It consists of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([|], equation(block: false, body: [𝓐]), [|])" role="math">\(|\mathcal{A}|\)</span> separate regret minimizers, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
+    <p>The overall construction is given below.</p>
+    <section class="env algorithm">
+      <div class="env-title"><strong>Algorithm</strong>: Swap regret minimizer</div>
+      <div class="pseudocode">
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><strong>Input:</strong> A regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> for each action <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [a],
+  [ ],
+  [∈],
+  [ ],
+  equation(block: false, body: [𝓐]),
+)" role="math">\(a \in \mathcal{A}\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><code>NextStrategy</code>():</div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text"><strong>for each</strong> action <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [a],
+  [ ],
+  [∈],
+  [ ],
+  equation(block: false, body: [𝓐]),
+)" role="math">\(a \in \mathcal{A}\)</span> <strong>do</strong></div>
+        </div>
+        <div class="pseudo-line" style="--indent:2">
+          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span></p>
+          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: [𝐱]),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [a],
+  ),
+  [ ],
+  [≔],
+  [ ],
+  attach(base: [R], b: [a]),
+  [.],
+)" role="math">\(\boldsymbol{x}_{a}^{(t)} \coloneqq R_{a}.\)</span><code>NextStrategy</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(body: sequence([(], [)]))" role="math">\(()\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: [𝐌]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  [ ],
+  [≔],
+  [ ],
+  lr(
+    body: sequence(
+      [[],
+      attach(
+        base: lr(
+          body: sequence(
+            [(],
+            attach(
+              base: equation(block: false, body: [𝐱]),
+              t: lr(body: sequence([(], [t], [)])),
+              b: [a],
+            ),
+            [)],
+          ),
+        ),
+        b: sequence(
+          [a],
+          [ ],
+          [∈],
+          [ ],
+          equation(block: false, body: [𝓐]),
+        ),
+      ),
+      []],
+    ),
+  ),
+)" role="math">\(\mathbf{M}^{(t)} \coloneqq [(\boldsymbol{x}_{a}^{(t)})_{a \in \mathcal{A}}]\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
+          <div class="pseudo-text"><strong>return</strong> a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: [𝐱]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  [ ],
+  [=],
+  [ ],
+  attach(
+    base: equation(block: false, body: [𝐌]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  [ ],
+  attach(
+    base: equation(block: false, body: [𝐱]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+)" role="math">\(\boldsymbol{x}^{(t)} = \mathbf{M}^{(t)} \boldsymbol{x}^{(t)}\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:0">
+          <div class="pseudo-text"><code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: [𝐮]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  [ ],
+  [∈],
+  [ ],
+  attach(
+    base: equation(block: false, body: [ℝ]),
+    t: equation(block: false, body: [𝓐]),
+  ),
+)" role="math">\(\boldsymbol{u}^{(t)} \in \mathbb{R}^{\mathcal{A}}\)</span>):</div>
+        </div>
+        <div class="pseudo-line" style="--indent:1">
+          <p><span class="pseudo-guide" style="--guide:1"></span></p>
+          <div class="pseudo-text"><strong>for each</strong> action <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [a],
+  [ ],
+  [∈],
+  [ ],
+  equation(block: false, body: [𝓐]),
+)" role="math">\(a \in \mathcal{A}\)</span> <strong>do</strong></div>
+        </div>
+        <div class="pseudo-line" style="--indent:2">
+          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span></p>
+          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  attach(
+    base: equation(block: false, body: [𝐮]),
+    t: lr(body: sequence([(], [t], [)])),
+    b: [a],
+  ),
+  [ ],
+  [≔],
+  [ ],
+  attach(
+    base: equation(block: false, body: [𝐱]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+  lr(body: sequence([[], [a], []])),
+  [ ],
+  attach(
+    base: equation(block: false, body: [𝐮]),
+    t: lr(body: sequence([(], [t], [)])),
+  ),
+)" role="math">\(\boldsymbol{u}_{a}^{(t)} \coloneqq \boldsymbol{x}^{(t)}[a] \boldsymbol{u}^{(t)}\)</span></div>
+        </div>
+        <div class="pseudo-line" style="--indent:2">
+          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span></p>
+          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [R], b: [a]), [.])" role="math">\(R_{a}.\)</span><code>ObserveUtility</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
+  body: sequence(
+    [(],
+    attach(
+      base: equation(block: false, body: [𝐮]),
+      t: lr(body: sequence([(], [t], [)])),
+      b: [a],
+    ),
+    [)],
+  ),
+)" role="math">\((\boldsymbol{u}_{a}^{(t)})\)</span></div>
+        </div>
+      </div>
+    </section>
+    <p>It consists of <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([|], equation(block: false, body: [𝓐]), [|])" role="math">\(|\mathcal{A}|\)</span> separate regret minimizers, <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: lr(
     body: sequence([(], attach(base: [R], b: [a]), [)]),
   ),
@@ -5093,7 +5257,7 @@ mark {
 )" role="math">\(\mathbf{M}^{(t)}\)</span> in which each column is given by the strategy of the corresponding regret minimizer, and then output any fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐌]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in <a href="#theorem-1-9">Theorem&nbsp;1.9</a>, can be cast as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in Theorem&nbsp;1.9, can be cast as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: [u], b: [Φ]),
   lr(body: sequence([(], [φ], [)])),
   [ ],
@@ -5230,9 +5394,9 @@ mark {
     base: equation(block: false, body: [𝐮]),
     t: lr(body: sequence([(], [t], [)])),
   ),
-)" role="math">\(\boldsymbol{x}^{(t)}[a] \boldsymbol{u}^{(t)}\)</span>. If we instantiate each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> with MWU and invoke <a href="#theorem-1-9">Theorem&nbsp;1.9</a>, we arrive at the following result.</p>
+)" role="math">\(\boldsymbol{x}^{(t)}[a] \boldsymbol{u}^{(t)}\)</span>. If we instantiate each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> with MWU and invoke Theorem&nbsp;1.9, we arrive at the following result.</p>
     <section class="env statement" id="theorem-1-12">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>12</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-27" role="doc-biblioref">BM07</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">1<span class="env-number-separator">.</span>12</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#bib-Blum07-From" role="doc-biblioref">BM07</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is an online algorithm whose swap regret is bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [O],
   lr(
@@ -5300,7 +5464,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(\sqrt{T \operatorname{log} |\mathcal{A}|})\)</span>. However, one can make use of the structure of the utilities to obtain the improved bound claimed in <a href="#theorem-1-12">Theorem&nbsp;1.12</a>. In particular, we observe that for any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(O(\sqrt{T \operatorname{log} |\mathcal{A}|})\)</span>. However, one can make use of the structure of the utilities to obtain the improved bound claimed in Theorem&nbsp;1.12. In particular, we observe that for any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [t],
   [ ],
   [∈],
@@ -5486,7 +5650,7 @@ mark {
   [.],
 )">\[\displaystyle \sum_{a \in \mathcal{A}} \left\Vert \boldsymbol{u}_{a}^{\left(t\right)}\right\Vert_{∞}^{2} = \left\Vert \boldsymbol{u}^{\left(t\right)}\right\Vert_{∞}^{2} \sum_{a \in \mathcal{A}} \left(\boldsymbol{x}^{\left(t\right)}\left[a\right]\right)^{2} \le \left\Vert \boldsymbol{u}^{\left(t\right)}\right\Vert_{∞}^{2}.\]</span></div>
     </figure>
-    <p>So, using the regret bound of MWU together with <a href="#theorem-1-9">Theorem&nbsp;1.9</a>,</p>
+    <p>So, using the regret bound of MWU together with Theorem&nbsp;1.9,</p>
     <figure class="equation" role="math">
       <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [Φ],
@@ -5621,209 +5785,46 @@ mark {
 )">\[\displaystyle \Phi \text{Reg}^{\left(T\right)} \le \frac{\left|\mathcal{A}\right| \operatorname{log} \left|\mathcal{A}\right|}{η} + η \sum_{t=1}^{T} \left\Vert \boldsymbol{u}^{\left(t\right)}\right\Vert_{∞}^{2} \le \frac{\left|\mathcal{A}\right| \operatorname{log} \left|\mathcal{A}\right|}{η} + η T.\]</span></div>
     </figure>
     <p>Optimizing the learning rate <span class="math-katex-source" data-math-display="inline" data-typst-math="[η]" role="math">\(η\)</span> gives the claim.</p>
-    <section class="env algorithm">
-      <div class="env-title"><strong>Algorithm</strong>: Swap regret minimizer</div>
-      <div class="pseudocode">
-        <div class="pseudo-line" style="--indent:0">
-          <div class="pseudo-text"><strong>Input:</strong> A regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [a])" role="math">\(R_{a}\)</span> for each action <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  [a],
-  [ ],
-  [∈],
-  [ ],
-  equation(block: false, body: [𝓐]),
-)" role="math">\(a \in \mathcal{A}\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:0">
-          <div class="pseudo-text"><code>NextStrategy</code>():</div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide" style="--guide:1"></span></p>
-          <div class="pseudo-text"><strong>for each</strong> action <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  [a],
-  [ ],
-  [∈],
-  [ ],
-  equation(block: false, body: [𝓐]),
-)" role="math">\(a \in \mathcal{A}\)</span> <strong>do</strong></div>
-        </div>
-        <div class="pseudo-line" style="--indent:2">
-          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span></p>
-          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: [𝐱]),
-    t: lr(body: sequence([(], [t], [)])),
-    b: [a],
-  ),
-  [ ],
-  [≔],
-  [ ],
-  attach(base: [R], b: [a]),
-  [.],
-)" role="math">\(\boldsymbol{x}_{a}^{(t)} \coloneqq R_{a}.\)</span><code>NextStrategy</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(body: sequence([(], [)]))" role="math">\(()\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide" style="--guide:1"></span></p>
-          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: [𝐌]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-  [ ],
-  [≔],
-  [ ],
-  lr(
-    body: sequence(
-      [[],
-      attach(
-        base: lr(
-          body: sequence(
-            [(],
-            attach(
-              base: equation(block: false, body: [𝐱]),
-              t: lr(body: sequence([(], [t], [)])),
-              b: [a],
-            ),
-            [)],
-          ),
-        ),
-        b: sequence(
-          [a],
-          [ ],
-          [∈],
-          [ ],
-          equation(block: false, body: [𝓐]),
-        ),
-      ),
-      []],
-    ),
-  ),
-)" role="math">\(\mathbf{M}^{(t)} \coloneqq [(\boldsymbol{x}_{a}^{(t)})_{a \in \mathcal{A}}]\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span></p>
-          <div class="pseudo-text"><strong>return</strong> a fixed point <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: [𝐱]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-  [ ],
-  [=],
-  [ ],
-  attach(
-    base: equation(block: false, body: [𝐌]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-  [ ],
-  attach(
-    base: equation(block: false, body: [𝐱]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-)" role="math">\(\boldsymbol{x}^{(t)} = \mathbf{M}^{(t)} \boldsymbol{x}^{(t)}\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:0">
-          <div class="pseudo-text"><code>ObserveUtility</code>(<span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: [𝐮]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-  [ ],
-  [∈],
-  [ ],
-  attach(
-    base: equation(block: false, body: [ℝ]),
-    t: equation(block: false, body: [𝓐]),
-  ),
-)" role="math">\(\boldsymbol{u}^{(t)} \in \mathbb{R}^{\mathcal{A}}\)</span>):</div>
-        </div>
-        <div class="pseudo-line" style="--indent:1">
-          <p><span class="pseudo-guide" style="--guide:1"></span></p>
-          <div class="pseudo-text"><strong>for each</strong> action <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  [a],
-  [ ],
-  [∈],
-  [ ],
-  equation(block: false, body: [𝓐]),
-)" role="math">\(a \in \mathcal{A}\)</span> <strong>do</strong></div>
-        </div>
-        <div class="pseudo-line" style="--indent:2">
-          <p><span class="pseudo-guide" style="--guide:1"></span><span class="pseudo-guide" style="--guide:2"></span></p>
-          <div class="pseudo-text">Set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
-  attach(
-    base: equation(block: false, body: [𝐮]),
-    t: lr(body: sequence([(], [t], [)])),
-    b: [a],
-  ),
-  [ ],
-  [≔],
-  [ ],
-  attach(
-    base: equation(block: false, body: [𝐱]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-  lr(body: sequence([[], [a], []])),
-  [ ],
-  attach(
-    base: equation(block: false, body: [𝐮]),
-    t: lr(body: sequence([(], [t], [)])),
-  ),
-)" role="math">\(\boldsymbol{u}_{a}^{(t)} \coloneqq \boldsymbol{x}^{(t)}[a] \boldsymbol{u}^{(t)}\)</span></div>
-        </div>
-        <div class="pseudo-line" style="--indent:2">
-          <p><span class="pseudo-guide pseudo-guide-end" style="--guide:1"></span><span class="pseudo-guide pseudo-guide-end" style="--guide:2"></span></p>
-          <div class="pseudo-text"><span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(attach(base: [R], b: [a]), [.])" role="math">\(R_{a}.\)</span><code>ObserveUtility</code><span class="math-katex-source" data-math-display="inline" data-typst-math="lr(
-  body: sequence(
-    [(],
-    attach(
-      base: equation(block: false, body: [𝐮]),
-      t: lr(body: sequence([(], [t], [)])),
-      b: [a],
-    ),
-    [)],
-  ),
-)" role="math">\((\boldsymbol{u}_{a}^{(t)})\)</span></div>
-        </div>
-      </div>
-    </section>
     <section class="bibliography" id="bibliography">
       <h1 class="notes-heading notes-heading-unnumbered" data-level="1">Bibliography for this chapter</h1>
       <table class="bibliography-table">
-        <tbody><tr id="loc-19" class="bibliography-row">
+        <tbody><tr class="bibliography-row" id="bib-Gordon08-No">
           <td class="bib-key">[GGM08]</td>
           <td class="bib-entry">G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</td>
         </tr>
-        <tr id="loc-20" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Nash50-Equilibrium">
           <td class="bib-key">[Nas50]</td>
           <td class="bib-entry">J. Nash. (1950). Equilibrium points in N-person games. <em>Proceedings of the National Academy of Sciences</em>, 36, 48–49.</td>
         </tr>
-        <tr id="loc-21" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Daskalakis08-Complexity">
           <td class="bib-key">[DGP08]</td>
           <td class="bib-entry">C. Daskalakis, P. Goldberg and C. Papadimitriou. (2008). The Complexity of Computing a Nash Equilibrium. <em>SIAM Journal on Computing</em>.</td>
         </tr>
-        <tr id="loc-22" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Gilboa89-Nash">
           <td class="bib-key">[GZ89]</td>
           <td class="bib-entry">I. Gilboa and E. Zemel. (1989). Nash and Correlated Equilibria: Some Complexity Considerations. <em>Games and Economic Behavior</em>, 1, 80–93.</td>
         </tr>
-        <tr id="loc-23" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Moulin78-Strategically">
           <td class="bib-key">[MV78]</td>
           <td class="bib-entry">H. Moulin and J.-P. Vial. (1978). Strategically zero-sum games: The class of games whose completely mixed equilibria cannot be improved upon. <em>International Journal of Game Theory</em>, 7, 201–221.</td>
         </tr>
-        <tr id="loc-24" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Aumann74-Subjectivity">
           <td class="bib-key">[Aum74]</td>
           <td class="bib-entry">R. Aumann. (1974). Subjectivity and Correlation in Randomized Strategies. <em>Journal of Mathematical Economics</em>, 1, 67–96.</td>
         </tr>
-        <tr id="loc-25" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Viossat13-Noregret">
           <td class="bib-key">[VZ13]</td>
           <td class="bib-entry">Y. Viossat and A. Zapechelnyuk. (2013). No-regret dynamics and fictitious play. <em>Journal of Economic Theory</em>, 148, 825–842.</td>
         </tr>
-        <tr id="loc-26" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Cesa-Bianchi06-Prediction">
           <td class="bib-key">[CL06]</td>
           <td class="bib-entry">N. Cesa-Bianchi and G. Lugosi. (2006). Prediction, learning, and games. Cambridge university press.</td>
         </tr>
-        <tr id="loc-27" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Blum07-From">
           <td class="bib-key">[BM07]</td>
           <td class="bib-entry">A. Blum and Y. Mansour. (2007). From External to Internal Regret. <em>Journal of Machine Learning Research</em>, 8, 1307–1324.</td>
         </tr>
-        <tr id="loc-28" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Stoltz05-Internal">
           <td class="bib-key">[SL05]</td>
           <td class="bib-entry">G. Stoltz and G. Lugosi. (2005). Internal regret in on-line portfolio selection. <em>Machine Learning</em>, 59, 125–159.</td>
         </tr>

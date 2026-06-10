@@ -137,25 +137,6 @@ The profile swap distance of a CSP $overline(kappa)^((T))$ is the infimum Euclid
 
 The key observation now is that the induced approachability problem can be solved efficiently through the response-based approachability framework of~#citet(<Bernstein15:Approachability>). This was recently leveraged by~#citet(<Anagnostides26:Swap>).
 
-The algorithm proceeds by maintaining the accumulated displacement
-
-$ matU^((t)) := sum_(tau=1)^t (kappa^((tau)) - vs^((tau))) in RR^(d times (d+1)). $
-
-At every round $t$, it solves the bilinear zero-sum game
-
-$
-  max_(vx in cX) min_(vu in cal(U))
-  ip(matU^((t-1)), (vu times.o vx, vu)).
-$ <eq:bs-game>
-
-Let $(vx^((t)), vu_*^((t)))$ be a pair of minimax strategies for this game. The algorithm then sets
-
-$ vs^((t)) := (vu_*^((t)) times.o b(vu_*^((t))), vu_*^((t))) in cal(S). $
-
-Finally, it plays the strategy $vx^((t))$, whereupon it observes the utility $vu^((t))$, forms the induced $kappa^((t))$, and updates the cumulative displacement $matU^((t))$.
-
-This response-based approachability algorithm is summarized below. All steps can be efficiently implemented through oracle access to $cal(X)$.
-
 #pseudocode-list(
   booktabs: true,
   title: [*Algorithm* #citep(<Bernstein15:Approachability>): Response-based approachability],
@@ -173,6 +154,28 @@ This response-based approachability algorithm is summarized below. All steps can
     - Set $kappa^((t)) := (vu^((t)) times.o vx^((t)), vu^((t)))$
     - Update $matU^((t)) := matU^((t-1)) + kappa^((t)) - vs^((t))$
 ]
+
+
+The algorithm proceeds by maintaining the accumulated displacement
+
+$ matU^((t)) := sum_(tau=1)^t (kappa^((tau)) - vs^((tau))) in RR^(d times (d+1)). $
+
+At every round $t$, it solves the bilinear zero-sum game
+
+$
+  max_(vx in cX) min_(vu in cal(U))
+  ip(matU^((t-1)), (vu times.o vx, vu)).
+$ <eq:bs-game>
+
+Let $(vx^((t)), vu_*^((t)))$ be a pair of minimax strategies for this game. The algorithm then sets
+
+$ vs^((t)) := (vu_*^((t)) times.o b(vu_*^((t))), vu_*^((t))) in cal(S). $
+
+Finally, it plays the strategy $vx^((t))$, whereupon it observes the utility $vu^((t))$, forms the induced $kappa^((t))$, and updates the cumulative displacement $matU^((t))$.
+//
+//This response-based approachability algorithm is summarized below.
+All steps can be efficiently implemented through oracle access to $cal(X)$.
+
 
 The proof of correctness crucially relies on the minimax theorem, as we formalize below.
 

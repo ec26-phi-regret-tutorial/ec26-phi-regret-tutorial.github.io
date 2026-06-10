@@ -5,6 +5,7 @@
 // #import "@preview/lovelace:0.3.1": *
 #import "@preview/equate:0.3.3": equate
 
+#import "citations.typ": *
 #import "notation.typ": *
 
 #let _arrow(from, to, ..kw) = {
@@ -21,6 +22,7 @@
   hooks: .3mm,
   stroke: .2mm + gray,
   booktabs-stroke: .4mm + black,
+  max-width: true,
 )
 
 #let email(addr) = {
@@ -201,8 +203,8 @@
     //   )
     // }
     if it.numbering != none {
-      // v(1.5mm * (2 / it.level))
-      v(1mm)
+      v(3mm + 1mm * (2 - it.level))
+      // v(1mm)
       [#h(-.4in)#box(width: .3in, fill: gray, height: (3 - it.level) * 1mm + .7mm)#h(.1in)#box(
           width: .6in,
           inset: 0mm,
@@ -210,7 +212,7 @@
         )[#strong(counter(heading).display())]#strong(it.body)]
       // v(1.5mm - it.level * 1mm)
     } else [
-      // v(2mm * (2 / it.level))
+      // #v(2mm * (2 / it.level))
       #h(-.4in)#box(width: .3in, fill: gray, height: 2mm)#h(.1in)#strong(it.body)
       // v(1mm)
     ]
@@ -295,6 +297,7 @@
       it
     }
   }
+  show figure.where(kind: "shared"): set block(breakable: true)
   show figure.where(kind: "theorem"): set block(breakable: true)
   show figure.where(kind: "proposition"): set block(breakable: true)
   show figure.where(kind: "corollary"): set block(breakable: true)
@@ -348,102 +351,43 @@
   body
 }
 
-#let citation_label_collisions = (
-  "Zhang25:Learning": (base: "Zha+25", group: ("Zhang25:Learning", "Zhang25:Expected")),
-  "Zhang25:Expected": (base: "Zha+25", group: ("Zhang25:Learning", "Zhang25:Expected")),
-)
-
-#let citation_suffixes = (
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-)
-
-#let citation_key_name(key) = {
-  let raw = str(key)
-  if raw.starts-with("<") and raw.ends-with(">") {
-    raw.slice(1, -1)
-  } else {
-    raw
-  }
-}
-
-#let citation_label(key) = context {
-  let key_name = citation_key_name(key)
-  let collision = citation_label_collisions.at(key_name, default: none)
-  if collision == none {
-    cite(key)
-  } else {
-    let cited_keys = lecture-bib.final().map(citation_key_name)
-    let group = collision.group.filter(group_key => group_key in cited_keys)
-    let suffix = if group.len() > 1 {
-      let suffix_index = 0
-      for (i, group_key) in group.enumerate() {
-        if group_key == key_name {
-          suffix_index = i
-        }
-      }
-      citation_suffixes.at(suffix_index)
-    } else {
-      ""
+#let citation_register(key) = {
+  lecture-bib.update(it => {
+    if key not in it {
+      it.push(key)
     }
-    [#collision.base#suffix]
-  }
+    it
+  })
 }
 
-#let citep(key) = context {
+#let citep(..keys) = context {
   if crossrefs-active.get() {
     []
   } else {
-    lecture-bib.update(it => {
-      if key not in it {
-        it.push(key)
+    let items = keys.pos()
+    for key in items {
+      citation_register(key)
+    }
+    [\[]
+    for (i, key) in items.enumerate() {
+      if i > 0 {
+        [; ]
       }
-      it
-    })
-    text(fill: blue.darken(40%), {
-      set cite(style: "alphanum-intext.csl")
-      citation_label(key)
-    })
+      text(fill: blue.darken(40%), citation_label_text(key, cited_keys: lecture-bib.final()))
+    }
+    [\]]
   }
 }
+
 #let citet(key, ..supplement) = context {
   if crossrefs-active.get() {
     []
   } else {
-    lecture-bib.update(it => {
-      if key not in it {
-        it.push(key)
-      }
-      it
-    })
-    text(fill: blue.darken(40%), {
-      set cite(style: "alphanum-intext.csl")
-      cite(key, form: "prose", ..supplement)
-    })
+    citation_register(key)
+    text(fill: blue.darken(40%), citation_author_text(key))
+    [ \[]
+    text(fill: blue.darken(40%), citation_label_text(key, cited_keys: lecture-bib.final(), ..supplement))
+    [\]]
   }
 }
 
@@ -470,7 +414,7 @@
   context {
     let rows = ()
     for item in lecture-bib.get() {
-      rows.push(citation_label(item))
+      rows.push(citation_bracket(item, cited_keys: lecture-bib.final()))
       rows.push(cite(item, form: "full"))
     }
     grid(columns: 2, row-gutter: 3.8mm, column-gutter: 2.3mm, ..rows)

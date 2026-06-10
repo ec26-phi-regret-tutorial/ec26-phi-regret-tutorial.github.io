@@ -218,40 +218,40 @@
 
   let cells = precursors
     .map(prec => {
-        if prec.kind == "content" {
-          grid.cell(
-            x: prec.x + line-number-correction,
-            y: prec.y + title-correction,
-            colspan: max-x + 1 - prec.x,
-            rowspan: 1,
-            // stroke: none,
-            prec.body,
-          )
-        } else if prec.kind == "number" and line-numbering != none {
-          grid.cell(
-            x: 0,
-            y: prec.y + title-correction,
-            colspan: 1,
-            rowspan: 1,
-            // stroke: none,
-            box(width: .8em, {
-              set text(fill: luma(50%), font: "Georgia")
-              box(prec.body)
-            }),
-          )
-        } else if prec.kind == "indent" {
-          grid.cell(
-            x: prec.x + line-number-correction,
-            y: prec.y + title-correction,
-            colspan: 1,
-            rowspan: prec.rowspan,
-            stroke: (left: stroke, bottom: stroke, rest: none),
-            h(hooks),
-          )
-        } else {
-          ()
-        }
-      })
+      if prec.kind == "content" {
+        grid.cell(
+          x: prec.x + line-number-correction,
+          y: prec.y + title-correction,
+          colspan: max-x + 1 - prec.x,
+          rowspan: 1,
+          // stroke: none,
+          prec.body,
+        )
+      } else if prec.kind == "number" and line-numbering != none {
+        grid.cell(
+          x: 0,
+          y: prec.y + title-correction,
+          colspan: 1,
+          rowspan: 1,
+          // stroke: none,
+          box(width: .8em, {
+            set text(fill: luma(50%), font: "Georgia")
+            box(prec.body)
+          }),
+        )
+      } else if prec.kind == "indent" {
+        grid.cell(
+          x: prec.x + line-number-correction,
+          y: prec.y + title-correction,
+          colspan: 1,
+          rowspan: prec.rowspan,
+          stroke: (left: stroke, bottom: stroke, rest: none),
+          h(hooks),
+        )
+      } else {
+        ()
+      }
+    })
     .flatten()
 
   let max-y = cells.fold(0, (curr-max, cell) => calc.max(curr-max, cell.y))
@@ -296,7 +296,7 @@
 
   grid(
     // stroke: blue,
-    columns: (auto,) * (max-x + line-number-correction) + (if max-width { 1fr} else {auto},),
+    columns: (auto,) * (max-x + line-number-correction) + (if max-width { 1fr } else { auto },),
     align: left,
     column-gutter: indentation / 2,
     row-gutter: line-gap,
@@ -308,10 +308,16 @@
 
 
 #let is-not-empty(it) = {
-  return type(it) != content or not (
-    it.fields() == (:) or (it.has("children") and it.children == ()) or (
-      it.has("children") and it.children.all(c => not is-not-empty(c))
-    ) or (it.has("text") and it.text.match(regex("^\\s*$")) != none)
+  return (
+    type(it) != content
+      or not (
+        it.fields() == (:)
+          or (it.has("children") and it.children == ())
+          or (
+            it.has("children") and it.children.all(c => not is-not-empty(c))
+          )
+          or (it.has("text") and it.text.match(regex("^\\s*$")) != none)
+      )
   )
 }
 
@@ -340,10 +346,13 @@
       if f in (enum.item, list.item) {
         items += transform-list(child.body, f == enum.item)
       } else if (
-        child.func() == metadata and child.value.at(
-          "identifier",
-          default: "",
-        ) == "lovelace line label" and "label" in child.value
+        child.func() == metadata
+          and child.value.at(
+            "identifier",
+            default: "",
+          )
+            == "lovelace line label"
+          and "label" in child.value
       ) {
         non-item-label = child.value.label
       } else {

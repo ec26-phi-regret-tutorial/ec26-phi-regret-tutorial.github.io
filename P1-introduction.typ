@@ -4,6 +4,7 @@
 
 #show: gabri_notes.with(lec_num: 1, date: none, title: "Introduction")
 
+#v(4mm)
 This introductory chapter covers basic background on regret minimization and connections to game-theoretic equilibrium concepts. In particular, we begin by introducing and motivating the notion of _$Phi$-regret_ and its associated solution concept in games---_$Phi$-equilibrium_. In the second part, we will introduce the canonical algorithmic template for minimizing _$Phi$-regret_ due to~#citet(<Gordon08:No>).
 
 = Online learning and regret
@@ -36,13 +37,13 @@ A major criticism of the Nash equilibrium is that, even though one always exists
 It turns out that no-regret learning is inherently tied to _coarse correlated equilibria_ #citep(<Moulin78:Strategically>). Let's begin by recalling the basic definition and start building some intuition about this solution concept; for now, we restrict our attention to normal-form games.
 
 #definition("Coarse correlated equilibrium")[
-  A correlated distribution $mu in Delta(cA_1 times dots.c times cA_n)$ is an _$epsilon$-coarse correlated equilibrium (CCE)_ if for any player $i in [n]$ and deviation $a_i' in cA_i$,
+  A correlateddistribution $mu in Delta(cA_1 times dots.c times cA_n)$ is an _$epsilon$-coarse correlated equilibrium (CCE)_ if for any player $i in [n]$ and deviation $a_i' in cA_i$,
   $
     EE_((a_1, ..., a_n) tilde mu) [ u_i (a_1, ..., a_n) ] >= EE_((a_1, ..., a_n) tilde mu) [ u_i (a_i', a_(-i)) ] - epsilon.
   $ <def:CCE>
 ]
 
-This definition mirrors Nash equilibria, but with a critical difference: the underlying distribution $mu$ can be _correlated_; by contrast, in a Nash equilibrium $mu$ has to be a _product distribution_, reflecting the fact that players randomize independently. To explain this, let's consider the following two distributions with respect to some $2 times 2$ bimatrix game (meaning that each of the two players has two available actions).
+This definition mirrors Nash equilibria, but with a critical difference: the underlying distribution $mu$ can be _correlated_; by contrast, in a Nash equilibrium $mu$ has to be a _product distribution_, reflecting the fact that players randomize independently. To explain this, let's consider the following two distributions with respect to some $2 times 2$ bimatrix game (meaning that each of the two players has two available actions):
 
 $
   mu = mat(1/2, 0; 0, 1/2), quad
@@ -191,6 +192,20 @@ Assuming access to these oracles, the algorithm of #citet(<Gordon08:No>) produce
 - In every time $t in [T]$, it obtains the next strategy $phi^((t))$ of $R_(Phi)$. $R$ then produces as the next strategy $vx^((t)) in cX$ any fixed point of $phi^((t))$ through the fixed-point oracle.
 - Next, upon observing $vu^((t))$, $R$ feeds to $R_(Phi)$ the utility function $u^((t))_(Phi): phi |-> ip(phi(vx^((t))), vu^((t)))$.
 
+
+#pseudocode-list(
+  booktabs: true,
+  title: [*Algorithm* #citep(<Gordon08:No>): $Phi$-regret minimizer#h(1fr) <alg:Gordon>],
+)[
+  - *Input:* An external regret minimizer $R_Phi$ for the set $Phi$
+  - *function* `NextStrategy`():
+    - Set $phi^((t)) := R_Phi.$`NextStrategy`$()$
+    - *return* a fixed point $vx^((t)) = phi^((t))(vx^((t)))$
+  - *function* `ObserveUtility`($vu^((t))$):
+    - Set $u_Phi^((t)) : phi |-> ip(phi(vx^((t))), vu^((t)))$
+    - $R_Phi.$`ObserveUtility`$(u_Phi^((t)))$
+]
+
 #theorem[#citep(<Gordon08:No>)][
   If $"Reg"^((T))$ is the external regret of $R_(Phi)$ and $Phi"Reg"^((T))$ is the $Phi$-regret of $R$, then $"Reg"^((T)) = Phi"Reg"^((T))$.
 ] <theorem:Gordon>
@@ -207,18 +222,6 @@ Assuming access to these oracles, the algorithm of #citet(<Gordon08:No>) produce
   $
 ]
 
-#pseudocode-list(
-  booktabs: true,
-  title: [*Algorithm* #citep(<Gordon08:No>): $Phi$-regret minimizer#h(1fr) <alg:Gordon>],
-)[
-  - *Input:* An external regret minimizer $R_Phi$ for the set $Phi$
-  - *function* `NextStrategy`():
-    - Set $phi^((t)) := R_Phi.$`NextStrategy`$()$
-    - *return* a fixed point $vx^((t)) = phi^((t))(vx^((t)))$
-  - *function* `ObserveUtility`($vu^((t))$):
-    - Set $u_Phi^((t)) : phi |-> ip(phi(vx^((t))), vu^((t)))$
-    - $R_Phi.$`ObserveUtility`$(u_Phi^((t)))$
-]
 
 == The algorithm of Blum and Mansour
 
@@ -240,22 +243,7 @@ where, for $vx, vx' in RR^(cA)$, $[ (vx, vx') ]$ denotes the matrix with columns
   There is an efficient no-regret algorithm for minimizing external regret over the set of stochastic matrices.
 ]
 
-The overall construction is given below. It consists of $|cA|$ separate regret minimizers, $(R_a)_(a in cA)$, each of which operates over $Delta(cA)$. To obtain the next strategy, we create the stochastic matrix $matM^((t))$ in which each column is given by the strategy of the corresponding regret minimizer, and then output any fixed point of $matM^((t))$. To explain the second part of the algorithm, let's first note that the utility observed by $R_(Phi)$, per the construction in @theorem:Gordon, can be cast as $u_(Phi)(phi) = ip(phi(vx^((t))), vu^((t))) = ip(matM vx^((t)), vu^((t))) = ip(matM, vu^((t)) times.o vx^((t)))$, where we used that $phi(vx^((t))) = matM vx^((t))$. In other words, $R_(Phi)$ observes the utility vector $vu^((t)) times.o vx^((t))$. Moreover, one should forward to each $R_a$ its corresponding component, which is $vx^((t))[a] vu^((t))$. If we instantiate each $R_a$ with MWU and invoke @theorem:Gordon, we arrive at the following result.
-
-#theorem[#citep(<Blum07:From>)][
-  There is an online algorithm whose swap regret is bounded by $O(sqrt(T |cA| log |cA|))$.
-] <theorem:swap>
-
-The naive argument here would only yield a swap regret bound of $O(|cA| sqrt(T log |cA|))$ since each MWU algorithm incurs an external regret bounded by $O(sqrt(T log |cA|))$. However, one can make use of the structure of the utilities to obtain the improved bound claimed in @theorem:swap. In particular, we observe that for any $t in [T]$,
-$
-  sum_(a in cA) norm(vu_a^((t)))_oo^2 = norm(vu^((t)))_oo^2 sum_(a in cA) (vx^((t))[a])^2 <= norm(vu^((t)))_oo^2.
-$
-So, using the regret bound of MWU together with @theorem:Gordon,
-$
-  Phi"Reg"^((T)) <= (|cA| log |cA|) / eta + eta sum_(t=1)^T norm(vu^((t)))_oo^2 <= (|cA| log |cA|) / eta + eta T.
-$
-Optimizing the learning rate $eta$ gives the claim.
-
+The overall construction is given below.
 #pseudocode-list(
   booktabs: true,
   title: [*Algorithm*: Swap regret minimizer  #h(1fr) <alg:BM>],
@@ -271,6 +259,24 @@ Optimizing the learning rate $eta$ gives the claim.
       - Set $vu_a^((t)) := vx^((t))[a] vu^((t))$ #h(1fr) <line:utilia>
       - $R_a.$`ObserveUtility`$(vu_a^((t)))$
 ]
+
+It consists of $|cA|$ separate regret minimizers, $(R_a)_(a in cA)$, each of which operates over $Delta(cA)$. To obtain the next strategy, we create the stochastic matrix $matM^((t))$ in which each column is given by the strategy of the corresponding regret minimizer, and then output any fixed point of $matM^((t))$. To explain the second part of the algorithm, let's first note that the utility observed by $R_(Phi)$, per the construction in @theorem:Gordon, can be cast as $u_(Phi)(phi) = ip(phi(vx^((t))), vu^((t))) = ip(matM vx^((t)), vu^((t))) = ip(matM, vu^((t)) times.o vx^((t)))$, where we used that $phi(vx^((t))) = matM vx^((t))$. In other words, $R_(Phi)$ observes the utility vector $vu^((t)) times.o vx^((t))$. Moreover, one should forward to each $R_a$ its corresponding component, which is $vx^((t))[a] vu^((t))$. If we instantiate each $R_a$ with MWU and invoke @theorem:Gordon, we arrive at the following result.
+
+#theorem[#citep(<Blum07:From>)][
+  There is an online algorithm whose swap regret is bounded by $O(sqrt(T |cA| log |cA|))$.
+] <theorem:swap>
+
+The naive argument here would only yield a swap regret bound of $O(|cA| sqrt(T log |cA|))$ since each MWU algorithm incurs an external regret bounded by $O(sqrt(T log |cA|))$. However, one can make use of the structure of the utilities to obtain the improved bound claimed in @theorem:swap. In particular, we observe that for any $t in [T]$,
+$
+  sum_(a in cA) norm(vu_a^((t)))_oo^2 = norm(vu^((t)))_oo^2 sum_(a in cA) (vx^((t))[a])^2 <= norm(vu^((t)))_oo^2.
+$
+So, using the regret bound of MWU together with @theorem:Gordon,
+$
+  Phi"Reg"^((T)) <= (|cA| log |cA|) / eta + eta sum_(t=1)^T norm(vu^((t)))_oo^2 <= (|cA| log |cA|) / eta + eta T.
+$
+Optimizing the learning rate $eta$ gives the claim.
+
+
 
 
 

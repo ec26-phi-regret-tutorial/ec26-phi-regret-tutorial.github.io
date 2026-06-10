@@ -1348,7 +1348,7 @@ mark {
 </ol></nav>
 <p>The techniques we have covered so far based on regret minimization lead to a running time complexity growing polynomially in <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([1], [/], [ϵ])" role="math">\(1/\epsilon\)</span>, where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([ε], [ ], [>], [ ], [0])" role="math">\(\epsilon &gt; 0\)</span> is the approximation quality of the equilibrium—be it a Nash equilibrium in zero-sum games or a (coarse) correlated equilibrium in general-sum games. Specifically, if we employ algorithms with (<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-)regret bounded by <span class="math-katex-source" data-math-display="inline" data-typst-math="root(radicand: [T])" role="math">\(\sqrt{T}\)</span> as a function of the time horizon, we need <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([1], [/], attach(base: [ϵ], t: [2]))" role="math">\(1/\epsilon^{2}\)</span> iterations to reach an equilibrium. Can we do better in the regime where <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span> is, say, exponentially small? The other main approach we have introduced for equilibrium computation is based on linear programming, which has the advantage of finding an <em>exact</em> equilibrium. But, as we have already seen, the LP describing (C)CEs has a number of variables that scales <em>exponentially</em> with the number of players.</p>
     <h1 id="3-1-ellipsoid-against-hope" class="notes-heading" data-level="1" data-number="3.1"><span class="secno">3.1</span> Ellipsoid against hope</h1>
-    <p>We will now introduce <em>ellipsoid against hope</em> (EAH), a polynomial-time algorithm for computing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria even in games with many players and complex strategy sets. It was first introduced by <span class="citation-wrap"><a class="citation" href="#loc-13" id="loc-1" role="doc-biblioref">Papadimitriou and Roughgarden [PR08]</a><span class="citation-note"><span class="citation-note-key">[PR08]</span> C. H. Papadimitriou and T. Roughgarden. (2008). Computing correlated equilibria in multi-player games. <em>Journal of the ACM</em>.</span></span>. In what follows, we mostly follow the generalized version of the algorithm due to <span class="citation-wrap"><a class="citation" href="#loc-14" id="loc-2" role="doc-biblioref">Farina and Pipis [FP24]</a><span class="citation-note"><span class="citation-note-key">[FP24]</span> G. Farina and C. Pipis. (2024). Polynomial-Time Computation of Exact <span class="bib-math">Φ</span>-Equilibria in Polyhedral Games. <em>Neural Information Processing Systems</em>.</span></span> and <span class="citation-wrap"><a class="citation" href="#loc-15" id="loc-3" role="doc-biblioref">Zhang, Anagnostides, Tewolde, Berker, Farina, Conitzer and Sandholm [Zha+25]</a><span class="citation-note"><span class="citation-note-key">[Zha+25]</span> B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Learning and Computation of <span class="bib-math">Φ</span>-Equilibria at the Frontier of Tractability. <em>Economics and Computation</em>.</span></span>. To be clear, this algorithm works in the centralized model, and it’s not compatible with the framework of online learning, although as we shall see similarities do exist between the two approaches.</p>
+    <p>We will now introduce <em>ellipsoid against hope</em> (EAH), a polynomial-time algorithm for computing <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria even in games with many players and complex strategy sets. It was first introduced by <span class="citation-wrap"><a class="citation" href="#bib-Papadimitriou08-Computing" role="doc-biblioref">Papadimitriou and Roughgarden [PR08]</a> <span class="citation-note"><span class="citation-note-key">[PR08]</span> C. H. Papadimitriou and T. Roughgarden. (2008). Computing correlated equilibria in multi-player games. <em>Journal of the ACM</em>.</span></span>. In what follows, we mostly follow the generalized version of the algorithm due to <span class="citation-wrap"><a class="citation" href="#bib-Farina24-Polynomial" role="doc-biblioref">Farina and Pipis [FP24]</a> <span class="citation-note"><span class="citation-note-key">[FP24]</span> G. Farina and C. Pipis. (2024). Polynomial-Time Computation of Exact <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-Equilibria in Polyhedral Games. <em>Neural Information Processing Systems</em>.</span></span> and <span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Learning" role="doc-biblioref">Zhang, Anagnostides, Tewolde, Berker, Farina, Conitzer and Sandholm [ZAT+25]</a> <span class="citation-note"><span class="citation-note-key">[ZAT+25]</span> B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Learning and Computation of <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-Equilibria at the Frontier of Tractability. <em>Economics and Computation</em>.</span></span>. To be clear, this algorithm works in the centralized model, and it’s not compatible with the framework of online learning, although as we shall see similarities do exist between the two approaches.</p>
     <p>Our goal is to compute an <em><span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium</em> of a multilinear game, that is, a correlated distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [μ],
   [ ],
@@ -1592,10 +1592,7 @@ mark {
   [.],
 )">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} u_{i} \left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \ge \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} u_{i} \left(\phi_{i} \left(\boldsymbol{x}_{i}\right), \boldsymbol{x}_{-i}\right) - \epsilon .\]</span> <span class="eqno">(1)</span></div>
     </figure>
-    <p>From a more abstract point of view, EAH deals with optimization problems of the form<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span><p>We caution that</p>
-          <p>here corresponds to</p>
-          <p>in the context of (<a href="#loc-4">1</a>), even though we sometimes take</p>
-          <p>to be the strategy set of a single player in the context of regret minimization.</p></span></p>
+    <p>From a more abstract point of view, EAH deals with optimization problems of the form<sup>1</sup></p>
     <figure class="equation" id="loc-6" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [find ],
@@ -1740,7 +1737,7 @@ mark {
   [→],
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [k]),
-)" role="math">\(G : \mathcal{X} \to \mathbb{R}^{k}\)</span> is a function that can be evaluated efficiently. The crux in the optimization problem (<a href="#loc-6">2</a>) lies in the fact that <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> resides in a high-dimensional space; a canonical case to think about is when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(G : \mathcal{X} \to \mathbb{R}^{k}\)</span> is a function that can be evaluated efficiently. The crux in the optimization problem (2) lies in the fact that <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> resides in a high-dimensional space; a canonical case to think about is when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝓧]),
   [ ],
   [=],
@@ -1771,7 +1768,7 @@ mark {
   [ ],
   attach(base: equation(block: false, body: [ℝ]), t: [k]),
 )" role="math">\(\boldsymbol{y} \in \mathbb{R}^{k}\)</span> belongs to <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> or not. A special case is when <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> is a polytope described with a polynomial number of constraints, as is the case for swap regret in normal-form games—each player’s set of deviations amounts to the set of stochastic matrices.</p>
-    <p>The key assumption in the EAH framework [<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>] is the existence of a <em>good-enough-response (GER)</em> oracle, which, given any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>The key assumption in the EAH framework [<span class="citation-wrap"><a class="citation" href="#bib-Farina24-Polynomial" role="doc-biblioref">FP24</a></span>] is the existence of a <em>good-enough-response (GER)</em> oracle, which, given any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐲]),
   [ ],
   [∈],
@@ -1808,7 +1805,7 @@ mark {
   [ ],
   [0],
 )" role="math">\(\left\langle \boldsymbol{y},G(\boldsymbol{x}) \right\rangle \ge 0\)</span>.</p>
-    <p>The EAH algorithm enables solving (<a href="#loc-6">2</a>) with just a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle. The basic idea is to consider an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate version of the dual of (<a href="#loc-6">2</a>),</p>
+    <p>The EAH algorithm enables solving (2) with just a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle. The basic idea is to consider an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate version of the dual of (2),</p>
     <figure class="equation" id="loc-7" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   [find ],
@@ -1900,7 +1897,7 @@ mark {
   [.],
 )">\[\displaystyle \text{find } \boldsymbol{y} \in \mathcal{Y} \text{ such that } \left\langle \boldsymbol{y},G\left(\boldsymbol{x}\right) \right\rangle \le - \epsilon \quad \forall \boldsymbol{x} \in \mathcal{X}.\]</span> <span class="eqno">(3)</span></div>
     </figure>
-    <p>On account of the fact that a GER oracle exists, (<a href="#loc-7">3</a>) is guaranteed to be infeasible. Even so, EAH proceeds by executing the ellipsoid algorithm on that infeasible program—this is where the apt name “ellipsoid against hope” comes from. In every step <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span> of the algorithm, we have a candidate <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>On account of the fact that a GER oracle exists, (3) is guaranteed to be infeasible. Even so, EAH proceeds by executing the ellipsoid algorithm on that infeasible program—this is where the apt name “ellipsoid against hope” comes from. In every step <span class="math-katex-source" data-math-display="inline" data-typst-math="[t]" role="math">\(t\)</span> of the algorithm, we have a candidate <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐲]),
     t: lr(body: sequence([(], [t], [)])),
@@ -2296,9 +2293,9 @@ mark {
   [∈],
   [ ],
   equation(block: false, body: [𝓨]),
-)" role="math">\(y \in \mathcal{Y}\)</span>. That convex combination, which is a <em>certificate of dual infeasibility</em>, will thus be an approximate solution to (<a href="#loc-6">2</a>). The key point is that the resulting zero-sum game in (<a href="#loc-8">4</a>) is much smaller than the one we started with, and can be solved with standard techniques.</p>
+)" role="math">\(y \in \mathcal{Y}\)</span>. That convex combination, which is a <em>certificate of dual infeasibility</em>, will thus be an approximate solution to (2). The key point is that the resulting zero-sum game in (4) is much smaller than the one we started with, and can be solved with standard techniques.</p>
     <section class="env statement" id="theorem-3-1">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>1</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>1</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#bib-Farina24-Polynomial" role="doc-biblioref">FP24</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">Assuming the existence of a separation oracle for <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓨])" role="math">\(\mathcal{Y}\)</span> and a GER oracle, EAH runs in time <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
   lr(
@@ -2317,10 +2314,10 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(\text{poly}(d, k, \operatorname{log}(1/\epsilon ))\)</span> and returns an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate solution to (<a href="#loc-6">2</a>).</div>
+)" role="math">\(\text{poly}(d, k, \operatorname{log}(1/\epsilon ))\)</span> and returns an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ε]" role="math">\(\epsilon\)</span>-approximate solution to (2).</div>
     </section>
     <h1 id="3-2-application-to-computing-correlated-equilibria" class="notes-heading" data-level="1" data-number="3.2"><span class="secno">3.2</span> Application to computing correlated equilibria</h1>
-    <p>Let’s now see to apply this algorithm to solve (<a href="#loc-4">1</a>). As before, we assume that each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], b: [i])" role="math">\(\Phi_{i}\)</span> contains linear functions of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Let’s now see to apply this algorithm to solve (1). As before, we assume that each <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], b: [i])" role="math">\(\Phi_{i}\)</span> contains linear functions of the form <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: equation(block: false, body: [𝐱]), b: [i]),
   [ ],
   [↦],
@@ -2367,7 +2364,7 @@ mark {
       attach(base: [k], b: [i]),
     ),
   ),
-)" role="math">\(\mathcal{Y}_{i} \subset \mathbb{R}^{d_{i} \times k_{i}}\)</span>; this assumption can be relaxed using a similar idea to the semi-separation oracle [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>]. we will later briefly explain how to relax this assumption. Then a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium is a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> such that</p>
+)" role="math">\(\mathcal{Y}_{i} \subset \mathbb{R}^{d_{i} \times k_{i}}\)</span>; this assumption can be relaxed using a similar idea to the semi-separation oracle [<span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Learning" role="doc-biblioref">ZAT+25</a></span>]. we will later briefly explain how to relax this assumption. Then a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibrium is a distribution <span class="math-katex-source" data-math-display="inline" data-typst-math="[μ]" role="math">\(\mu\)</span> such that</p>
     <figure class="equation" id="loc-10" role="math">
       <div class="equation-line is-numbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(base: [∑], t: [n], b: sequence([i], [=], [1])),
@@ -2566,8 +2563,8 @@ mark {
     <p>where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝐈]), b: [i])" role="math">\(\mathbf{I}_{i}\)</span> is the matrix for which <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: [φ],
   b: attach(base: equation(block: false, body: [𝐈]), b: [i]),
-)" role="math">\(\phi_{\mathbf{I}_{i}}\)</span> is the identity map. This indeed adheres to (<a href="#loc-6">2</a>).</p>
-    <p>What’s left is to prove that (<a href="#loc-10">5</a>) admits an efficient GER oracle. To do so, let’s consider any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi_{\mathbf{I}_{i}}\)</span> is the identity map. This indeed adheres to (2).</p>
+    <p>What’s left is to prove that (5) admits an efficient GER oracle. To do so, let’s consider any <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
   [∈],
@@ -2803,7 +2800,7 @@ mark {
   [,],
 )">\[\displaystyle \mathop{\mathbb{E}}\limits_{\left(\boldsymbol{x}_{1}, \dots , \boldsymbol{x}_{n}\right) \sim \mu} \left\langle \boldsymbol{x}_{i} - \mathbf{M}_{i} q\left(\boldsymbol{x}_{i}\right),u_{i} \left(\boldsymbol{x}_{-i}\right) \right\rangle \ge - \epsilon \cdot \left\Vert u_{i} \left(\boldsymbol{x}_{-i}\right)\right\Vert_{2},\]</span></div>
     </figure>
-    <p>But this is not immediately good enough. Recall that our algorithm for expected fixed points, from <a href="P2-phi_regret.html#theorem-2-6">Chapter 2, Theorem&nbsp;2.6</a>, has <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>But this is not immediately good enough. Recall that our algorithm for expected fixed points, from Chapter 2, Theorem&nbsp;2.6, has <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
   lr(body: sequence([(], [1], [/], [ϵ], [)])),
 )" role="math">\(\text{poly}(1/\epsilon )\)</span> runtime. Since our goal in this section is to construct algorithms with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
@@ -2826,7 +2823,7 @@ mark {
   ),
 )" role="math">\(\text{poly}(d, \operatorname{log}(1/\epsilon ))\)</span>-time algorithm for semi-separation with expected fixed points:</p>
     <section id="theorem-3-2" class="env statement">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>2</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>2</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Learning" role="doc-biblioref">ZAT+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">There is a <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [poly],
   lr(
@@ -2876,7 +2873,7 @@ mark {
   [−],
   [ ],
   equation(block: false, body: [𝐱]),
-)" role="math">\(G(\boldsymbol{x}) = \phi (\boldsymbol{x}) - \boldsymbol{x}\)</span>. Then, by <a href="#theorem-3-1">Theorem&nbsp;3.1</a>, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(G(\boldsymbol{x}) = \phi (\boldsymbol{x}) - \boldsymbol{x}\)</span>. Then, by Theorem&nbsp;3.1, it suffices to implement a GER oracle. That is, given <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝐲]),
   [ ],
   [∈],
@@ -3037,9 +3034,9 @@ mark {
   [×],
   [ ],
   attach(base: [μ], b: [n]),
-)" role="math">\(\mu_{1} \times \dots \times \mu_{n}\)</span> is a GER solution satisfying (<a href="#loc-10">5</a>). We therefore have:</p>
+)" role="math">\(\mu_{1} \times \dots \times \mu_{n}\)</span> is a GER solution satisfying (5). We therefore have:</p>
     <section class="env statement" id="theorem-3-3">
-      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#loc-14" role="doc-biblioref">FP24</a></span>; <span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
+      <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Theorem</strong> <strong class="env-number">3<span class="env-number-separator">.</span>3</strong> <span class="env-extra">([<span class="citation-wrap"><a class="citation" href="#bib-Farina24-Polynomial" role="doc-biblioref">FP24</a></span>; <span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Learning" role="doc-biblioref">ZAT+25</a></span>])</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">If for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [i],
   [ ],
@@ -3070,7 +3067,7 @@ mark {
     <p>We conclude this chapter with several remarks about the previous theorem.</p>
     <ol>
       <li value="1">
-        <p><em>Nested EAH.</em> The algorithm that we derive for <a href="#theorem-3-3">Theorem&nbsp;3.3</a> is a doubly-nested ellipsoid against hope algorithm: the outer EAH algorithm computes the equilibrium itself, and on every iteration, EAH is invoked for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span> to compute an expected fixed point for <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>.</p>
+        <p><em>Nested EAH.</em> The algorithm that we derive for Theorem&nbsp;3.3 is a doubly-nested ellipsoid against hope algorithm: the outer EAH algorithm computes the equilibrium itself, and on every iteration, EAH is invoked for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span> to compute an expected fixed point for <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>.</p>
       </li>
       <li value="2">
         <p><em>Necessity of linearity.</em> The results presented in this document assume, and use, the fact that utilities are multilinear. The multilinearity assumption is used twice:</p>
@@ -3217,46 +3214,39 @@ mark {
             <p>for every convex function <span class="math-katex-source" data-math-display="inline" data-typst-math="[u]" role="math">\(u\)</span>. Expected fixed points do not guarantee this.</p>
           </li>
         </ol>
-        <p>The first issue is not circumventable, and is generally a barrier to efficient equilibrium computation in concave games with many players. The second issue is not circumventable in general, as it would imply the ability to compute fixed points of contraction maps. However, it <em>is</em> circumventable in the special case where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([u], lr(body: sequence([(], [·], [)])))" role="math">\(u(\cdot )\)</span> is <em>quadratic</em> concave for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>; therefore, it is possible to compute <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria in quadratic games with a constant number of players. The required techniques, however, are beyond the scope of this document. We refer the interested reader to our recent preprint on this topic <span id="loc-12">[</span><span class="citation-wrap"><a class="citation" href="#loc-16" role="doc-biblioref">Ana+26</a><span class="citation-note"><span class="citation-note-key">[Ana+26]</span> I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2026). On the Complexity of Correlated Equilibria Beyond Normal-Form Games. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2605.17665">arXiv:2605.17665</a></em>.</span></span>].</p>
+        <p>The first issue is not circumventable, and is generally a barrier to efficient equilibrium computation in concave games with many players. The second issue is not circumventable in general, as it would imply the ability to compute fixed points of contraction maps. However, it <em>is</em> circumventable in the special case where <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([u], lr(body: sequence([(], [·], [)])))" role="math">\(u(\cdot )\)</span> is <em>quadratic</em> concave for each player <span class="math-katex-source" data-math-display="inline" data-typst-math="[i]" role="math">\(i\)</span>; therefore, it is possible to compute <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-equilibria in quadratic games with a constant number of players. The required techniques, however, are beyond the scope of this document. We refer the interested reader to our recent preprint on this topic [<span class="citation-wrap"><a class="citation" href="#bib-Anagnostides26-Complexity" role="doc-biblioref">ADF+26</a> <span class="citation-note"><span class="citation-note-key">[ADF+26]</span> I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2026). On the Complexity of Correlated Equilibria Beyond Normal-Form Games. <em>arXiv preprint </em><em>arXiv:2605.17665</em>.</span></span>].</p>
       </li>
       <li value="3">
-        <p><em>Non-separable sets <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. So far in this section, we have assumed that the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization in <a href="P2-phi_regret.html#2-3-efficient-regret-minimization-via-semi-separation">Chapter 2, Section&nbsp;2.3</a>, it is sufficient to take <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> to be a <em>superset</em> of the valid deviations and rely on the semi-separation oracle to declare when a given matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+        <p><em>Non-separable sets <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span></em>. So far in this section, we have assumed that the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> admit efficient separation oracles. However, this is not a necessary assumption. As it turns out, like we did for regret minimization in Chapter 2, Section&nbsp;2.3, it is sufficient to take <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> to be a <em>superset</em> of the valid deviations and rely on the semi-separation oracle to declare when a given matrix <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(base: equation(block: false, body: [𝐌]), b: [i]),
   [ ],
   [∈],
   [ ],
   attach(base: equation(block: false, body: [𝓨]), b: [i]),
-)" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span> is invalid. Therefore, <a href="#theorem-3-3">Theorem&nbsp;3.3</a> also generalizes to the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> only admits an efficient <em>semi</em>-separation oracle, such as the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> discussed there. For more details, we refer the interested reader to our paper [<span class="citation-wrap"><a class="citation" href="#loc-15" role="doc-biblioref">Zha+25</a></span>].</p>
+)" role="math">\(\mathbf{M}_{i} \in \mathcal{Y}_{i}\)</span> is invalid. Therefore, Theorem&nbsp;3.3 also generalizes to the case where <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: equation(block: false, body: [𝓨]), b: [i])" role="math">\(\mathcal{Y}_{i}\)</span> only admits an efficient <em>semi</em>-separation oracle, such as the sets <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> discussed there. For more details, we refer the interested reader to our paper [<span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Learning" role="doc-biblioref">ZAT+25</a></span>].</p>
       </li>
     </ol>
     <section class="bibliography" id="bibliography">
       <h1 class="notes-heading notes-heading-unnumbered" data-level="1">Bibliography for this chapter</h1>
       <table class="bibliography-table">
-        <tbody><tr id="loc-13" class="bibliography-row">
+        <tbody><tr class="bibliography-row" id="bib-Papadimitriou08-Computing">
           <td class="bib-key">[PR08]</td>
           <td class="bib-entry">C. H. Papadimitriou and T. Roughgarden. (2008). Computing correlated equilibria in multi-player games. <em>Journal of the ACM</em>.</td>
         </tr>
-        <tr id="loc-14" class="bibliography-row">
+        <tr class="bibliography-row" id="bib-Farina24-Polynomial">
           <td class="bib-key">[FP24]</td>
           <td class="bib-entry">G. Farina and C. Pipis. (2024). Polynomial-Time Computation of Exact <span class="bib-math">Φ</span>-Equilibria in Polyhedral Games. <em>Neural Information Processing Systems</em>.</td>
         </tr>
-        <tr id="loc-15" class="bibliography-row">
-          <td class="bib-key">[Zha+25]</td>
+        <tr class="bibliography-row" id="bib-Zhang25-Learning">
+          <td class="bib-key">[ZAT+25]</td>
           <td class="bib-entry">B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Learning and Computation of <span class="bib-math">Φ</span>-Equilibria at the Frontier of Tractability. <em>Economics and Computation</em>.</td>
         </tr>
-        <tr id="loc-16" class="bibliography-row">
-          <td class="bib-key">[Ana+26]</td>
-          <td class="bib-entry">I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2026). On the Complexity of Correlated Equilibria Beyond Normal-Form Games. <em>arXiv preprint </em><em><a href="https://arxiv.org/abs/2605.17665">arXiv:2605.17665</a></em>.</td>
+        <tr class="bibliography-row" id="bib-Anagnostides26-Complexity">
+          <td class="bib-key">[ADF+26]</td>
+          <td class="bib-entry">I. Anagnostides, C. Daskalakis, G. Farina, N. Golowich, T. Sandholm and B. H. Zhang. (2026). On the Complexity of Correlated Equilibria Beyond Normal-Form Games. <em>arXiv preprint </em><em>arXiv:2605.17665</em>.</td>
         </tr>
       </tbody></table>
-    </section><p></p><section class="endnotes" id="endnotes">
-<h1>Notes</h1>
-<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body"><p>We caution that</p>
-          <p>here corresponds to</p>
-          <p>in the context of (<a href="#loc-4">1</a>), even though we sometimes take</p>
-          <p>to be the strategy set of a single player in the context of regret minimization.</p></span></p>
-</section>
-</article>
+    </section><p></p></article>
 </main>
 <script>
 (() => {

@@ -3,7 +3,7 @@
 #show: gabri_notes.with(lec_num: 3, date: none, title: "Ellipsoid Against Hope")
 
 
-
+#v(4mm)
 The techniques we have covered so far based on regret minimization lead to a running time complexity growing polynomially in $1\/eps$, where $epsilon > 0$ is the approximation quality of the equilibrium---be it a Nash equilibrium in zero-sum games or a (coarse) correlated equilibrium in general-sum games. Specifically, if we employ algorithms with ($Phi$-)regret bounded by $sqrt(T)$ as a function of the time horizon, we need $1\/eps^2$ iterations to reach an equilibrium. Can we do better in the regime where $epsilon$ is, say, exponentially small? The other main approach we have introduced for equilibrium computation is based on linear programming, which has the advantage of finding an _exact_ equilibrium. But, as we have already seen, the LP describing (C)CEs has a number of variables that scales _exponentially_ with the number of players.
 
 = Ellipsoid against hope <sec:eah>
@@ -50,6 +50,8 @@ In other words, there is a convex combination of $vx^((1)), dots, vx^((T))$ that
   Assuming the existence of a separation oracle for $cY$ and a GER oracle, EAH runs in time $"poly"(d, k, log(1\/eps))$ and returns an $epsilon$-approximate solution to (@eq:EAH).
 ] <thm:eah-general>
 
+#v(9mm)
+
 = Application to computing correlated equilibria <sec:eah-equilibria>
 
 Let's now see to apply this algorithm to solve (@eq:phi-equil). As before, we assume that each $Phi_i$ contains linear functions of the form $vx_i |-> matM_i q_i (vx_i) in cX_i$ for some feature map $q_i: cX_i -> RR^(k_i)$. For these notes, we will assume that the set of valid matrices $matM_i$ form a convex, compact set $cY_i subset RR^(d_i times k_i)$; this assumption can be relaxed using a similar idea to the semi-separation oracle #citep(<Zhang25:Learning>). we will later briefly explain how to relax this assumption. Then a $Phi$-equilibrium is a distribution $mu$ such that
@@ -84,9 +86,7 @@ But this is not immediately good enough. Recall that our algorithm for expected 
 ]
 Finally, if $mu_i in Delta(cX_i)$ is an expected fixed point of $phi_i$ for every $i$, then the product distribution $mu_1 times dots.c times mu_n$ is a GER solution satisfying (@eq:simplified). We therefore have:
 
-#theorem[#citep(<Farina24:Polynomial>) #citep(
-    <Zhang25:Learning>,
-  )][
+#theorem[#citep(<Farina24:Polynomial>, <Zhang25:Learning>)][
   If for each player $i in [n]$ in a multilinear game the set of deviations $Phi_i$ admits a separation oracle, there is an algorithm polynomial in $log(1\/epsilon)$, $n$, $d_1, ..., d_n$, and $k_1, ..., k_n$ that outputs an $epsilon$-$Phi$-equilibrium.
 ] <thm:eah-eqm>
 
