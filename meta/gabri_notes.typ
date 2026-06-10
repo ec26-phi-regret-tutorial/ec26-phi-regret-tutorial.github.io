@@ -414,7 +414,7 @@
   context {
     let rows = ()
     for item in lecture-bib.get() {
-      rows.push(citation_bracket(item, cited_keys: lecture-bib.final()))
+      rows.push([[#citation_label_text(item, cited_keys: lecture-bib.final())]])
       rows.push(cite(item, form: "full"))
     }
     grid(columns: 2, row-gutter: 3.8mm, column-gutter: 2.3mm, ..rows)

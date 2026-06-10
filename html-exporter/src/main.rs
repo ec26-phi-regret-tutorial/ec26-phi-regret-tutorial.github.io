@@ -876,22 +876,26 @@ fn render_chapter_citation_sidenote(
     export_config: &ExportConfig,
     chapter: &ChapterNav,
     title: &str,
-    site_title: &str,
+    _site_title: &str,
     pdf_href: Option<&str>,
 ) -> String {
     let citation = &export_config.how_to_cite;
     let key = format!("{}-chapter-{}", citation.key_prefix, chapter.number);
     let href = chapter.href().expect("chapter href was validated");
+    let citation_url = citation.citation_url(&href);
     let citation_title = citation.citation_title(chapter.number, title);
-    let citation_note = citation.citation_note(chapter.number, title);
+    let citation_note = citation
+        .citation_note(chapter.number, title)
+        .map(|note| format!("  note = {{{}}},\n", bibtex_escape(&note)))
+        .unwrap_or_default();
     let bibtex = format!(
-        "@misc{{{key},\n  author = {{{}}},\n  title = {{{}}},\n  booktitle = {{{}}},\n  note = {{{}}},\n  year = {{{}}},\n  url = {{{}}}\n}}",
+        "@misc{{{key},\n  author = {{{}}},\n  title = {{{}}},\n  booktitle = {{{}}},\n{}  year = {{{}}},\n  url = {{{}}}\n}}",
         citation.authors,
         bibtex_escape(&citation_title),
-        bibtex_escape(site_title),
-        bibtex_escape(&citation_note),
+        bibtex_escape(&citation.booktitle),
+        citation_note,
         citation.year,
-        href
+        citation_url
     );
     let mut out = String::from(
         "<aside class=\"chapter-citation-sidenote\" aria-label=\"Chapter links and citation\">",

@@ -74,6 +74,10 @@ a:hover {
     color: var(--brown)
 }
 
+.citation-author {
+    color: var(--brown)
+}
+
 .citation:hover {
     color: #5f3213
 }
@@ -109,7 +113,16 @@ a:hover {
 
 .citation-note-key {
     font-family: "Frutiger Notes", var(--serif);
-    font-weight: 700
+    font-weight: 700;
+    color: var(--brown)
+}
+
+.citation-note-bracket {
+    color: var(--ink)
+}
+
+.citation-note-authors[hidden] {
+    display: none
 }
 
 .notes-heading,

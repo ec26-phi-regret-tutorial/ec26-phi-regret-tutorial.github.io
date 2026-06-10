@@ -1,9 +1,10 @@
 how_to_cite:
   authors: Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu
   key_prefix: anagnostides-farina-zhang-2026-phi-equilibria
+  booktitle: ACM EC 2026 Tutorial on Learning and Computation of Phi-Equilibria
   title_template: "Chapter {number}: {title}"
-  note_template: Chapter {number} of the ACM EC 2026 tutorial notes
   year: 2026
+  url_prefix: https://ec26-phi-regret-tutorial.github.io/
 
 chapters:
   - number: 1

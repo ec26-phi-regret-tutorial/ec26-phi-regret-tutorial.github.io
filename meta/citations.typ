@@ -250,10 +250,6 @@
   citation_label(key, cited_keys: cited_keys) + suffix
 }
 
-#let citation_bracket(key, cited_keys: (), ..supplement) = {
-  "[" + citation_label_text(key, cited_keys: cited_keys, ..supplement) + "]"
-}
-
 #let citation_author_text(key) = {
   let names = citation_author_last_names(citation_key_name(key))
   if names.len() == 0 {

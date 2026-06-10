@@ -13,9 +13,12 @@ pub(crate) struct ExportConfig {
 pub(crate) struct CitationConfig {
     pub(crate) authors: String,
     pub(crate) key_prefix: String,
+    pub(crate) booktitle: String,
     pub(crate) title_template: String,
-    pub(crate) note_template: String,
+    #[serde(default)]
+    pub(crate) note_template: Option<String>,
     pub(crate) year: u16,
+    pub(crate) url_prefix: String,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -106,8 +109,14 @@ impl CitationConfig {
         apply_chapter_template(&self.title_template, number, title)
     }
 
-    pub(crate) fn citation_note(&self, number: u8, title: &str) -> String {
-        apply_chapter_template(&self.note_template, number, title)
+    pub(crate) fn citation_note(&self, number: u8, title: &str) -> Option<String> {
+        self.note_template
+            .as_deref()
+            .map(|template| apply_chapter_template(template, number, title))
+    }
+
+    pub(crate) fn citation_url(&self, href: &str) -> String {
+        format!("{}{}", self.url_prefix, href)
     }
 
     fn validate(&self, path: &Path) -> Result<(), String> {
@@ -123,15 +132,37 @@ impl CitationConfig {
                 path.display()
             ));
         }
+        if self.booktitle.trim().is_empty() {
+            return Err(format!(
+                "export config {} has empty booktitle",
+                path.display()
+            ));
+        }
         if self.title_template.trim().is_empty() {
             return Err(format!(
                 "export config {} has empty title_template",
                 path.display()
             ));
         }
-        if self.note_template.trim().is_empty() {
+        if self
+            .note_template
+            .as_ref()
+            .is_some_and(|template| template.trim().is_empty())
+        {
             return Err(format!(
                 "export config {} has empty note_template",
+                path.display()
+            ));
+        }
+        if self.url_prefix.trim().is_empty() {
+            return Err(format!(
+                "export config {} has empty url_prefix",
+                path.display()
+            ));
+        }
+        if self.url_prefix.trim() != self.url_prefix {
+            return Err(format!(
+                "export config {} has url_prefix with surrounding whitespace",
                 path.display()
             ));
         }
@@ -198,7 +229,24 @@ mod tests {
         );
         assert_eq!(
             config.citation_note(2, "Beyond Normal Form"),
-            "Chapter 2 of the ACM EC 2026 tutorial notes"
+            Some("Chapter 2 of the ACM EC 2026 tutorial notes".to_owned())
+        );
+    }
+
+    #[test]
+    fn omits_citation_note_when_template_is_absent() {
+        let mut config = citation_config();
+        config.note_template = None;
+
+        assert_eq!(config.citation_note(2, "Beyond Normal Form"), None);
+    }
+
+    #[test]
+    fn prefixes_citation_urls() {
+        let config = citation_config();
+        assert_eq!(
+            config.citation_url("P2.html"),
+            "https://example.com/notes/P2.html"
         );
     }
 
@@ -206,9 +254,11 @@ mod tests {
         CitationConfig {
             authors: "A. Author".to_owned(),
             key_prefix: "notes".to_owned(),
+            booktitle: "Example Tutorial".to_owned(),
             title_template: "Chapter {number}: {title}".to_owned(),
-            note_template: "Chapter {number} of the ACM EC 2026 tutorial notes".to_owned(),
+            note_template: Some("Chapter {number} of the ACM EC 2026 tutorial notes".to_owned()),
             year: 2026,
+            url_prefix: "https://example.com/notes/".to_owned(),
         }
     }
 }

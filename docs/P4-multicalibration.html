@@ -82,6 +82,10 @@ a:hover {
     color: var(--brown)
 }
 
+.citation-author {
+    color: var(--brown)
+}
+
 .citation:hover {
     color: #5f3213
 }
@@ -117,7 +121,16 @@ a:hover {
 
 .citation-note-key {
     font-family: "Frutiger Notes", var(--serif);
-    font-weight: 700
+    font-weight: 700;
+    color: var(--brown)
+}
+
+.citation-note-bracket {
+    color: var(--ink)
+}
+
+.citation-note-authors[hidden] {
+    display: none
 }
 
 .notes-heading,
@@ -1338,10 +1351,9 @@ mark {
 <aside class="chapter-citation-sidenote" aria-label="Chapter links and citation"><a class="chapter-citation-pdf" href="pdf/P4-multicalibration.pdf">Download as PDF</a><details class="chapter-citation-details"><summary class="chapter-citation-title">How to cite</summary><pre><code>@misc{anagnostides-farina-zhang-2026-phi-equilibria-chapter-4,
   author = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
   title = {Chapter 4: Phi-Regret and Multicalibration},
-  booktitle = {Learning and Computation of Phi-Equilibria},
-  note = {Chapter 4 of the ACM EC 2026 tutorial notes},
+  booktitle = {ACM EC 2026 Tutorial on Learning and Computation of Phi-Equilibria},
   year = {2026},
-  url = {P4-multicalibration.html}
+  url = {https://ec26-phi-regret-tutorial.github.io/P4-multicalibration.html}
 }</code></pre></details></aside>
 <p class="chapter-kicker">Chapter 4</p>
 <h1 class="lecture-title">Phi-Regret and Multicalibration</h1>
@@ -1352,7 +1364,7 @@ mark {
 <li class="toc-l2"><a href="#4-2-2-linear-deviations"><span class="toc-no">4.2.2</span><span class="toc-title">Linear deviations</span></a></li>
 <li class="toc-l2"><a href="#4-2-3-rkhs-deviations"><span class="toc-no">4.2.3</span><span class="toc-title">RKHS deviations</span></a></li>
 </ol></nav>
-<p>The black-box reduction from <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to online learning due to <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a> <span class="citation-note"><span class="citation-note-key">[GGM08]</span> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</span></span> centers around the algorithmic primitive of fixed points. This chapter introduces a different route to the same destination that passes through forecasting [<span class="citation-wrap"><a class="citation" href="#bib-FarinaPerdomo26-Efficient" role="doc-biblioref">FP26</a> <span class="citation-note"><span class="citation-note-key">[FP26]</span> G. Farina and J. C. Perdomo. (2026). An Efficient Black-Box Reduction from Online Learning to Multicalibration, and a New Route to \Phi-Regret Minimization. <em>arXiv preprint </em><em>arXiv:2604.19592</em>.</span></span>].</p>
+<p>The black-box reduction from <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret to online learning due to <span class="citation-text"><span class="citation-author cite-authors">Gordon, Greenwald and Marks</span> [<span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">GGM08</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">GGM08</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Gordon, Greenwald and Marks</span> G. J. Gordon, A. Greenwald and C. Marks. (2008). No-regret learning in convex games. <em>International Conference on Machine Learning</em>.</span></span>]</span> centers around the algorithmic primitive of fixed points. This chapter introduces a different route to the same destination that passes through forecasting [<span class="citation-wrap"><a class="citation" href="#bib-FarinaPerdomo26-Efficient" role="doc-biblioref">FP26</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">FP26</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Farina and Perdomo</span> G. Farina and J. C. Perdomo. (2026). An Efficient Black-Box Reduction from Online Learning to Multicalibration, and a New Route to \Phi-Regret Minimization. <em>arXiv preprint </em><em>arXiv:2604.19592</em>.</span></span>].</p>
     <p>At a high level, the moral of this section is the following, also depicted in Figure&nbsp;1.</p>
     <aside class="callout callout-info" data-callout="info">
       <div class="callout-body">One can construct a <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-regret minimizer starting from a powerful enough <em>multicalibrated forecaster</em> of the upcoming utility, and best respond to such forecast. In turn, the task of constructing such a forecaster admits a reduction to online learning in the style of Gordon-Greenwald-Marks, with expected variational inequalities replacing expected fixed points as the nonlinear optimization primitive.</div>
@@ -1592,7 +1604,7 @@ mark {
   [ ],
   equation(block: false, body: [𝓗]),
 )" role="math">\(h \in \mathcal{H}\)</span>.</p>
-    <p>As we show in Theorem&nbsp;4.2, multicalibration admits a black-box reduction to online learning in the style of <span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">Gordon, Greenwald and Marks [GGM08]</a></span>. However, in the case of multicalibration the nonlinear primitive is <em>not</em> fixed points, but rather <em>expected variational inequalities</em>, as defined next.<sup>1</sup></p>
+    <p>As we show in Theorem&nbsp;4.2, multicalibration admits a black-box reduction to online learning in the style of <span class="citation-text"><span class="citation-author cite-authors">Gordon, Greenwald and Marks</span> [<span class="citation-wrap"><a class="citation" href="#bib-Gordon08-No" role="doc-biblioref">GGM08</a></span>]</span>. However, in the case of multicalibration the nonlinear primitive is <em>not</em> fixed points, but rather <em>expected variational inequalities</em>, as defined next.<sup>1</sup></p>
     <section id="definition-4-1" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">4<span class="env-number-separator">.</span>1</strong> <span class="env-extra">(Expected variational inequality)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -1734,7 +1746,7 @@ mark {
         </figure>
       </div>
     </section>
-    <p>Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions [<span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Expected" role="doc-biblioref">ZAT+25</a> <span class="citation-note"><span class="citation-note-key">[ZAT+25]</span> B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. <em>International Conference on Machine Learning</em>, 74422–74446.</span></span>].</p>
+    <p>Efficient algorithms for EVIs are known for general compact convex sets under mild oracle access assumptions [<span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Expected" role="doc-biblioref">ZAT+25</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">ZAT+25</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Zhang, Anagnostides, Tewolde, Berker, Farina, Conitzer and Sandholm</span> B. H. Zhang, I. Anagnostides, E. Tewolde, R. E. Berker, G. Farina, V. Conitzer and T. Sandholm. (2025). Expected Variational Inequalities. <em>International Conference on Machine Learning</em>, 74422–74446.</span></span>].</p>
     <p>Armed with the EVI primitive, we can reduct multicalibration to an external-regret minimizer <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: equation(block: false, body: [𝓗]))" role="math">\(R_{\mathcal{H}}\)</span> whose decision set is the class of tests <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓗])" role="math">\(\mathcal{H}\)</span> as follows.</p>
     <section class="env algorithm">
       <div class="env-title"><strong>Algorithm</strong>: Multicalibration from external regret</div>
@@ -4033,7 +4045,7 @@ mark {
 )" role="math">\(\sigma (\boldsymbol{p})\)</span> as a maximizer over <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span>.</p>
       </div>
     </section>
-    <p>Quite intuitively, the complexity of the required calibration class scales with the complexity of the deviation class. We can think of Theorem&nbsp;4.3 as a generalization of the classical connection between <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [ℓ], b: [1])" role="math">\(ℓ_{1}\)</span>-calibration and swap regret [<span class="citation-wrap"><a class="citation" href="#bib-foster1997calibrated" role="doc-biblioref">FV97</a> <span class="citation-note"><span class="citation-note-key">[FV97]</span> D. P. Foster and R. V. Vohra. (1997). Calibrated learning and correlated equilibrium. <em>Games and Economic Behavior</em>, 21, 40–55.</span></span>].</p>
+    <p>Quite intuitively, the complexity of the required calibration class scales with the complexity of the deviation class. We can think of Theorem&nbsp;4.3 as a generalization of the classical connection between <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [ℓ], b: [1])" role="math">\(ℓ_{1}\)</span>-calibration and swap regret [<span class="citation-wrap"><a class="citation" href="#bib-foster1997calibrated" role="doc-biblioref">FV97</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">FV97</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Foster and Vohra</span> D. P. Foster and R. V. Vohra. (1997). Calibrated learning and correlated equilibrium. <em>Games and Economic Behavior</em>, 21, 40–55.</span></span>].</p>
     <section id="remark-4-4" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Remark</strong> <strong class="env-number">4<span class="env-number-separator">.</span>4</strong> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -4217,7 +4229,7 @@ mark {
 )" role="math">\(\mathcal{H}_{\Phi}\)</span>; and</li>
       <li>solving EVIs over the forecast domain <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓤])" role="math">\(\mathcal{U}\)</span>.</li>
     </ol>
-    <p>The key distinction from the Gordon-Greenwald-Marks path is that we do <em>not</em> need to optimize over valid deviations directly. We only need a regret minimizer over tests that contain the maps <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [h], b: [φ])" role="math">\(h_{\phi}\)</span>. This extra flexibility is useful when characterizing the deviation class would otherwise require complex machinery, such the semiseparation construction of <span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [DFF+25]</a> <span class="citation-note"><span class="citation-note-key">[DFF+25]</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</span></span> mentioned in Chapter 2, Section&nbsp;2.2.</p>
+    <p>The key distinction from the Gordon-Greenwald-Marks path is that we do <em>not</em> need to optimize over valid deviations directly. We only need a regret minimizer over tests that contain the maps <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [h], b: [φ])" role="math">\(h_{\phi}\)</span>. This extra flexibility is useful when characterizing the deviation class would otherwise require complex machinery, such the semiseparation construction of <span class="citation-text"><span class="citation-author cite-authors">Daskalakis, Farina, Fishelson, Pipis and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">DFF+25</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">DFF+25</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Daskalakis, Farina, Fishelson, Pipis and Schneider</span> C. Daskalakis, G. Farina, M. Fishelson, C. Pipis and J. Schneider. (2025). Efficient Learning and Computation of Linear Correlated Equilibrium in General Convex Games. <em>Symposium on Theory of Computing (STOC)</em>.</span></span>]</span> mentioned in Chapter 2, Section&nbsp;2.2.</p>
     <h2 id="4-2-2-linear-deviations" class="notes-heading" data-level="2" data-number="4.2.2"><span class="secno">4.2.2</span> Linear deviations</h2>
     <p>As an illustration, consider linear deviations <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
@@ -4741,7 +4753,7 @@ mark {
       [)],
     ),
   ),
-)" role="math">\(O(B L S \sqrt{d T})\)</span> linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">Daskalakis, Farina, Fishelson, Pipis and Schneider [DFF+25]</a></span>, while avoiding semi-separation altogether.</p>
+)" role="math">\(O(B L S \sqrt{d T})\)</span> linear-swap regret, up to constants. This improves the dimension dependence of the recent semi-separation-based route of <span class="citation-text"><span class="citation-author cite-authors">Daskalakis, Farina, Fishelson, Pipis and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">DFF+25</a></span>]</span>, while avoiding semi-separation altogether.</p>
     <h2 id="4-2-3-rkhs-deviations" class="notes-heading" data-level="2" data-number="4.2.3"><span class="secno">4.2.3</span> RKHS deviations</h2>
     <p>The same idea extends beyond finite-dimensional linear classes. Suppose that the deviation functions <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [φ],

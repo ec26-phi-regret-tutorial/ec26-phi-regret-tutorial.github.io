@@ -35,7 +35,7 @@
 })
 
 #let body = if figure-html {
-  image("../public/figures/phi-fixed-point.svg")
+  image("../docs/figures/phi-fixed-point.svg")
 } else {
   drawing
 }

@@ -170,13 +170,37 @@
     "data-source": file,
     "data-href": file.replace(regex("\.typ$"), ".html"),
   ))[]
-  include("../" + file)
+  include ("../" + file)
   html.elem("span", attrs: (class: "crossrefs-end", hidden: ""))[]
 }
 #let lecture-bib = state("lecture-bib", ())
 #let lecnum = counter("lecnum")
 #let html-heading-tag(level) = ("h1", "h2", "h3", "h4", "h5", "h6").at(calc.min(level - 1, 5))
-#let html-text(value) = if value == none { "" } else { str(value) }
+#let html-text(value) = {
+  if value == none {
+    ""
+  } else if type(value) == str {
+    value
+  } else if type(value) == array {
+    value.map(html-text).join("")
+  } else if type(value) == content {
+    if value == linebreak() {
+      " "
+    } else if value.has("text") {
+      html-text(value.text)
+    } else if value.has("children") {
+      value.children.map(html-text).join("")
+    } else if value.has("body") {
+      html-text(value.body)
+    } else if value.has("child") {
+      html-text(value.child)
+    } else {
+      ""
+    }
+  } else {
+    str(value)
+  }
+}
 #let html-math-mode = sys.inputs.at("html-math", default: "svg")
 #let math-data-attrs(body, display, katex: none) = {
   let body = if body == none { [] } else { body }
@@ -333,9 +357,7 @@
         it.element.location(),
       )[#ref-chapter-prefix(target-chapter)#supplement~#number]
     } else if (
-      it.element != none
-        and it.element.func() == heading
-        and it.element.at("numbering", default: none) != none
+      it.element != none and it.element.func() == heading and it.element.at("numbering", default: none) != none
     ) {
       let numbering-fn = it.element.at("numbering")
       let numbers = counter(heading).at(it.element.location())
@@ -370,7 +392,7 @@
     class: "notes-meta",
     hidden: "",
     "data-lecture-number": html-text(lec_num),
-    "data-title": if strtitle != none { html-text(strtitle) } else { html-text(title) },
+    "data-title": html-text(title),
   ))[]
 
   show math.equation.where(block: false): it => {
@@ -434,23 +456,28 @@
       it.push(key_name)
       it
     })
+    let cite_label = citation_label_text(key, cited_keys: lecture-bib.final())
+    let cite_open = html.elem("span", attrs: (class: "citation-note-bracket"))[#text("[")]
+    let cite_key = html.elem("span", attrs: (class: "citation-note-key cite_key"))[#cite_label]
+    let cite_close = html.elem("span", attrs: (class: "citation-note-bracket"))[#text("]")]
+    let cite_authors = html.elem("span", attrs: (class: "citation-note-authors cite-authors", hidden: ""))[
+      #citation_author_text(key)
+    ]
     html.elem("span", attrs: (class: "citation-note"))[
-      #html.elem("span", attrs: (class: "citation-note-key"))[
-        #citation_bracket(key, cited_keys: lecture-bib.final())
-      ]
+      #cite_open#cite_key#cite_close#cite_authors
       #cite(key, form: "full")
     ]
   }
 }
 
 #let citation_link(key, body) = {
+  let link = html.elem("a", attrs: (
+    class: "citation",
+    href: "#" + citation_html_id(key),
+    role: "doc-biblioref",
+  ))[#body]
   html.elem("span", attrs: (class: "citation-wrap"))[
-    #html.elem("a", attrs: (
-      class: "citation",
-      href: "#" + citation_html_id(key),
-      role: "doc-biblioref",
-    ))[#body]
-    #citation_note(key)
+    #link#citation_note(key)
   ]
 }
 
@@ -477,9 +504,13 @@
     []
   } else {
     citation_register(key)
-    citation_link(key, text(fill: blue.darken(40%))[
-      #citation_author_text(key) #citation_bracket(key, cited_keys: lecture-bib.final(), ..supplement)
-    ])
+    let author_part = html.elem("span", attrs: (class: "citation-author cite-authors"))[
+      #citation_author_text(key)
+    ]
+    let label = text(fill: blue.darken(40%), citation_label_text(key, cited_keys: lecture-bib.final(), ..supplement))
+    html.elem("span", attrs: (class: "citation-text"))[
+      #author_part#text(" [")#citation_link(key, label)#text("]")
+    ]
   }
 }
 
@@ -517,7 +548,7 @@
             id: citation_html_id(item),
           ))[
             #html.elem("td", attrs: (class: "bib-key"))[
-              #citation_bracket(item, cited_keys: lecture-bib.final())
+              #text("[")#citation_label_text(item, cited_keys: lecture-bib.final())#text("]")
             ]
             #html.elem("td", attrs: (class: "bib-entry"))[#cite(item, form: "full")]
           ]

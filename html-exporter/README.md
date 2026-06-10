@@ -12,7 +12,7 @@ The canonical entry point is the repository Makefile:
 make html
 ```
 
-That regenerates `public/P*.html` with the notes CSS embedded in each chapter and builds matching PDFs in `public/pdf/`.
+That regenerates `docs/P*.html` with the notes CSS embedded in each chapter and builds matching PDFs in `docs/pdf/`.
 
 For a single chapter:
 
@@ -21,7 +21,7 @@ cargo run --manifest-path html-exporter/Cargo.toml -- \
   --root . \
   --math katex \
   P4-multicalibration.typ \
-  public/P4-multicalibration.html
+  docs/P4-multicalibration.html
 ```
 
 Useful options:
