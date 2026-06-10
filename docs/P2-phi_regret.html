@@ -669,6 +669,8 @@ code {
 }
 
 .env.algorithm {
+    --algorithm-rule: 2.25px solid #111;
+    --algorithm-midrule: 1.25px solid #1f1f1f;
     counter-increment: algorithm;
     padding: .15rem 0 .45rem;
     background: transparent;
@@ -679,8 +681,8 @@ code {
 .env.algorithm .env-title {
     margin: 0 0 .45rem;
     padding: .38rem 0 .42rem;
-    border-top: 1.5px solid #1f1f1f;
-    border-bottom: 1.5px solid #1f1f1f;
+    border-top: var(--algorithm-rule);
+    border-bottom: var(--algorithm-midrule);
     font-size: .98em;
     font-weight: 400;
     line-height: 1.28
@@ -705,7 +707,7 @@ code {
     --pseudo-stroke: #252525;
     margin: .1rem 0 0;
     padding: .12rem 0 .08rem;
-    border-bottom: 1.5px solid #1f1f1f;
+    border-bottom: var(--algorithm-rule);
     font-size: .94em;
     line-height: 1.36
 }
@@ -1566,7 +1568,7 @@ mark {
   [→],
   [ ],
   equation(block: false, body: [𝓧]),
-)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span>, an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate <em>expected fixed point</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is a distribution<sup>1</sup> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\phi : \mathcal{X} \to \mathcal{X}\)</span>, an <span class="math-katex-source" data-math-display="inline" data-typst-math="[ϵ]" role="math">\(\epsilon\)</span>-approximate <em>expected fixed point</em> of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> is a distribution<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</span> <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   [μ],
   [ ],
   [∈],
@@ -2034,7 +2036,7 @@ mark {
       </div>
     </section>
     <h1 id="2-2-semi-separation" class="notes-heading" data-level="1" data-number="2.2"><span class="secno">2.2</span> Semi-separation</h1>
-    <p>Theorem&nbsp;2.6 also, conveniently, solves the second problem. The key observation, as it turns out, is that it is not actually necessary to be able to efficiently optimize/separate over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. In fact, it is sufficient to be able to perform the following task, which we call <em>semi-separation</em>.</p>
+    <p><a href="#theorem-2-6">Theorem&nbsp;2.6</a> also, conveniently, solves the second problem. The key observation, as it turns out, is that it is not actually necessary to be able to efficiently optimize/separate over <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span>. In fact, it is sufficient to be able to perform the following task, which we call <em>semi-separation</em>.</p>
     <section id="definition-2-7" class="env statement">
       <p class="env-heading"><span class="env-title env-title-numbered"><strong class="env-kind">Definition</strong> <strong class="env-number">2<span class="env-number-separator">.</span>7</strong> <span class="env-extra">(Semi-separation)</span> <strong class="env-punct">.</strong></span></p>
       <div class="env-body">
@@ -2083,7 +2085,7 @@ mark {
         </ul>
       </div>
     </section>
-    <p>The proof of Theorem&nbsp;2.6 also gives a solution to the semi-separation problem: indeed, while constructing the sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>The proof of <a href="#theorem-2-6">Theorem&nbsp;2.6</a> also gives a solution to the semi-separation problem: indeed, while constructing the sequence <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐱]),
     t: lr(body: sequence([(], [1], [)])),
@@ -2154,7 +2156,7 @@ mark {
   attach(base: equation(block: false, body: [ℝ]), t: [d]),
 )" role="math">\(\phi : \mathcal{X} \to \mathbb{R}^{d}\)</span> actually has image in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> is a hard problem, and indeed a semi-separation algorithm does not achieve this. Semi-separation only guarantees an expected fixed point <em>or</em> a separation certificate; in particular, it is possible that semi-separation algorithms output an expected fixed point even when <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence([φ], [ ], [∉], [ ], attach(base: [Φ], t: [q]))" role="math">\(\phi \notin \Phi^{q}\)</span>.</p>
     <h1 id="2-3-efficient-regret-minimization-via-semi-separation" class="notes-heading" data-level="1" data-number="2.3"><span class="secno">2.3</span> Efficient regret minimization via semi-separation</h1>
-    <p>We now briefly sketch how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> expressible in the form given by Definition&nbsp;2.1.</p>
+    <p>We now briefly sketch how to use a semi-separation oracle to construct an efficient regret minimizer over any set of functions <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [Φ], t: [q])" role="math">\(\Phi^{q}\)</span> expressible in the form given by <a href="#definition-2-1">Definition&nbsp;2.1</a>.</p>
     <p>At a high level, the algorithm relies on an online algorithm called <em>Shell gradient descent</em>, developed by&nbsp;<span class="citation-text"><span class="citation-author cite-authors">Daskalakis, Farina, Fishelson, Pipis and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">DFF+25</a></span>]</span>. This is just projected gradient descent, but with the twist that the underlying constraint set—the “shell set” <span class="math-katex-source" data-math-display="inline" data-typst-math="accent(base: [Φ], accent: &quot;\u{303}&quot;)" role="math">\(\tilde{\Phi}\)</span>—is <em>changing from round to round</em>. The key invariance which guarantees correctness is that <span class="math-katex-source" data-math-display="inline" data-typst-math="accent(base: [Φ], accent: &quot;\u{303}&quot;)" role="math">\(\tilde{\Phi}\)</span> always contains the constraint set of interest—namely, the set of endomorphisms. What’s more, unlike the set of endomorphisms <span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>, <span class="math-katex-source" data-math-display="inline" data-typst-math="accent(base: [Φ], accent: &quot;\u{303}&quot;)" role="math">\(\tilde{\Phi}\)</span> always admits efficient oracle access.</p>
     <p>Now, for a given function <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span>, the algorithm of&nbsp;<span class="citation-text"><span class="citation-author cite-authors">Daskalakis, Farina, Fishelson, Pipis and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">DFF+25</a></span>]</span> first attempts to find a fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> in <span class="math-katex-source" data-math-display="inline" data-typst-math="equation(block: false, body: [𝓧])" role="math">\(\mathcal{X}\)</span> through a semi-separation oracle. If it succeeds, we can safely output such a fixed point <em>even though <span class="math-katex-source" data-math-display="inline" data-typst-math="[φ]" role="math">\(\phi\)</span> may not necessarily be an endomorphism</em>. Otherwise, the semi-separation oracle yields a separating direction, thereby providing sufficient information to shrink the shell set <span class="math-katex-source" data-math-display="inline" data-typst-math="accent(base: [Φ], accent: &quot;\u{303}&quot;)" role="math">\(\tilde{\Phi}\)</span>. Moreover, shell gradient descent hinges on a projection oracle, which again crucially uses the semi-separation oracle developed above. For the details, we refer the interested readers to&nbsp;<span class="citation-text"><span class="citation-author cite-authors">Daskalakis, Farina, Fishelson, Pipis and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Daskalakis25-Efficient" role="doc-biblioref">DFF+25</a></span>]</span>, as well as&nbsp;<span class="citation-text"><span class="citation-author cite-authors">Zhang, Anagnostides, Tewolde, Berker, Farina, Conitzer and Sandholm</span> [<span class="citation-wrap"><a class="citation" href="#bib-Zhang25-Learning" role="doc-biblioref">ZAT+25a</a></span>]</span> for the extension beyond linear swap regret.</p>
     <figure class="rendered-figure typst">
@@ -2187,7 +2189,11 @@ mark {
           <td class="bib-entry">B. H. Zhang, G. Farina and T. Sandholm. (2024). Mediator Interpretation and Faster Learning Algorithms for Linear Correlated Equilibria in General Sequential Games. <em>International Conference on Learning Representations</em>.</td>
         </tr>
       </tbody></table>
-    </section></article>
+    </section><section class="endnotes" id="endnotes">
+<h1>Notes</h1>
+<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body">Throughout this document, to avoid measure-theoretic issues, we only consider finite-support distributions.</span></p>
+</section>
+</article>
 </main>
 <script>
 (() => {

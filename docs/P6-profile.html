@@ -669,6 +669,8 @@ code {
 }
 
 .env.algorithm {
+    --algorithm-rule: 2.25px solid #111;
+    --algorithm-midrule: 1.25px solid #1f1f1f;
     counter-increment: algorithm;
     padding: .15rem 0 .45rem;
     background: transparent;
@@ -679,8 +681,8 @@ code {
 .env.algorithm .env-title {
     margin: 0 0 .45rem;
     padding: .38rem 0 .42rem;
-    border-top: 1.5px solid #1f1f1f;
-    border-bottom: 1.5px solid #1f1f1f;
+    border-top: var(--algorithm-rule);
+    border-bottom: var(--algorithm-midrule);
     font-size: .98em;
     font-weight: 400;
     line-height: 1.28
@@ -705,7 +707,7 @@ code {
     --pseudo-stroke: #252525;
     margin: .1rem 0 0;
     padding: .12rem 0 .08rem;
-    border-bottom: 1.5px solid #1f1f1f;
+    border-bottom: var(--algorithm-rule);
     font-size: .94em;
     line-height: 1.36
 }
@@ -1364,7 +1366,7 @@ mark {
 <li class="toc-l1"><a href="#6-3-reducing-to-an-approachability-problem"><span class="toc-no">6.3</span><span class="toc-title">Reducing to an approachability problem</span></a></li>
 <li class="toc-l1"><a href="#6-4-response-based-approachability"><span class="toc-no">6.4</span><span class="toc-title">Response-based approachability</span></a></li>
 </ol></nav>
-<p>In this chapter, we introduce the notion of <em>profile swap regret</em>, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees <em>non-manipulability</em>—in a sense that will be formalized soon—against a dynamic optimizer. What’s more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by&nbsp;<span class="citation-text"><span class="citation-author cite-authors">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan</span> [<span class="citation-wrap"><a class="citation" href="#bib-Arunachaleswaran25-Profile" role="doc-biblioref">ACM+25</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">ACM+25</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan</span> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider and B. Sivan. (2025). Swap Regret and Correlated Equilibria Beyond Normal-Form Games. <em>Conference on Economics and Computation (EC)</em>.</span></span>]</span>, who also provided the first efficient algorithm. In what follows, we present the approach of <span class="citation-text"><span class="citation-author cite-authors">Anagnostides, Farina, Fishelson, Luo and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Anagnostides26-Swap" role="doc-biblioref">AFF+26</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">AFF+26</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Anagnostides, Farina, Fishelson, Luo and Schneider</span> I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. <em>Conference on Learning Theory (COLT)</em>.</span></span>]</span>, which in turn relies on the response-based approachability algorithm of <span class="citation-text"><span class="citation-author cite-authors">Bernstein and Shimkin</span> [<span class="citation-wrap"><a class="citation" href="#bib-Bernstein15-Approachability" role="doc-biblioref">BS15</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">BS15</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Bernstein and Shimkin</span> A. Bernstein and N. Shimkin. (2015). Response-Based Approachability with Applications to Generalized No-Regret Problems. <em>Journal of Machine Learning Research</em>, 16, 747–773.</span></span>]</span>.<sup>1</sup></p>
+<p>In this chapter, we introduce the notion of <em>profile swap regret</em>, which lies in between linear swap regret and full swap regret. A key property of profile swap regret is that it guarantees <em>non-manipulability</em>—in a sense that will be formalized soon—against a dynamic optimizer. What’s more, there is an efficient algorithm for minimizing profile swap regret. This notion was recently introduced by&nbsp;<span class="citation-text"><span class="citation-author cite-authors">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan</span> [<span class="citation-wrap"><a class="citation" href="#bib-Arunachaleswaran25-Profile" role="doc-biblioref">ACM+25</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">ACM+25</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Arunachaleswaran, Collina, Mansour, Mohri, Schneider and Sivan</span> E. R. Arunachaleswaran, N. Collina, Y. Mansour, M. Mohri, J. Schneider and B. Sivan. (2025). Swap Regret and Correlated Equilibria Beyond Normal-Form Games. <em>Conference on Economics and Computation (EC)</em>.</span></span>]</span>, who also provided the first efficient algorithm. In what follows, we present the approach of <span class="citation-text"><span class="citation-author cite-authors">Anagnostides, Farina, Fishelson, Luo and Schneider</span> [<span class="citation-wrap"><a class="citation" href="#bib-Anagnostides26-Swap" role="doc-biblioref">AFF+26</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">AFF+26</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Anagnostides, Farina, Fishelson, Luo and Schneider</span> I. Anagnostides, G. Farina, M. Fishelson, H. Luo and J. Schneider. (2026). Swap Regret Minimization Through Response-Based Approachability. <em>Conference on Learning Theory (COLT)</em>.</span></span>]</span>, which in turn relies on the response-based approachability algorithm of <span class="citation-text"><span class="citation-author cite-authors">Bernstein and Shimkin</span> [<span class="citation-wrap"><a class="citation" href="#bib-Bernstein15-Approachability" role="doc-biblioref">BS15</a><span class="citation-note"><span class="citation-note-bracket">[</span><span class="citation-note-key cite_key">BS15</span><span class="citation-note-bracket">]</span><span class="citation-note-authors cite-authors" hidden="">Bernstein and Shimkin</span> A. Bernstein and N. Shimkin. (2015). Response-Based Approachability with Applications to Generalized No-Regret Problems. <em>Journal of Machine Learning Research</em>, 16, 747–773.</span></span>]</span>.<sup class="footnote-ref" id="fnref-1"><a href="#fn-end-1">1</a></sup><span class="footnote" id="fn-side-1"><span class="footnote-num">1</span>We point the interested reader to <a href="https://sites.google.com/view/strategic-learning-ec25"><code>https://sites.google.com/view/strategic-learning-ec25</code></a> for an adjacent workshop at EC ‘25.</span></p>
     <h1 id="6-1-setup" class="notes-heading" data-level="1" data-number="6.1"><span class="secno">6.1</span> Setup</h1>
     <p>We operate in the usual online linear optimization setting. The learner picks strategies from a convex and compact strategy set <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   equation(block: false, body: [𝓧]),
@@ -2935,7 +2937,7 @@ mark {
   [.],
 )">\[\displaystyle \left\langle \phi - \left(\mathbf{I}, 0\right),\boldsymbol{s} \right\rangle \le 0.\]</span></div>
         </figure>
-        <p>Therefore, using (2),</p>
+        <p>Therefore, using (<a href="#loc-7">2</a>),</p>
         <figure class="equation" role="math">
           <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(
@@ -4369,7 +4371,7 @@ mark {
   [,],
 )">\[\displaystyle \left\langle \mathbf{U}^{\left(t-1\right)},κ^{\left(t\right)} \right\rangle \ge \left\langle \mathbf{U}^{\left(t-1\right)},\boldsymbol{s}^{\left(t\right)} \right\rangle ,\]</span></div>
         </figure>
-        <p>which is exactly (7).</p>
+        <p>which is exactly (<a href="#loc-10">7</a>).</p>
       </div>
     </section>
     <p>The invariant implies approachability by the usual Pythagorean argument.</p>
@@ -4528,7 +4530,7 @@ mark {
         </figure>
       </div>
     </section>
-    <p>Applying Lemma&nbsp;6.6 with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+    <p>Applying <a href="#lemma-6-6">Lemma&nbsp;6.6</a> with <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   attach(
     base: equation(block: false, body: [𝐳]),
     t: lr(body: sequence([(], [t], [)])),
@@ -5036,7 +5038,11 @@ mark {
           <td class="bib-entry">A. Assos, Y. Dagan and C. Daskalakis. (2024). Maximizing utility in multi-agent environments by anticipating the behavior of other learners. <em>Neural Information Processing Systems (NeurIPS)</em>.</td>
         </tr>
       </tbody></table>
-    </section></article>
+    </section><section class="endnotes" id="endnotes">
+<h1>Notes</h1>
+<p id="fn-end-1"><a class="footnote-backref" href="#fnref-1">1</a><span class="footnote-body">We point the interested reader to <a href="https://sites.google.com/view/strategic-learning-ec25"><code>https://sites.google.com/view/strategic-learning-ec25</code></a> for an adjacent workshop at EC ‘25.</span></p>
+</section>
+</article>
 </main>
 <script>
 (() => {

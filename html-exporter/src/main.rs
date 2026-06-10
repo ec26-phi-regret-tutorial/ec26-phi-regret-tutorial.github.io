@@ -710,7 +710,7 @@ fn unwrap_generated_biblioref_links(body: String) -> String {
         .replace_all(&body, |captures: &Captures| {
             let whole = captures.get(0).map_or("", |m| m.as_str());
             let attrs = captures.name("attrs").map_or("", |m| m.as_str());
-            if attrs.contains("citation") {
+            if !attrs.contains(r#"role="doc-biblioref""#) || attrs.contains("citation") {
                 whole.to_owned()
             } else {
                 captures.name("inner").map_or("", |m| m.as_str()).to_owned()
@@ -1580,6 +1580,27 @@ mod tests {
         assert!(body.contains("<td class=\"bib-entry\">Entry</td>"));
         assert!(!body.contains("role=\"doc-bibliography\""));
         assert!(!body.contains("doc-endnotes"));
+    }
+
+    #[test]
+    fn postprocess_preserves_reference_links() {
+        let body = r##"
+<p>See <a href="#loc-1">Section 1.1</a>, <a href="#loc-2">Theorem 1.2</a>, and <a href="#loc-3">(3)</a>.</p>
+<p>Generated citation <a href="#bib-old" role="doc-biblioref">OLD</a> is unwrapped.</p>
+<p>Custom citation <a class="citation" href="#bib-new" role="doc-biblioref">NEW</a> is preserved.</p>
+"##
+        .to_owned();
+
+        let (body, _) = postprocess_body(body, &[], MathMode::Svg).unwrap();
+
+        assert!(body.contains(r##"<a href="#loc-1">Section 1.1</a>"##));
+        assert!(body.contains(r##"<a href="#loc-2">Theorem 1.2</a>"##));
+        assert!(body.contains(r##"<a href="#loc-3">(3)</a>"##));
+        assert!(body.contains("Generated citation OLD is unwrapped."));
+        assert!(!body.contains(r##"<a href="#bib-old" role="doc-biblioref">OLD</a>"##));
+        assert!(
+            body.contains(r##"<a class="citation" href="#bib-new" role="doc-biblioref">NEW</a>"##)
+        );
     }
 
     #[test]
