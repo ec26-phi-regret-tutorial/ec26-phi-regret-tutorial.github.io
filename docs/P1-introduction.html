@@ -5271,98 +5271,177 @@ mark {
 )" role="math">\(\mathbf{M}^{(t)}\)</span> in which each column is given by the strategy of the corresponding regret minimizer, and then output any fixed point of <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(
   base: equation(block: false, body: [𝐌]),
   t: lr(body: sequence([(], [t], [)])),
-)" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in <a href="#theorem-1-9">Theorem&nbsp;1.9</a>, can be cast as <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+)" role="math">\(\mathbf{M}^{(t)}\)</span>. To explain the second part of the algorithm, let’s first note that the utility observed by <span class="math-katex-source" data-math-display="inline" data-typst-math="attach(base: [R], b: [Φ])" role="math">\(R_{\Phi}\)</span>, per the construction in <a href="#theorem-1-9">Theorem&nbsp;1.9</a>, can be cast as</p>
+    <figure class="equation" role="math">
+      <div class="equation-line is-unnumbered" data-line="1" data-math-display="block" data-typst-math="sequence(
   attach(base: [u], b: [Φ]),
   lr(body: sequence([(], [φ], [)])),
   [ ],
   [=],
   [ ],
-  equation(
-    block: false,
-    body: lr(
-      body: sequence(
-        [⟨],
-        [ ],
-        sequence(
-          [φ],
-          lr(
-            body: sequence(
-              [(],
-              attach(
-                base: equation(block: false, body: [𝐱]),
-                t: lr(body: sequence([(], [t], [)])),
-              ),
-              [)],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      sequence(
+        [φ],
+        lr(
+          body: sequence(
+            [(],
+            attach(
+              base: equation(block: false, body: [𝐱]),
+              t: lr(body: sequence([(], [t], [)])),
             ),
+            [)],
           ),
         ),
-        [,],
-        attach(
-          base: equation(block: false, body: [𝐮]),
-          t: lr(body: sequence([(], [t], [)])),
-        ),
-        [ ],
-        [⟩],
       ),
+      [,],
+      attach(
+        base: equation(block: false, body: [𝐮]),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [ ],
+      [⟩],
     ),
   ),
   [ ],
   [=],
   [ ],
-  equation(
-    block: false,
-    body: lr(
-      body: sequence(
-        [⟨],
-        [ ],
-        sequence(
-          equation(block: false, body: [𝐌]),
-          [ ],
-          attach(
-            base: equation(block: false, body: [𝐱]),
-            t: lr(body: sequence([(], [t], [)])),
-          ),
-        ),
-        [,],
-        attach(
-          base: equation(block: false, body: [𝐮]),
-          t: lr(body: sequence([(], [t], [)])),
-        ),
-        [ ],
-        [⟩],
-      ),
-    ),
-  ),
-  [ ],
-  [=],
-  [ ],
-  equation(
-    block: false,
-    body: lr(
-      body: sequence(
-        [⟨],
-        [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      sequence(
         equation(block: false, body: [𝐌]),
-        [,],
-        sequence(
-          attach(
-            base: equation(block: false, body: [𝐮]),
-            t: lr(body: sequence([(], [t], [)])),
-          ),
-          [ ],
-          [⊗],
-          [ ],
-          attach(
-            base: equation(block: false, body: [𝐱]),
-            t: lr(body: sequence([(], [t], [)])),
-          ),
-        ),
         [ ],
-        [⟩],
+        attach(
+          base: equation(block: false, body: [𝐱]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
       ),
+      [,],
+      attach(
+        base: equation(block: false, body: [𝐮]),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [ ],
+      [⟩],
     ),
   ),
-)" role="math">\(u_{\Phi}(\phi ) = \left\langle \phi (\boldsymbol{x}^{(t)}),\boldsymbol{u}^{(t)} \right\rangle = \left\langle \mathbf{M} \boldsymbol{x}^{(t)},\boldsymbol{u}^{(t)} \right\rangle = \left\langle \mathbf{M},\boldsymbol{u}^{(t)} ⊗ \boldsymbol{x}^{(t)} \right\rangle\)</span>, where we used that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      equation(block: false, body: [𝐌]),
+      [,],
+      sequence(
+        attach(
+          base: equation(block: false, body: [𝐮]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
+        [ ],
+        [⊗],
+        [ ],
+        attach(
+          base: equation(block: false, body: [𝐱]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [,],
+)"><span class="equation-math math-katex-source" data-math-display="block" data-typst-math="sequence(
+  attach(base: [u], b: [Φ]),
+  lr(body: sequence([(], [φ], [)])),
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      sequence(
+        [φ],
+        lr(
+          body: sequence(
+            [(],
+            attach(
+              base: equation(block: false, body: [𝐱]),
+              t: lr(body: sequence([(], [t], [)])),
+            ),
+            [)],
+          ),
+        ),
+      ),
+      [,],
+      attach(
+        base: equation(block: false, body: [𝐮]),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      sequence(
+        equation(block: false, body: [𝐌]),
+        [ ],
+        attach(
+          base: equation(block: false, body: [𝐱]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
+      ),
+      [,],
+      attach(
+        base: equation(block: false, body: [𝐮]),
+        t: lr(body: sequence([(], [t], [)])),
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [ ],
+  [=],
+  [ ],
+  lr(
+    body: sequence(
+      [⟨],
+      [ ],
+      equation(block: false, body: [𝐌]),
+      [,],
+      sequence(
+        attach(
+          base: equation(block: false, body: [𝐮]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
+        [ ],
+        [⊗],
+        [ ],
+        attach(
+          base: equation(block: false, body: [𝐱]),
+          t: lr(body: sequence([(], [t], [)])),
+        ),
+      ),
+      [ ],
+      [⟩],
+    ),
+  ),
+  [,],
+)">\[\displaystyle u_{\Phi}\left(\phi \right) = \left\langle \phi \left(\boldsymbol{x}^{\left(t\right)}\right),\boldsymbol{u}^{\left(t\right)} \right\rangle = \left\langle \mathbf{M} \boldsymbol{x}^{\left(t\right)},\boldsymbol{u}^{\left(t\right)} \right\rangle = \left\langle \mathbf{M},\boldsymbol{u}^{\left(t\right)} ⊗ \boldsymbol{x}^{\left(t\right)} \right\rangle ,\]</span></div>
+    </figure>
+    <p>where we used that <span class="math-katex-source" data-math-display="inline" data-typst-math="sequence(
   sequence(
     [φ],
     lr(
