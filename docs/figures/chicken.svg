@@ -2,6 +2,14 @@
     <g>
         <g class="typst-group">
             <g>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 2 18.712954447588583)" d="M 0 0v 34.84323 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 32.5693359375 1.6456692913385826)" d="M 0 0v 51.91052 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 63.138671875 1.6456692913385826)" d="M 0 0v 51.91052 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 102.24453125 1.6456692913385826)" d="M 0 0v 51.91052 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 32.215005228838585 2)" d="M 0 0h 70.38386 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 1.6456692913385826 19.067285156249998)" d="M 0 0h 100.95319 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 1.6456692913385826 36.134570312499996)" d="M 0 0h 100.95319 "/>
+                <path class="typst-shape" fill="none" stroke="#000000" stroke-width="0.7086614173228346" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="matrix(1 0 0 1 1.6456692913385826 53.20185546875)" d="M 0 0h 100.95319 "/>
                 <g class="typst-text" transform="matrix(1 0 0 -1 37.5693359375 14.067285156249998)">
                     <use xlink:href="#gDD31209643C236450EDAC46A4BDC6C81" x="0" y="0" fill="#000000" fill-rule="nonzero"/>
                     <use xlink:href="#g131B820404BBDEA51D60D357C5250494" x="5.72255859375" y="0" fill="#000000" fill-rule="nonzero"/>

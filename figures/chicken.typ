@@ -4,7 +4,7 @@
 #let body = table(
   columns: 3,
   align: center + horizon,
-  stroke: none,
+  stroke: (j, i) => if j >= 1 or i >= 1 { .25mm + black } else { none },
   [], [Stop], [Go],
   [Stop], [0, 0], [0, 1],
   [Go], [1, 0], [-5, -5],
