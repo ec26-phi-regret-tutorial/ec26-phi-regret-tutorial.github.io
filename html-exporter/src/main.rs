@@ -667,10 +667,18 @@ fn postprocess_body(
     body = re_empty_hidden_div().replace_all(&body, "").to_string();
     body = normalize_typst_classes(body);
     body = math::postprocess_html_math(body, math_mode);
+    body = render_raw_tex_inline_symbols(body);
     let (body, bibliography_blocks) = protect_visible_bibliographies(body);
     let body = restore_visible_bibliographies(body, bibliography_blocks);
     let body = unwrap_generated_biblioref_links(body);
     Ok(rewrite_footnotes(body, endnotes))
+}
+
+fn render_raw_tex_inline_symbols(body: String) -> String {
+    body.replace(
+        r"\Phi-",
+        r#"<span class="math-katex-source" data-math-display="inline" data-typst-math="[Φ]" role="math">\(\Phi\)</span>-"#,
+    )
 }
 
 fn normalize_typst_classes(mut body: String) -> String {
@@ -1656,6 +1664,20 @@ mod tests {
         assert!(
             body.contains(r##"<a class="citation" href="#bib-new" role="doc-biblioref">NEW</a>"##)
         );
+    }
+
+    #[test]
+    fn postprocess_renders_raw_tex_phi_in_citation_notes() {
+        let body = r##"
+<p>Forecasting [<span class="citation-wrap"><a class="citation" href="#bib-fp" role="doc-biblioref">FP26</a><span class="citation-note">A New Route to \Phi-Regret Minimization.</span></span>].</p>
+"##
+        .to_owned();
+
+        let (body, _) = postprocess_body(body, &[], MathMode::Katex).unwrap();
+
+        assert!(body.contains("math-katex-source"));
+        assert!(body.contains(r#"\(\Phi\)</span>-Regret"#));
+        assert!(!body.contains(r"\Phi-Regret"));
     }
 
     #[test]
