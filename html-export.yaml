@@ -1,3 +1,9 @@
+site:
+  event: ACM EC’26 Tutorial
+  title: Learning and Computation of Phi-Equilibria
+  authors: Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang
+  index_href: index.html
+
 how_to_cite:
   authors: Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu
   key_prefix: anagnostides-farina-zhang-2026-phi-equilibria

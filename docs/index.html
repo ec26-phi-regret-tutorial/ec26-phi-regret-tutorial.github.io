@@ -222,6 +222,18 @@
       font-size: 1rem
     }
 
+    .sessions-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+      margin: 1rem 0 .45rem
+    }
+
+    .side-panel .sessions-heading .sessions-title {
+      margin: 0
+    }
+
     .details-title {
       position: absolute;
       width: 1px;
@@ -251,7 +263,9 @@
       border-radius: 2px;
       background: #fffdf9;
       color: var(--accent);
+      font-family: "Frutiger", "Helvetica Neue", Arial, sans-serif;
       font-size: .92rem;
+      font-weight: 400;
       line-height: 1.2
     }
 
@@ -268,6 +282,25 @@
       color: #24527e
     }
 
+    .button.zoom {
+      background: #faf4ee;
+      border-color: #d7b99f;
+      color: #8a4c20
+    }
+
+    .button.compact {
+      min-height: 1.7rem;
+      padding: .12rem .48rem;
+      font-size: .76rem;
+      white-space: nowrap
+    }
+
+    .button.compact svg {
+      width: .86rem;
+      height: .86rem;
+      margin-right: .3rem
+    }
+
     .button:hover {
       text-decoration: none;
       background: #f5f1e9
@@ -276,6 +309,11 @@
     .button.primary:hover {
       background: #dcebf8;
       color: #173f64
+    }
+
+    .button.zoom:hover {
+      background: #f0dfd1;
+      color: #5f3213
     }
 
     .lecture-content {
@@ -613,6 +651,7 @@
               d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.5 7.5 0 0 1 8 3.86c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z">
             </path>
           </svg>GitHub</a>
+        <a class="button zoom" href="https://yale.zoom.us/j/95642888370" aria-label="Join the tutorial Zoom meeting"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M4.75 6.5A2.75 2.75 0 0 0 2 9.25v5.5a2.75 2.75 0 0 0 2.75 2.75h8.5A2.75 2.75 0 0 0 16 14.75v-.68l3.74 2.4A1.45 1.45 0 0 0 22 15.25v-6.5a1.45 1.45 0 0 0-2.26-1.22L16 9.93v-.68a2.75 2.75 0 0 0-2.75-2.75h-8.5Zm0 1.5h8.5c.69 0 1.25.56 1.25 1.25v5.5c0 .69-.56 1.25-1.25 1.25h-8.5c-.69 0-1.25-.56-1.25-1.25v-5.5C3.5 8.56 4.06 8 4.75 8Zm11.25 3.7 4.5-2.89v6.38L16 12.3v-.6Z"></path></svg>Join Zoom</a>
       </div>
       <section id="notes" class="reading-panel">
         <h1>Tutorial Notes</h1>
@@ -652,7 +691,10 @@
         </dl>
         <p><strong>Prerequisites.</strong> Basic game theory and introductory online learning.</p>
         <p>No prior knowledge of \(\Phi\)-regret or \(\Phi\)-equilibria is assumed.</p>
-        <h1 class="sessions-title">Sessions</h1>
+        <div class="sessions-heading">
+          <h1 class="sessions-title">Sessions</h1>
+          <a class="button compact zoom" href="https://yale.zoom.us/j/95642888370" aria-label="Join the tutorial Zoom meeting"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path d="M4.75 6.5A2.75 2.75 0 0 0 2 9.25v5.5a2.75 2.75 0 0 0 2.75 2.75h8.5A2.75 2.75 0 0 0 16 14.75v-.68l3.74 2.4A1.45 1.45 0 0 0 22 15.25v-6.5a1.45 1.45 0 0 0-2.26-1.22L16 9.93v-.68a2.75 2.75 0 0 0-2.75-2.75h-8.5Zm0 1.5h8.5c.69 0 1.25.56 1.25 1.25v5.5c0 .69-.56 1.25-1.25 1.25h-8.5c-.69 0-1.25-.56-1.25-1.25v-5.5C3.5 8.56 4.06 8 4.75 8Zm11.25 3.7 4.5-2.89v6.38L16 12.3v-.6Z"></path></svg>Join Zoom</a>
+        </div>
         <div class="schedule">
           <section class="session">
             <h2>Session 1</h2>

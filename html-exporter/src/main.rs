@@ -27,6 +27,7 @@ use typst_kit::package::PackageStorage;
 const PAGE_CSS: &str = include_str!("gabri-notes.css");
 const GITHUB_REPOSITORY_URL: &str =
     "https://github.com/ec26-phi-regret-tutorial/ec26-phi-regret-tutorial.github.io";
+const DEFAULT_EVENT_NAME: &str = "ACM EC'26 Tutorial";
 
 fn main() {
     if let Err(err) = run() {
@@ -945,27 +946,64 @@ fn render_chapter_rail(
     config: &Config,
 ) -> String {
     let mut out = String::from("<nav class=\"chapter-rail\" aria-label=\"Chapters\">\n");
-    out.push_str("<div class=\"chapter-rail-course\"><div class=\"course-event\">ACM EC&rsquo;26 Tutorial</div>");
-    if let Some(index) = &config.index_href {
+    let event = export_config
+        .site
+        .event
+        .as_deref()
+        .unwrap_or(DEFAULT_EVENT_NAME);
+    let title = export_config
+        .site
+        .title
+        .as_deref()
+        .unwrap_or(&config.site_title);
+    let authors = export_config
+        .site
+        .authors
+        .as_deref()
+        .unwrap_or(&config.authors);
+    let index_href = export_config
+        .site
+        .index_href
+        .as_deref()
+        .or(config.index_href.as_deref());
+
+    out.push_str("<div class=\"chapter-rail-course\">");
+    if let Some(index) = index_href {
+        write!(
+            out,
+            "<a class=\"course-event\" href=\"{}\">{}</a>",
+            escape_attr(index),
+            escape_html(event)
+        )
+        .unwrap();
+    } else {
+        write!(
+            out,
+            "<div class=\"course-event\">{}</div>",
+            escape_html(event)
+        )
+        .unwrap();
+    }
+    if let Some(index) = index_href {
         write!(
             out,
             "<a class=\"course-title course-title-link\" href=\"{}\">{}</a>",
             escape_attr(index),
-            escape_html(&config.site_title)
+            escape_html(title)
         )
         .unwrap();
     } else {
         write!(
             out,
             "<div class=\"course-title\">{}</div>",
-            escape_html(&config.site_title)
+            escape_html(title)
         )
         .unwrap();
     }
     write!(
         out,
         "<div class=\"course-authors\">{}</div></div>\n",
-        escape_html(&config.authors)
+        escape_html(authors)
     )
     .unwrap();
     out.push_str("<div class=\"chapter-rail-heading\">Chapters</div>\n");

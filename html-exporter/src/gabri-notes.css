@@ -315,13 +315,23 @@ figure[id],
     border-bottom: 1px solid var(--rule)
 }
 
-.course-event {
+.chapter-rail .course-event {
+    display: block;
     margin: 0 0 .28rem;
+    padding: 0;
     color: var(--brown);
+    background: transparent;
     font-size: .68rem;
     font-weight: 700;
     letter-spacing: .04em;
     text-transform: uppercase
+}
+
+.chapter-rail .course-event:hover {
+    padding: 0;
+    color: var(--brown);
+    background: transparent;
+    text-decoration: none
 }
 
 .chapter-rail-course .course-title {

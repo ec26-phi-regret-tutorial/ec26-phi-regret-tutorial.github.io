@@ -5,8 +5,22 @@ use std::path::Path;
 
 #[derive(Clone, Debug, Deserialize)]
 pub(crate) struct ExportConfig {
+    #[serde(default)]
+    pub(crate) site: SiteConfig,
     pub(crate) how_to_cite: CitationConfig,
     pub(crate) chapters: Vec<ChapterNav>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize)]
+pub(crate) struct SiteConfig {
+    #[serde(default)]
+    pub(crate) event: Option<String>,
+    #[serde(default)]
+    pub(crate) title: Option<String>,
+    #[serde(default)]
+    pub(crate) authors: Option<String>,
+    #[serde(default)]
+    pub(crate) index_href: Option<String>,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -48,6 +62,7 @@ impl ExportConfig {
     }
 
     fn validate(&self, path: &Path) -> Result<(), String> {
+        self.site.validate(path)?;
         self.how_to_cite.validate(path)?;
 
         if self.chapters.is_empty() {
@@ -100,6 +115,16 @@ impl ExportConfig {
             }
         }
 
+        Ok(())
+    }
+}
+
+impl SiteConfig {
+    fn validate(&self, path: &Path) -> Result<(), String> {
+        validate_optional_nonempty(path, "site.event", &self.event)?;
+        validate_optional_nonempty(path, "site.title", &self.title)?;
+        validate_optional_nonempty(path, "site.authors", &self.authors)?;
+        validate_optional_nonempty(path, "site.index_href", &self.index_href)?;
         Ok(())
     }
 }
@@ -170,6 +195,20 @@ impl CitationConfig {
     }
 }
 
+fn validate_optional_nonempty(
+    path: &Path,
+    field: &str,
+    value: &Option<String>,
+) -> Result<(), String> {
+    if value.as_ref().is_some_and(|value| value.trim().is_empty()) {
+        return Err(format!(
+            "export config {} has empty {field}",
+            path.display()
+        ));
+    }
+    Ok(())
+}
+
 impl ChapterNav {
     pub(crate) fn href(&self) -> Result<String, String> {
         let source = Path::new(&self.source);
@@ -194,6 +233,7 @@ mod tests {
     #[test]
     fn finds_current_chapter_by_input_file_name() {
         let book = ExportConfig {
+            site: SiteConfig::default(),
             how_to_cite: citation_config(),
             chapters: vec![ChapterNav {
                 number: 4,

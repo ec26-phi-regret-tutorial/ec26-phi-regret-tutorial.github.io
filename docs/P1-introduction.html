@@ -323,13 +323,23 @@ figure[id],
     border-bottom: 1px solid var(--rule)
 }
 
-.course-event {
+.chapter-rail .course-event {
+    display: block;
     margin: 0 0 .28rem;
+    padding: 0;
     color: var(--brown);
+    background: transparent;
     font-size: .68rem;
     font-weight: 700;
     letter-spacing: .04em;
     text-transform: uppercase
+}
+
+.chapter-rail .course-event:hover {
+    padding: 0;
+    color: var(--brown);
+    background: transparent;
+    text-decoration: none
 }
 
 .chapter-rail-course .course-title {
@@ -1340,7 +1350,7 @@ mark {
 </head>
 <body>
 <nav class="chapter-rail" aria-label="Chapters">
-<div class="chapter-rail-course"><div class="course-event">ACM EC&rsquo;26 Tutorial</div><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
+<div class="chapter-rail-course"><a class="course-event" href="index.html">ACM EC’26 Tutorial</a><a class="course-title course-title-link" href="index.html">Learning and Computation of Phi-Equilibria</a><div class="course-authors">Ioannis Anagnostides, Gabriele Farina, and Brian Hu Zhang</div></div>
 <div class="chapter-rail-heading">Chapters</div>
 <a class="chapter-rail-link is-current" href="P1-introduction.html" aria-current="page"><span>1</span>Introduction</a>
 <a class="chapter-rail-link" href="P2-phi_regret.html"><span>2</span>Beyond Normal Form</a>
