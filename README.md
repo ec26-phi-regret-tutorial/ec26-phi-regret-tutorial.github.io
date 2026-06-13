@@ -46,9 +46,6 @@ the repository can be served directly with GitHub Pages.
 
 ## Citation
 
-The citation metadata is maintained in [`html-export.yaml`](html-export.yaml).
-When citing a chapter, use:
-
 ```bibtex
 @misc{anagnostides-farina-zhang-2026-phi-equilibria,
   author       = {Anagnostides, Ioannis and Farina, Gabriele and Zhang, Brian Hu},
